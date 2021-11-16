@@ -12,7 +12,7 @@ export default function TabIcon({ iconName, color, focused }: Props) {
     <Ionicons
       name={focused ? iconName : `${iconName}-outline`}
       color={color}
-      size={22}
+      size={27}
     />
   );
 }

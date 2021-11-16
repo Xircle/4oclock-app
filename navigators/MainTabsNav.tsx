@@ -25,9 +25,44 @@ export default function MainTabsNav(props: Props) {
           ),
         }}
       />
-      <Tabs.Screen name="RandomProfile" component={RandomProfile} />
-      <Tabs.Screen name="Chat" component={Chat} />
-      <Tabs.Screen name="MyPage" component={MyPage} />
+      <Tabs.Screen
+        name="RandomProfile"
+        component={RandomProfile}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon iconName={"people"} color={color} focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Chat"
+        component={Chat}
+        options={{
+          title: "메세지",
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon
+              iconName={"chatbubble-ellipses"}
+              color={color}
+              focused={focused}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="MyPage"
+        component={MyPage}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon
+              iconName={"person-circle"}
+              color={color}
+              focused={focused}
+            />
+          ),
+        }}
+      />
     </Tabs.Navigator>
   );
 }
