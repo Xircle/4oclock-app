@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Text, View } from "react-native";
 import styled from "styled-components/native";
-import AvatarUri from "./components/AvatarUri";
-import Loader from "./components/Loader";
+import AvatarUri from "./components/UI/AvatarUri";
+import Loader from "./components/UI/Loader";
 import { NavigationContainer } from "@react-navigation/native";
 import "react-native-gesture-handler";
 import AppLoading from "expo-app-loading";

@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React from "react";
-import XLButton, { ButtonText } from "../components/XLButton";
+import XLButton, { ButtonText } from "../components/UI/XLButton";
 import {} from "react-native";
 import { colors } from "../styles/styles";
 
