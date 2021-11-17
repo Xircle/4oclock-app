@@ -12,15 +12,43 @@ import { Asset } from "expo-asset";
 import LoggedOutNav from "./navigators/LoggedOutNav";
 import LoggedInNav from "./navigators/LoggedInNav";
 import Realm from "realm";
+import { DBContext, UserSchema } from "./libs/RealmDB";
+
 
 export default function App() {
-  const [loading, setLoading] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [withValidToken, setWithValidToken] = useState(false);
+  const [realm, setRealm] = useState(null);
 
-  if (loading) return <AppLoading />;
+  const startLoading = async () => {
+    const connection = await Realm.open({
+      path: "clientDB",
+      schema: [UserSchema],
+    });
+    setRealm(connection);
+    if (connection?.[0]?.token) {
+      // log user in
+      setWithValidToken(true);
+    }
+  };
+  const onFinish = () => {
+    setReady(true);
+  };
+
+  if (!ready)
+    return (
+      <AppLoading
+        startAsync={startLoading}
+        onFinish={onFinish}
+        onError={console.error}
+      />
+    );
   return (
-    // @ts-ignore
-    <NavigationContainer>
-      {false ? <LoggedInNav /> : <LoggedOutNav />}
-    </NavigationContainer>
+    <DBContext.Provider value={realm}>
+      {/* // @ts-ignore */}
+      <NavigationContainer>
+        {withValidToken ? <LoggedInNav /> : <LoggedOutNav />}
+      </NavigationContainer>
+    </DBContext.Provider>
   );
 }
