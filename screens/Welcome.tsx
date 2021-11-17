@@ -35,10 +35,15 @@ export default function Welcome(props: Props) {
   };
 
   const socialRedirect = async () => {
-    const res = await AxiosClient.get<SocialRedirectResponse>(
-      `auth/social/redirect/kakao?email=${email}`
-    );
-    console.log(res);
+    try {
+      const res = await AxiosClient.get<SocialRedirectResponse>(
+        `https://xircle-alpha-server.herokuapp.com/auth/social/redirect/kakao?email=umxx8100%40mylaurier.ca`
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+      throw new Error(err);
+    }
   };
 
   useEffect(() => {
