@@ -12,8 +12,10 @@ import { Asset } from "expo-asset";
 import LoggedOutNav from "./navigators/LoggedOutNav";
 import LoggedInNav from "./navigators/LoggedInNav";
 import Realm from "realm";
-import { DBContext, UserSchema } from "./libs/RealmDB";
+import { DBContext, UserSchema } from "./lib/RealmDB";
+import { QueryClient, QueryClientProvider } from "react-query";
 
+const queryClient = new QueryClient();
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -24,6 +26,7 @@ export default function App() {
     const connection = await Realm.open({
       path: "clientDB",
       schema: [UserSchema],
+      schemaVersion: 3,
     });
     setRealm(connection);
     if (connection?.[0]?.token) {
@@ -44,11 +47,13 @@ export default function App() {
       />
     );
   return (
-    <DBContext.Provider value={realm}>
-      {/* // @ts-ignore */}
-      <NavigationContainer>
-        {withValidToken ? <LoggedInNav /> : <LoggedOutNav />}
-      </NavigationContainer>
-    </DBContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <DBContext.Provider value={realm}>
+        {/* // @ts-ignore */}
+        <NavigationContainer>
+          {withValidToken ? <LoggedInNav /> : <LoggedOutNav />}
+        </NavigationContainer>
+      </DBContext.Provider>
+    </QueryClientProvider>
   );
 }

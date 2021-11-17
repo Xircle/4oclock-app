@@ -7,6 +7,7 @@ export const UserSchema = {
   properties: {
     _id: "int",
     token: "string",
+    email: "string",
   },
   primaryKey: "_id",
 };
@@ -23,7 +24,7 @@ export const getToken = async () => {
   return realm.objects("UserSchema")[0];
 };
 
-export const setToken = async (token: string) => {
+export const setProfile = async (token: string, email: string) => {
   const realm = await Realm.open({
     schema: [UserSchema],
   });
@@ -31,7 +32,7 @@ export const setToken = async (token: string) => {
   realm.write(() => {
     realm.create("UserSchema", {
       _id: Date.now(),
-      token: token,
+      email: email,
     });
   });
 };

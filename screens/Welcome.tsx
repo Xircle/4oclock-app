@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert } from "react-native";
 import {
   KakaoOAuthToken,
@@ -10,29 +10,51 @@ import {
   unlink,
 } from "@react-native-seoul/kakao-login";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { setToken } from "../libs/RealmDB";
+import AxiosClient from "../lib/apiClient";
+import { SocialAuthResponse, SocialRedirectResponse } from "../lib/kakao";
+// import { setToken } from "../lib/RealmDB";
 
 interface Props {}
 
 export default function Welcome(props: Props) {
-  const [temp, setTemp] = useState("");
+  const [email, setEmail] = useState("");
+
+  const getProfile = async (): Promise<void> => {
+    const profile: KakaoProfile = await getKakaoProfile();
+    setEmail(profile.email);
+  };
+
   const signInWithKakao = async (): Promise<void> => {
     try {
       const token: KakaoOAuthToken = await login();
-      console.log(token);
-      console.log("no exception");
-      setToken(token.accessToken);
-      setTemp(token.accessToken);
+      // setToken(token.accessToken);
+      getProfile();
     } catch (e) {
       console.log(e);
     }
   };
 
+  const socialRedirect = async () => {
+    const res = await AxiosClient.get<SocialRedirectResponse>(
+      `auth/social/redirect/kakao?email=${email}`
+    );
+    console.log(res);
+  };
+
+  useEffect(() => {
+    // if (email) {
+    //   socialRedirect();
+    // }
+  }, [email]);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Container>
-        <Text>{temp}</Text>
+        <Text>{email}</Text>
         <KakaoLoginButton onPress={signInWithKakao}></KakaoLoginButton>
+        <KakaoLoginButton
+          style={{ backgroundColor: "#000000" }}
+          onPress={socialRedirect}
+        ></KakaoLoginButton>
       </Container>
     </SafeAreaView>
   );
