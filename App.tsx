@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Text, View } from "react-native";
 import styled from "styled-components/native";
 import AvatarUri from "./components/UI/AvatarUri";
@@ -14,6 +14,9 @@ import LoggedInNav from "./navigators/LoggedInNav";
 import Realm from "realm";
 import { DBContext, UserSchema } from "./lib/RealmDB";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { createStackNavigator } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
 
 const queryClient = new QueryClient();
 
@@ -26,7 +29,7 @@ export default function App() {
     const connection = await Realm.open({
       path: "clientDB",
       schema: [UserSchema],
-      schemaVersion: 3,
+      schemaVersion: 1,
     });
     setRealm(connection);
     if (connection?.[0]?.token) {
@@ -49,9 +52,14 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <DBContext.Provider value={realm}>
-        {/* // @ts-ignore */}
         <NavigationContainer>
-          {withValidToken ? <LoggedInNav /> : <LoggedOutNav />}
+          <Stack.Navigator
+            screenOptions={{ headerShown: false }}
+            initialRouteName={withValidToken ? "LoggedInNav" : "LoggedOutrNav"}
+          >
+            <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
+            <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
+          </Stack.Navigator>
         </NavigationContainer>
       </DBContext.Provider>
     </QueryClientProvider>
