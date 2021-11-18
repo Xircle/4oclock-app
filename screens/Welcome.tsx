@@ -12,16 +12,22 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import AxiosClient from "../lib/apiClient";
 import { SocialAuthResponse, SocialRedirectResponse } from "../lib/kakao";
-// import { setToken } from "../lib/RealmDB";
+import { setProfile } from "../lib/RealmDB";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {}
 
 export default function Welcome(props: Props) {
+  const navigation = useNavigation();
+
   const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
 
   const getProfile = async (): Promise<void> => {
+    // @ts-ignore
     const profile: KakaoProfile = await getKakaoProfile();
     setEmail(profile.email);
+    socialRedirect(profile.email);
   };
 
   const signInWithKakao = async (): Promise<void> => {
@@ -34,12 +40,13 @@ export default function Welcome(props: Props) {
     }
   };
 
-  const socialRedirect = async () => {
+  const socialRedirect = async (emailInput: string) => {
     try {
       const res = await AxiosClient.get<SocialRedirectResponse>(
-        `https://xircle-alpha-server.herokuapp.com/auth/social/redirect/kakao?email=umxx8100%40mylaurier.ca`
+        `https://xircle-alpha-server.herokuapp.com/auth/social/redirect/kakao?email=${emailInput}`
       );
       console.log(res.data);
+      setToken(res.data.data.token);
     } catch (err) {
       console.log(err);
       throw new Error(err);
@@ -47,19 +54,17 @@ export default function Welcome(props: Props) {
   };
 
   useEffect(() => {
-    // if (email) {
-    //   socialRedirect();
-    // }
-  }, [email]);
+    if (email && token) {
+      console.log("called");
+      setProfile(email, token);
+      navigation.navigate("LoggedInNav");
+    }
+  }, [email, token]);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Container>
         <Text>{email}</Text>
         <KakaoLoginButton onPress={signInWithKakao}></KakaoLoginButton>
-        <KakaoLoginButton
-          style={{ backgroundColor: "#000000" }}
-          onPress={socialRedirect}
-        ></KakaoLoginButton>
       </Container>
     </SafeAreaView>
   );
