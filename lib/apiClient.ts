@@ -1,4 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { getTOKEN, TOKEN } from "./utils";
+import Realm from "realm";
+import { UserSchema } from "./RealmDB";
+import storage from "./helpers/myAsyncStorage";
 
 // http://localhost:3080
 const host =
@@ -6,29 +10,20 @@ const host =
     ? process.env.REACT_APP_PRODUCTION_API_SERVER
     : process.env.REACT_APP_PRODUCTION_API_SERVER;
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1YjAwYmM3LTJlMjYtNDkxZi1hMTNmLTA3NzRkZDZlZjI2NSIsImlhdCI6MTYzNjYyNzMyNH0.Ox0yT31SFOw8Z-aercA_g5WSVq7x40E4ZFLp6OkHRVQ";
+const token = storage.getItem("token");
 
-const apiClient = axios.create({
-  withCredentials: true,
-  headers: {
-    Authorization: `Bearer ${token || ""}`,
-  },
-});
 
-export default apiClient;
+const giveApiClient = async () => {
+  const token = await storage.getItem("token");
 
-const CancelToken = axios.CancelToken;
-export const source = CancelToken.source();
-const RELOAD_TARGET_URL = ["/user/me", "/user/profile/random"];
+  const targetApiClient = axios.create({
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${token || ""}`,
+    },
+  });
 
-apiClient.interceptors.request.use((config: AxiosRequestConfig) => {
-  const rawToken = (config.headers.Authorization as string).split(" ");
+  return targetApiClient;
+};
 
-  if (token && !rawToken[1] && RELOAD_TARGET_URL.includes(config.url!)) {
-    console.log("got you");
-    source.cancel("Request cancelled, Because token was not reflected");
-    //window.location.reload();
-  }
-  return config;
-});
+export default giveApiClient;

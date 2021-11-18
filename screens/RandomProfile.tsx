@@ -23,20 +23,17 @@ export default function RandomProfile(props: Props) {
   });
 
   useEffect(() => {
-    if (realm.objects("UserSchema")[0].token) {
-      console.log(realm.objects("UserSchema")[0]);
-    } else {
+    if (!realm.objects("UserSchema")[0].token) {
       Alert.alert("token missing");
     }
-    console.log(TOKEN);
   }, []);
 
   return (
     <Container>
       <Text>random profile</Text>
       <Text>{randomProfileData?.MBTI}</Text>
-      <Text>random profile</Text>
-      <Text>random profile</Text>
+      <Text>{randomProfileData?.username}</Text>
+      <Text>{randomProfileData?.shortBio}</Text>
     </Container>
   );
 }

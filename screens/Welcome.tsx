@@ -15,6 +15,7 @@ import { SocialRedirectResponse } from "../lib/kakao";
 import { useDB } from "../lib/RealmDB";
 import { useNavigation } from "@react-navigation/native";
 import { BASE_URL, setTOKEN, TOKEN } from "../lib/utils";
+import storage from "../lib/helpers/myAsyncStorage";
 
 interface Props {}
 
@@ -46,9 +47,7 @@ export default function Welcome(props: Props) {
       const res = await AxiosClient.get<SocialRedirectResponse>(
         `${BASE_URL}/auth/social/redirect/kakao?email=${emailInput}`
       );
-      console.log(res.data);
       setToken(res.data.data.token);
-      setTOKEN(res.data.data.token);
     } catch (err) {
       console.log(err);
       throw new Error(err);
@@ -68,19 +67,20 @@ export default function Welcome(props: Props) {
         realm.objects("UserSchema")[0].token = token;
       }
     });
-    console.log("done");
   };
 
   useEffect(() => {
     if (email && token) {
+      setTOKEN(token);
       setProfile(token, email);
+      storage.setItem("token", token);
       navigation.navigate("LoggedInNav");
     }
   }, [email, token]);
   useEffect(() => {
     if (realm.objects("UserSchema").length) {
-      console.log("token + " + realm.objects("UserSchema")[0].token);
       setTOKEN(realm.objects("UserSchema")[0].token);
+      storage.setItem("token", realm.objects("UserSchema")[0].token);
       navigation.navigate("LoggedInNav");
     }
   }, []);

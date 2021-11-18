@@ -37,5 +37,4 @@ export const setProfile = (token: string, email: string) => {
       realm.objects("UserSchema")[0].token = token;
     }
   });
-  console.log("done");
 };
