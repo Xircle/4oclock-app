@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { UserProfile, UserData, GetMyRooms } from "../lib/api/types";
 import { useDB } from "../lib/RealmDB";
-import { Alert, Dimensions, View } from "react-native";
+import { Alert, Dimensions, ScrollView, View } from "react-native";
 import { seeRandomProfile } from "../lib/api/seeRandomProfile";
 import { AgeNumberToString, TOKEN } from "../lib/utils";
 import AvatarUri from "../components/UI/AvatarUri";
@@ -48,9 +48,7 @@ export default function RandomProfile(props: Props) {
   }, [randomProfileData?.age]);
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, alignItems: "center", backgroundColor: colors.bgColor }}
-    >
+    <Wrapper>
       {loading && (
         <LoaderWrapper
           style={{
@@ -66,34 +64,43 @@ export default function RandomProfile(props: Props) {
           연고이팅을 가입한 친구들과 소통할 수 있는 탭이에요!
         </SInfoText>
       </SInfoBox>
-      <Container>
-        <AvatarUri
-          source={randomProfileData?.profileImageUrl}
-          size={width * 0.5}
-        />
-        <BigBlackText>{randomProfileData?.username}</BigBlackText>
-        <MidGreyText>{randomProfileData?.job || ""}</MidGreyText>
+      <View style={{ flex: 8, width: "100%" }}>
+        <ScrollView
+          style={{ paddingTop: 30 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <Container>
+            <AvatarUri
+              source={randomProfileData?.profileImageUrl}
+              size={width * 0.5}
+            />
+            <BigBlackText>{randomProfileData?.username}</BigBlackText>
+            <MidGreyText>{randomProfileData?.job || ""}</MidGreyText>
 
-        <InnerContainer>
-          <InnerContent>
-            <SmallBlackText>{randomProfileData?.MBTI}</SmallBlackText>
-            <SmallBlackText>{randomProfileData?.personality}</SmallBlackText>
-          </InnerContent>
-          <ShortBioText>{randomProfileData?.shortBio}</ShortBioText>
-          <GraySubText>
-            {randomProfileData?.location
-              ? randomProfileData?.location
-              : "대한민국 어딘가"}{" "}
-            / {randomProfileData?.university || "고연이대"} / {age || "나잇살"}{" "}
-            /{" "}
-            {randomProfileData
-              ? randomProfileData.gender === "Male"
-                ? "남"
-                : "여"
-              : "남성역"}
-          </GraySubText>
-        </InnerContainer>
-      </Container>
+            <InnerContainer>
+              <InnerContent>
+                <SmallBlackText>{randomProfileData?.MBTI}</SmallBlackText>
+                <SmallBlackText>
+                  {randomProfileData?.personality}
+                </SmallBlackText>
+              </InnerContent>
+              <ShortBioText>{randomProfileData?.shortBio}</ShortBioText>
+              <GraySubText>
+                {randomProfileData?.location
+                  ? randomProfileData?.location
+                  : "대한민국 어딘가"}{" "}
+                / {randomProfileData?.university || "고연이대"} /{" "}
+                {age || "나잇살"} /{" "}
+                {randomProfileData
+                  ? randomProfileData.gender === "Male"
+                    ? "남"
+                    : "여"
+                  : "남성역"}
+              </GraySubText>
+            </InnerContainer>
+          </Container>
+        </ScrollView>
+      </View>
       <ButtonContainer>
         <ChatButton>
           <ChatText>채팅하기</ChatText>
@@ -102,15 +109,21 @@ export default function RandomProfile(props: Props) {
           <NextText onPress={refetchRandomProfileData}>다음 친구보기</NextText>
         </NextButton>
       </ButtonContainer>
-    </SafeAreaView>
+    </Wrapper>
   );
 }
 
+const Wrapper = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: ${colors.bgColor};
+`;
+
 const Container = styled.View`
-  flex: 0.9;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
 `;
 
 const InnerContent = styled.View`
@@ -143,7 +156,7 @@ const MidGreyText = styled.Text`
 `;
 
 const InnerContainer = styled.View`
-  width: 100%;
+  width: 80%;
 `;
 
 const GraySubText = styled.Text`
@@ -159,10 +172,11 @@ const ShortBioText = styled.Text`
 `;
 
 const ButtonContainer = styled.View`
-  flex: 0.1;
+  flex: 0.7;
   width: ${width * 0.9 + "px"};
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 15px;
 `;
 
 const ChatButton = styled.TouchableOpacity`

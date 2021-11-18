@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, TouchableOpacity } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -13,6 +13,10 @@ import AvatarUri from "../components/UI/AvatarUri";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { Alert } from "react-native";
+import { useQuery } from "react-query";
+import { UserData } from "../lib/api/types";
+import { getUser } from "../lib/api/getUser";
+import { AgeNumberToString } from "../lib/utils";
 
 interface Props {}
 
@@ -21,70 +25,84 @@ const { width, height } = Dimensions.get("window");
 export default function MyPage(props: Props) {
   const [result, setResult] = useState<string>("");
 
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bgColor }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Container>
-          <MainHeading>마이페이지</MainHeading>
-          <ProfileContainer>
-            <AvatarUri
-              size={width * 0.2}
-              source={
-                "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-340b910c-1b94-400f-80ac-14f39d454bc4-1636351789614-%EC%BA%A1%EC%B2%98.JPG"
-              }
-            />
-            <ProfileInnerContainer>
-              <GeneralText style={{ fontWeight: "600", lineHeight: 28 }}>
-                나는 현덕
-              </GeneralText>
-              <GeneralText style={{ color: colors.bareGrey, lineHeight: 28 }}>
-                워털루 대학교 / 20후반
-              </GeneralText>
-            </ProfileInnerContainer>
-          </ProfileContainer>
+  const { data: userData, isLoading } = useQuery<UserData | undefined>(
+    "userProfile",
+    () => getUser(),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
 
-          <SXLButton>
-            <SXLButtonText>프로필 수정하기</SXLButtonText>
-          </SXLButton>
-          <ListContainer>
-            <ListButton>
-              <ListText>맛집 건의하기</ListText>
-            </ListButton>
-            <ListButton>
-              <ListText>문의하기 / 피드백하기</ListText>
-            </ListButton>
-            <ListButton>
-              <ListText>서비스 사용약관</ListText>
-            </ListButton>
-            <ListButton>
-              <ListText>유저 신고하기</ListText>
-            </ListButton>
-            <ListButton>
-              <ListText>로그아웃하기</ListText>
-            </ListButton>
-          </ListContainer>
-          <FooterContainer>
-            <SNSWrapper>
-              <SNSContainer>
-                <Ionicons name="logo-instagram" size={24} color="#ffffff" />
-              </SNSContainer>
-              <SNSContainer style={{ marginLeft: 10 }}>
-                <Ionicons name="logo-youtube" size={24} color="#ffffff" />
-              </SNSContainer>
-              <SNSContainer style={{ marginLeft: 10 }}>
-                <Ionicons name="logo-instagram" size={24} color="#ffffff" />
-              </SNSContainer>
-            </SNSWrapper>
-            <TouchableOpacity>
-              <SNSText>개인정보처리방침</SNSText>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <SNSText>마케팅 수신동의 이용약관</SNSText>
-            </TouchableOpacity>
-          </FooterContainer>
-        </Container>
-      </ScrollView>
-    </SafeAreaView>
+  return (
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{ backgroundColor: colors.bgColor }}
+    >
+      <Container>
+        <MainHeading>마이페이지</MainHeading>
+        <ProfileContainer>
+          <AvatarUri size={width * 0.2} source={userData?.profileImageUrl} />
+          <ProfileInnerContainer>
+            <GeneralText style={{ fontWeight: "600", lineHeight: 28 }}>
+              {userData?.username || ""}
+            </GeneralText>
+            <GeneralText style={{ color: colors.bareGrey, lineHeight: 28 }}>
+              {userData?.university || "기안대학교"} /{" "}
+              {AgeNumberToString(userData?.age) || "모름"}
+            </GeneralText>
+          </ProfileInnerContainer>
+        </ProfileContainer>
+
+        <SXLButton>
+          <SXLButtonText>프로필 수정하기</SXLButtonText>
+        </SXLButton>
+        <ListContainer>
+          <ListButton>
+            <RegisteredButton>
+              <ListText style={{ fontWeight: "700" }}>
+                신청한 모임 {userData?.reservation_count}
+              </ListText>
+              <Ionicons name="chevron-forward-sharp" size={24} color="black" />
+            </RegisteredButton>
+          </ListButton>
+          <ListButton>
+            <ListText>맛집 건의하기</ListText>
+          </ListButton>
+          <ListButton>
+            <ListText>문의하기 / 피드백하기</ListText>
+          </ListButton>
+          <ListButton>
+            <ListText>서비스 사용약관</ListText>
+          </ListButton>
+          <ListButton>
+            <ListText>유저 신고하기</ListText>
+          </ListButton>
+          <ListButton>
+            <ListText>로그아웃하기</ListText>
+          </ListButton>
+        </ListContainer>
+        <FooterContainer>
+          <SNSWrapper>
+            <SNSContainer>
+              <Ionicons name="logo-instagram" size={24} color="#ffffff" />
+            </SNSContainer>
+            <SNSContainer style={{ marginLeft: 10 }}>
+              <Ionicons name="logo-youtube" size={24} color="#ffffff" />
+            </SNSContainer>
+            <SNSContainer style={{ marginLeft: 10 }}>
+              <Ionicons name="logo-instagram" size={24} color="#ffffff" />
+            </SNSContainer>
+          </SNSWrapper>
+          <TouchableOpacity>
+            <SNSText>개인정보처리방침</SNSText>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <SNSText>마케팅 수신동의 이용약관</SNSText>
+          </TouchableOpacity>
+        </FooterContainer>
+      </Container>
+    </ScrollView>
   );
 }
 
@@ -151,4 +169,11 @@ const SNSText = styled.Text`
   font-size: 15px;
   color: ${colors.bareGrey};
   line-height: 28px;
+`;
+
+const RegisteredButton = styled.TouchableOpacity`
+  width: 100%;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
 `;

@@ -7,6 +7,8 @@ import RandomProfile from "../screens/RandomProfile";
 import Chat from "../screens/Chat";
 import MyPage from "../screens/MyPage";
 import TabIcon from "../components/nav/TabIcon";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { colors } from "../styles/styles";
 
 interface Props {}
 
@@ -14,7 +16,18 @@ const Tabs = createBottomTabNavigator();
 
 export default function MainTabsNav(props: Props) {
   return (
-    <Tabs.Navigator screenOptions={{ tabBarShowLabel: false }}>
+    <Tabs.Navigator
+      screenOptions={{
+        tabBarShowLabel: false,
+        headerStyle: {
+          backgroundColor: colors.bgColor,
+          borderColor: colors.bgColor,
+          borderBottomWidth: 0,
+        },
+        headerTitle: "",
+        headerShadowVisible: false,
+      }}
+    >
       <Tabs.Screen
         name="Main"
         component={Main}
@@ -29,7 +42,6 @@ export default function MainTabsNav(props: Props) {
         name="RandomProfile"
         component={RandomProfile}
         options={{
-          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"people"} color={color} focused={focused} />
           ),
@@ -53,7 +65,6 @@ export default function MainTabsNav(props: Props) {
         name="MyPage"
         component={MyPage}
         options={{
-          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon
               iconName={"person-circle"}
