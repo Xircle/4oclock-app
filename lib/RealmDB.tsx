@@ -16,24 +16,26 @@ export const useDB = () => {
   return useContext(DBContext);
 };
 
-export const getData = async () => {
-  const realm = await Realm.open({
-    schema: [UserSchema],
-  });
+export const getData = () => {
+  const realm = useDB();
 
   return realm.objects("UserSchema")[0];
 };
 
-export const setProfile = async (token: string, email: string) => {
-  const realm = await Realm.open({
-    schema: [UserSchema],
-  });
+export const setProfile = (token: string, email: string) => {
+  const realm = useDB();
 
   realm.write(() => {
-    realm.create("UserSchema", {
-      _id: Date.now(),
-      email: email,
-      token: token,
-    });
+    if (realm.objects("UserSchema").length === 0) {
+      realm.create("UserSchema", {
+        _id: Date.now(),
+        email: email,
+        token: token,
+      });
+    } else {
+      realm.objects("UserSchema")[0].email = email;
+      realm.objects("UserSchema")[0].token = token;
+    }
   });
+  console.log("done");
 };

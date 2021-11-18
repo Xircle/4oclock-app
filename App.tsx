@@ -22,20 +22,15 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const [ready, setReady] = useState(false);
-  const [withValidToken, setWithValidToken] = useState(false);
   const [realm, setRealm] = useState(null);
 
   const startLoading = async () => {
     const connection = await Realm.open({
-      path: "clientDB",
+      path: "UserDB",
       schema: [UserSchema],
       schemaVersion: 1,
     });
     setRealm(connection);
-    if (connection?.[0]?.token) {
-      // log user in
-      setWithValidToken(true);
-    }
   };
   const onFinish = () => {
     setReady(true);
@@ -53,10 +48,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <DBContext.Provider value={realm}>
         <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{ headerShown: false }}
-            initialRouteName={withValidToken ? "LoggedInNav" : "LoggedOutrNav"}
-          >
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
             <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
           </Stack.Navigator>

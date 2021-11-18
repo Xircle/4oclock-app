@@ -1,14 +1,18 @@
 import styled from "styled-components/native";
-import React from "react";
+import React, { useEffect } from "react";
 import {} from "react-native";
 import { colors } from "../styles/styles";
+import { useDB } from "../lib/RealmDB";
+import { TOKEN } from "../lib/utils";
 
 interface Props {}
 
 export default function Main(props: Props) {
+  const realm = useDB();
+
   return (
     <Container>
-      <Text>Main</Text>
+      <Text>Main {TOKEN}</Text>
     </Container>
   );
 }

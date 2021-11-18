@@ -11,15 +11,16 @@ import {
 } from "@react-native-seoul/kakao-login";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AxiosClient from "../lib/apiClient";
-import { SocialAuthResponse, SocialRedirectResponse } from "../lib/kakao";
-import { setProfile } from "../lib/RealmDB";
+import { SocialRedirectResponse } from "../lib/kakao";
+import { useDB } from "../lib/RealmDB";
 import { useNavigation } from "@react-navigation/native";
+import { BASE_URL, setTOKEN, TOKEN } from "../lib/utils";
 
 interface Props {}
 
 export default function Welcome(props: Props) {
   const navigation = useNavigation();
-
+  const realm = useDB();
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
 
@@ -43,23 +44,46 @@ export default function Welcome(props: Props) {
   const socialRedirect = async (emailInput: string) => {
     try {
       const res = await AxiosClient.get<SocialRedirectResponse>(
-        `https://xircle-alpha-server.herokuapp.com/auth/social/redirect/kakao?email=${emailInput}`
+        `${BASE_URL}/auth/social/redirect/kakao?email=${emailInput}`
       );
       console.log(res.data);
       setToken(res.data.data.token);
+      setTOKEN(res.data.data.token);
     } catch (err) {
       console.log(err);
       throw new Error(err);
     }
   };
 
+  const setProfile = (token: string, email: string) => {
+    realm.write(() => {
+      if (realm.objects("UserSchema").length === 0) {
+        realm.create("UserSchema", {
+          _id: Date.now(),
+          email: email,
+          token: token,
+        });
+      } else {
+        realm.objects("UserSchema")[0].email = email;
+        realm.objects("UserSchema")[0].token = token;
+      }
+    });
+    console.log("done");
+  };
+
   useEffect(() => {
     if (email && token) {
-      console.log("called");
-      setProfile(email, token);
+      setProfile(token, email);
       navigation.navigate("LoggedInNav");
     }
   }, [email, token]);
+  useEffect(() => {
+    if (realm.objects("UserSchema").length) {
+      console.log("token + " + realm.objects("UserSchema")[0].token);
+      setTOKEN(realm.objects("UserSchema")[0].token);
+      navigation.navigate("LoggedInNav");
+    }
+  }, []);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Container>
