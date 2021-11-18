@@ -16,7 +16,7 @@ export const useDB = () => {
   return useContext(DBContext);
 };
 
-export const getToken = async () => {
+export const getData = async () => {
   const realm = await Realm.open({
     schema: [UserSchema],
   });
@@ -33,6 +33,7 @@ export const setProfile = async (token: string, email: string) => {
     realm.create("UserSchema", {
       _id: Date.now(),
       email: email,
+      token: token,
     });
   });
 };
