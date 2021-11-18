@@ -48,7 +48,9 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <DBContext.Provider value={realm}>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Navigator
+            screenOptions={{ headerShown: false, gestureEnabled: false }}
+          >
             <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
             <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
           </Stack.Navigator>

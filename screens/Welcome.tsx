@@ -44,7 +44,9 @@ export default function Welcome(props: Props) {
 
   const socialRedirect = async (emailInput: string) => {
     try {
-      const res = await AxiosClient.get<SocialRedirectResponse>(
+      const axiosclient = await AxiosClient();
+
+      const res = await axiosclient.get<SocialRedirectResponse>(
         `${BASE_URL}/auth/social/redirect/kakao?email=${emailInput}`
       );
       setToken(res.data.data.token);

@@ -1,7 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { getTOKEN, TOKEN } from "./utils";
-import Realm from "realm";
-import { UserSchema } from "./RealmDB";
+import axios from "axios";
 import storage from "./helpers/myAsyncStorage";
 
 // http://localhost:3080
@@ -11,7 +8,6 @@ const host =
     : process.env.REACT_APP_PRODUCTION_API_SERVER;
 
 const token = storage.getItem("token");
-
 
 const giveApiClient = async () => {
   const token = await storage.getItem("token");

@@ -9,6 +9,8 @@ export const colors = {
   bgColor: "#FFFFFF",
   midGrey: "#6F7789",
   bareGrey: "#A7B0C0",
+  lightBlue: "#DBEDFF",
+  
 };
 
 export const MainHeading = styled.Text`
@@ -42,4 +44,18 @@ export const XLButtonText = styled.Text`
 
 export const GeneralText = styled.Text`
   font-size: 16px;
+`;
+
+export const InfoBox = styled.View`
+  padding: 20px;
+  background-color: ${colors.lightBlue};
+  border-radius: 5px;
+  width: 100%;
+`;
+
+export const InfoText = styled.Text`
+  color: ${colors.mainBlue};
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
 `;
