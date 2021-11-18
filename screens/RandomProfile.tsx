@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { UserProfile, UserData, GetMyRooms } from "../lib/api/types";
 import { useDB } from "../lib/RealmDB";
-import { Alert, Dimensions } from "react-native";
+import { Alert, Dimensions, View } from "react-native";
 import { seeRandomProfile } from "../lib/api/seeRandomProfile";
 import { AgeNumberToString, TOKEN } from "../lib/utils";
 import AvatarUri from "../components/UI/AvatarUri";
@@ -18,6 +18,7 @@ const { width, height } = Dimensions.get("screen");
 export default function RandomProfile(props: Props) {
   const [isYkClub, SetIsYkClub] = useState<boolean>(false);
   const [isYkOnly, SetIsYkOnly] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [age, setAge] = useState<string>("");
   const realm = useDB();
   const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
@@ -38,19 +39,28 @@ export default function RandomProfile(props: Props) {
     }
   }, []);
   useEffect(() => {
+    setLoading(isFetching);
+  }, [isFetching]);
+  useEffect(() => {
     if (randomProfileData) {
       setAge(AgeNumberToString(randomProfileData.age));
     }
   }, [randomProfileData?.age]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <SafeAreaView
       style={{ flex: 1, alignItems: "center", backgroundColor: colors.bgColor }}
     >
+      {loading && (
+        <LoaderWrapper
+          style={{
+            transform: [{ translateY: "-100%" }, { translateX: -15 }],
+            zIndex: 3,
+          }}
+        >
+          <Loader color={colors.mainBlue} large={true} />
+        </LoaderWrapper>
+      )}
       <SInfoBox>
         <SInfoText>
           연고이팅을 가입한 친구들과 소통할 수 있는 탭이에요!
@@ -183,4 +193,10 @@ const NextText = styled.Text`
   font-size: 20px;
   font-weight: 800;
   color: ${colors.mainBlue};
+`;
+
+const LoaderWrapper = styled.View`
+  position: absolute;
+  top: 50%;
+  left: 50%;
 `;
