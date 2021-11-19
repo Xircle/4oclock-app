@@ -92,16 +92,20 @@ export default function MyProfile(props: Props) {
               defaultButtonText="MBTI를 설정해주세요"
             />
             <SLabel>계열이나 직업</SLabel>
-            <SBigTextInput placeholder="USERNAME" autoCapitalize="none" />
+            <SBigTextInput
+              placeholder="ex. 새내기 / 스타트업 마케터 / AI중독 문과생..."
+              autoCapitalize="none"
+            />
             <SLabel>간단한 자기소개</SLabel>
             <STextArea
-              placeholder="USERNAME"
+              placeholder="ex. 미대에 다니는 다양한 삶을 살고 싶어하는 미개봉화석^^
+              요즘 스타트업에 관심이 생겨서 관련하신 분들과 이야기하면 좋을 것 같아요ㅎㅎ"
               autoCapitalize="none"
               multiline={true}
             />
             <SLabel>성격이나 스타일</SLabel>
             <STextArea
-              placeholder="USERNAME"
+              placeholder="ex. 친해지면 말 많아요 / 드립력 상 / 조용하고 이야기 잘 들어줘요 / 연락, 답장이 빨라요"
               autoCapitalize="none"
               multiline={true}
             />

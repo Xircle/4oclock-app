@@ -71,3 +71,4 @@ export const Label = styled.Text`
   color: ${colors.midGrey};
   font-size: 16px;
 `;
+

@@ -65,6 +65,7 @@ export default function ProfileV({
                   : "남성역"}
               </GraySubText>
             </InnerContainer>
+            <View style={{ height: 150 }} />
           </Container>
         </ScrollView>
       </View>
