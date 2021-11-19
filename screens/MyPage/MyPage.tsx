@@ -55,12 +55,13 @@ export default function MyPage(props: Props) {
               </GeneralText>
             </ProfileInnerContainer>
           </ProfileContainer>
-
+          {/* @ts-ignore */}
           <SXLButton onPress={() => naviagtion.navigate("MyProfile")}>
             <SXLButtonText>프로필 수정하기</SXLButtonText>
           </SXLButton>
           <ListContainer>
             <ListButton>
+              {/* @ts-ignore */}
               <RegisteredButton onPress={() => naviagtion.navigate("MyPlaces")}>
                 <ListText style={{ fontWeight: "700" }}>
                   신청한 모임 {userData?.reservation_count}

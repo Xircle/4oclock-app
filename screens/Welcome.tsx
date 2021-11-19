@@ -75,6 +75,7 @@ export default function Welcome(props: Props) {
       setTOKEN(token);
       setProfile(token, email);
       storage.setItem("token", token);
+      /* @ts-ignore */
       navigation.navigate("LoggedInNav");
     }
   }, [email, token]);
@@ -82,6 +83,7 @@ export default function Welcome(props: Props) {
     if (realm.objects("UserSchema").length) {
       setTOKEN(realm.objects("UserSchema")[0].token);
       storage.setItem("token", realm.objects("UserSchema")[0].token);
+      /* @ts-ignore */
       navigation.navigate("LoggedInNav");
     }
   }, []);
