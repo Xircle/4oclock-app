@@ -3,6 +3,7 @@ import AxiosClient from "../apiClient";
 import { CoreOutput } from "./types";
 import { ProfileData } from "../../screens/MyPage/MyProfile";
 import { AxiosResponse } from "axios";
+import { BASE_URL } from "../utils";
 
 export const editProfile = async (
   editedProfileData: ProfileData
@@ -27,5 +28,5 @@ export const editProfile = async (
     formData.append("personality", editedProfileData.personality);
   editedProfileData.drinkingStyle &&
     formData.append("drinkingStyle", editedProfileData.drinkingStyle + "");
-  return axiosclient.put<CreateAccountOutput>("user", formData);
+  return axiosclient.put<CreateAccountOutput>(`${BASE_URL}/user`, formData);
 };

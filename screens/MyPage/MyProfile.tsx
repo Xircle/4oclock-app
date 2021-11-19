@@ -2,16 +2,19 @@ import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
 import { BigTextInput, colors, Label } from "../../styles/styles";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
-import { Dimensions, ScrollView, Text, View } from "react-native";
+import { Alert, Dimensions, ScrollView, Text, View } from "react-native";
 import AvatarUri from "../../components/UI/AvatarUri";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { UserData } from "../../lib/api/types";
 import { getUser } from "../../lib/api/getUser";
-
+import _ from "lodash";
 import { DrinkingStyles, MBTIs, MBTIToIndex } from "../../lib/utils";
 import { Ionicons } from "@expo/vector-icons";
 import MySelect from "../../components/UI/MySelect";
 import SelectButton from "../../components/UI/SelectButton";
+import diff from "object-diff";
+import { useNavigation } from "@react-navigation/native";
+import { editProfile } from "../../lib/api/editProfile";
 
 interface Props {}
 
@@ -34,6 +37,7 @@ export interface ProfileData {
 const { width } = Dimensions.get("screen");
 
 export default function MyProfile(props: Props) {
+  const navigation = useNavigation();
   const [isYK, setIsYK] = useState(false);
   const [localProfileData, setLocalProfileData] = useState<ProfileData>({});
 
@@ -42,6 +46,36 @@ export default function MyProfile(props: Props) {
   >("userProfile", () => getUser(), {
     retry: 2,
   });
+  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } = useMutation(
+    editProfile
+  );
+
+  const updateProfile = async () => {
+    const trimedProfileData = Object.keys(localProfileData).reduce(
+      (acc, curr) => {
+        if (
+          typeof localProfileData[curr] === "string" &&
+          localProfileData[curr] !== "profileImageUrl"
+        ) {
+          acc[curr] = localProfileData[curr].trim();
+        } else {
+          acc[curr] = localProfileData[curr];
+        }
+
+        return acc;
+      },
+      {}
+    );
+    const editedProfileData: ProfileData = diff(userData, trimedProfileData);
+    if (_.isEqual(editedProfileData, {}))
+      return Alert.alert("프로필을 수정해주세요");
+    const { data } = await mutateUserProfile({
+      ...editedProfileData,
+    });
+    if (!data.ok) return Alert.alert(data.error);
+    Alert.alert("프로필 편집 성공했습니다");
+    navigation.goBack();
+  };
 
   useEffect(() => {
     if (isSuccess) {
