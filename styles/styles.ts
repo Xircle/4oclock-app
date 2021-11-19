@@ -10,7 +10,6 @@ export const colors = {
   midGrey: "#6F7789",
   bareGrey: "#A7B0C0",
   lightBlue: "#DBEDFF",
-  
 };
 
 export const MainHeading = styled.Text`
@@ -58,4 +57,17 @@ export const InfoText = styled.Text`
   font-weight: 400;
   font-size: 13px;
   line-height: 20px;
+`;
+
+export const BigTextInput = styled.TextInput`
+  width: 100%;
+  padding: 10px 10px;
+  border-radius: 12px;
+  font-size: 16px;
+  border: 0.5px solid ${colors.midGrey};
+`;
+
+export const Label = styled.Text`
+  color: ${colors.midGrey};
+  font-size: 16px;
 `;
