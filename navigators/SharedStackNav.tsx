@@ -20,7 +20,11 @@ export default function SharedStackNav({ screenName }: Props) {
         headerBackTitleVisible: false,
         presentation: "modal",
         headerStyle: { backgroundColor: colors.mainBlue },
-        headerTitleStyle: { color: colors.bgColor },
+        headerTitleStyle: {
+          color: colors.bgColor,
+          fontSize: 24,
+          fontWeight: "bold",
+        },
       }}
     >
       <Stack.Screen name="MyPage" component={MyPage} />
@@ -32,7 +36,7 @@ export default function SharedStackNav({ screenName }: Props) {
       <Stack.Screen
         name="MyProfile"
         component={MyProfile}
-        options={{ headerShown: true, headerTitle: "프로필 수정" }}
+        options={{ headerShown: true, headerTitle: "프로필 수정하기" }}
       />
     </Stack.Navigator>
   );
