@@ -5,10 +5,10 @@ import { View, Text } from "react-native";
 import Main from "../screens/Main";
 import RandomProfile from "../screens/RandomProfile";
 import Chat from "../screens/Chat";
-import MyPage from "../screens/MyPage";
+import MyPage from "../screens/MyPage/MyPage";
 import TabIcon from "../components/nav/TabIcon";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "../styles/styles";
+import SharedStackNav from "./SharedStackNav";
 
 interface Props {}
 
@@ -29,7 +29,7 @@ export default function MainTabsNav(props: Props) {
       }}
     >
       <Tabs.Screen
-        name="Main"
+        name="MainT"
         component={Main}
         options={{
           title: "메인",
@@ -39,7 +39,7 @@ export default function MainTabsNav(props: Props) {
         }}
       />
       <Tabs.Screen
-        name="RandomProfile"
+        name="RandomProfileT"
         component={RandomProfile}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -48,7 +48,7 @@ export default function MainTabsNav(props: Props) {
         }}
       />
       <Tabs.Screen
-        name="Chat"
+        name="ChatT"
         component={Chat}
         options={{
           title: "메세지",
@@ -62,8 +62,7 @@ export default function MainTabsNav(props: Props) {
         }}
       />
       <Tabs.Screen
-        name="MyPage"
-        component={MyPage}
+        name="MyPageT"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon
@@ -72,8 +71,11 @@ export default function MainTabsNav(props: Props) {
               focused={focused}
             />
           ),
+          headerShown: false,
         }}
-      />
+      >
+        {() => <SharedStackNav screenName="MyPage" />}
+      </Tabs.Screen>
     </Tabs.Navigator>
   );
 }

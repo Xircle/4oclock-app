@@ -9,12 +9,11 @@ import {
   logout,
   unlink,
 } from "@react-native-seoul/kakao-login";
-import { SafeAreaView } from "react-native-safe-area-context";
 import AxiosClient from "../lib/apiClient";
 import { SocialRedirectResponse } from "../lib/kakao";
 import { useDB } from "../lib/RealmDB";
 import { useNavigation } from "@react-navigation/native";
-import { BASE_URL, setTOKEN, TOKEN } from "../lib/utils";
+import { BASE_URL, setTOKEN } from "../lib/utils";
 import storage from "../lib/helpers/myAsyncStorage";
 
 interface Props {}
@@ -87,12 +86,10 @@ export default function Welcome(props: Props) {
     }
   }, []);
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Container>
-        <Text>{email}</Text>
-        <KakaoLoginButton onPress={signInWithKakao}></KakaoLoginButton>
-      </Container>
-    </SafeAreaView>
+    <Container>
+      <Text>{email}</Text>
+      <KakaoLoginButton onPress={signInWithKakao}></KakaoLoginButton>
+    </Container>
   );
 }
 
