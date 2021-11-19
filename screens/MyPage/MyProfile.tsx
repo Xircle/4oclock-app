@@ -15,6 +15,7 @@ import SelectButton from "../../components/UI/SelectButton";
 import diff from "object-diff";
 import { useNavigation } from "@react-navigation/native";
 import { editProfile } from "../../lib/api/editProfile";
+import { preventAutoHideAsync } from "expo-splash-screen";
 
 interface Props {}
 
@@ -124,6 +125,13 @@ export default function MyProfile(props: Props) {
               defaultValue={
                 localProfileData.username ? localProfileData.username : ""
               }
+              onChange={(event) => {
+                const { eventCount, target, text } = event.nativeEvent;
+                setLocalProfileData((prev) => ({
+                  ...prev,
+                  username: text,
+                }));
+              }}
             />
             <SLabel>MBTI</SLabel>
             <MySelect
@@ -179,7 +187,7 @@ export default function MyProfile(props: Props) {
           </DetailContainer>
         </InnerContainer>
       </ScrollView>
-      <MainButtonWBg></MainButtonWBg>
+      <MainButtonWBg onPress={updateProfile}></MainButtonWBg>
     </Container>
   );
 }

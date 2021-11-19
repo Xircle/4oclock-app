@@ -3,17 +3,17 @@ import React from "react";
 import { colors, XLButton, XLButtonText } from "../../styles/styles";
 import { Dimensions } from "react-native";
 
-
 interface Props {
   color?: string;
+  onPress: () => void;
 }
 
 const { width } = Dimensions.get("window");
 
-export default function MainButtonWBg(props: Props) {
+export default function MainButtonWBg({ onPress }: Props) {
   return (
     <Container>
-      <XLButton>
+      <XLButton onPress={onPress}>
         <XLButtonText>수정하기</XLButtonText>
       </XLButton>
     </Container>
