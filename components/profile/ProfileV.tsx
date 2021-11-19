@@ -1,3 +1,5 @@
+import { isUsingEmbeddedAssets } from "expo-updates";
+import React from "react";
 import { Dimensions, ScrollView, View } from "react-native";
 import styled from "styled-components/native";
 import { UserProfile } from "../../lib/api/types";
@@ -7,12 +9,21 @@ import AvatarUri from "../UI/AvatarUri";
 
 interface Props {
   randomProfileData: UserProfile;
-  onPress: () => void;
+  onPressNext?: () => void;
+  enableNext?: boolean;
+  onPressChat?: () => void;
+  enableChat?: boolean;
 }
 
-const { width, height } = Dimensions.get("screen");
+const { width } = Dimensions.get("screen");
 
-export default function profile({ randomProfileData, onPress }: Props) {
+export default function ProfileV({
+  randomProfileData,
+  onPressNext,
+  onPressChat,
+  enableChat,
+  enableNext,
+}: Props) {
   return (
     <>
       <SInfoBox>
@@ -46,7 +57,7 @@ export default function profile({ randomProfileData, onPress }: Props) {
                   ? randomProfileData?.location
                   : "대한민국 어딘가"}{" "}
                 / {randomProfileData?.university || "고연이대"} /{" "}
-                {AgeNumberToString(randomProfileData.age) || "나잇살"} /{" "}
+                {AgeNumberToString(randomProfileData?.age) || "나잇살"} /{" "}
                 {randomProfileData
                   ? randomProfileData.gender === "Male"
                     ? "남"
@@ -58,12 +69,17 @@ export default function profile({ randomProfileData, onPress }: Props) {
         </ScrollView>
       </View>
       <ButtonContainer>
-        <ChatButton>
-          <ChatText>채팅하기</ChatText>
-        </ChatButton>
-        <NextButton>
-          <NextText onPress={onPress}>다음 친구보기</NextText>
-        </NextButton>
+        {enableChat && (
+          <ChatButton fullWidth={!enableNext}>
+            <ChatText>채팅하기</ChatText>
+          </ChatButton>
+        )}
+
+        {enableNext && (
+          <NextButton onPress={onPressNext}>
+            <NextText>다음 친구보기</NextText>
+          </NextButton>
+        )}
       </ButtonContainer>
     </>
   );
@@ -120,10 +136,11 @@ const ButtonContainer = styled.View`
   margin-bottom: 15px;
 `;
 
-const ChatButton = styled.TouchableOpacity`
+const ChatButton = styled.TouchableOpacity<{ fullWidth?: boolean }>`
   background-color: ${colors.mainBlue};
   height: 100%;
   flex: 0.47;
+  flex: ${(props) => (props.fullWidth ? 1 : 0.47)};
   border-radius: 10px;
   justify-content: center;
   align-items: center;
