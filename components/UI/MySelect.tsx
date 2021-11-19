@@ -44,6 +44,7 @@ export default function MySelect({
         marginTop: 20,
         height: 40,
       }}
+      dropdownStyle={{ borderRadius: 5 }}
       buttonTextStyle={{
         color: colors.bareGrey,
         fontSize: 16,
