@@ -8,7 +8,7 @@ import { useQuery } from "react-query";
 import { UserData } from "../../lib/api/types";
 import { getUser } from "../../lib/api/getUser";
 
-import { DrinkingStyles, MBTIs } from "../../lib/utils";
+import { DrinkingStyles, MBTIs, MBTIToIndex } from "../../lib/utils";
 import { Ionicons } from "@expo/vector-icons";
 import MySelect from "../../components/UI/MySelect";
 import SelectButton from "../../components/UI/SelectButton";
@@ -58,6 +58,9 @@ export default function MyProfile(props: Props) {
         personality: userData?.personality,
         drinkingStyle: userData?.drinkingStyle,
       });
+      if (userData?.isYkClub) {
+        setIsYK(userData?.isYkClub);
+      }
     }
   }, [isSuccess]);
 
@@ -81,7 +84,13 @@ export default function MyProfile(props: Props) {
               {">"} 문의하기 마이페이지에서 상담원에게 문의해주세요!
             </InfoText>
             <SLabel>닉네임</SLabel>
-            <SBigTextInput placeholder="USERNAME" autoCapitalize="none" />
+            <SBigTextInput
+              placeholder="USERNAME"
+              autoCapitalize="none"
+              defaultValue={
+                localProfileData.username ? localProfileData.username : ""
+              }
+            />
             <SLabel>MBTI</SLabel>
             <MySelect
               data={MBTIs}
@@ -90,11 +99,13 @@ export default function MyProfile(props: Props) {
               }}
               width={width * 0.81}
               defaultButtonText="MBTI를 설정해주세요"
+              defaultValueByIndex={MBTIToIndex[localProfileData.MBTI]}
             />
             <SLabel>계열이나 직업</SLabel>
             <SBigTextInput
               placeholder="ex. 새내기 / 스타트업 마케터 / AI중독 문과생..."
               autoCapitalize="none"
+              defaultValue={localProfileData.job ? localProfileData.job : ""}
             />
             <SLabel>간단한 자기소개</SLabel>
             <STextArea
@@ -102,12 +113,18 @@ export default function MyProfile(props: Props) {
               요즘 스타트업에 관심이 생겨서 관련하신 분들과 이야기하면 좋을 것 같아요ㅎㅎ"
               autoCapitalize="none"
               multiline={true}
+              defaultValue={
+                localProfileData.shortBio ? localProfileData.shortBio : ""
+              }
             />
             <SLabel>성격이나 스타일</SLabel>
             <STextArea
               placeholder="ex. 친해지면 말 많아요 / 드립력 상 / 조용하고 이야기 잘 들어줘요 / 연락, 답장이 빨라요"
               autoCapitalize="none"
               multiline={true}
+              defaultValue={
+                localProfileData.personality ? localProfileData.personality : ""
+              }
             />
             <SLabel>음주 스타일</SLabel>
             <MySelect
@@ -117,6 +134,7 @@ export default function MyProfile(props: Props) {
               }}
               width={width * 0.81}
               defaultButtonText="음주 스타일을 설정해주세요"
+              defaultValueByIndex={localProfileData.drinkingStyle}
             />
             <SLabel>혹시 맛집 동아리 연고이팅 회원이신가요?</SLabel>
             <YKButton onPress={() => setIsYK((prev) => !prev)}>

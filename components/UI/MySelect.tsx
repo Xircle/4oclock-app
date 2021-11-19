@@ -9,9 +9,15 @@ interface Props {
   width: number;
   onSelect: (selectedItem: any, index: any) => void;
   defaultButtonText: string;
+  defaultValueByIndex: number;
 }
 
-export default function MySelect({ data, width }: Props) {
+export default function MySelect({
+  data,
+  width,
+  defaultButtonText,
+  defaultValueByIndex,
+}: Props) {
   return (
     <SelectDropdown
       data={data}
@@ -28,6 +34,7 @@ export default function MySelect({ data, width }: Props) {
         // if data array is an array of objects then return item.property to represent item in dropdown
         return item;
       }}
+      defaultValueByIndex={defaultValueByIndex}
       buttonStyle={{
         backgroundColor: colors.bgColor,
         borderColor: colors.bareGrey,
@@ -42,7 +49,7 @@ export default function MySelect({ data, width }: Props) {
         fontSize: 16,
         textAlign: "left",
       }}
-      defaultButtonText="MBTI를 설정해주세요"
+      defaultButtonText={defaultButtonText}
       dropdownIconPosition={"right"}
       renderDropdownIcon={() => {
         return (
