@@ -2,12 +2,16 @@ import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
 import { BigTextInput, colors, Label } from "../../styles/styles";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
-import { Dimensions, ScrollView } from "react-native";
+import { Dimensions, ScrollView, Text, View } from "react-native";
 import AvatarUri from "../../components/UI/AvatarUri";
 import { useQuery } from "react-query";
 import { UserData } from "../../lib/api/types";
 import { getUser } from "../../lib/api/getUser";
-import RNPickerSelect from "react-native-picker-select";
+
+import { DrinkingStyles, MBTIs } from "../../lib/utils";
+import { Ionicons } from "@expo/vector-icons";
+import MySelect from "../../components/UI/MySelect";
+import SelectButton from "../../components/UI/SelectButton";
 
 interface Props {}
 
@@ -30,6 +34,7 @@ export interface ProfileData {
 const { width } = Dimensions.get("screen");
 
 export default function MyProfile(props: Props) {
+  const [isYK, setIsYK] = useState(false);
   const [localProfileData, setLocalProfileData] = useState<ProfileData>({});
 
   const { data: userData, isLoading, isSuccess } = useQuery<
@@ -61,7 +66,7 @@ export default function MyProfile(props: Props) {
   }, [localProfileData]);
   return (
     <Container>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <InnerContainer>
           <AvatarWrapper>
             <AvatarUri
@@ -78,16 +83,43 @@ export default function MyProfile(props: Props) {
             <SLabel>닉네임</SLabel>
             <SBigTextInput placeholder="USERNAME" autoCapitalize="none" />
             <SLabel>MBTI</SLabel>
-            <RNPickerSelect
-              onValueChange={(value) => console.log(value)}
-              items={[
-                { label: "Football", value: "football" },
-                { label: "Baseball", value: "baseball" },
-                { label: "Hockey", value: "hockey" },
-              ]}
+            <MySelect
+              data={MBTIs}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+              width={width * 0.81}
+              defaultButtonText="MBTI를 설정해주세요"
             />
             <SLabel>계열이나 직업</SLabel>
             <SBigTextInput placeholder="USERNAME" autoCapitalize="none" />
+            <SLabel>간단한 자기소개</SLabel>
+            <STextArea
+              placeholder="USERNAME"
+              autoCapitalize="none"
+              multiline={true}
+            />
+            <SLabel>성격이나 스타일</SLabel>
+            <STextArea
+              placeholder="USERNAME"
+              autoCapitalize="none"
+              multiline={true}
+            />
+            <SLabel>음주 스타일</SLabel>
+            <MySelect
+              data={DrinkingStyles}
+              onSelect={(selectedItem, index) => {
+                console.log(selectedItem, index);
+              }}
+              width={width * 0.81}
+              defaultButtonText="음주 스타일을 설정해주세요"
+            />
+            <SLabel>혹시 맛집 동아리 연고이팅 회원이신가요?</SLabel>
+            <YKButton onPress={() => setIsYK((prev) => !prev)}>
+              <SelectButton marginRight={15} selected={isYK} />
+              <SLabel style={{ marginTop: 0 }}>예</SLabel>
+            </YKButton>
+            <View style={{ height: 150 }} />
           </DetailContainer>
         </InnerContainer>
       </ScrollView>
@@ -96,12 +128,24 @@ export default function MyProfile(props: Props) {
   );
 }
 
+const YKButton = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+`;
+
 const SLabel = styled(Label)`
   margin-top: 20px;
 `;
 
 const SBigTextInput = styled(BigTextInput)`
   margin-top: 20px;
+  max-width: 100%;
+`;
+
+const STextArea = styled(SBigTextInput)`
+  height: 120px;
+  max-height: 150px;
 `;
 
 const InnerContainer = styled.View`
