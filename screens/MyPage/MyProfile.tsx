@@ -8,14 +8,17 @@ import { useMutation, useQuery } from "react-query";
 import { UserData } from "../../lib/api/types";
 import { getUser } from "../../lib/api/getUser";
 import _ from "lodash";
-import { DrinkingStyles, MBTIs, MBTIToIndex } from "../../lib/utils";
-import { Ionicons } from "@expo/vector-icons";
+import {
+  DrinkingStyles,
+  IndexToMBTI,
+  MBTIs,
+  MBTIToIndex,
+} from "../../lib/utils";
 import MySelect from "../../components/UI/MySelect";
 import SelectButton from "../../components/UI/SelectButton";
 import diff from "object-diff";
 import { useNavigation } from "@react-navigation/native";
 import { editProfile } from "../../lib/api/editProfile";
-import { preventAutoHideAsync } from "expo-splash-screen";
 
 interface Props {}
 
@@ -42,7 +45,7 @@ export default function MyProfile(props: Props) {
   const [isYK, setIsYK] = useState(false);
   const [localProfileData, setLocalProfileData] = useState<ProfileData>({});
 
-  const { data: userData, isLoading, isSuccess } = useQuery<
+  const { data: userData, isLoading, isSuccess, refetch } = useQuery<
     UserData | undefined
   >("userProfile", () => getUser(), {
     retry: 2,
@@ -99,9 +102,6 @@ export default function MyProfile(props: Props) {
     }
   }, [isSuccess]);
 
-  useEffect(() => {
-    console.log(localProfileData);
-  }, [localProfileData]);
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -136,8 +136,11 @@ export default function MyProfile(props: Props) {
             <SLabel>MBTI</SLabel>
             <MySelect
               data={MBTIs}
-              onSelect={(selectedItem, index) => {
-                console.log(selectedItem, index);
+              onSelect={(_, index) => {
+                setLocalProfileData((prev) => ({
+                  ...prev,
+                  MBTI: IndexToMBTI[index],
+                }));
               }}
               width={width * 0.81}
               defaultButtonText="MBTI를 설정해주세요"
@@ -148,6 +151,13 @@ export default function MyProfile(props: Props) {
               placeholder="ex. 새내기 / 스타트업 마케터 / AI중독 문과생..."
               autoCapitalize="none"
               defaultValue={localProfileData.job ? localProfileData.job : ""}
+              onChange={(event) => {
+                const { eventCount, target, text } = event.nativeEvent;
+                setLocalProfileData((prev) => ({
+                  ...prev,
+                  job: text,
+                }));
+              }}
             />
             <SLabel>간단한 자기소개</SLabel>
             <STextArea
@@ -158,6 +168,13 @@ export default function MyProfile(props: Props) {
               defaultValue={
                 localProfileData.shortBio ? localProfileData.shortBio : ""
               }
+              onChange={(event) => {
+                const { eventCount, target, text } = event.nativeEvent;
+                setLocalProfileData((prev) => ({
+                  ...prev,
+                  shortBio: text,
+                }));
+              }}
             />
             <SLabel>성격이나 스타일</SLabel>
             <STextArea
@@ -167,19 +184,37 @@ export default function MyProfile(props: Props) {
               defaultValue={
                 localProfileData.personality ? localProfileData.personality : ""
               }
+              onChange={(event) => {
+                const { eventCount, target, text } = event.nativeEvent;
+                setLocalProfileData((prev) => ({
+                  ...prev,
+                  personality: text,
+                }));
+              }}
             />
             <SLabel>음주 스타일</SLabel>
             <MySelect
               data={DrinkingStyles}
-              onSelect={(selectedItem, index) => {
-                console.log(selectedItem, index);
+              onSelect={(_, index) => {
+                setLocalProfileData((prev) => ({
+                  ...prev,
+                  drinkingStyle: index,
+                }));
               }}
               width={width * 0.81}
               defaultButtonText="음주 스타일을 설정해주세요"
               defaultValueByIndex={localProfileData.drinkingStyle}
             />
             <SLabel>혹시 맛집 동아리 연고이팅 회원이신가요?</SLabel>
-            <YKButton onPress={() => setIsYK((prev) => !prev)}>
+            <YKButton
+              onPress={() => {
+                setIsYK((prev) => !prev);
+                setLocalProfileData((prev) => ({
+                  ...prev,
+                  isYkClub: !isYK,
+                }));
+              }}
+            >
               <SelectButton marginRight={15} selected={isYK} />
               <SLabel style={{ marginTop: 0 }}>예</SLabel>
             </YKButton>

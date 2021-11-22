@@ -17,12 +17,13 @@ export default function MySelect({
   width,
   defaultButtonText,
   defaultValueByIndex,
+  onSelect,
 }: Props) {
   return (
     <SelectDropdown
       data={data}
       onSelect={(selectedItem, index) => {
-        console.log(selectedItem, index);
+        onSelect(selectedItem, index);
       }}
       buttonTextAfterSelection={(selectedItem, index) => {
         // text represented after item is selected
