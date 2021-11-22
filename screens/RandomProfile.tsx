@@ -6,12 +6,11 @@ import { useDB } from "../lib/RealmDB";
 import { Alert, Dimensions } from "react-native";
 import { seeRandomProfile } from "../lib/api/seeRandomProfile";
 import { AgeNumberToString } from "../lib/utils";
-import { colors} from "../styles/styles";
+import { colors } from "../styles/styles";
 import Loader from "../components/UI/Loader";
 import ProfileV from "../components/profile/ProfileV";
 
 interface Props {}
-
 
 export default function RandomProfile(props: Props) {
   const [isYkClub, SetIsYkClub] = useState<boolean>(false);
@@ -32,11 +31,6 @@ export default function RandomProfile(props: Props) {
   };
 
   useEffect(() => {
-    if (!realm.objects("UserSchema")[0].token) {
-      Alert.alert("token missing");
-    }
-  }, []);
-  useEffect(() => {
     setLoading(isFetching);
   }, [isFetching]);
   useEffect(() => {
@@ -50,7 +44,7 @@ export default function RandomProfile(props: Props) {
       {loading && (
         <LoaderWrapper
           style={{
-            transform: [{ translateY: "-100%" }, { translateX: -15 }],
+            transform: [{ translateX: -15 }],
             zIndex: 3,
           }}
         >

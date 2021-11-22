@@ -13,7 +13,7 @@ import AxiosClient from "../lib/apiClient";
 import { SocialRedirectResponse } from "../lib/kakao";
 import { useDB } from "../lib/RealmDB";
 import { useNavigation } from "@react-navigation/native";
-import { BASE_URL, setTOKEN } from "../lib/utils";
+import { BASE_URL } from "../lib/utils";
 import storage from "../lib/helpers/myAsyncStorage";
 
 interface Props {}
@@ -23,6 +23,25 @@ export default function Welcome(props: Props) {
   const realm = useDB();
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
+
+  const redirectWithExistingToken = async () => {
+    const tt = await storage.getItem("token");
+
+    console.log(tt);
+    /* @ts-ignore */
+    if (tt) navigation.navigate("LoggedInNav");
+  };
+
+  const redirectWithNewToken = async () => {
+    await storage.setItem("token", token);
+    const tt = await storage.getItem("token");
+    console.log("new one");
+
+    if (tt) {
+      /* @ts-ignore */
+      navigation.navigate("LoggedInNav");
+    }
+  };
 
   const getProfile = async (): Promise<void> => {
     // @ts-ignore
@@ -55,37 +74,15 @@ export default function Welcome(props: Props) {
     }
   };
 
-  const setProfile = (token: string, email: string) => {
-    realm.write(() => {
-      if (realm.objects("UserSchema").length === 0) {
-        realm.create("UserSchema", {
-          _id: Date.now(),
-          email: email,
-          token: token,
-        });
-      } else {
-        realm.objects("UserSchema")[0].email = email;
-        realm.objects("UserSchema")[0].token = token;
-      }
-    });
-  };
+
 
   useEffect(() => {
     if (email && token) {
-      setTOKEN(token);
-      setProfile(token, email);
-      storage.setItem("token", token);
-      /* @ts-ignore */
-      navigation.navigate("LoggedInNav");
+      redirectWithNewToken();
     }
   }, [email, token]);
   useEffect(() => {
-    if (realm.objects("UserSchema").length) {
-      setTOKEN(realm.objects("UserSchema")[0].token);
-      storage.setItem("token", realm.objects("UserSchema")[0].token);
-      /* @ts-ignore */
-      navigation.navigate("LoggedInNav");
-    }
+    redirectWithExistingToken();
   }, []);
   return (
     <Container>

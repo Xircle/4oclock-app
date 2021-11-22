@@ -1,18 +1,26 @@
 import styled from "styled-components/native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {} from "react-native";
 import { colors } from "../styles/styles";
 import { useDB } from "../lib/RealmDB";
-import { TOKEN } from "../lib/utils";
+import storage from "../lib/helpers/myAsyncStorage";
 
 interface Props {}
 
 export default function Main(props: Props) {
   const realm = useDB();
+  const [temp, setTemp] = useState("");
+  const t = async () => {
+    const tt = await storage.getItem("token");
+    console.log(tt);
+  };
+  useEffect(() => {
+    t();
+  }, []);
 
   return (
     <Container>
-      <Text>Main {TOKEN}</Text>
+      <Text>Main </Text>
     </Container>
   );
 }

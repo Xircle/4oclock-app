@@ -7,7 +7,7 @@ const host =
     ? process.env.REACT_APP_PRODUCTION_API_SERVER
     : process.env.REACT_APP_PRODUCTION_API_SERVER;
 
-const token = storage.getItem("token");
+
 
 const giveApiClient = async () => {
   const token = await storage.getItem("token");
