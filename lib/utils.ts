@@ -1,7 +1,5 @@
 export const BASE_URL = "https://xircle-alpha-server.herokuapp.com";
 
-
-
 import moment from "moment";
 import "moment/locale/ko";
 
@@ -43,6 +41,26 @@ export const MBTIToIndex = {
   ENTP: 14,
   ENTJ: 15,
   모름: 16,
+};
+
+export const IndexToMBTI = {
+  0: "ISFP",
+  1: "ISFJ",
+  2: "ISTP",
+  3: "ISTJ",
+  4: "INFP",
+  5: "INFJ",
+  6: "INTP",
+  7: "INTJ",
+  8: "ESFP",
+  9: "ESFJ",
+  10: "ESTP",
+  11: "ESTJ",
+  12: "ENFP",
+  13: "ENFJ",
+  14: "ENTP",
+  15: "ENTJ",
+  16: "모름",
 };
 
 export const DrinkingStyles = [
