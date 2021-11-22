@@ -31,7 +31,6 @@ export default function MyPage(props: Props) {
     () => getUser(),
     {
       retry: 1,
-      refetchOnWindowFocus: false,
     }
   );
 
