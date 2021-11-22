@@ -26,7 +26,7 @@ export const editProfile = async (
   editedProfileData.MBTI && formData.append("MBTI", editedProfileData.MBTI);
   editedProfileData.personality &&
     formData.append("personality", editedProfileData.personality);
-  editedProfileData.drinkingStyle &&
+  (editedProfileData.drinkingStyle || editedProfileData.drinkingStyle === 0) &&
     formData.append("drinkingStyle", editedProfileData.drinkingStyle + "");
   return axiosclient.put<CreateAccountOutput>(`${BASE_URL}/user`, formData);
 };
