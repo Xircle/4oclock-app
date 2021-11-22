@@ -72,6 +72,7 @@ export default function MainTabsNav(props: Props) {
             />
           ),
           headerShown: false,
+          unmountOnBlur: true,
         }}
       >
         {() => <SharedStackNav screenName="MyPage" />}
