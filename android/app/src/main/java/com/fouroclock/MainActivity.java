@@ -1,4 +1,4 @@
-package com.4oclockapp;
+package com.fouroclock;
 
 import android.os.Bundle;
 
