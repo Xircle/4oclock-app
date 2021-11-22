@@ -44,7 +44,12 @@ export default function MyPage(props: Props) {
         <Container>
           <MainHeading>마이페이지</MainHeading>
           <ProfileContainer>
-            <AvatarUri size={width * 0.2} source={userData?.profileImageUrl} />
+            {userData?.profileImageUrl && (
+              <AvatarUri
+                size={width * 0.2}
+                source={userData?.profileImageUrl}
+              />
+            )}
             <ProfileInnerContainer>
               <GeneralText style={{ fontWeight: "600", lineHeight: 28 }}>
                 {userData?.username || ""}
