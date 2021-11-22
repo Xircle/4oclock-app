@@ -65,10 +65,10 @@ export const BigTextInput = styled.TextInput`
   border-radius: 12px;
   font-size: 16px;
   border: 0.5px solid ${colors.midGrey};
+  text-align-vertical: top;
 `;
 
 export const Label = styled.Text`
   color: ${colors.midGrey};
   font-size: 16px;
 `;
-
