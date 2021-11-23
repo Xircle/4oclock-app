@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, TouchableOpacity } from "react-native";
 import {
   colors,
@@ -19,21 +19,30 @@ import { AgeNumberToString } from "../../lib/utils";
 import { useNavigation } from "@react-navigation/native";
 import { openLink } from "../../components/shared/Links";
 
-interface Props {}
+interface Props {
+  isRefetch?: boolean;
+}
 
 const { width, height } = Dimensions.get("window");
 
-export default function MyPage(props: Props) {
+export default function MyPage({ isRefetch }: Props) {
   const naviagtion = useNavigation();
   const [result, setResult] = useState<string>("");
 
-  const { data: userData, isLoading } = useQuery<UserData | undefined>(
-    "userProfile",
+  const { data: userData, isLoading, refetch } = useQuery<UserData | undefined>(
+    ["userProfile"],
     () => getUser(),
     {
       retry: 1,
     }
   );
+  if (isRefetch) {
+    refetch();
+  }
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <Wrapper>

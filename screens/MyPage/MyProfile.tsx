@@ -47,12 +47,16 @@ export default function MyProfile(props: Props) {
 
   const { data: userData, isLoading, isSuccess, refetch } = useQuery<
     UserData | undefined
-  >("userProfile", () => getUser(), {
+  >(["userProfile"], () => getUser(), {
     retry: 2,
   });
   const { mutateAsync: mutateUserProfile, isLoading: isUpdating } = useMutation(
     editProfile
   );
+
+  const Refetch = async () => {
+    await refetch();
+  };
 
   const updateProfile = async () => {
     const trimedProfileData = Object.keys(localProfileData).reduce(
@@ -77,6 +81,7 @@ export default function MyProfile(props: Props) {
       ...editedProfileData,
     });
     if (!data.ok) return Alert.alert(data.error);
+    Refetch();
     Alert.alert("프로필 편집 성공했습니다");
     navigation.goBack();
   };
@@ -136,7 +141,7 @@ export default function MyProfile(props: Props) {
             <SLabel>MBTI</SLabel>
             <MySelect
               data={MBTIs}
-              onSelect={(_, index) => {
+              onSelect={(selectedItem, index) => {
                 setLocalProfileData((prev) => ({
                   ...prev,
                   MBTI: IndexToMBTI[index],
