@@ -56,6 +56,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fonts/SpoqaHanSansNeo-Medium.ttf</string>
+		<string>Fonts/SpoqaHanSansNeo-Bold.ttf</string>
+		<string>Fonts/SpoqaHanSansNeo-Regular.ttf</string>
+		<string>Fonts/SpoqaHanSansNeo-Light.ttf</string>
+		<string>Fonts/SpoqaHanSansNeo-Thin.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
