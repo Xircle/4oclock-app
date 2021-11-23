@@ -46,6 +46,12 @@ export default function MyProfile(props: Props) {
   const navigation = useNavigation();
   const [isYK, setIsYK] = useState(false);
   const [localProfileData, setLocalProfileData] = useState<ProfileData>({});
+  const [localValidation, setLocalValidation] = useState<boolean[]>([
+    true,
+    true,
+    true,
+    true,
+  ]);
 
   const { data: userData, isFetching, isSuccess, refetch } = useQuery<
     UserData | undefined
@@ -142,6 +148,94 @@ export default function MyProfile(props: Props) {
       }
     }
   };
+
+  const handleNameChange = (text: string) => {
+    if (text.length <= 0 || text.length >= 20) {
+      setLocalValidation([
+        false,
+        localValidation[1],
+        localValidation[2],
+        localValidation[3],
+      ]);
+    } else {
+      setLocalValidation([
+        true,
+        localValidation[1],
+        localValidation[2],
+        localValidation[3],
+      ]);
+    }
+    setLocalProfileData((prev) => ({
+      ...prev,
+      username: text,
+    }));
+  };
+  const handleJobChange = (text: string) => {
+    if (text.length > 0 && text.length < 255) {
+      setLocalValidation([
+        localValidation[0],
+        true,
+        localValidation[2],
+        localValidation[3],
+      ]);
+    } else {
+      setLocalValidation([
+        localValidation[0],
+        false,
+        localValidation[2],
+        localValidation[3],
+      ]);
+    }
+    setLocalProfileData((prev) => ({
+      ...prev,
+      job: text,
+    }));
+  };
+
+  const handleBioChange = (text: string) => {
+    if (text.length > 0 && text.length < 1023) {
+      setLocalValidation([
+        localValidation[0],
+        localValidation[1],
+        true,
+        localValidation[3],
+      ]);
+    } else {
+      setLocalValidation([
+        localValidation[0],
+        localValidation[1],
+        false,
+        localValidation[3],
+      ]);
+    }
+    setLocalProfileData((prev) => ({
+      ...prev,
+      shortBio: text,
+    }));
+  };
+
+  const handlePersonalityChange = (text: string) => {
+    if (text.length > 0 && text.length < 255) {
+      setLocalValidation([
+        localValidation[0],
+        localValidation[1],
+        localValidation[2],
+        true,
+      ]);
+    } else {
+      setLocalValidation([
+        localValidation[0],
+        localValidation[1],
+        localValidation[2],
+        false,
+      ]);
+    }
+    setLocalProfileData((prev) => ({
+      ...prev,
+      personality: text,
+    }));
+  };
+
   if (isFetching || loading) return <Loader />;
   return (
     <Container>
@@ -168,10 +262,7 @@ export default function MyProfile(props: Props) {
               }
               onChange={(event) => {
                 const { eventCount, target, text } = event.nativeEvent;
-                setLocalProfileData((prev) => ({
-                  ...prev,
-                  username: text,
-                }));
+                handleNameChange(text);
               }}
             />
             <SLabel>MBTI</SLabel>
@@ -194,10 +285,7 @@ export default function MyProfile(props: Props) {
               defaultValue={localProfileData.job ? localProfileData.job : ""}
               onChange={(event) => {
                 const { eventCount, target, text } = event.nativeEvent;
-                setLocalProfileData((prev) => ({
-                  ...prev,
-                  job: text,
-                }));
+                handleJobChange(text);
               }}
             />
             <SLabel>간단한 자기소개</SLabel>
@@ -211,10 +299,7 @@ export default function MyProfile(props: Props) {
               }
               onChange={(event) => {
                 const { eventCount, target, text } = event.nativeEvent;
-                setLocalProfileData((prev) => ({
-                  ...prev,
-                  shortBio: text,
-                }));
+                handleBioChange(text);
               }}
             />
             <SLabel>성격이나 스타일</SLabel>
@@ -227,10 +312,7 @@ export default function MyProfile(props: Props) {
               }
               onChange={(event) => {
                 const { eventCount, target, text } = event.nativeEvent;
-                setLocalProfileData((prev) => ({
-                  ...prev,
-                  personality: text,
-                }));
+                handlePersonalityChange(text);
               }}
             />
             <SLabel>음주 스타일</SLabel>
@@ -263,7 +345,10 @@ export default function MyProfile(props: Props) {
           </DetailContainer>
         </InnerContainer>
       </ScrollView>
-      <MainButtonWBg onPress={updateProfile}></MainButtonWBg>
+      <MainButtonWBg
+        onPress={updateProfile}
+        disabled={localValidation.includes(false)}
+      ></MainButtonWBg>
     </Container>
   );
 }

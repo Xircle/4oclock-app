@@ -6,14 +6,15 @@ import { Dimensions } from "react-native";
 interface Props {
   color?: string;
   onPress: () => void;
+  disabled?: boolean;
 }
 
 const { width } = Dimensions.get("window");
 
-export default function MainButtonWBg({ onPress }: Props) {
+export default function MainButtonWBg({ onPress, disabled = false }: Props) {
   return (
     <Container>
-      <XLButton onPress={onPress}>
+      <XLButton onPress={onPress} disabled={disabled}>
         <XLButtonText>수정하기</XLButtonText>
       </XLButton>
     </Container>
