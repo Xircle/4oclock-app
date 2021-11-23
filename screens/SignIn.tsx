@@ -4,10 +4,11 @@ import { Text } from "../styles/styles";
 
 interface Props {}
 
-export default function SignIn(props: Props) {
+export default function SignIn({ route }: Props) {
+  console.log(route);
   return (
     <Container>
-      <Text>sign in</Text>
+      <Text>{route.params.gender}</Text>
     </Container>
   );
 }
