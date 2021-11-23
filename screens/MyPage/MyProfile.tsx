@@ -53,6 +53,13 @@ export default function MyProfile(props: Props) {
     true,
   ]);
 
+  const errorMessages: string[] = [
+    "20자 이하의 이름을 입력해주세요",
+    "200자 이하의 계열이나 직업을 입력해주세요",
+    "1000자 이하의 자기소개를 입력해주세요",
+    "200자 이하의 성격이나 스타일을 입력해주세요",
+  ];
+
   const { data: userData, isFetching, isSuccess, refetch } = useQuery<
     UserData | undefined
   >(["userProfile"], () => getUser(), {
@@ -265,6 +272,9 @@ export default function MyProfile(props: Props) {
                 handleNameChange(text);
               }}
             />
+            {!localValidation[0] && (
+              <ErrorMessage>{errorMessages[0]}</ErrorMessage>
+            )}
             <SLabel>MBTI</SLabel>
             <MySelect
               data={MBTIs}
@@ -288,6 +298,9 @@ export default function MyProfile(props: Props) {
                 handleJobChange(text);
               }}
             />
+            {!localValidation[1] && (
+              <ErrorMessage>{errorMessages[1]}</ErrorMessage>
+            )}
             <SLabel>간단한 자기소개</SLabel>
             <STextArea
               placeholder="ex. 미대에 다니는 다양한 삶을 살고 싶어하는 미개봉화석^^
@@ -302,6 +315,9 @@ export default function MyProfile(props: Props) {
                 handleBioChange(text);
               }}
             />
+            {!localValidation[2] && (
+              <ErrorMessage>{errorMessages[2]}</ErrorMessage>
+            )}
             <SLabel>성격이나 스타일</SLabel>
             <STextArea
               placeholder="ex. 친해지면 말 많아요 / 드립력 상 / 조용하고 이야기 잘 들어줘요 / 연락, 답장이 빨라요"
@@ -315,6 +331,9 @@ export default function MyProfile(props: Props) {
                 handlePersonalityChange(text);
               }}
             />
+            {!localValidation[3] && (
+              <ErrorMessage>{errorMessages[3]}</ErrorMessage>
+            )}
             <SLabel>음주 스타일</SLabel>
             <MySelect
               data={DrinkingStyles}
@@ -352,6 +371,13 @@ export default function MyProfile(props: Props) {
     </Container>
   );
 }
+
+const ErrorMessage = styled(Text)`
+  font-size: 11px;
+  text-align: center;
+  margin-top: 5px;
+  color: ${colors.mainBlue};
+`;
 
 const YKButton = styled.TouchableOpacity`
   flex-direction: row;

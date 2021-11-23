@@ -32,7 +32,7 @@ export const XLButton = styled.TouchableOpacity<{
 }>`
   background-color: ${(props) =>
     props.disabled
-      ? colors.midGrey
+      ? colors.bareGrey
       : props.bgColor
       ? props.bgColor
       : colors.mainBlue};
