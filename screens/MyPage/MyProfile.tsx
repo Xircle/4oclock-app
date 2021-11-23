@@ -20,6 +20,7 @@ import diff from "object-diff";
 import { useNavigation } from "@react-navigation/native";
 import { editProfile } from "../../lib/api/editProfile";
 import * as ImagePicker from "react-native-image-picker";
+import Loader from "../../components/UI/Loader";
 
 interface Props {}
 export interface ProfileData {
@@ -45,7 +46,7 @@ export default function MyProfile(props: Props) {
   const [isYK, setIsYK] = useState(false);
   const [localProfileData, setLocalProfileData] = useState<ProfileData>({});
 
-  const { data: userData, isLoading, isSuccess, refetch } = useQuery<
+  const { data: userData, isFetching, isSuccess, refetch } = useQuery<
     UserData | undefined
   >(["userProfile"], () => getUser(), {
     retry: 2,
@@ -109,19 +110,38 @@ export default function MyProfile(props: Props) {
 
   const fileHandle = async () => {
     const option: ImagePicker.ImageLibraryOptions = {
-      maxHeight: 200,
-      maxWidth: 200,
-      selectionLimit: 0,
       mediaType: "photo",
-      includeBase64: false,
+      includeBase64: true,
     };
     const result = await ImagePicker.launchImageLibrary(option);
+    //console.log(result);
+    if (result.errorMessage) {
+      return Alert.alert(result.errorMessage);
+    } else if (!result.didCancel && result?.assets?.[0].uri) {
+      if (result.assets?.[0].fileSize > 10000000) {
+        return Alert.alert(
+          "사진 최대 용량을 초과했습니다. 사진 용량은 최대 10MB입니다."
+        );
+      } else {
+        const file = {
+          type: "image/jpeg",
+          uri: result.assets[0].uri,
+          name: result.assets[0].fileName,
+        };
+        setLocalProfileData((prev) => ({
+          ...prev,
+          profileImageFile: file,
+        }));
+        console.log(file);
+      }
+    }
   };
+  if (isFetching) return <Loader />;
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
         <InnerContainer>
-          <AvatarWrapper onPress={async () => await fileHandle()}>
+          <AvatarWrapper onPress={fileHandle}>
             <AvatarUri
               source={localProfileData.profileImageUrl}
               size={width * 0.5}
