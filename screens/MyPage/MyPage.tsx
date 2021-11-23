@@ -100,7 +100,7 @@ export default function MyPage(props: Props) {
               </SNSContainer>
               <SNSContainer
                 style={{ marginLeft: 10 }}
-                onPress={openLink.LOpenKakaoChat}
+                onPress={openLink.LYoutube}
               >
                 <Ionicons name="logo-youtube" size={24} color="#ffffff" />
               </SNSContainer>
@@ -111,10 +111,10 @@ export default function MyPage(props: Props) {
                 <Ionicons name="logo-instagram" size={24} color="#ffffff" />
               </SNSContainer>
             </SNSWrapper>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={openLink.LPrivacyAgree}>
               <SNSText>개인정보처리방침</SNSText>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={openLink.LServiceAgree}>
               <SNSText>마케팅 수신동의 이용약관</SNSText>
             </TouchableOpacity>
           </FooterContainer>
