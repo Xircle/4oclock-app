@@ -68,14 +68,17 @@ export default function Welcome(props: Props) {
       const res = await axiosclient.get<SocialRedirectResponse>(
         `${BASE_URL}/auth/social/redirect/kakao?email=${emailInput}`
       );
-      setToken(res.data.data.token);
+      if (res.data.code === 200) {
+        setToken(res.data.data.token);
+      } else if (res.data.code === 401) {
+        // @ts-ignore
+        navigation.navigate("SignIn");
+      }
     } catch (err) {
       console.log(err);
       throw new Error(err);
     }
   };
-
-
 
   useEffect(() => {
     if (email && token) {
@@ -98,7 +101,6 @@ const Container = styled.View`
   justify-content: center;
   align-items: center;
 `;
-
 
 const KakaoLoginButton = styled.TouchableOpacity`
   background-color: gold;
