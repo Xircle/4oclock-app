@@ -19,9 +19,9 @@ import SelectButton from "../../components/UI/SelectButton";
 import diff from "object-diff";
 import { useNavigation } from "@react-navigation/native";
 import { editProfile } from "../../lib/api/editProfile";
+import * as ImagePicker from "react-native-image-picker";
 
 interface Props {}
-
 export interface ProfileData {
   username?: string;
   shortBio?: string;
@@ -107,11 +107,21 @@ export default function MyProfile(props: Props) {
     }
   }, [isSuccess]);
 
+  const fileHandle = async () => {
+    const option: ImagePicker.ImageLibraryOptions = {
+      maxHeight: 200,
+      maxWidth: 200,
+      selectionLimit: 0,
+      mediaType: "photo",
+      includeBase64: false,
+    };
+    const result = await ImagePicker.launchImageLibrary(option);
+  };
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
         <InnerContainer>
-          <AvatarWrapper>
+          <AvatarWrapper onPress={async () => await fileHandle()}>
             <AvatarUri
               source={localProfileData.profileImageUrl}
               size={width * 0.5}
