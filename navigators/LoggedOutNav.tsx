@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Welcome from "../screens/Welcome";
 import SignIn from "../screens/SignIn";
 
-type LoggedOutStackParamList = {
+export type LoggedOutStackParamList = {
   Welcome: undefined;
   SignIn: { profileImageUrl: string; gender: string; uid: string };
 };
