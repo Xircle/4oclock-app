@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
 import {} from "react-native";
-import { colors } from "../styles/styles";
+import { colors, Text } from "../styles/styles";
 import { useDB } from "../lib/RealmDB";
 import storage from "../lib/helpers/myAsyncStorage";
 
@@ -32,4 +32,3 @@ const Container = styled.View`
   background-color: ${colors.bgColor};
 `;
 
-const Text = styled.Text``;

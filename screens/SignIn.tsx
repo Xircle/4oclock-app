@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import React from "react";
+import { Text } from "../styles/styles";
 
 interface Props {}
 
@@ -16,5 +17,3 @@ const Container = styled.View`
   justify-content: center;
   align-items: center;
 `;
-
-const Text = styled.Text``;

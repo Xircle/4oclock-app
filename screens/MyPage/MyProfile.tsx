@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
-import { BigTextInput, colors, Label } from "../../styles/styles";
+import { BigTextInput, colors, fontFamilies, Label } from "../../styles/styles";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import { Alert, Dimensions, ScrollView, Text, View } from "react-native";
 import AvatarUri from "../../components/UI/AvatarUri";
@@ -269,7 +269,7 @@ const AvatarWrapper = styled.TouchableOpacity`
 const ChangeProfilePicText = styled.Text`
   padding-top: 15px;
   color: ${colors.mainBlue};
-  font-weight: bold;
+  font-family: ${fontFamilies.bold};
   font-size: 18px;
 `;
 
@@ -281,4 +281,5 @@ const InfoText = styled.Text`
   line-height: 14px;
   font-size: 12px;
   color: ${colors.bareGrey};
+  font-family: ${fontFamilies.regular};
 `;

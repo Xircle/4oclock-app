@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Dimensions, TouchableOpacity } from "react-native";
 import {
   colors,
+  fontFamilies,
   GeneralText,
   MainHeading,
   XLButton,
@@ -67,7 +68,7 @@ export default function MyPage(props: Props) {
             <ListButton>
               {/* @ts-ignore */}
               <RegisteredButton onPress={() => naviagtion.navigate("MyPlaces")}>
-                <ListText style={{ fontWeight: "700" }}>
+                <ListText style={{ fontFamily: fontFamilies.bold }}>
                   신청한 모임 {userData?.reservation_count}
                 </ListText>
                 <Ionicons
@@ -78,29 +79,19 @@ export default function MyPage(props: Props) {
               </RegisteredButton>
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
-              <ListText style={{ fontFamily: "SpoqaHanSansNeo-Medium" }}>
-                맛집 건의하기
-              </ListText>
+              <ListText>맛집 건의하기</ListText>
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
-              <ListText style={{ fontFamily: "SpoqaHanSansNeo-Bold" }}>
-                문의하기 / 피드백하기
-              </ListText>
+              <ListText>문의하기 / 피드백하기</ListText>
             </ListButton>
             <ListButton onPress={openLink.LServiceAgree}>
-              <ListText style={{ fontFamily: "SpoqaHanSansNeo-Light" }}>
-                서비스 사용약관
-              </ListText>
+              <ListText>서비스 사용약관</ListText>
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
-              <ListText style={{ fontFamily: "SpoqaHanSansNeo-Regular" }}>
-                유저 신고하기
-              </ListText>
+              <ListText>유저 신고하기</ListText>
             </ListButton>
             <ListButton>
-              <ListText style={{ fontFamily: "SpoqaHanSansNeo-Thin" }}>
-                로그아웃하기
-              </ListText>
+              <ListText>로그아웃하기</ListText>
             </ListButton>
           </ListContainer>
           <FooterContainer>
@@ -178,6 +169,7 @@ const ListText = styled.Text`
   color: ${colors.black};
   font-size: 19px;
   line-height: 28px;
+  font-family: ${fontFamilies.regular};
 `;
 
 const FooterContainer = styled.View`
@@ -202,6 +194,7 @@ const SNSText = styled.Text`
   font-size: 15px;
   color: ${colors.bareGrey};
   line-height: 28px;
+  font-family: ${fontFamilies.regular};
 `;
 
 const RegisteredButton = styled.TouchableOpacity`

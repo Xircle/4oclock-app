@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 import { MyPlaceData } from "../../lib/api/types";
 import React, { useEffect } from "react";
 import { getMyPlaces } from "../../lib/api/getMyPlaces";
-import { colors } from "../../styles/styles";
+import { colors, Text } from "../../styles/styles";
 
 interface Props {}
 
@@ -30,5 +30,3 @@ const Container = styled.View`
   align-items: center;
   background-color: ${colors.bgColor};
 `;
-
-const Text = styled.Text``;

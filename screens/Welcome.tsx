@@ -15,6 +15,7 @@ import { useDB } from "../lib/RealmDB";
 import { useNavigation } from "@react-navigation/native";
 import { BASE_URL } from "../lib/utils";
 import storage from "../lib/helpers/myAsyncStorage";
+import { Text } from "../styles/styles";
 
 interface Props {}
 
@@ -98,7 +99,6 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const Text = styled.Text``;
 
 const KakaoLoginButton = styled.TouchableOpacity`
   background-color: gold;

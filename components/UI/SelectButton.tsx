@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React from "react";
-import { colors } from "../../styles/styles";
+import { colors, Text } from "../../styles/styles";
 import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
@@ -35,4 +35,4 @@ const YKIconWrapper = styled.View<{ selected?: boolean; marginRight: number }>`
   align-items: center;
 `;
 
-const YKIconContainer = styled.Text``;
+const YKIconContainer = styled(Text)``;

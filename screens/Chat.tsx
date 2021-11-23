@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React from "react";
-import { colors } from "../styles/styles";
+import { colors, Text } from "../styles/styles";
 
 interface Props {}
 
@@ -19,4 +19,3 @@ const Container = styled.View`
   background-color: ${colors.bgColor};
 `;
 
-const Text = styled.Text``;

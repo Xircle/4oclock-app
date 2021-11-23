@@ -4,7 +4,7 @@ import { Dimensions, ScrollView, View } from "react-native";
 import styled from "styled-components/native";
 import { UserProfile } from "../../lib/api/types";
 import { AgeNumberToString } from "../../lib/utils";
-import { colors, InfoBox, InfoText } from "../../styles/styles";
+import { colors, fontFamilies, InfoBox, InfoText } from "../../styles/styles";
 import AvatarUri from "../UI/AvatarUri";
 
 interface Props {
@@ -102,13 +102,13 @@ const Container = styled.View`
 const BigBlackText = styled.Text`
   color: ${colors.black};
   font-size: 30px;
-  font-weight: 600;
+  font-family: ${fontFamilies.medium};
   margin-top: 30px;
 `;
 
 const MidGreyText = styled.Text`
   font-size: 17px;
-  font-weight: 500;
+  font-family: ${fontFamilies.regular};
   color: #8c94a4;
   margin: 10px 0px;
 `;
@@ -120,11 +120,12 @@ const InnerContainer = styled.View`
 const GraySubText = styled.Text`
   font-size: 17px;
   color: #8c94a4;
+  font-family: ${fontFamilies.regular};
 `;
 
 const ShortBioText = styled.Text`
   font-size: 16px;
-  font-weight: 300;
+  font-family: ${fontFamilies.light};
   color: rgb(18, 18, 29);
   margin: 20px 0px;
 `;
@@ -158,14 +159,14 @@ const NextButton = styled.TouchableOpacity`
 
 const ChatText = styled.Text`
   font-size: 20px;
-  font-weight: 800;
+  font-family: ${fontFamilies.bold};
   color: white;
 `;
 
 const NextText = styled.Text`
   font-size: 20px;
-  font-weight: 800;
   color: ${colors.mainBlue};
+  font-family: ${fontFamilies.bold};
 `;
 
 const InnerContent = styled.View`
@@ -174,4 +175,5 @@ const InnerContent = styled.View`
 
 const SmallBlackText = styled.Text`
   margin-right: 20px;
+  font-family: ${fontFamilies.regular};
 `;

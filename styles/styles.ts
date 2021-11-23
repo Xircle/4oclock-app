@@ -12,10 +12,18 @@ export const colors = {
   lightBlue: "#DBEDFF",
 };
 
+export const fontFamilies = {
+  bold: "SpoqaHanSansNeo-Bold",
+  medium: "SpoqaHanSansNeo-Medium",
+  regular: "SpoqaHanSansNeo-Regular",
+  light: "SpoqaHanSansNeo-Light",
+  thin: "SpoqaHanSansNeo-Thin",
+};
+
 export const MainHeading = styled.Text`
   font-size: 26px;
-  font-weight: 700;
   color: ${colors.black};
+  font-family: ${fontFamilies.bold};
 `;
 
 export const XLButton = styled.TouchableOpacity<{
@@ -38,11 +46,12 @@ export const XLButton = styled.TouchableOpacity<{
 export const XLButtonText = styled.Text`
   color: #ffffff;
   font-size: ${width / 17 + "px"};
-  font-weight: 600;
+  font-family: ${fontFamilies.medium};
 `;
 
 export const GeneralText = styled.Text`
   font-size: 16px;
+  font-family: ${fontFamilies.regular};
 `;
 
 export const InfoBox = styled.View`
@@ -50,11 +59,12 @@ export const InfoBox = styled.View`
   background-color: ${colors.lightBlue};
   border-radius: 5px;
   width: 100%;
+  font-family: ${fontFamilies.regular};
 `;
 
 export const InfoText = styled.Text`
   color: ${colors.mainBlue};
-  font-weight: 400;
+  font-family: ${fontFamilies.regular};
   font-size: 13px;
   line-height: 20px;
 `;
@@ -65,10 +75,16 @@ export const BigTextInput = styled.TextInput`
   border-radius: 12px;
   font-size: 16px;
   border: 0.5px solid ${colors.midGrey};
+  font-family: ${fontFamilies.regular};
   text-align-vertical: top;
 `;
 
 export const Label = styled.Text`
   color: ${colors.midGrey};
   font-size: 16px;
+  font-family: ${fontFamilies.regular};
+`;
+
+export const Text = styled.Text`
+  font-family: ${fontFamilies.regular};
 `;
