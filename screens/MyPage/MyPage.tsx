@@ -11,12 +11,12 @@ import {
 import AvatarUri from "../../components/UI/AvatarUri";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
-import { Alert } from "react-native";
 import { useQuery } from "react-query";
 import { UserData } from "../../lib/api/types";
 import { getUser } from "../../lib/api/getUser";
 import { AgeNumberToString } from "../../lib/utils";
 import { useNavigation } from "@react-navigation/native";
+import { openLink } from "../../components/shared/Links";
 
 interface Props {}
 
@@ -77,16 +77,16 @@ export default function MyPage(props: Props) {
                 />
               </RegisteredButton>
             </ListButton>
-            <ListButton>
+            <ListButton onPress={openLink.LOpenKakaoChat}>
               <ListText>맛집 건의하기</ListText>
             </ListButton>
-            <ListButton>
+            <ListButton onPress={openLink.LOpenKakaoChat}>
               <ListText>문의하기 / 피드백하기</ListText>
             </ListButton>
-            <ListButton>
+            <ListButton onPress={openLink.LServiceAgree}>
               <ListText>서비스 사용약관</ListText>
             </ListButton>
-            <ListButton>
+            <ListButton onPress={openLink.LOpenKakaoChat}>
               <ListText>유저 신고하기</ListText>
             </ListButton>
             <ListButton>
@@ -95,13 +95,19 @@ export default function MyPage(props: Props) {
           </ListContainer>
           <FooterContainer>
             <SNSWrapper>
-              <SNSContainer>
+              <SNSContainer onPress={openLink.LInstagram}>
                 <Ionicons name="logo-instagram" size={24} color="#ffffff" />
               </SNSContainer>
-              <SNSContainer style={{ marginLeft: 10 }}>
+              <SNSContainer
+                style={{ marginLeft: 10 }}
+                onPress={openLink.LOpenKakaoChat}
+              >
                 <Ionicons name="logo-youtube" size={24} color="#ffffff" />
               </SNSContainer>
-              <SNSContainer style={{ marginLeft: 10 }}>
+              <SNSContainer
+                style={{ marginLeft: 10 }}
+                onPress={openLink.LYoutube}
+              >
                 <Ionicons name="logo-instagram" size={24} color="#ffffff" />
               </SNSContainer>
             </SNSWrapper>
