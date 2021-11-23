@@ -48,7 +48,7 @@ export default function Welcome(props: Props) {
     // @ts-ignore
     const profile: KakaoProfile = await getKakaoProfile();
     setEmail(profile.email);
-    socialRedirect(profile.email);
+    socialRedirect(profile);
   };
 
   const signInWithKakao = async (): Promise<void> => {
@@ -61,18 +61,23 @@ export default function Welcome(props: Props) {
     }
   };
 
-  const socialRedirect = async (emailInput: string) => {
+  const socialRedirect = async (profile: KakaoProfile) => {
     try {
       const axiosclient = await AxiosClient();
 
       const res = await axiosclient.get<SocialRedirectResponse>(
-        `${BASE_URL}/auth/social/redirect/kakao?email=${emailInput}`
+        `${BASE_URL}/auth/social/redirect/kakao?email=${profile.email}`
       );
       if (res.data.code === 200) {
         setToken(res.data.data.token);
       } else if (res.data.code === 401) {
+        console.log(profile);
         // @ts-ignore
-        navigation.navigate("SignIn");
+        navigation.navigate("SignIn", {
+          profileImageUrl: profile.profileImageUrl,
+          gender: profile.gender,
+          uid: profile.id,
+        });
       }
     } catch (err) {
       console.log(err);
