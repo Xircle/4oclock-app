@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
-import {} from "react-native";
+import { Image } from "react-native";
 import { colors, Text } from "../styles/styles";
 import { useDB } from "../lib/RealmDB";
 import storage from "../lib/helpers/myAsyncStorage";
@@ -20,6 +20,10 @@ export default function Main(props: Props) {
 
   return (
     <Container>
+      <Image
+        source={require("../statics/images/mascot.png")}
+        style={{ width: 300, resizeMode: "contain" }}
+      />
       <Text>Main </Text>
     </Container>
   );
@@ -31,4 +35,3 @@ const Container = styled.View`
   align-items: center;
   background-color: ${colors.bgColor};
 `;
-
