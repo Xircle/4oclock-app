@@ -42,6 +42,7 @@ export interface ProfileData {
 const { width } = Dimensions.get("screen");
 
 export default function MyProfile(props: Props) {
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const [isYK, setIsYK] = useState(false);
   const [localProfileData, setLocalProfileData] = useState<ProfileData>({});
@@ -60,6 +61,7 @@ export default function MyProfile(props: Props) {
   };
 
   const updateProfile = async () => {
+    setLoading(true);
     const trimedProfileData = Object.keys(localProfileData).reduce(
       (acc, curr) => {
         if (
@@ -81,6 +83,7 @@ export default function MyProfile(props: Props) {
     const { data } = await mutateUserProfile({
       ...editedProfileData,
     });
+    setLoading(false);
     if (!data.ok) return Alert.alert(data.error);
     Refetch();
     Alert.alert("프로필 편집 성공했습니다");
@@ -132,11 +135,14 @@ export default function MyProfile(props: Props) {
           ...prev,
           profileImageFile: file,
         }));
-        console.log(file);
+        setLocalProfileData((prev) => ({
+          ...prev,
+          profileImageUrl: result.assets[0].uri,
+        }));
       }
     }
   };
-  if (isFetching) return <Loader />;
+  if (isFetching || loading) return <Loader />;
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
