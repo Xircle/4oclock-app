@@ -78,19 +78,29 @@ export default function MyPage(props: Props) {
               </RegisteredButton>
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
-              <ListText>맛집 건의하기</ListText>
+              <ListText style={{ fontFamily: "SpoqaHanSansNeo-Medium" }}>
+                맛집 건의하기
+              </ListText>
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
-              <ListText>문의하기 / 피드백하기</ListText>
+              <ListText style={{ fontFamily: "SpoqaHanSansNeo-Bold" }}>
+                문의하기 / 피드백하기
+              </ListText>
             </ListButton>
             <ListButton onPress={openLink.LServiceAgree}>
-              <ListText>서비스 사용약관</ListText>
+              <ListText style={{ fontFamily: "SpoqaHanSansNeo-Light" }}>
+                서비스 사용약관
+              </ListText>
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
-              <ListText>유저 신고하기</ListText>
+              <ListText style={{ fontFamily: "SpoqaHanSansNeo-Regular" }}>
+                유저 신고하기
+              </ListText>
             </ListButton>
             <ListButton>
-              <ListText>로그아웃하기</ListText>
+              <ListText style={{ fontFamily: "SpoqaHanSansNeo-Thin" }}>
+                로그아웃하기
+              </ListText>
             </ListButton>
           </ListContainer>
           <FooterContainer>
