@@ -12,7 +12,6 @@ export default function Main(props: Props) {
   const [temp, setTemp] = useState("");
   const t = async () => {
     const tt = await storage.getItem("token");
-    console.log(tt);
   };
   useEffect(() => {
     t();

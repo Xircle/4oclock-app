@@ -17,7 +17,6 @@ interface Props {
 
 export default function SignIn({ route }: Props) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(route);
 
   useEffect(() => {
     const uid = route.params.uid;

@@ -28,7 +28,6 @@ export default function Welcome(props: Props) {
   const redirectWithExistingToken = async () => {
     const tt = await storage.getItem("token");
 
-    console.log(tt);
     /* @ts-ignore */
     if (tt) navigation.navigate("LoggedInNav");
   };
@@ -36,7 +35,6 @@ export default function Welcome(props: Props) {
   const redirectWithNewToken = async () => {
     await storage.setItem("token", token);
     const tt = await storage.getItem("token");
-    console.log("new one");
 
     if (tt) {
       /* @ts-ignore */
@@ -71,7 +69,6 @@ export default function Welcome(props: Props) {
       if (res.data.code === 200) {
         setToken(res.data.data.token);
       } else if (res.data.code === 401) {
-        console.log(profile);
         // @ts-ignore
         navigation.navigate("SignIn", {
           profileImageUrl: profile.profileImageUrl,
