@@ -52,7 +52,6 @@ export default function AuthProfileMainData({
         returnKeyType="next"
         returnKeyLabel="next"
         autoCorrect={false}
-        autoFocus={true}
         defaultValue={state.name ? state.name : ""}
         onChange={(event) => {
           const { eventCount, target, text } = event.nativeEvent;
@@ -182,7 +181,6 @@ export default function AuthProfileMainData({
         returnKeyType="next"
         returnKeyLabel="next"
         autoCorrect={false}
-        autoFocus={true}
         defaultValue={state.title ? state.title : ""}
         onChange={(event) => {
           const { eventCount, target, text } = event.nativeEvent;
@@ -208,7 +206,6 @@ export default function AuthProfileMainData({
         returnKeyType="next"
         returnKeyLabel="next"
         autoCorrect={false}
-        autoFocus={true}
         defaultValue={state.bio ? state.bio : ""}
         multiline={true}
         onChange={(event) => {

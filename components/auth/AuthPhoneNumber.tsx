@@ -33,7 +33,6 @@ export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
         returnKeyLabel="next"
         autoCapitalize="none"
         autoCorrect={false}
-        autoFocus={true}
         keyboardType="number-pad"
         onChange={(event) => {
           const { eventCount, target, text } = event.nativeEvent;
