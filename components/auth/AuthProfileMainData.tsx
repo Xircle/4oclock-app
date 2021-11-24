@@ -8,12 +8,15 @@ import {
   BigTextInput,
   colors,
   ErrorMessage,
+  fontFamilies,
   GeneralText,
+  Label,
   MainHeading,
+  TextArea,
 } from "../../styles/styles";
 import { authErrorMessage } from "../../lib/errorMessages";
 import { Universities, UniversityToIndex } from "../../lib/SelectData";
-import { Dimensions } from "react-native";
+import { Dimensions, View } from "react-native";
 import MySelect from "../UI/MySelect";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -31,11 +34,12 @@ export default function AuthProfileMainData({
   dispatch,
 }: Props) {
   const univs: string[] = ["고려대학교", "연세대학교", "이화여자대학교"];
-  const [nameError, SetNameError] = useState<boolean>(false);
-  const [univError, SetUnivError] = useState<boolean>(false);
-  const [ageError, SetAgeError] = useState<boolean>(false);
-  const [genderError, SetGenderError] = useState<boolean>(false);
-  const [bioError, SetBioError] = useState<boolean>(false);
+  const [nameError, SetNameError] = useState<boolean>(true);
+  const [univError, SetUnivError] = useState<boolean>(true);
+  const [ageError, SetAgeError] = useState<boolean>(true);
+  const [genderError, SetGenderError] = useState<boolean>(true);
+  const [titleError, SetTitleError] = useState<boolean>(true);
+  const [bioError, SetBioError] = useState<boolean>(true);
 
   return (
     <Container showsVerticalScrollIndicator={false}>
@@ -56,7 +60,7 @@ export default function AuthProfileMainData({
           SetNameError(
             authValidation.validateName(
               text,
-              univError || ageError || genderError || bioError,
+              univError || ageError || genderError || bioError || titleError,
               dispatch
             )
           );
@@ -66,13 +70,16 @@ export default function AuthProfileMainData({
       <MySelect
         data={Universities}
         onSelect={(selectedItem, index) => {
-          authDispatcher.dispatchUniversity(
-            selectedItem.split(" ")[0],
-            dispatch
-          );
-          authDispatcher.dispatchIsGraduate(
-            selectedItem.split(" ")[1] === "졸업",
-            dispatch
+          const univ = selectedItem.split(" ")[0];
+          const iG = selectedItem.split(" ")[1];
+          authDispatcher.dispatchUniversity(univ, dispatch);
+          authDispatcher.dispatchIsGraduate(iG === "졸업", dispatch);
+          SetUnivError(
+            authValidation.validateUniversity(
+              selectedItem,
+              nameError || ageError || genderError || bioError || titleError,
+              dispatch
+            )
           );
         }}
         width={width - 120}
@@ -83,7 +90,9 @@ export default function AuthProfileMainData({
           ]
         }
       />
-      {univError && <ErrorMessage>{authErrorMessage[1]}</ErrorMessage>}
+      {!nameError && univError && (
+        <ErrorMessage>{authErrorMessage[1]}</ErrorMessage>
+      )}
       <SBigTextInput
         style={{ width: width - 120 }}
         placeholder="나이"
@@ -100,16 +109,27 @@ export default function AuthProfileMainData({
           SetAgeError(
             authValidation.validateAge(
               text,
-              univError || nameError || genderError || bioError,
+              univError || nameError || genderError || bioError || titleError,
               dispatch
             )
           );
         }}
       />
-      {ageError && <ErrorMessage>{authErrorMessage[2]}</ErrorMessage>}
+      {!nameError && !univError && ageError && (
+        <ErrorMessage>{authErrorMessage[2]}</ErrorMessage>
+      )}
       <RadioContainer>
         <Radio
-          onPress={() => authDispatcher.dispatchGender("female", dispatch)}
+          onPress={() => {
+            authDispatcher.dispatchGender("female", dispatch);
+            SetGenderError(
+              authValidation.validateGender(
+                "female",
+                univError || nameError || ageError || bioError || titleError,
+                dispatch
+              )
+            );
+          }}
         >
           <Ionicons
             name={
@@ -125,7 +145,18 @@ export default function AuthProfileMainData({
           />
           <GenderText isSelected={state.gender === "female"}>여자</GenderText>
         </Radio>
-        <Radio onPress={() => authDispatcher.dispatchGender("male", dispatch)}>
+        <Radio
+          onPress={() => {
+            authDispatcher.dispatchGender("male", dispatch);
+            SetGenderError(
+              authValidation.validateGender(
+                "male",
+                univError || nameError || ageError || bioError || titleError,
+                dispatch
+              )
+            );
+          }}
+        >
           <Ionicons
             name={
               state.gender === "male"
@@ -139,7 +170,63 @@ export default function AuthProfileMainData({
           <GenderText isSelected={state.gender === "male"}>남자</GenderText>
         </Radio>
       </RadioContainer>
-      {genderError && <ErrorMessage>{authErrorMessage[3]}</ErrorMessage>}
+      {!nameError && !univError && !ageError && genderError && (
+        <ErrorMessage>{authErrorMessage[3]}</ErrorMessage>
+      )}
+      <SLabel>한줄소개 (스타일/계열/직업...자유롭게)</SLabel>
+      <SBigTextInput
+        placeholder="ex. 말이 많아요 / 치믈리에 새내기..."
+        autoCapitalize="none"
+        blurOnSubmit={true}
+        onSubmitEdition={onNext}
+        returnKeyType="next"
+        returnKeyLabel="next"
+        autoCorrect={false}
+        autoFocus={true}
+        defaultValue={state.title ? state.title : ""}
+        onChange={(event) => {
+          const { eventCount, target, text } = event.nativeEvent;
+          authDispatcher.dispatchTitle(text, dispatch);
+          SetTitleError(
+            authValidation.validateName(
+              text,
+              univError || ageError || genderError || bioError || nameError,
+              dispatch
+            )
+          );
+        }}
+      />
+      {!nameError && !univError && !ageError && !genderError && titleError && (
+        <ErrorMessage>{authErrorMessage[4]}</ErrorMessage>
+      )}
+      <SLabel>친구들에게 자기소개를 적어주세요!</SLabel>
+      <STextArea
+        placeholder="ex. 안녕하세요 트와이스를 좋아하는 인문대생입니다 / 취주하느라 너무 힘들어요...! 같이 고민이야기 하실 분!"
+        autoCapitalize="none"
+        blurOnSubmit={true}
+        onSubmitEdition={onNext}
+        returnKeyType="next"
+        returnKeyLabel="next"
+        autoCorrect={false}
+        autoFocus={true}
+        defaultValue={state.bio ? state.bio : ""}
+        multiline={true}
+        onChange={(event) => {
+          const { eventCount, target, text } = event.nativeEvent;
+          authDispatcher.dispatchBio(text, dispatch);
+          SetBioError(
+            authValidation.validateName(
+              text,
+              univError || ageError || genderError || bioError || titleError,
+              dispatch
+            )
+          );
+        }}
+      />
+      {!nameError && !univError && !ageError && !genderError && bioError && (
+        <ErrorMessage>{authErrorMessage[5]}</ErrorMessage>
+      )}
+      <View style={{ height: 150 }}></View>
     </Container>
   );
 }
@@ -166,4 +253,15 @@ const Radio = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   padding: 8px;
+`;
+
+const SLabel = styled(Label)`
+  margin-top: 20px;
+  font-size: 20px;
+  font-family: ${fontFamilies.regular};
+`;
+
+const STextArea = styled(TextArea)`
+  margin-top: 20px;
+  height: 150px;
 `;

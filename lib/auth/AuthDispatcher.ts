@@ -50,4 +50,16 @@ export const authDispatcher = {
       payload: gender,
     });
   },
+  dispatchTitle: (title: string, dispatch: React.Dispatch<AuthAction>) => {
+    dispatch({
+      type: "setTitle",
+      payload: title,
+    });
+  },
+  dispatchBio: (bio: string, dispatch: React.Dispatch<AuthAction>) => {
+    dispatch({
+      type: "setBio",
+      payload: bio,
+    });
+  },
 };
