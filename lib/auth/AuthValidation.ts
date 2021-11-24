@@ -1,5 +1,10 @@
 import { AuthAction } from "../../components/auth/types";
 
+const CheckAge = (age: number) => {
+  if (age >= 19 && age <= 40) return true;
+  return false;
+};
+
 export const authValidation = {
   validatePhoneNumber: (data: string, dispatch: React.Dispatch<AuthAction>) => {
     if (data.length < 10 || data.length > 11) {
