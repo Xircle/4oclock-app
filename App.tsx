@@ -8,7 +8,7 @@ import Realm from "realm";
 import { DBContext, UserSchema } from "./lib/RealmDB";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createStackNavigator } from "@react-navigation/stack";
-import { LogBox } from "react-native";
+import { KeyboardAvoidingView, LogBox } from "react-native";
 
 LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 const Stack = createStackNavigator();
@@ -41,14 +41,16 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <DBContext.Provider value={realm}>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{ headerShown: false, gestureEnabled: false }}
-          >
-            <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
-            <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{ headerShown: false, gestureEnabled: false }}
+            >
+              <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
+              <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </KeyboardAvoidingView>
       </DBContext.Provider>
     </QueryClientProvider>
   );
