@@ -15,12 +15,6 @@ import { useMutation, useQuery } from "react-query";
 import { UserData } from "../../lib/api/types";
 import { getUser } from "../../lib/api/getUser";
 import _ from "lodash";
-import {
-  DrinkingStyles,
-  IndexToMBTI,
-  MBTIs,
-  MBTIToIndex,
-} from "../../lib/utils";
 import MySelect from "../../components/UI/MySelect";
 import SelectButton from "../../components/UI/SelectButton";
 import diff from "object-diff";
@@ -28,6 +22,12 @@ import { useNavigation } from "@react-navigation/native";
 import { editProfile } from "../../lib/api/editProfile";
 import * as ImagePicker from "react-native-image-picker";
 import Loader from "../../components/UI/Loader";
+import {
+  DrinkingStyles,
+  IndexToMBTI,
+  MBTIs,
+  MBTIToIndex,
+} from "../../lib/SelectData";
 
 interface Props {}
 export interface ProfileData {
