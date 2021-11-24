@@ -94,7 +94,7 @@ export const GreyInfoText = styled(GeneralText)`
 
 export const ErrorMessage = styled(Text)`
   font-size: 11px;
-  text-align: center;
+  /* text-align: center; */
   margin-top: 5px;
   color: ${colors.mainBlue};
 `;
