@@ -5,14 +5,15 @@ interface Props {
   iconName: string;
   color: string;
   focused: boolean;
+  size?: number;
 }
 
-export default function TabIcon({ iconName, color, focused }: Props) {
+export default function TabIcon({ iconName, color, focused, size }: Props) {
   return (
     <Ionicons
       name={focused ? iconName : `${iconName}-outline`}
       color={color}
-      size={27}
+      size={size ? size : 27}
     />
   );
 }
