@@ -8,12 +8,14 @@ import {
   BigTextInput,
   colors,
   ErrorMessage,
+  GeneralText,
   MainHeading,
 } from "../../styles/styles";
 import { authErrorMessage } from "../../lib/errorMessages";
 import { Universities, UniversityToIndex } from "../../lib/SelectData";
 import { Dimensions } from "react-native";
 import MySelect from "../UI/MySelect";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   onNext: () => void;
@@ -95,19 +97,56 @@ export default function AuthProfileMainData({
         onChange={(event) => {
           const { eventCount, target, text } = event.nativeEvent;
           authDispatcher.dispatchAge(text, dispatch);
-          SetNameError(
-            authValidation.validateName(
+          SetAgeError(
+            authValidation.validateAge(
               text,
-              univError || ageError || genderError || bioError,
+              univError || nameError || genderError || bioError,
               dispatch
             )
           );
         }}
       />
       {ageError && <ErrorMessage>{authErrorMessage[2]}</ErrorMessage>}
+      <RadioContainer>
+        <Radio
+          onPress={() => authDispatcher.dispatchGender("female", dispatch)}
+        >
+          <Ionicons
+            name={
+              state.gender === "female"
+                ? "checkmark-circle"
+                : "checkmark-circle-outline"
+            }
+            color={
+              state.gender === "female" ? colors.mainBlue : colors.bareGrey
+            }
+            size={32}
+            style={{ marginRight: 10 }}
+          />
+          <GenderText isSelected={state.gender === "female"}>여자</GenderText>
+        </Radio>
+        <Radio onPress={() => authDispatcher.dispatchGender("male", dispatch)}>
+          <Ionicons
+            name={
+              state.gender === "male"
+                ? "checkmark-circle"
+                : "checkmark-circle-outline"
+            }
+            color={state.gender === "male" ? colors.mainBlue : colors.bareGrey}
+            size={32}
+            style={{ marginRight: 10 }}
+          />
+          <GenderText isSelected={state.gender === "male"}>남자</GenderText>
+        </Radio>
+      </RadioContainer>
+      {genderError && <ErrorMessage>{authErrorMessage[3]}</ErrorMessage>}
     </Container>
   );
 }
+
+const GenderText = styled(GeneralText)<{ isSelected: boolean }>`
+  color: ${(props) => (props.isSelected ? colors.mainBlue : colors.bareGrey)};
+`;
 
 const Container = styled.ScrollView`
   background-color: ${colors.bgColor};
@@ -116,4 +155,15 @@ const Container = styled.ScrollView`
 
 const SBigTextInput = styled(BigTextInput)`
   margin-top: 20px;
+`;
+
+const RadioContainer = styled.View`
+  flex-direction: row;
+`;
+
+const Radio = styled.TouchableOpacity`
+  margin-top: 20px;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px;
 `;
