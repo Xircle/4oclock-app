@@ -76,7 +76,6 @@ export const BigTextInput = styled.TextInput`
   font-size: 16px;
   border: 0.5px solid ${colors.midGrey};
   font-family: ${fontFamilies.regular};
-  text-align-vertical: top;
 `;
 
 export const Label = styled.Text`
@@ -87,4 +86,15 @@ export const Label = styled.Text`
 
 export const Text = styled.Text`
   font-family: ${fontFamilies.regular};
+`;
+
+export const GreyInfoText = styled(GeneralText)`
+  color: ${colors.bareGrey};
+`;
+
+export const ErrorMessage = styled(Text)`
+  font-size: 11px;
+  text-align: center;
+  margin-top: 5px;
+  color: ${colors.mainBlue};
 `;

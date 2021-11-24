@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
-import { BigTextInput, colors, fontFamilies, Label } from "../../styles/styles";
+import { BigTextInput, colors, ErrorMessage, fontFamilies, Label } from "../../styles/styles";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import { Alert, Dimensions, ScrollView, Text, View } from "react-native";
 import AvatarUri from "../../components/UI/AvatarUri";
@@ -373,12 +373,7 @@ export default function MyProfile(props: Props) {
   );
 }
 
-const ErrorMessage = styled(Text)`
-  font-size: 11px;
-  text-align: center;
-  margin-top: 5px;
-  color: ${colors.mainBlue};
-`;
+
 
 const YKButton = styled.TouchableOpacity`
   flex-direction: row;
@@ -398,6 +393,7 @@ const SBigTextInput = styled(BigTextInput)`
 const STextArea = styled(SBigTextInput)`
   height: 120px;
   max-height: 150px;
+  text-align-vertical: top;
 `;
 
 const InnerContainer = styled.View`
