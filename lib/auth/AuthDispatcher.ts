@@ -1,6 +1,19 @@
 import { AuthAction } from "../../components/auth/types";
 
 export const authDispatcher = {
+  dispatchInit: (
+    uid: number,
+    profileImageUrl: string,
+    email: string,
+    gender: string,
+    dispatch: React.Dispatch<AuthAction>
+  ) => {
+    if (uid) dispatch({ type: "setUid", payload: uid });
+    if (gender) dispatch({ type: "setGender", payload: gender });
+    if (profileImageUrl)
+      dispatch({ type: "setProfileImgUrl", payload: profileImageUrl });
+    if (email) dispatch({ type: "setEmail", payload: email });
+  },
   dispatchPhoneNumber: (text: string, dispatch: React.Dispatch<AuthAction>) => {
     dispatch({ type: "setPhoneNumber", payload: text });
   },

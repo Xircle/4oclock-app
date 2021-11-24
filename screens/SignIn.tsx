@@ -10,6 +10,7 @@ import MyBackButton from "../components/UI/MyBackButton";
 import MainButtonWBg from "../components/UI/MainButtonWBg";
 import AuthPhoneNumber from "../components/auth/AuthPhoneNumber";
 import AuthProfileMainData from "../components/auth/AuthProfileMainData";
+import { authDispatcher } from "../lib/auth/AuthDispatcher";
 
 interface Props {
   route: RouteProp<LoggedOutStackParamList, "SignIn">;
@@ -19,15 +20,16 @@ export default function SignIn({ route }: Props) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const uid = route.params.uid;
-    const thumbnail = route.params.profileImageUrl;
-    const email = route.params.email;
-    const gender = route.params.gender;
 
-    if (uid) dispatch({ type: "setUid", payload: uid });
-    if (gender) dispatch({ type: "setGender", payload: gender });
-    if (thumbnail) dispatch({ type: "setProfileImgUrl", payload: thumbnail });
-    if (email) dispatch({ type: "setEmail", payload: email });
+
+    authDispatcher.dispatchInit(
+      route.params.uid,
+      route.params.profileImageUrl,
+      route.params.email,
+      route.params.gender,
+      dispatch
+    );
+
   }, []);
 
   // API
