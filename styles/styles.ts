@@ -98,3 +98,7 @@ export const ErrorMessage = styled(Text)`
   margin-top: 5px;
   color: ${colors.mainBlue};
 `;
+
+export const TextArea = styled(BigTextInput)`
+  text-align-vertical: top;
+`;

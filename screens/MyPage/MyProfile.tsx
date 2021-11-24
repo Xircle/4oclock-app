@@ -1,6 +1,13 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
-import { BigTextInput, colors, ErrorMessage, fontFamilies, Label } from "../../styles/styles";
+import {
+  BigTextInput,
+  colors,
+  ErrorMessage,
+  fontFamilies,
+  Label,
+  TextArea,
+} from "../../styles/styles";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import { Alert, Dimensions, ScrollView, Text, View } from "react-native";
 import AvatarUri from "../../components/UI/AvatarUri";
@@ -373,8 +380,6 @@ export default function MyProfile(props: Props) {
   );
 }
 
-
-
 const YKButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
@@ -390,10 +395,11 @@ const SBigTextInput = styled(BigTextInput)`
   max-width: 100%;
 `;
 
-const STextArea = styled(SBigTextInput)`
+const STextArea = styled(TextArea)`
+  margin-top: 20px;
+  max-width: 100%;
   height: 120px;
   max-height: 150px;
-  text-align-vertical: top;
 `;
 
 const InnerContainer = styled.View`
