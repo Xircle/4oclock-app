@@ -1,10 +1,19 @@
 import styled from "styled-components/native";
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { OpaqueColorValue, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-interface Props {}
+interface Props {
+  color?: string;
+  size?: number;
+}
 
-export default function MyBackButton(props: Props) {
-  return <Ionicons name="chevron-back" size={24} color={"white"} />;
+export default function MyBackButton({ size, color }: Props) {
+  return (
+    <Ionicons
+      name="chevron-back"
+      size={size ? size : 24}
+      color={color ? color : "white"}
+    />
+  );
 }
