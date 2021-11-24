@@ -20,4 +20,28 @@ export const authDispatcher = {
   dispatchName: (text: string, dispatch: React.Dispatch<AuthAction>) => {
     dispatch({ type: "setName", payload: text });
   },
+  dispatchUniversity: (
+    university: string,
+    dispatch: React.Dispatch<AuthAction>
+  ) => {
+    dispatch({
+      type: "setUniversity",
+      payload: university,
+    });
+  },
+  dispatchIsGraduate: (
+    isGraduate: boolean,
+    dispatch: React.Dispatch<AuthAction>
+  ) => {
+    dispatch({
+      type: "setIsGraduate",
+      payload: isGraduate,
+    });
+  },
+  dispatchAge: (age: string, dispatch: React.Dispatch<AuthAction>) => {
+    dispatch({
+      type: "setAge",
+      payload: age,
+    });
+  },
 };
