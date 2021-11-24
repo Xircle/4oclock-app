@@ -22,16 +22,17 @@ export const authValidation = {
     otherBool: boolean,
     dispatch: React.Dispatch<AuthAction>
   ) => {
-    let result;
-    if (data.length <= 0 || data.length > 20) {
-      dispatch({ type: "setStage2Valid", payload: false });
-      result = true;
-    } else {
-      result = false;
-      if (!otherBool) {
-        dispatch({ type: "setStage2Valid", payload: true });
-      }
-    }
+    const result = data.length <= 0 || data.length > 20;
+    dispatch({ type: "setStage2Valid", payload: !(result || otherBool) });
+    return result;
+  },
+  validateAge: (
+    age: string,
+    otherBool: boolean,
+    dispatch: React.Dispatch<AuthAction>
+  ) => {
+    const result = !CheckAge(Number(age));
+    dispatch({ type: "setStage2Valid", payload: !(result || otherBool) });
     return result;
   },
 };

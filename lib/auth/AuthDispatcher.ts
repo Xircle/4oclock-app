@@ -44,4 +44,10 @@ export const authDispatcher = {
       payload: age,
     });
   },
+  dispatchGender: (gender: string, dispatch: React.Dispatch<AuthAction>) => {
+    dispatch({
+      type: "setGender",
+      payload: gender,
+    });
+  },
 };
