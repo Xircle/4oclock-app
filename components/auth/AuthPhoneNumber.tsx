@@ -7,6 +7,8 @@ import {
 } from "../../styles/styles";
 import { AuthAction, AuthState } from "./types";
 import React from "react";
+import { authDispatcher } from "../../lib/auth/AuthDispatcher";
+import { authValidation } from "../../lib/auth/AuthValidation";
 
 interface Props {
   onNext: () => void;
@@ -15,17 +17,6 @@ interface Props {
 }
 
 export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
-  const Validate = (data: string) => {
-    if (data.length < 10 || data.length > 11) {
-      dispatch({ type: "setStage1Valid", payload: false });
-    } else if (data[0] !== "0" || data[1] !== "1" || data[2] !== "0") {
-      dispatch({ type: "setStage1Valid", payload: false });
-    } else if (isNaN(Number(data)) || Number(data) < 0) {
-      dispatch({ type: "setStage1Valid", payload: false });
-    } else {
-      dispatch({ type: "setStage1Valid", payload: true });
-    }
-  };
   return (
     <Container>
       <MainHeading style={{ marginTop: 40 }}>
@@ -44,6 +35,11 @@ export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
         autoCorrect={false}
         autoFocus={true}
         keyboardType="number-pad"
+        onChange={(event) => {
+          const { eventCount, target, text } = event.nativeEvent;
+          authDispatcher.dispatchPhoneNumber(text, dispatch);
+          authValidation.validatePhoneNumber(text, dispatch);
+        }}
       />
     </Container>
   );
