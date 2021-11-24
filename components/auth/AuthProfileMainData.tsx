@@ -11,12 +11,17 @@ import {
   MainHeading,
 } from "../../styles/styles";
 import { authErrorMessage } from "../../lib/errorMessages";
+import { Universities, UniversityToIndex } from "../../lib/SelectData";
+import { Dimensions } from "react-native";
+import MySelect from "../UI/MySelect";
 
 interface Props {
   onNext: () => void;
   state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
 }
+
+const { width } = Dimensions.get("screen");
 
 export default function AuthProfileMainData({
   onNext,
@@ -30,13 +35,8 @@ export default function AuthProfileMainData({
   const [genderError, SetGenderError] = useState<boolean>(false);
   const [bioError, SetBioError] = useState<boolean>(false);
 
-  const CheckAge = (age: number) => {
-    if (age >= 19 && age <= 40) return true;
-    return false;
-  };
-
   return (
-    <Container>
+    <Container showsVerticalScrollIndicator={false}>
       <MainHeading style={{ marginTop: 20 }}>프로필 만들기</MainHeading>
       <SBigTextInput
         placeholder="USERNAME"
@@ -61,12 +61,55 @@ export default function AuthProfileMainData({
         }}
       />
       {nameError && <ErrorMessage>{authErrorMessage[0]}</ErrorMessage>}
+      <MySelect
+        data={Universities}
+        onSelect={(selectedItem, index) => {
+          authDispatcher.dispatchUniversity(
+            selectedItem.split(" ")[0],
+            dispatch
+          );
+          authDispatcher.dispatchIsGraduate(
+            selectedItem.split(" ")[1] === "졸업",
+            dispatch
+          );
+        }}
+        width={width - 120}
+        defaultButtonText="학교"
+        defaultValueByIndex={
+          UniversityToIndex[
+            state.university + (state.isGraduate ? "졸업" : "재학")
+          ]
+        }
+      />
+      {univError && <ErrorMessage>{authErrorMessage[1]}</ErrorMessage>}
+      <SBigTextInput
+        style={{ width: width - 120 }}
+        placeholder="나이"
+        blurOnSubmit={true}
+        onSubmitEdition={onNext}
+        returnKeyType="next"
+        returnKeyLabel="next"
+        autoCorrect={false}
+        defaultValue={state.age}
+        keyboardType="number-pad"
+        onChange={(event) => {
+          const { eventCount, target, text } = event.nativeEvent;
+          authDispatcher.dispatchAge(text, dispatch);
+          SetNameError(
+            authValidation.validateName(
+              text,
+              univError || ageError || genderError || bioError,
+              dispatch
+            )
+          );
+        }}
+      />
+      {ageError && <ErrorMessage>{authErrorMessage[2]}</ErrorMessage>}
     </Container>
   );
 }
 
-const Container = styled.View`
-  flex: 1;
+const Container = styled.ScrollView`
   background-color: ${colors.bgColor};
   padding: 15px;
 `;
