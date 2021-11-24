@@ -7,15 +7,20 @@ interface Props {
   color?: string;
   onPress: () => void;
   disabled?: boolean;
+  title: string;
 }
 
 const { width } = Dimensions.get("window");
 
-export default function MainButtonWBg({ onPress, disabled = false }: Props) {
+export default function MainButtonWBg({
+  onPress,
+  disabled = false,
+  title,
+}: Props) {
   return (
     <Container>
       <XLButton onPress={onPress} disabled={disabled}>
-        <XLButtonText>수정하기</XLButtonText>
+        <XLButtonText>{title}</XLButtonText>
       </XLButton>
     </Container>
   );

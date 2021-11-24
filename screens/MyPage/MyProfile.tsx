@@ -367,6 +367,7 @@ export default function MyProfile(props: Props) {
       <MainButtonWBg
         onPress={updateProfile}
         disabled={localValidation.includes(false)}
+        title={"수정하기"}
       ></MainButtonWBg>
     </Container>
   );
