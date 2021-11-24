@@ -77,6 +77,7 @@ export default function Welcome(props: Props) {
           profileImageUrl: profile.profileImageUrl,
           gender: profile.gender,
           uid: profile.id,
+          email: profile.email,
         });
       }
     } catch (err) {

@@ -5,7 +5,12 @@ import SignIn from "../screens/SignIn";
 
 export type LoggedOutStackParamList = {
   Welcome: undefined;
-  SignIn: { profileImageUrl: string; gender: string; uid: string };
+  SignIn: {
+    profileImageUrl: string;
+    gender: string;
+    uid: number;
+    email: string;
+  };
 };
 
 const Stack = createStackNavigator<LoggedOutStackParamList>();
@@ -14,7 +19,11 @@ export default function LoggedOutNav() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
-      <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{ gestureEnabled: false }}
+      />
     </Stack.Navigator>
   );
 }
