@@ -12,7 +12,9 @@ import AuthPhoneNumber from "../components/auth/AuthPhoneNumber";
 import AuthProfileMainData from "../components/auth/AuthProfileMainData";
 import { authDispatcher } from "../lib/auth/AuthDispatcher";
 import { Animated, Dimensions, TouchableOpacity, View } from "react-native";
-
+import AuthProfileSubData from "../components/auth/AuthProfileSubData";
+import AuthProfileImage from "../components/auth/AuthProfileImage";
+import AuthAgree from "../components/auth/AuthAgree";
 
 interface Props {
   route: RouteProp<LoggedOutStackParamList, "SignIn">;
@@ -63,6 +65,22 @@ export default function SignIn({ route }: Props) {
       animateByStep(step + 1, position).start();
     }
   };
+
+  const isDisable = () => {
+    switch (step) {
+      case 0:
+        return !state.stage1Valid;
+      case 1:
+        return !state.stage2Valid;
+      case 2:
+        return !state.stage3Valid;
+      case 3:
+        return !state.profileImgFile && !state.profileImgUrl;
+      case 4:
+        return !(state.agree1 && state.agree2 && state.agree3);
+    }
+  };
+
   // pan responders
   return (
     <SafeAreaView style={{ backgroundColor: colors.bgColor, flex: 1 }}>
@@ -106,7 +124,7 @@ export default function SignIn({ route }: Props) {
               left: width * 2,
             }}
           >
-            <AuthProfileMainData
+            <AuthProfileSubData
               onNext={nextHandler}
               state={state}
               dispatch={dispatch}
@@ -118,7 +136,7 @@ export default function SignIn({ route }: Props) {
               left: width * 3,
             }}
           >
-            <AuthProfileMainData
+            <AuthProfileImage
               onNext={nextHandler}
               state={state}
               dispatch={dispatch}
@@ -130,14 +148,16 @@ export default function SignIn({ route }: Props) {
               left: width * 4,
             }}
           >
-            <AuthProfileMainData
-              onNext={nextHandler}
-              state={state}
-              dispatch={dispatch}
-            />
+            <AuthAgree onNext={nextHandler} state={state} dispatch={dispatch} />
           </AnimationWrapper>
         </Wrapper>
-        <MainButtonWBg onPress={nextHandler} title={"다음"} />
+        <MainButtonWBg
+          onPress={() => {
+            nextHandler();
+          }}
+          title={step === limit - 1 ? "가입하기" : "다음"}
+          disabled={isDisable()}
+        />
       </Container>
     </SafeAreaView>
   );
