@@ -1,7 +1,16 @@
 import styled from "styled-components/native";
 import React, { useState } from "react";
-import { View } from "react-native";
 import { AuthAction, AuthState } from "./types";
+
+import { authValidation } from "../../lib/auth/AuthValidation";
+import { authDispatcher } from "../../lib/auth/AuthDispatcher";
+import {
+  BigTextInput,
+  colors,
+  ErrorMessage,
+  MainHeading,
+} from "../../styles/styles";
+import { authErrorMessage } from "../../lib/errorMessages";
 
 interface Props {
   onNext: () => void;
@@ -21,47 +30,47 @@ export default function AuthProfileMainData({
   const [genderError, SetGenderError] = useState<boolean>(false);
   const [bioError, SetBioError] = useState<boolean>(false);
 
-  const SetErrorAll = (param: boolean) => {
-    SetNameError(param);
-    SetUnivError(param);
-    SetAgeError(param);
-    SetGenderError(param);
-    SetBioError(param);
-  };
-
   const CheckAge = (age: number) => {
     if (age >= 19 && age <= 40) return true;
     return false;
   };
-  function Validate(
-    univ: string = state.university,
-    gender: string = state.gender
-  ): void {
-    if (state.name.length <= 0 || state.name.length > 20) {
-      SetErrorAll(false);
-      dispatch({ type: "setStage2Valid", payload: false });
-      SetNameError(true);
-    } else if (!univs.includes(univ)) {
-      SetErrorAll(false);
-      dispatch({ type: "setStage2Valid", payload: false });
-      SetUnivError(true);
-    } else if (!CheckAge(Number(state.age))) {
-      SetErrorAll(false);
-      dispatch({ type: "setStage2Valid", payload: false });
-      SetAgeError(true);
-    } else if (gender !== "male" && gender !== "female") {
-      SetErrorAll(false);
-      dispatch({ type: "setStage2Valid", payload: false });
-      SetGenderError(true);
-    } else if (state.bio.length < 1) {
-      SetErrorAll(false);
-      dispatch({ type: "setStage2Valid", payload: false });
-      SetBioError(true);
-    } else {
-      SetErrorAll(false);
-      dispatch({ type: "setStage2Valid", payload: true });
-    }
-  }
 
-  return <View></View>;
+  return (
+    <Container>
+      <MainHeading style={{ marginTop: 20 }}>프로필 만들기</MainHeading>
+      <SBigTextInput
+        placeholder="USERNAME"
+        autoCapitalize="none"
+        blurOnSubmit={true}
+        onSubmitEdition={onNext}
+        returnKeyType="next"
+        returnKeyLabel="next"
+        autoCorrect={false}
+        autoFocus={true}
+        defaultValue={state.name ? state.name : ""}
+        onChange={(event) => {
+          const { eventCount, target, text } = event.nativeEvent;
+          authDispatcher.dispatchName(text, dispatch);
+          SetNameError(
+            authValidation.validateName(
+              text,
+              univError || ageError || genderError || bioError,
+              dispatch
+            )
+          );
+        }}
+      />
+      {nameError && <ErrorMessage>{authErrorMessage[0]}</ErrorMessage>}
+    </Container>
+  );
 }
+
+const Container = styled.View`
+  flex: 1;
+  background-color: ${colors.bgColor};
+  padding: 15px;
+`;
+
+const SBigTextInput = styled(BigTextInput)`
+  margin-top: 20px;
+`;
