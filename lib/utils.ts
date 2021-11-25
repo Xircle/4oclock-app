@@ -1,9 +1,7 @@
-export const BASE_URL = "https://xircle-alpha-server.herokuapp.com";
+export const BASE_URL = "https://api.4oclock.kr";
 
 import moment from "moment";
 import "moment/locale/ko";
-
-
 
 const DateByMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const StartDays = [
