@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, Text } from "react-native";
+import { View, Text, Dimensions } from "react-native";
 import Main from "../screens/Main";
 import RandomProfile from "../screens/RandomProfile";
 import Chat from "../screens/Chat";
@@ -9,16 +9,20 @@ import MyPage from "../screens/MyPage/MyPage";
 import TabIcon from "../components/nav/TabIcon";
 import { colors } from "../styles/styles";
 import SharedStackNav from "./SharedStackNav";
+import CreateActivityScreen from "../screens/CreateActivityScreen";
+import TabMiddleAdd from "../components/nav/TabMiddleAdd";
+import TabSide from "../components/nav/TabSide";
 
 interface Props {}
 
 const Tabs = createBottomTabNavigator();
-
+const { width } = Dimensions.get("window");
 export default function MainTabsNav(props: Props) {
   return (
     <Tabs.Navigator
       screenOptions={{
         tabBarShowLabel: false,
+
         headerStyle: {
           backgroundColor: colors.bgColor,
           borderColor: colors.bgColor,
@@ -34,11 +38,26 @@ export default function MainTabsNav(props: Props) {
         options={{
           title: "메인",
           tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName={"home"} color={color} focused={focused} />
+            // <TabIcon iconName={"home"} color={color} focused={focused} />
+            // <Text>hihi</Text>
+            <TabSide
+              focused={focused}
+              color={color}
+              size={size}
+              title={"이팅모임"}
+            />
           ),
         }}
       />
       <Tabs.Screen
+        name="CreatePlaceT"
+        component={CreateActivityScreen}
+        options={{
+          title: "생성하기",
+          tabBarIcon: ({ focused, color, size }) => <TabMiddleAdd />,
+        }}
+      />
+      {/* <Tabs.Screen
         name="RandomProfileT"
         component={RandomProfile}
         options={{
@@ -46,8 +65,8 @@ export default function MainTabsNav(props: Props) {
             <TabIcon iconName={"people"} color={color} focused={focused} />
           ),
         }}
-      />
-      <Tabs.Screen
+      /> */}
+      {/* <Tabs.Screen
         name="ChatT"
         component={Chat}
         options={{
@@ -60,15 +79,16 @@ export default function MainTabsNav(props: Props) {
             />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="MyPageT"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon
-              iconName={"person-circle"}
-              color={color}
+            <TabSide
               focused={focused}
+              color={color}
+              size={size}
+              title={"마이 / 후기"}
             />
           ),
           headerShown: false,
