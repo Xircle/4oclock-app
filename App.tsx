@@ -8,14 +8,25 @@ import Realm from "realm";
 import { DBContext, UserSchema } from "./lib/RealmDB";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createStackNavigator } from "@react-navigation/stack";
-import { KeyboardAvoidingView, LogBox } from "react-native";
+import { Image, KeyboardAvoidingView, LogBox } from "react-native";
 import { Platform } from "react-native";
+import { Asset, useAssets } from "expo-asset";
 
 LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 const Stack = createStackNavigator();
 const queryClient = new QueryClient();
 
+const loadImages = (images) =>
+  images.map((image) => {
+    if (typeof image === "string") {
+      return Image.prefetch(image);
+    } else {
+      return Asset.loadAsync(image);
+    }
+  });
+
 export default function App() {
+  
   const [ready, setReady] = useState(false);
   const [realm, setRealm] = useState(null);
 
@@ -26,6 +37,8 @@ export default function App() {
       schemaVersion: 1,
     });
     setRealm(connection);
+    const images = loadImages([require("./statics/images/anonymous_user.png")]);
+    await Promise.all([...images]);
   };
   const onFinish = () => {
     setReady(true);
