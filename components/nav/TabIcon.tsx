@@ -11,6 +11,7 @@ interface Props {
 export default function TabIcon({ iconName, color, focused, size }: Props) {
   return (
     <Ionicons
+      //@ts-ignore
       name={focused ? iconName : `${iconName}-outline`}
       color={color}
       size={size ? size : 27}
