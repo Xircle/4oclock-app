@@ -137,6 +137,7 @@ export default function AuthProfileSubData({ onNext, state, dispatch }: Props) {
           }}
         />
       </TagContainer>
+      <View style={{ height: 150 }}></View>
     </Container>
   );
 }

@@ -11,12 +11,7 @@ import MainButtonWBg from "../components/UI/MainButtonWBg";
 import AuthPhoneNumber from "../components/auth/AuthPhoneNumber";
 import AuthProfileMainData from "../components/auth/AuthProfileMainData";
 import { authDispatcher } from "../lib/auth/AuthDispatcher";
-import {
-  Animated,
-  Dimensions,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Dimensions, TouchableOpacity, View } from "react-native";
 import AuthProfileSubData from "../components/auth/AuthProfileSubData";
 import AuthProfileImage from "../components/auth/AuthProfileImage";
 import AuthAgree from "../components/auth/AuthAgree";
