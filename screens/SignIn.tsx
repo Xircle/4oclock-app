@@ -11,10 +11,19 @@ import MainButtonWBg from "../components/UI/MainButtonWBg";
 import AuthPhoneNumber from "../components/auth/AuthPhoneNumber";
 import AuthProfileMainData from "../components/auth/AuthProfileMainData";
 import { authDispatcher } from "../lib/auth/AuthDispatcher";
-import { Animated, Dimensions, TouchableOpacity, View } from "react-native";
+import {
+  Animated,
+  Dimensions,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import AuthProfileSubData from "../components/auth/AuthProfileSubData";
 import AuthProfileImage from "../components/auth/AuthProfileImage";
 import AuthAgree from "../components/auth/AuthAgree";
+import { CreateAccountOutput } from "../lib/api/types";
+import { createAccount } from "../lib/api/createAccount";
+import storage from "../lib/helpers/myAsyncStorage";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {
   route: RouteProp<LoggedOutStackParamList, "SignIn">;
@@ -23,6 +32,7 @@ interface Props {
 const { width } = Dimensions.get("screen");
 
 export default function SignIn({ route }: Props) {
+  const navigation = useNavigation();
   const [step, setStep] = useState(0);
   const limit = 5;
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -59,10 +69,24 @@ export default function SignIn({ route }: Props) {
     }
   };
 
-  const nextHandler = () => {
+  const nextHandler = async () => {
     if (step < limit - 1) {
       setStep(step + 1);
       animateByStep(step + 1, position).start();
+    } else {
+      try {
+        const data: CreateAccountOutput = await createAccount(state);
+        if (!data.ok) {
+          console.log(data.error);
+        } else {
+          await storage.setItem("token", data.data.token);
+          /* @ts-ignore */
+          navigation.navigate("LoggedInNav");
+        }
+      } catch (err) {
+        console.log(err);
+        throw new Error();
+      }
     }
   };
 
@@ -155,7 +179,7 @@ export default function SignIn({ route }: Props) {
           onPress={() => {
             nextHandler();
           }}
-          title={step === limit - 1 ? "가입하기" : "다음"}
+          title={step === limit - 1 ? "시작하기" : "다음"}
           disabled={isDisable()}
         />
       </Container>
