@@ -28,7 +28,6 @@ export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
       </GreyInfoText>
       <PhoneNumberInput
         blurOnSubmit={true}
-        onSubmitEdition={onNext}
         returnKeyType="next"
         returnKeyLabel="next"
         autoCapitalize="none"

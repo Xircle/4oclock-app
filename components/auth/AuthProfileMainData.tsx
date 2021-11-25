@@ -48,7 +48,6 @@ export default function AuthProfileMainData({
         placeholder="USERNAME"
         autoCapitalize="none"
         blurOnSubmit={true}
-        onSubmitEdition={onNext}
         returnKeyType="next"
         returnKeyLabel="next"
         autoCorrect={false}
@@ -96,7 +95,6 @@ export default function AuthProfileMainData({
         style={{ width: width - 120 }}
         placeholder="나이"
         blurOnSubmit={true}
-        onSubmitEdition={onNext}
         returnKeyType="next"
         returnKeyLabel="next"
         autoCorrect={false}
@@ -177,7 +175,6 @@ export default function AuthProfileMainData({
         placeholder="ex. 말이 많아요 / 치믈리에 새내기..."
         autoCapitalize="none"
         blurOnSubmit={true}
-        onSubmitEdition={onNext}
         returnKeyType="next"
         returnKeyLabel="next"
         autoCorrect={false}
@@ -199,10 +196,9 @@ export default function AuthProfileMainData({
       )}
       <SLabel>친구들에게 자기소개를 적어주세요!</SLabel>
       <STextArea
-        placeholder="ex. 안녕하세요 트와이스를 좋아하는 인문대생입니다 / 취주하느라 너무 힘들어요...! 같이 고민이야기 하실 분!"
+        placeholder="ex. 안녕하세요 트와이스를 좋아하는 인문대생입니다 / 취준하느라 너무 힘들어요...! 같이 고민이야기 하실 분!"
         autoCapitalize="none"
         blurOnSubmit={true}
-        onSubmitEdition={onNext}
         returnKeyType="next"
         returnKeyLabel="next"
         autoCorrect={false}
