@@ -62,4 +62,44 @@ export const authDispatcher = {
       payload: bio,
     });
   },
+  dispatchPersonality: (
+    personality: string,
+    dispatch: React.Dispatch<AuthAction>
+  ) => {
+    dispatch({
+      type: "setPersonality",
+      payload: personality,
+    });
+  },
+  dispatchMBTI: (MBTI: string, dispatch: React.Dispatch<AuthAction>) => {
+    dispatch({
+      type: "setMBTI",
+      payload: MBTI,
+    });
+  },
+
+  dispatchDrinkingStyle: (
+    drinkingStyle: number,
+    dispatch: React.Dispatch<AuthAction>
+  ) => {
+    dispatch({
+      type: "setDrinkingStyle",
+      payload: drinkingStyle,
+    });
+  },
+  dispatchProfileImg: (
+    // @ts-ignore
+    file: File,
+    url: string,
+    dispatch: React.Dispatch<AuthAction>
+  ) => {
+    dispatch({
+      type: "setProfileImgFile",
+      payload: file,
+    });
+    dispatch({
+      type: "setProfileImgUrl",
+      payload: url,
+    });
+  },
 };

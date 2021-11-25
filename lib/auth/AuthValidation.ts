@@ -72,4 +72,12 @@ export const authValidation = {
     dispatch({ type: "setStage2Valid", payload: !(result || otherBool) });
     return result;
   },
+  validateStage3: (
+    MBTI: string,
+    drinkingStyle: number,
+    personality: string,
+    dispatch: React.Dispatch<AuthAction>
+  ) => {
+    dispatch({ type: "setStage3Valid", payload: MBTI && personality && drinkingStyle >= 0 });
+  },
 };
