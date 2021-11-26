@@ -5,10 +5,7 @@ import { colors, fontFamilies, GeneralText, Text } from "../styles/styles";
 import { useDB } from "../lib/RealmDB";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { GetPlacesByLocationOutput, PlaceFeedData } from "../lib/api/types";
-import {
-  getPlacesByLocation,
-  getPlacesNew,
-} from "../lib/api/getPlacesByLocation";
+import { getPlacesForCarousel, getPlacesMain } from "../lib/api/getPlaces";
 import TopCarouselPlace from "../components/main/TopCarouselPlace";
 import optimizeImage from "../lib/helpers/optimizeImage";
 import { PlaceData } from "../lib/api/types.d";
@@ -29,9 +26,9 @@ export default function Main(props: Props) {
   const queryClient = useQueryClient();
 
   // api call
-  const { data: topCarouselData } = useQuery<
+  const { data: topCarouselData, isLoading: topCarouselLoading } = useQuery<
     GetPlacesByLocationOutput | undefined
-  >(["places", "전체", "top"], () => getPlacesByLocation("전체", 1), {
+  >(["places", "전체", "top"], () => getPlacesForCarousel("전체", 1), {
     retry: 1,
     refetchOnWindowFocus: false,
   });
@@ -42,10 +39,11 @@ export default function Main(props: Props) {
     fetchNextPage,
   } = useInfiniteQuery<GetPlacesByLocationOutput | undefined>(
     ["places", "전체", "main"],
-    getPlacesNew,
+    getPlacesMain,
     {
       getNextPageParam: (currentPage) => {
-        return 2;
+        const nextPage = currentPage.meta.page + 1;
+        return nextPage > currentPage.meta.totalPages ? null : nextPage;
       },
     }
   );
@@ -66,12 +64,12 @@ export default function Main(props: Props) {
   };
 
   useEffect(() => {
-    console.log(mainPlaceData);
+    console.log(mainPlaceData?.pages);
   }, [mainPlaceData]);
 
   // values
   const position = useRef(new Animated.Value(0)).current;
-  const loading = mainPlaceDataLoading;
+  const loading = mainPlaceDataLoading || topCarouselLoading;
   // animations
   const middleTabAnim = (middleTab: number, position: Animated.Value) =>
     Animated.timing(position, {
@@ -161,7 +159,9 @@ export default function Main(props: Props) {
           ItemSeparatorComponent={HSeperator}
           keyExtractor={(item: PlaceFeedData) => item.id + ""}
           data={mainPlaceData.pages.map((page) => page.places).flat()}
-          renderItem={({ item }) => <MidFlatListPlace coverImage={item.coverImage}/>}
+          renderItem={({ item }) => (
+            <MidFlatListPlace coverImage={item.coverImage} name={item.name} />
+          )}
         />
 
         <SubAnimWrapper
