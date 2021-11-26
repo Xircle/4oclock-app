@@ -41,7 +41,19 @@ export default function Main(props: Props) {
 
   return (
     <Container>
-      <TopCarouselContainer>
+      <TopCarouselContainer
+        style={{
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 4,
+          },
+          shadowOpacity: 0.32,
+          shadowRadius: 5.46,
+
+          elevation: 9,
+        }}
+      >
         <TopCarousel
           horizontal={true}
           decelerationRate={0}
@@ -81,4 +93,6 @@ const Container = styled.View`
 const TopCarouselContainer = styled.View`
   width: ${width + "px"};
   height: ${height * 0.3 + "px"};
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 `;
