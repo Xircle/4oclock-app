@@ -58,9 +58,14 @@ export interface PlaceFeedData {
 
 export interface ParticipantsListData extends Participants {}
 
+interface Meta {
+  page: number;
+  totalPages: number;
+}
+
 export interface GetPlacesByLocationOutput extends CoreOutput {
   places: PlaceFeedData[];
-  eventBannerImageUrl: string;
+  meta: Meta;
 }
 
 // Get Place By Id
