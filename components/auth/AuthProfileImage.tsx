@@ -22,8 +22,6 @@ interface Props {
 }
 
 export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
-  const [loading, setLoading] = useState(false);
-
   const fileHandle = async () => {
     const option: ImagePicker.ImageLibraryOptions = {
       mediaType: "photo",
