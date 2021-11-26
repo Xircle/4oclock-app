@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
-import React, { useEffect, useState } from "react";
-import { Dimensions } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Dimensions, Animated, View } from "react-native";
 import { colors, GeneralText, Text } from "../styles/styles";
 import { useDB } from "../lib/RealmDB";
 import { useQuery } from "react-query";
@@ -14,9 +14,8 @@ interface Props {}
 const { width, height } = Dimensions.get("window");
 
 export default function Main(props: Props) {
-  const [middleTab, setMiddleTab] = useState(0);
+  const [middleTabIndex, setMiddleTabIndex] = useState(0);
   const realm = useDB();
-  const [temp, setTemp] = useState("");
 
   // api call
   const {
@@ -34,9 +33,15 @@ export default function Main(props: Props) {
     }
   );
 
-  useEffect(() => {
-    console.log(topCarouselData);
-  }, [topCarouselData]);
+  // values
+  const position = useRef(new Animated.Value(0)).current;
+
+  // animations
+  const middleTabAnim = (middleTab: number, position: Animated.Value) =>
+    Animated.timing(position, {
+      toValue: middleTab * width * -1,
+      useNativeDriver: true,
+    });
 
   return (
     <Container>
@@ -58,40 +63,71 @@ export default function Main(props: Props) {
           decelerationRate={0}
           snapToInterval={width}
           snapToAlignment={"center"}
+          showsVerticalScrollIndicator={false}
         >
           {topCarouselData?.places?.map((item, idx) => {
-            return (
-              <TopCarouselPlace
-                coverImageUrl={optimizeImage(item.coverImage)}
-                width={width}
-                height={height * 0.3}
-                key={idx}
-              />
-            );
+            if (!item.isClosed || true) {
+              return (
+                <TopCarouselPlace
+                  coverImageUrl={optimizeImage(item.coverImage)}
+                  width={width}
+                  height={height * 0.3}
+                  key={idx}
+                  name={item.name}
+                />
+              );
+            }
           })}
         </TopCarousel>
       </TopCarouselContainer>
       <MiddleTabContainer>
-        <MiddleTab onPress={() => setMiddleTab(0)}>
-          <MiddleTabTextWrapper isSelected={middleTab === 0}>
-            <MiddleTabText isSelected={middleTab === 0}>전체보기</MiddleTabText>
+        <MiddleTab
+          onPress={() => {
+            setMiddleTabIndex(0);
+            middleTabAnim(0, position).start();
+          }}
+        >
+          <MiddleTabTextWrapper isSelected={middleTabIndex === 0}>
+            <MiddleTabText isSelected={middleTabIndex === 0}>
+              전체보기
+            </MiddleTabText>
           </MiddleTabTextWrapper>
         </MiddleTab>
-        <MiddleTab onPress={() => setMiddleTab(1)}>
-          <MiddleTabTextWrapper isSelected={middleTab === 1}>
-            <MiddleTabText isSelected={middleTab === 1}>후기보기</MiddleTabText>
+        <MiddleTab
+          onPress={() => {
+            setMiddleTabIndex(1);
+            middleTabAnim(1, position).start();
+          }}
+        >
+          <MiddleTabTextWrapper isSelected={middleTabIndex === 1}>
+            <MiddleTabText isSelected={middleTabIndex === 1}>
+              후기보기
+            </MiddleTabText>
           </MiddleTabTextWrapper>
         </MiddleTab>
       </MiddleTabContainer>
-      <Text>Main </Text>
+      <AnimationContainer>
+        <AnimationWrapper
+          style={{
+            transform: [{ translateX: position }],
+          }}
+        >
+          <Text>Main </Text>
+        </AnimationWrapper>
+        <AnimationWrapper
+          style={{
+            left: width,
+            transform: [{ translateX: position }],
+          }}
+        >
+          <Text>Sub </Text>
+        </AnimationWrapper>
+      </AnimationContainer>
     </Container>
   );
 }
 
-const TopCarousel = styled.ScrollView`
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-`;
+const TopCarousel = styled.ScrollView``;
 
 const Container = styled.View`
   flex: 1;
@@ -128,4 +164,15 @@ const MiddleTabText = styled(GeneralText)<{ isSelcted: boolean }>`
   font-size: 20px;
   padding: 12px;
   color: ${(props) => (props.isSelected ? colors.black : colors.bareGrey)};
+`;
+
+const AnimationWrapper = styled(Animated.createAnimatedComponent(View))`
+  background-color: ${colors.bgColor};
+  width: 100%;
+  height: 100%;
+  position: absolute;
+`;
+
+const AnimationContainer = styled.View`
+  flex: 1;
 `;
