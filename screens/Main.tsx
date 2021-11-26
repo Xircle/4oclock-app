@@ -1,14 +1,12 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
-import { Image, Dimensions } from "react-native";
+import { Dimensions } from "react-native";
 import { colors, GeneralText, Text } from "../styles/styles";
 import { useDB } from "../lib/RealmDB";
-import storage from "../lib/helpers/myAsyncStorage";
 import { useQuery } from "react-query";
 import { GetPlacesByLocationOutput } from "../lib/api/types";
 import { getPlacesByLocation } from "../lib/api/getPlacesByLocation";
 import TopCarouselPlace from "../components/main/TopCarouselPlace";
-import { isTemplateExpression } from "typescript";
 import optimizeImage from "../lib/helpers/optimizeImage";
 
 interface Props {}
