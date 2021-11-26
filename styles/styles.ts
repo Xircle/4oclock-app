@@ -26,6 +26,12 @@ export const MainHeading = styled.Text`
   font-family: ${fontFamilies.bold};
 `;
 
+export const SubHeading = styled.Text`
+  font-size: 16px;
+  color: ${colors.midGrey};
+  font-family: ${fontFamilies.regular};
+`;
+
 export const XLButton = styled.TouchableOpacity<{
   disabled?: boolean;
   bgColor?: string;
