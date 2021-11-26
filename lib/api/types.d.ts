@@ -110,7 +110,7 @@ export interface PlaceData {
   };
 }
 
-export interface AdminPlaceData {
+export interface CreatePlaceData {
   name: string;
   isLightning: boolean;
   maxParticipantsNumber?: string;
@@ -133,7 +133,7 @@ export interface AdminPlaceData {
 }
 
 // need to change CreatePlaceOutput
-export interface AdminPlaceOutput extends AdminPlaceData {}
+export interface CreatePlaceOutput extends CreatePlaceData {}
 
 export interface GetPlaceByIdOutput extends CoreOutput {
   placeData: PlaceData;
@@ -222,7 +222,7 @@ export interface CancelReservationOutput extends CoreOutput {}
 
 export interface EditPlaceInput {
   placeId: string;
-  state: AdminPlaceOutput;
+  state: CreatePlaceOutput;
 }
 
 export interface EditPlaceOutput extends CoreOutput {}
