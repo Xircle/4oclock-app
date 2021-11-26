@@ -26,3 +26,23 @@ export const getPlacesByLocation = async (
   }
   return data;
 };
+
+export const getPlacesNew = async ({
+  pageParam,
+}): Promise<GetPlacesByLocationOutput | undefined> => {
+  const axiosclient = await AxiosClient();
+  const token = await storage.getItem("token");
+  if (!token) return;
+  const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
+    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=10`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (!data.ok) {
+    throw new Error(data.error);
+  }
+  return data;
+};
