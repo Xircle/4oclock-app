@@ -1,6 +1,13 @@
 import styled from "styled-components/native";
 import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, Animated, View, Image, FlatList } from "react-native";
+import {
+  Dimensions,
+  Animated,
+  View,
+  Image,
+  FlatList,
+  PanResponder,
+} from "react-native";
 import { colors, fontFamilies, GeneralText, Text } from "../styles/styles";
 import { useDB } from "../lib/RealmDB";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
@@ -18,8 +25,6 @@ const { width, height } = Dimensions.get("window");
 
 export default function Main(props: Props) {
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
-  const [ableToRefetch, setAbleToRefetch] = useState(false);
-  const [page, setPage] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
   const realm = useDB();
 
@@ -39,6 +44,7 @@ export default function Main(props: Props) {
     fetchNextPage,
   } = useInfiniteQuery<GetPlacesByLocationOutput | undefined>(
     ["places", "전체", "main"],
+    // @ts-ignore
     getPlacesMain,
     {
       getNextPageParam: (currentPage) => {
@@ -55,17 +61,10 @@ export default function Main(props: Props) {
   };
 
   const loadMore = () => {
-    console.log("fetch Before");
     if (hasNextPage) {
-      console.log("fetch called");
       fetchNextPage();
-      console.log("fetch After");
     }
   };
-
-  useEffect(() => {
-    console.log(mainPlaceData?.pages);
-  }, [mainPlaceData]);
 
   // values
   const position = useRef(new Animated.Value(0)).current;
@@ -76,6 +75,39 @@ export default function Main(props: Props) {
       toValue: middleTab * width * -1,
       useNativeDriver: true,
     });
+
+  // pan Resonders
+  const mainPanResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (_, { dx }) => {
+        position.setValue(dx);
+      },
+      onPanResponderRelease: (_, { dx }) => {
+        if (dx > 150) {
+          middleTabAnim(1, position).start();
+        } else {
+          middleTabAnim(0, position).start();
+        }
+      },
+    })
+  ).current;
+
+  const subPanResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (_, { dx }) => {
+        position.setValue(dx);
+      },
+      onPanResponderRelease: (_, { dx }) => {
+        if (dx < -150) {
+          middleTabAnim(0, position).start();
+        } else {
+          middleTabAnim(1, position).start();
+        }
+      },
+    })
+  ).current;
   if (loading) return <Loader />;
   return (
     <Container>
@@ -142,6 +174,7 @@ export default function Main(props: Props) {
       </MiddleTabContainer>
       <AnimationContainer>
         <MainAnimWrapper
+          {...mainPanResponder.panHandlers}
           style={{
             transform: [{ translateX: position }],
             padding: 20,
@@ -165,6 +198,7 @@ export default function Main(props: Props) {
         />
 
         <SubAnimWrapper
+          {...subPanResponder.panHandlers}
           style={{
             left: width,
             transform: [{ translateX: position }],
