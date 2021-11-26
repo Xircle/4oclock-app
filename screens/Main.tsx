@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import React, { useEffect, useRef, useState } from "react";
 import { Dimensions, Animated, View, Image, FlatList } from "react-native";
-import { colors, GeneralText, Text } from "../styles/styles";
+import { colors, fontFamilies, GeneralText, Text } from "../styles/styles";
 import { useDB } from "../lib/RealmDB";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { GetPlacesByLocationOutput, PlaceFeedData } from "../lib/api/types";
@@ -13,6 +13,7 @@ import TopCarouselPlace from "../components/main/TopCarouselPlace";
 import optimizeImage from "../lib/helpers/optimizeImage";
 import { PlaceData } from "../lib/api/types.d";
 import Loader from "../components/UI/Loader";
+import MidFlatListPlace from "../components/main/MidFlatListPlace";
 
 interface Props {}
 
@@ -145,7 +146,14 @@ export default function Main(props: Props) {
         <MainAnimWrapper
           style={{
             transform: [{ translateX: position }],
+            padding: 20,
           }}
+          ListHeaderComponent={
+            <ListHeaderContainer>
+              <ListMainText>맛집 뿌셔뿌셔👋</ListMainText>
+              <ListSubText>새로운 친구들 사귀는거 얼마나 재밌게요</ListSubText>
+            </ListHeaderContainer>
+          }
           onEndReached={loadMore}
           onEndReachedThreshold={0.4}
           onRefresh={onRefresh}
@@ -153,12 +161,7 @@ export default function Main(props: Props) {
           ItemSeparatorComponent={HSeperator}
           keyExtractor={(item: PlaceFeedData) => item.id + ""}
           data={mainPlaceData.pages.map((page) => page.places).flat()}
-          renderItem={({ item }) => (
-            <Image
-              source={require("../statics/images/mascot.png")}
-              style={{ width: 300, resizeMode: "contain" }}
-            />
-          )}
+          renderItem={({ item }) => <MidFlatListPlace coverImage={item.coverImage}/>}
         />
 
         <SubAnimWrapper
@@ -176,6 +179,24 @@ export default function Main(props: Props) {
     </Container>
   );
 }
+
+const ListHeaderContainer = styled.View`
+  width: 100%;
+  height: 100px;
+  padding: 0px 20px;
+`;
+
+const ListMainText = styled(GeneralText)`
+  font-family: ${fontFamilies.medium};
+  font-size: 24px;
+`;
+
+const ListSubText = styled(GeneralText)`
+  font-family: ${fontFamilies.regular};
+  color: ${colors.bareGrey};
+  margin-top: 14px;
+  font-size: 14px;
+`;
 
 const TopCarousel = styled.ScrollView``;
 
@@ -238,11 +259,4 @@ const AnimationContainer = styled.View`
 
 const HSeperator = styled.View`
   height: 20px;
-`;
-
-const TempImage = styled.Image<{ width: number; height: number }>`
-  width: ${(props) => props.width + "px"};
-  height: ${(props) => props.height + "px"};
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
 `;
