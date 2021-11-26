@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
 import { Image, Dimensions } from "react-native";
-import { colors, Text } from "../styles/styles";
+import { colors, GeneralText, Text } from "../styles/styles";
 import { useDB } from "../lib/RealmDB";
 import storage from "../lib/helpers/myAsyncStorage";
 import { useQuery } from "react-query";
@@ -16,6 +16,7 @@ interface Props {}
 const { width, height } = Dimensions.get("window");
 
 export default function Main(props: Props) {
+  const [middleTab, setMiddleTab] = useState(0);
   const realm = useDB();
   const [temp, setTemp] = useState("");
 
@@ -68,11 +69,22 @@ export default function Main(props: Props) {
                 height={height * 0.3}
                 key={idx}
               />
-              // <Text>item.coverImage </Text>
             );
           })}
         </TopCarousel>
       </TopCarouselContainer>
+      <MiddleTabContainer>
+        <MiddleTab onPress={() => setMiddleTab(0)}>
+          <MiddleTabTextWrapper isSelected={middleTab === 0}>
+            <MiddleTabText isSelected={middleTab === 0}>전체보기</MiddleTabText>
+          </MiddleTabTextWrapper>
+        </MiddleTab>
+        <MiddleTab onPress={() => setMiddleTab(1)}>
+          <MiddleTabTextWrapper isSelected={middleTab === 1}>
+            <MiddleTabText isSelected={middleTab === 1}>후기보기</MiddleTabText>
+          </MiddleTabTextWrapper>
+        </MiddleTab>
+      </MiddleTabContainer>
       <Text>Main </Text>
     </Container>
   );
@@ -85,8 +97,6 @@ const TopCarousel = styled.ScrollView`
 
 const Container = styled.View`
   flex: 1;
-  /* justify-content: center;
-  align-items: center; */
   background-color: ${colors.bgColor};
 `;
 
@@ -95,4 +105,29 @@ const TopCarouselContainer = styled.View`
   height: ${height * 0.3 + "px"};
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+`;
+
+const MiddleTabContainer = styled.View`
+  width: ${width + "px"};
+  height: ${height * 0.1 + "px"};
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MiddleTab = styled.TouchableOpacity`
+  flex: 0.45;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MiddleTabTextWrapper = styled.View<{ isSelcted: boolean }>`
+  border-bottom-width: ${(props) => (props.isSelected ? "1px" : 0)};
+  border-color: ${colors.black};
+`;
+
+const MiddleTabText = styled(GeneralText)<{ isSelcted: boolean }>`
+  font-size: 20px;
+  padding: 12px;
+  color: ${(props) => (props.isSelected ? colors.black : colors.bareGrey)};
 `;
