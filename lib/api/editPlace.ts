@@ -2,7 +2,6 @@ import AxiosClient from "../apiClient";
 import {
   EditPlaceInput,
   EditPlaceOutput,
-  AdminPlaceData,
 } from "../../lib/api/types";
 import { AxiosResponse } from "axios";
 import { BASE_URL } from "../utils";
