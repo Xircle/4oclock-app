@@ -7,6 +7,7 @@ interface Props {
   coverImageUrl: string;
   width: number;
   height: number;
+  key: number;
 }
 
 export default function TopCarouselPlace({
