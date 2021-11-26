@@ -1,11 +1,11 @@
-import { GetPlacesByLocationOutput, PlaceFeedData } from "./types.d";
+import { GetPlacesByLocationOutput, PlaceFeedData } from "./types";
 import AxiosClient from "../apiClient";
 import storage from "../helpers/myAsyncStorage";
 import { BASE_URL } from "../utils";
 
 export type PlaceLocation = "전체" | "안암" | "신촌";
 
-export const getPlacesByLocation = async (
+export const getPlacesForCarousel = async (
   selectedLocation: PlaceLocation,
   page: number = 1,
   limit: number = 10
@@ -27,7 +27,7 @@ export const getPlacesByLocation = async (
   return data;
 };
 
-export const getPlacesNew = async ({
+export const getPlacesMain = async ({
   pageParam,
 }): Promise<GetPlacesByLocationOutput | undefined> => {
   const axiosclient = await AxiosClient();
