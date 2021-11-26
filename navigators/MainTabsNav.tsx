@@ -38,6 +38,7 @@ export default function MainTabsNav(props: Props) {
         component={Main}
         options={{
           title: "메인",
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             // <TabIcon iconName={"home"} color={color} focused={focused} />
             // <Text>hihi</Text>
