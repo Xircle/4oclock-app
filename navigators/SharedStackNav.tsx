@@ -17,7 +17,6 @@ const Stack =
   Platform.OS === "ios" ? createNativeStackNavigator() : createStackNavigator();
 
 export default function SharedStackNav({ screenName }: Props) {
-  const navigation = useNavigation();
   return (
     <Stack.Navigator
       screenOptions={{
@@ -41,8 +40,7 @@ export default function SharedStackNav({ screenName }: Props) {
       <Stack.Screen
         name="MyPlaces"
         component={MyPlaces}
-        options={{ headerShown: true,
-        headerTitle: "내가 참여한 이팅" }}
+        options={{ headerShown: true, headerTitle: "내가 참여한 이팅" }}
       />
       <Stack.Screen
         name="MyProfile"

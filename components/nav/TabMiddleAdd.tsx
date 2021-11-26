@@ -5,32 +5,33 @@ import { Dimensions, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import TabIcon from "./TabIcon";
 
-interface Props {}
+interface Props {
+  focused: boolean;
+}
 
 const { width } = Dimensions.get("window");
 
-export default function TabMiddleAdd(props: Props) {
+export default function TabMiddleAdd({ focused }: Props) {
+  
   return (
-    <Container style={{ transform: [{ translateY: -18 }] }} width={width}>
+    <Container width={width} focused={focused}>
       {/* <Ionicons name="add-circle" color={colors.mainBlue} size={width} /> */}
-      <BigLabel>+</BigLabel>
-      <Label>개설</Label>
+      <Label>모임 개설</Label>
     </Container>
   );
 }
 
-const Container = styled.View<{ width: number }>`
-  height: 80px;
+const Container = styled.View<{ width: number, focused: boolean }>`
+  height: 40px;
   width: 80px;
   border-radius: 40px;
   align-items: center;
   justify-content: center;
-  background-color: ${colors.mainBlue};
+  background-color: ${props => props.focused ? colors.mainBlue : colors.bareGrey};
 `;
 
 const Label = styled(GeneralText)`
   color: ${colors.bgColor};
-  transform: translateY(-15px);
 `;
 
 const BigLabel = styled(Label)`

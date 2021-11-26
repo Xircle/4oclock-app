@@ -55,7 +55,9 @@ export default function MainTabsNav(props: Props) {
         component={CreateActivityScreen}
         options={{
           title: "생성하기",
-          tabBarIcon: ({ focused, color, size }) => <TabMiddleAdd />,
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabMiddleAdd focused={focused} />
+          ),
         }}
       />
       {/* <Tabs.Screen
