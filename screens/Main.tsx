@@ -1,13 +1,18 @@
 import styled from "styled-components/native";
 import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, Animated, View } from "react-native";
+import { Dimensions, Animated, View, Image, FlatList } from "react-native";
 import { colors, GeneralText, Text } from "../styles/styles";
 import { useDB } from "../lib/RealmDB";
-import { useQuery } from "react-query";
-import { GetPlacesByLocationOutput } from "../lib/api/types";
-import { getPlacesByLocation } from "../lib/api/getPlacesByLocation";
+import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
+import { GetPlacesByLocationOutput, PlaceFeedData } from "../lib/api/types";
+import {
+  getPlacesByLocation,
+  getPlacesNew,
+} from "../lib/api/getPlacesByLocation";
 import TopCarouselPlace from "../components/main/TopCarouselPlace";
 import optimizeImage from "../lib/helpers/optimizeImage";
+import { PlaceData } from "../lib/api/types.d";
+import Loader from "../components/UI/Loader";
 
 interface Props {}
 
@@ -15,34 +20,64 @@ const { width, height } = Dimensions.get("window");
 
 export default function Main(props: Props) {
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
+  const [ableToRefetch, setAbleToRefetch] = useState(false);
+  const [page, setPage] = useState(1);
+  const [refreshing, setRefreshing] = useState(false);
   const realm = useDB();
 
+  const queryClient = useQueryClient();
+
   // api call
+  const { data: topCarouselData } = useQuery<
+    GetPlacesByLocationOutput | undefined
+  >(["places", "전체", "top"], () => getPlacesByLocation("전체", 1), {
+    retry: 1,
+    refetchOnWindowFocus: false,
+  });
   const {
-    data: topCarouselData,
-    isLoading,
-    isError,
-    isFetching,
-    isFetched,
-  } = useQuery<GetPlacesByLocationOutput | undefined>(
-    ["place", "전체", 1],
-    () => getPlacesByLocation("전체", 1),
+    data: mainPlaceData,
+    isLoading: mainPlaceDataLoading,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery<GetPlacesByLocationOutput | undefined>(
+    ["places", "전체", "main"],
+    getPlacesNew,
     {
-      retry: 1,
-      refetchOnWindowFocus: false,
+      getNextPageParam: (currentPage) => {
+        return 2;
+      },
     }
   );
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await queryClient.refetchQueries(["place", "전체", "main"]);
+    setRefreshing(false);
+  };
+
+  const loadMore = () => {
+    console.log("fetch Before");
+    if (hasNextPage) {
+      console.log("fetch called");
+      fetchNextPage();
+      console.log("fetch After");
+    }
+  };
+
+  useEffect(() => {
+    console.log(mainPlaceData);
+  }, [mainPlaceData]);
+
   // values
   const position = useRef(new Animated.Value(0)).current;
-
+  const loading = mainPlaceDataLoading;
   // animations
   const middleTabAnim = (middleTab: number, position: Animated.Value) =>
     Animated.timing(position, {
       toValue: middleTab * width * -1,
       useNativeDriver: true,
     });
-
+  if (loading) return <Loader />;
   return (
     <Container>
       <TopCarouselContainer
@@ -107,21 +142,36 @@ export default function Main(props: Props) {
         </MiddleTab>
       </MiddleTabContainer>
       <AnimationContainer>
-        <AnimationWrapper
+        <MainAnimWrapper
           style={{
             transform: [{ translateX: position }],
           }}
-        >
-          <Text>Main </Text>
-        </AnimationWrapper>
-        <AnimationWrapper
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.4}
+          onRefresh={onRefresh}
+          refreshing={refreshing}
+          ItemSeparatorComponent={HSeperator}
+          keyExtractor={(item: PlaceFeedData) => item.id + ""}
+          data={mainPlaceData.pages.map((page) => page.places).flat()}
+          renderItem={({ item }) => (
+            <Image
+              source={require("../statics/images/mascot.png")}
+              style={{ width: 300, resizeMode: "contain" }}
+            />
+          )}
+        />
+
+        <SubAnimWrapper
           style={{
             left: width,
             transform: [{ translateX: position }],
           }}
         >
-          <Text>Sub </Text>
-        </AnimationWrapper>
+          <Image
+            source={require("../statics/images/mascot.png")}
+            style={{ width: 300, resizeMode: "contain" }}
+          />
+        </SubAnimWrapper>
       </AnimationContainer>
     </Container>
   );
@@ -166,7 +216,16 @@ const MiddleTabText = styled(GeneralText)<{ isSelcted: boolean }>`
   color: ${(props) => (props.isSelected ? colors.black : colors.bareGrey)};
 `;
 
-const AnimationWrapper = styled(Animated.createAnimatedComponent(View))`
+const SubAnimWrapper = styled(Animated.createAnimatedComponent(View))`
+  background-color: ${colors.bgColor};
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MainAnimWrapper = styled(Animated.createAnimatedComponent(FlatList))`
   background-color: ${colors.bgColor};
   width: 100%;
   height: 100%;
@@ -175,4 +234,15 @@ const AnimationWrapper = styled(Animated.createAnimatedComponent(View))`
 
 const AnimationContainer = styled.View`
   flex: 1;
+`;
+
+const HSeperator = styled.View`
+  height: 20px;
+`;
+
+const TempImage = styled.Image<{ width: number; height: number }>`
+  width: ${(props) => props.width + "px"};
+  height: ${(props) => props.height + "px"};
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 `;
