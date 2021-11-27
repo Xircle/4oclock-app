@@ -260,7 +260,7 @@ export default function MyProfile(props: Props) {
               source={localProfileData.profileImageUrl}
               size={width * 0.5}
             />
-            <ChangeProfilePicText>프로필사진 수정하러가기</ChangeProfilePicText>
+            <ChangeProfilePicText>프로필사진 수정하기</ChangeProfilePicText>
           </AvatarWrapper>
           <DetailContainer>
             <InfoText>
