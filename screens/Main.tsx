@@ -163,9 +163,9 @@ export default function Main(props: Props) {
           </MiddleTabTextWrapper>
         </MiddleTab>
       </MiddleTabContainer>
+
       <AnimationContainer>
         <MainAnimWrapper
-          {...mainPanResponder.panHandlers}
           style={{
             transform: [{ translateX: position }],
             padding: 20,
@@ -182,6 +182,7 @@ export default function Main(props: Props) {
           refreshing={refreshing}
           ItemSeparatorComponent={HSeperator}
           keyExtractor={(item: PlaceFeedData) => item.id + ""}
+          // @ts-ignore
           data={mainPlaceData.pages.map((page) => page.places).flat()}
           renderItem={({ item }) => (
             <MidFlatListPlace coverImage={item.coverImage} name={item.name} />
@@ -189,7 +190,6 @@ export default function Main(props: Props) {
         />
 
         <SubAnimWrapper
-          {...subPanResponder.panHandlers}
           style={{
             left: width,
             transform: [{ translateX: position }],
