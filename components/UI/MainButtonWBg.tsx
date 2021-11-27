@@ -28,7 +28,7 @@ export default function MainButtonWBg({
 
 const Container = styled.View`
   background-color: ${colors.bgColor};
-  padding: ${width * 0.05 + "px"};
+  padding: ${width * 0.03 + "px"} ${width * 0.05 + "px"};
   position: absolute;
   left: 0;
   bottom: 0;
