@@ -1,10 +1,10 @@
-import { CreatePlaceOutput, CreatePlaceData } from "./types.d";
+import { CreateActivityOutput, CreateActivityData } from "./types.d";
 import AxiosClient from "../apiClient";
 import { BASE_URL } from "../utils";
 
 export const createPlace = async (
-  placeData: CreatePlaceData
-): Promise<CreatePlaceOutput> => {
+  placeData: CreateActivityData
+): Promise<CreateActivityOutput> => {
   const formData = new FormData();
   const axiosclient = await AxiosClient();
 
@@ -32,7 +32,7 @@ export const createPlace = async (
   formData.append("recommendation", placeData.recommendation);
   formData.append("participationFee", placeData.participationFee);
   formData.append("oneLineIntroText", placeData.oneLineIntroText);
-  const { data } = await axiosclient.post<CreatePlaceOutput>(
+  const { data } = await axiosclient.post<CreateActivityOutput>(
     `${BASE_URL}/place`,
     formData
   );

@@ -1,4 +1,4 @@
-import { CreatePlaceOutput } from "./api/types.d";
+import { CreateActivityOutput } from "./api/types.d";
 import moment from "moment";
 
 export type CreatePlaceAction =
@@ -24,7 +24,7 @@ export type CreatePlaceAction =
   // @ts-ignore
   | { type: "setReviewImagesFile"; payload: File[] };
 
-export const placeInitialState: CreatePlaceOutput = {
+export const placeInitialState: CreateActivityOutput = {
   name: "미정",
   isLightning: false,
   maxParticipantsNumber: "4",
@@ -47,9 +47,9 @@ export const placeInitialState: CreatePlaceOutput = {
 };
 
 export function reducer(
-  state: CreatePlaceOutput,
+  state: CreateActivityOutput,
   action: CreatePlaceAction
-): CreatePlaceOutput {
+): CreateActivityOutput {
   switch (action.type) {
     case "setName":
       return {
