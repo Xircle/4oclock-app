@@ -42,9 +42,9 @@ export const XLButton = styled.TouchableOpacity<{
       : props.bgColor
       ? props.bgColor
       : colors.mainBlue};
-  border-radius: ${width / 30 + "px"};
+  border-radius: ${width / 25 + "px"};
   width: ${width * 0.9 + "px"};
-  height: ${width * 0.18 + "px"};
+  height: ${width * 0.15 + "px"};
   justify-content: center;
   align-items: center;
 `;
