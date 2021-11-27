@@ -115,7 +115,7 @@ export interface PlaceData {
   };
 }
 
-export interface CreatePlaceData {
+export interface CreateActivityData {
   name: string;
   isLightning: boolean;
   maxParticipantsNumber?: string;
@@ -138,7 +138,7 @@ export interface CreatePlaceData {
 }
 
 // need to change CreatePlaceOutput
-export interface CreatePlaceOutput extends CreatePlaceData {}
+export interface CreateActivityOutput extends CreateActivityData {}
 
 export interface GetPlaceByIdOutput extends CoreOutput {
   placeData: PlaceData;
@@ -227,7 +227,7 @@ export interface CancelReservationOutput extends CoreOutput {}
 
 export interface EditPlaceInput {
   placeId: string;
-  state: CreatePlaceOutput;
+  state: CreateActivityOutput;
 }
 
 export interface EditPlaceOutput extends CoreOutput {}
