@@ -1,7 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
-import MyPlaces from "../screens/MyPage/MyPlaces";
+import MyActivities from "../screens/MyPage/MyActivitiess";
 import MyPage from "../screens/MyPage/MyPage";
 import MyProfile from "../screens/MyPage/MyProfile";
 import { colors } from "../styles/styles";
@@ -39,7 +39,7 @@ export default function SharedStackNav({ screenName }: Props) {
       <Stack.Screen name="MyPage" component={MyPage} />
       <Stack.Screen
         name="MyPlaces"
-        component={MyPlaces}
+        component={MyActivities}
         options={{ headerShown: true, headerTitle: "내가 참여한 이팅" }}
       />
       <Stack.Screen

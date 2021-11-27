@@ -7,7 +7,7 @@ import { colors, Text } from "../../styles/styles";
 
 interface Props {}
 
-export default function MyPlaces(props: Props) {
+export default function MyActivities(props: Props) {
   const { data: myPlacesData, isLoading } = useQuery<MyPlaceData[]>(
     "myPlaces",
     () => getMyPlaces(),

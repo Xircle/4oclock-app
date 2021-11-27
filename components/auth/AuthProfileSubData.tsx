@@ -6,7 +6,7 @@ import {
   fontFamilies,
   GeneralText,
   GreyInfoText,
-  Label,
+  GreyLabel,
   MainHeading,
   Text,
   TextArea,
@@ -155,7 +155,7 @@ const InfoText = styled(GreyInfoText)`
   margin-top: 18px;
 `;
 
-const SLabel = styled(Label)`
+const SLabel = styled(GreyLabel)`
   margin-top: 20px;
   font-size: 20px;
   font-family: ${fontFamilies.regular};

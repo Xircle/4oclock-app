@@ -5,7 +5,7 @@ import {
   colors,
   ErrorMessage,
   fontFamilies,
-  Label,
+  GreyLabel,
   TextArea,
 } from "../../styles/styles";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
@@ -386,7 +386,7 @@ const YKButton = styled.TouchableOpacity`
   margin-top: 20px;
 `;
 
-const SLabel = styled(Label)`
+const SLabel = styled(GreyLabel)`
   margin-top: 20px;
 `;
 

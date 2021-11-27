@@ -10,7 +10,7 @@ import {
   ErrorMessage,
   fontFamilies,
   GeneralText,
-  Label,
+  GreyLabel,
   MainHeading,
   TextArea,
 } from "../../styles/styles";
@@ -248,7 +248,7 @@ const Radio = styled.TouchableOpacity`
   padding: 8px;
 `;
 
-const SLabel = styled(Label)`
+const SLabel = styled(GreyLabel)`
   margin-top: 20px;
   font-size: 20px;
   font-family: ${fontFamilies.regular};

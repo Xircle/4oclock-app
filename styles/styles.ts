@@ -84,8 +84,14 @@ export const BigTextInput = styled.TextInput`
   font-family: ${fontFamilies.regular};
 `;
 
-export const Label = styled.Text`
+export const GreyLabel = styled.Text`
   color: ${colors.midGrey};
+  font-size: 16px;
+  font-family: ${fontFamilies.regular};
+`;
+
+export const BlackLabel = styled.Text`
+  color: ${colors.black};
   font-size: 16px;
   font-family: ${fontFamilies.regular};
 `;
