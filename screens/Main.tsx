@@ -80,16 +80,13 @@ export default function Main(props: Props) {
   const mainPanResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {
+        console.log("start");
+      },
       onPanResponderMove: (_, { dx }) => {
-        position.setValue(dx);
+        console.log(position + "     " + dx);
       },
-      onPanResponderRelease: (_, { dx }) => {
-        if (dx > 150) {
-          middleTabAnim(1, position).start();
-        } else {
-          middleTabAnim(0, position).start();
-        }
-      },
+      onPanResponderRelease: (_, { dx }) => {},
     })
   ).current;
 
@@ -97,15 +94,9 @@ export default function Main(props: Props) {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (_, { dx }) => {
-        position.setValue(dx);
+        console.log(position + "     " + dx);
       },
-      onPanResponderRelease: (_, { dx }) => {
-        if (dx < -150) {
-          middleTabAnim(0, position).start();
-        } else {
-          middleTabAnim(1, position).start();
-        }
-      },
+      onPanResponderRelease: (_, { dx }) => {},
     })
   ).current;
   if (loading) return <Loader />;
