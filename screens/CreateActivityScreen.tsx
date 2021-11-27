@@ -1,32 +1,97 @@
 import styled from "styled-components/native";
-import React from "react";
+import React, { useState, useReducer, useRef, useEffect } from "react";
 import { colors, MainHeading, SubHeading, Text } from "../styles/styles";
-import { ScrollView } from "react-native";
+import { ScrollView, Animated, Dimensions, View } from "react-native";
+import MainButtonWBg from "../components/UI/MainButtonWBg";
+import { activityInitialState, reducer } from "../lib/activity/ActivityReducer";
+import CreatePlaceStage1 from "../components/activity/CreatePlaceStage1";
+import CreatePlaceStage2 from "../components/activity/CreatePlaceStage2";
+import CreatePlaceStage3 from "../components/activity/CreatePlaceStage3";
 
 interface Props {}
 
+const { width } = Dimensions.get("screen");
+
 export default function CreateActivityScreen(props: Props) {
+  const [stage, setStage] = useState(0);
+  const totalStage = 3;
+  const [state, dispatch] = useReducer(reducer, activityInitialState);
+  // values
+  const position = useRef(new Animated.Value(0)).current;
+
+  // animations
+  const animateByStage = (step: number, position: Animated.Value) =>
+    Animated.timing(position, {
+      toValue: step * width * -1,
+      useNativeDriver: true,
+    });
+  const backHandler = (stage: number) => {
+    setStage(stage - 1);
+    animateByStage(stage - 1, position).start();
+  };
+  const nextHandler = (stage: number) => {
+    setStage(stage + 1);
+    animateByStage(stage + 1, position).start();
+  };
+
+  // regular functions
+  const isDisable = () => {};
+
+  const cleanUp = () => {
+    setStage(0);
+    position.setValue(0);
+  };
+
   return (
     <Container>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <MainHeading>모임을 열어볼까?</MainHeading>
-        <SubHeading style={{ marginTop: 20 }}>
-          재밌는 모임을 열어보자~~ 행복하고 재밌는 모임
-        </SubHeading>
-        
-      </ScrollView>
+      <Wrapper>
+        <AnimationWrapper
+          style={{
+            transform: [{ translateX: position }],
+          }}
+        >
+          <CreatePlaceStage1 />
+        </AnimationWrapper>
+        <AnimationWrapper
+          style={{
+            transform: [{ translateX: position }],
+            left: width * 1,
+          }}
+        >
+          <CreatePlaceStage2 onBackPressed={() => backHandler(1)} />
+        </AnimationWrapper>
+        <AnimationWrapper
+          style={{
+            transform: [{ translateX: position }],
+            left: width * 2,
+          }}
+        >
+          <CreatePlaceStage3 cleanUp={cleanUp} />
+        </AnimationWrapper>
+      </Wrapper>
+      {stage < totalStage - 1 && (
+        <MainButtonWBg
+          onPress={() => nextHandler(stage)}
+          disabled={false}
+          title={"모임열기"}
+        ></MainButtonWBg>
+      )}
     </Container>
   );
 }
 
-const Container = styled.ScrollView`
+const Wrapper = styled.View`
   flex: 1;
-  background-color: ${colors.bgColor};
-  padding: 0px 30px;
 `;
 
+const Container = styled.View`
+  flex: 1;
+  background-color: ${colors.bgColor};
+`;
 
-
-const SubImageContainer = styled.View``;
-
-const CoverImageContainer = styled.View``;
+const AnimationWrapper = styled(Animated.createAnimatedComponent(View))`
+  background-color: ${colors.bgColor};
+  width: 100%;
+  height: 100%;
+  position: absolute;
+`;
