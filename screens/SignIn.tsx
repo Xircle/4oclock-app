@@ -42,7 +42,6 @@ export default function SignIn({ route }: Props) {
     );
   }, []);
 
-  // API
 
   // values
   const position = useRef(new Animated.Value(0)).current;
@@ -51,7 +50,7 @@ export default function SignIn({ route }: Props) {
     outputRange: [0, -0.25 * width, -0.5 * width, -0.75 * width, -1 * width],
   });
   // animations
-  const animateByStep = (step: number, position: Animated.Value) =>
+  const animateByStage = (step: number, position: Animated.Value) =>
     Animated.timing(position, {
       toValue: step * width * -1,
       useNativeDriver: true,
@@ -60,14 +59,14 @@ export default function SignIn({ route }: Props) {
   const backHandler = () => {
     if (step > 0) {
       setStep(step - 1);
-      animateByStep(step - 1, position).start();
+      animateByStage(step - 1, position).start();
     }
   };
 
   const nextHandler = async () => {
     if (step < limit - 1) {
       setStep(step + 1);
-      animateByStep(step + 1, position).start();
+      animateByStage(step + 1, position).start();
     } else {
       try {
         const data: CreateAccountOutput = await createAccount(state);
