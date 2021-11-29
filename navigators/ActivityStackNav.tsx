@@ -44,12 +44,14 @@ export default function ActivityStackNav({ route }: Props) {
       </Stack.Screen>
       <Stack.Screen
         name="Reservation"
-        options={{ title: route.params.name }}
+        options={{
+          title: route.params.name,
+        }}
         component={Reservation}
       />
       <Stack.Screen
         name="ReservationConfirm"
-        options={{ headerShown: false }}
+        options={{ headerShown: false, gestureEnabled: false }}
         component={ReservationConfirm}
       />
     </Stack.Navigator>
