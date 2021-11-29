@@ -75,8 +75,8 @@ export default function MyPage({ isRefetch }: Props) {
           </SXLButton>
           <ListContainer>
             <ListButton>
-              {/* @ts-ignore */}
               <RegisteredButton
+                // @ts-ignore
                 onPress={() => naviagtion.navigate("MyActivities")}
               >
                 <ListText style={{ fontFamily: fontFamilies.bold }}>

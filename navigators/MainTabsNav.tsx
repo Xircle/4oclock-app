@@ -1,14 +1,12 @@
-import styled from "styled-components";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, Text, Dimensions } from "react-native";
+import {Dimensions } from "react-native";
 import Main from "../screens/Main";
 import RandomProfile from "../screens/RandomProfile";
 import Chat from "../screens/Chat";
 import MyPage from "../screens/MyPage/MyPage";
 import TabIcon from "../components/nav/TabIcon";
 import { colors } from "../styles/styles";
-import SharedStackNav from "./SharedStackNav";
 import CreateActivityScreen from "../screens/CreateActivityScreen";
 import TabMiddleAdd from "../components/nav/TabMiddleAdd";
 import TabSide from "../components/nav/TabSide";
