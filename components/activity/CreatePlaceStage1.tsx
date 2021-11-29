@@ -1,16 +1,23 @@
 import styled from "styled-components/native";
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   BlackLabel,
   colors,
   MainHeading,
   SubHeading,
 } from "../../styles/styles";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
+import Animated from "react-native-reanimated";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {}
 
 export default function CreatePlaceStage1(props: Props) {
+  // values
+
+  // animations
+
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -19,22 +26,29 @@ export default function CreatePlaceStage1(props: Props) {
           재밌는 모임을 열어보자~~ 행복하고 재밌는 모임
         </SubHeading>
         <InnerContainer>
-          <BlackLabel>어떤 모임인가요? (제목)</BlackLabel>
+          <SBlackLabel>어떤 모임인가요? (제목)</SBlackLabel>
         </InnerContainer>
         <InnerContainer>
-          <BlackLabel>모임에 대한 간단한 소개!</BlackLabel>
+          <SBlackLabel>모임에 대한 간단한 소개!</SBlackLabel>
         </InnerContainer>
+        <TouchableWithoutFeedback>
+          <SpaceBetweenContainer>
+            <SBlackLabel>만남시간</SBlackLabel>
+            <Ionicons name="add-outline" size={24} color="black" />
+          </SpaceBetweenContainer>
+        </TouchableWithoutFeedback>
+
+        <TouchableWithoutFeedback>
+          <SpaceBetweenContainer>
+            <SBlackLabel>만남위치</SBlackLabel>
+            <Ionicons name="add-outline" size={24} color="black" />
+          </SpaceBetweenContainer>
+        </TouchableWithoutFeedback>
         <SpaceBetweenContainer>
-          <BlackLabel>만남시간</BlackLabel>
+          <SBlackLabel>참가인원</SBlackLabel>
         </SpaceBetweenContainer>
         <SpaceBetweenContainer>
-          <BlackLabel>만남위치</BlackLabel>
-        </SpaceBetweenContainer>
-        <SpaceBetweenContainer>
-          <BlackLabel>참가인원</BlackLabel>
-        </SpaceBetweenContainer>
-        <SpaceBetweenContainer>
-          <BlackLabel>만남 fee</BlackLabel>
+          <SBlackLabel>만남 fee</SBlackLabel>
         </SpaceBetweenContainer>
       </ScrollView>
     </Container>
@@ -54,4 +68,13 @@ const InnerContainer = styled.View`
 const SpaceBetweenContainer = styled.View`
   margin: 10px 0;
   justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const SBlackLabel = styled(BlackLabel)``;
+
+const AnimationWrapper = styled(Animated.createAnimatedComponent(View))`
+  background-color: ${colors.bgColor};
+  width: 100%;
 `;
