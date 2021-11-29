@@ -99,6 +99,7 @@ export interface PlaceData {
   startDateAt: string;
   reviews: Review[];
   isLightning?: boolean;
+  participantsUsername?: string[];
   participantsInfo: {
     total_count: number;
     male_count: number;
