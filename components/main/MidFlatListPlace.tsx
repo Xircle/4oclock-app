@@ -3,18 +3,30 @@ import React from "react";
 import { colors, fontFamilies, GeneralText } from "../../styles/styles";
 import { Dimensions } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {
   coverImage?: string;
   name?: string;
-  placeLocation?: string;
+  id?: string;
 }
 
 const { height } = Dimensions.get("window");
 
-export default function MidFlatListPlace({ coverImage, name }: Props) {
+export default function MidFlatListPlace({ coverImage, name, id }: Props) {
+  const navigation = useNavigation();
+
+  const onPress = () => {
+    // @ts-ignore
+    navigation.navigate("ActivityStackNav", {
+      id: id,
+      name: name,
+      coverImage: coverImage,
+    });
+  };
+
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={onPress}>
       <Container>
         <CoverImage source={{ uri: coverImage }} />
         <Overlay></Overlay>
