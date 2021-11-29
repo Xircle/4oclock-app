@@ -85,7 +85,7 @@ export default function MainTabsNav(props: Props) {
         }}
       /> */}
       <Tabs.Screen
-        name="MyPageT"
+        name="MyPage"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabSide
@@ -97,9 +97,8 @@ export default function MainTabsNav(props: Props) {
           ),
           headerShown: false,
         }}
-      >
-        {() => <SharedStackNav screenName="MyPage" />}
-      </Tabs.Screen>
+        component={MyPage}
+      />
     </Tabs.Navigator>
   );
 }

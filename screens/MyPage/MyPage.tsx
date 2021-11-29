@@ -76,7 +76,9 @@ export default function MyPage({ isRefetch }: Props) {
           <ListContainer>
             <ListButton>
               {/* @ts-ignore */}
-              <RegisteredButton onPress={() => naviagtion.navigate("MyPlaces")}>
+              <RegisteredButton
+                onPress={() => naviagtion.navigate("MyActivities")}
+              >
                 <ListText style={{ fontFamily: fontFamilies.bold }}>
                   신청한 모임 {userData?.reservation_count}
                 </ListText>
