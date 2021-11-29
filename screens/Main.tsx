@@ -77,28 +77,7 @@ export default function Main(props: Props) {
     });
 
   // pan Resonders
-  const mainPanResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        console.log("start");
-      },
-      onPanResponderMove: (_, { dx }) => {
-        console.log(position + "     " + dx);
-      },
-      onPanResponderRelease: (_, { dx }) => {},
-    })
-  ).current;
 
-  const subPanResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: (_, { dx }) => {
-        console.log(position + "     " + dx);
-      },
-      onPanResponderRelease: (_, { dx }) => {},
-    })
-  ).current;
   if (loading) return <Loader />;
   return (
     <Container>

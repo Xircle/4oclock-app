@@ -8,7 +8,6 @@ export const createAccount = async (
 ): Promise<CreateAccountOutput> => {
   const formData = new FormData();
   const axiosclient = await AxiosClient();
-  console.log(state.profileImgFile);
   state.profileImgFile
     ? formData.append("profileImageFile", state.profileImgFile!)
     : formData.append("profileImageUrl", state.profileImgUrl!);
@@ -27,11 +26,9 @@ export const createAccount = async (
   formData.append("MBTI", state.MBTI);
     formData.append("personality", state.personality);
   formData.append("drinkingStyle", state.drinkingStyle + "");
-  console.log("2");
   const { data } = await axiosclient.post<CreateAccountOutput>(
     `${BASE_URL}/auth/social/register/kakao`,
     formData
   );
-  console.log("done");
   return data;
 };
