@@ -185,7 +185,11 @@ export default function Main(props: Props) {
           // @ts-ignore
           data={mainPlaceData.pages.map((page) => page.places).flat()}
           renderItem={({ item }) => (
-            <MidFlatListPlace coverImage={item.coverImage} name={item.name} />
+            <MidFlatListPlace
+              coverImage={item.coverImage}
+              name={item.name}
+              id={item.id}
+            />
           )}
         />
 
