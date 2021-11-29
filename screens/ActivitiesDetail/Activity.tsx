@@ -47,6 +47,8 @@ export default function Activity({ coverImage, id, name }: Props) {
     console.log(activityData);
   }, [activityData]);
 
+  const disabled = activityData?.isParticipating || activityData?.isClosed;
+
   return (
     <Container>
       <ScrollView>
@@ -109,7 +111,11 @@ export default function Activity({ coverImage, id, name }: Props) {
         </InnerWrapper>
         <View style={{ height: 200 }} />
       </ScrollView>
-      <MainButtonWBg title="나도 놀러갈래!" onPress={onPress} />
+      <MainButtonWBg
+        title={disabled ? "현재 신청이 불가합니다" : "나도 놀러갈래~"}
+        onPress={onPress}
+        disabled={disabled}
+      />
     </Container>
   );
 }
