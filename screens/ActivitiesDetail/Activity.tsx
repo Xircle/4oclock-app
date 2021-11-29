@@ -41,11 +41,16 @@ export default function Activity({ coverImage, id, name }: Props) {
     }
   );
 
-  const onPress = () => {};
+  const onPress = () => {
+    navigation.navigate("Reservation", {
+      detailAddress: activityData?.placeDetail.detailAddress,
+      participationFee: activityData?.placeDetail.participationFee,
+      startDateFromNow: activityData?.startDateFromNow,
+      startTime: activityData?.startDateAt,
+    });
+  };
 
-  useEffect(() => {
-    console.log(activityData);
-  }, [activityData]);
+
 
   const disabled = activityData?.isParticipating || activityData?.isClosed;
 
@@ -114,7 +119,7 @@ export default function Activity({ coverImage, id, name }: Props) {
       <MainButtonWBg
         title={disabled ? "현재 신청이 불가합니다" : "나도 놀러갈래~"}
         onPress={onPress}
-        disabled={disabled}
+        //disabled={disabled}
       />
     </Container>
   );
