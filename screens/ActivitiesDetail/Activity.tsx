@@ -42,15 +42,15 @@ export default function Activity({ coverImage, id, name }: Props) {
   );
 
   const onPress = () => {
+    // @ts-ignore
     navigation.navigate("Reservation", {
       detailAddress: activityData?.placeDetail.detailAddress,
       participationFee: activityData?.placeDetail.participationFee,
       startDateFromNow: activityData?.startDateFromNow,
       startTime: activityData?.startDateAt,
+      placeId: id,
     });
   };
-
-
 
   const disabled = activityData?.isParticipating || activityData?.isClosed;
 
@@ -119,7 +119,7 @@ export default function Activity({ coverImage, id, name }: Props) {
       <MainButtonWBg
         title={disabled ? "현재 신청이 불가합니다" : "나도 놀러갈래~"}
         onPress={onPress}
-        //disabled={disabled}
+        disabled={disabled}
       />
     </Container>
   );
@@ -164,11 +164,6 @@ const Description = styled(GeneralText)`
   font-size: 13px;
   font-family: ${fontFamilies.light};
   color: ${colors.midGrey};
-`;
-
-const SubImage = styled.Image`
-  width: 100%;
-  height: 100%;
 `;
 
 const UsernameContainer = styled.View`
