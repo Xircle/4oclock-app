@@ -44,14 +44,14 @@ export const XLButton = styled.TouchableOpacity<{
       : colors.mainBlue};
   border-radius: ${width / 25 + "px"};
   width: ${width * 0.9 + "px"};
-  height: ${width * 0.15 + "px"};
+  height: ${width * 0.14 + "px"};
   justify-content: center;
   align-items: center;
 `;
 
 export const XLButtonText = styled.Text`
   color: #ffffff;
-  font-size: ${width / 17 + "px"};
+  font-size: ${width / 20 + "px"};
   font-family: ${fontFamilies.medium};
 `;
 
