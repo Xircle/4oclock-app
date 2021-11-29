@@ -16,10 +16,8 @@ const Stack = createStackNavigator<ActivityStackParamList>();
 
 export default function ActivityStackNav({ route }: Props) {
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false, presentation: "card" }}
-    >
-      <Stack.Screen name="Activity">
+    <Stack.Navigator screenOptions={{ headerBackTitleVisible: false }}>
+      <Stack.Screen name="Activity" options={{ title: route.params.name }}>
         {() => (
           <Activity
             coverImage={route.params.coverImage}
