@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import MyProfile from "../screens/MyPage/MyProfile";
 import MyActivities from "../screens/MyPage/MyActivitiess";
 import ActivityStackNav from "./ActivityStackNav";
+import { Platform } from "react-native";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -26,13 +27,12 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="Tabs"
         component={MainTabsNav}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, gestureEnabled: false }}
       />
       <Stack.Screen
         name="MyProfile"
         component={MyProfile}
         options={{
-          presentation: "modal",
           headerTitle: "내가 참여한 이팅",
         }}
       />
@@ -40,13 +40,14 @@ export default function LoggedInNav() {
         name="MyActivities"
         component={MyActivities}
         options={{
-          presentation: "modal",
           headerTitle: "프로필 수정하기",
         }}
       />
-      <Stack.Screen name="ActivityStackNav" options={{ headerShown: false }}>
-        {() => <ActivityStackNav />}
-      </Stack.Screen>
+      <Stack.Screen
+        name="ActivityStackNav"
+        options={{ headerShown: false }}
+        component={ActivityStackNav}
+      />
     </Stack.Navigator>
   );
 }
