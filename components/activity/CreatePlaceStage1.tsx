@@ -9,56 +9,11 @@ import {
 import { ScrollView, View, Animated } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
+import ExpandableV from "../UI/ExpandableV";
 
 interface Props {}
 
 export default function CreatePlaceStage1(props: Props) {
-  // values
-  const [expandableStateTime, setExpandableStateTime] = useState(0);
-  const [expandableStateLocation, setExpandableStateLocation] = useState(0);
-  const expandHeightTime = 100;
-  const expandHeightLocation = 100;
-  const expandableAnimTime = useRef(new Animated.Value(0)).current;
-  const expandableAnimLocation = useRef(new Animated.Value(0)).current;
-
-  const rotationTime = expandableAnimTime.interpolate({
-    inputRange: [
-      0,
-      expandHeightTime / 4,
-      expandHeightTime / 2,
-      (expandHeightTime / 4) * 3,
-      expandHeightTime,
-    ],
-    outputRange: ["0deg", "135deg", "270deg", "405deg", "540deg"],
-  });
-
-  const rotationLocation = expandableAnimLocation.interpolate({
-    inputRange: [
-      0,
-      expandHeightLocation / 4,
-      expandHeightLocation / 2,
-      (expandHeightLocation / 4) * 3,
-      expandHeightLocation,
-    ],
-    outputRange: ["0deg", "135deg", "270deg", "405deg", "540deg"],
-  });
-
-  // animations
-  const expandTime = () => {
-    Animated.timing(expandableAnimTime, {
-      toValue: ((expandableStateTime + 1) % 2) * expandHeightTime,
-      useNativeDriver: false,
-    }).start();
-    setExpandableStateTime((prev) => prev + 1);
-  };
-  const expandLocation = () => {
-    Animated.timing(expandableAnimLocation, {
-      toValue: ((expandableStateLocation + 1) % 2) * expandHeightLocation,
-      useNativeDriver: false,
-    }).start();
-    setExpandableStateLocation((prev) => prev + 1);
-  };
-
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -66,36 +21,25 @@ export default function CreatePlaceStage1(props: Props) {
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
           재밌는 모임을 열어보자~~ 행복하고 재밌는 모임
         </SubHeading>
-        <InnerContainer>
-          <SBlackLabel>어떤 모임인가요? (제목)</SBlackLabel>
-        </InnerContainer>
-        <InnerContainer>
-          <SBlackLabel>모임에 대한 간단한 소개!</SBlackLabel>
-        </InnerContainer>
-        <TouchableWithoutFeedback onPress={expandTime}>
-          <SpaceBetweenContainer>
-            <SBlackLabel>만남시간</SBlackLabel>
-            <Animated.View style={{ transform: [{ rotateZ: rotationTime }] }}>
-              <Ionicons name="chevron-down" size={24} color="black" />
-            </Animated.View>
-          </SpaceBetweenContainer>
-        </TouchableWithoutFeedback>
-        <AnimWrapper style={{ height: expandableAnimTime }} />
-        <TouchableWithoutFeedback onPress={expandLocation}>
-          <SpaceBetweenContainer>
-            <SBlackLabel>만남위치</SBlackLabel>
-            <Animated.View style={{ transform: [{ rotateZ: rotationLocation }] }}>
-              <Ionicons name="chevron-down" size={24} color="black" />
-            </Animated.View>
-          </SpaceBetweenContainer>
-        </TouchableWithoutFeedback>
-        <AnimWrapper style={{ height: expandableAnimLocation }} />
-        <SpaceBetweenContainer>
-          <SBlackLabel>참가인원</SBlackLabel>
-        </SpaceBetweenContainer>
-        <SpaceBetweenContainer>
-          <SBlackLabel>만남 fee</SBlackLabel>
-        </SpaceBetweenContainer>
+
+        <ExpandableV title="어떤 모임인가요? (제목)" height={100}>
+          <MainHeading>모임을 열어볼까?</MainHeading>
+        </ExpandableV>
+        <ExpandableV title="모임에 대한 간단한 소개!" height={100}>
+          <MainHeading>모임을 열어볼까?</MainHeading>
+        </ExpandableV>
+        <ExpandableV title="만남시간" height={100}>
+          <MainHeading>모임을 열어볼까?</MainHeading>
+        </ExpandableV>
+        <ExpandableV title="만남장소" height={100}>
+          <MainHeading>모임을 열어볼까?</MainHeading>
+        </ExpandableV>
+        <ExpandableV title="최대 참가인원" height={100}>
+          <MainHeading>모임을 열어볼까?</MainHeading>
+        </ExpandableV>
+        <ExpandableV title="참가비" height={100}>
+          <MainHeading>모임을 열어볼까?</MainHeading>
+        </ExpandableV>
       </ScrollView>
     </Container>
   );
