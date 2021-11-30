@@ -17,7 +17,7 @@ import TopCarouselPlace from "../components/main/TopCarouselPlace";
 import optimizeImage from "../lib/helpers/optimizeImage";
 import { PlaceData } from "../lib/api/types.d";
 import Loader from "../components/UI/Loader";
-import MidFlatListPlace from "../components/main/MidFlatListPlace";
+import FlatListPlace from "../components/main/FlatListPlace";
 
 interface Props {}
 
@@ -136,6 +136,9 @@ export default function Main(props: Props) {
           }}
         >
           <MiddleTabTextWrapper isSelected={middleTabIndex === 1}>
+            <TagContiner>
+              <TagText>커밍쑨</TagText>
+            </TagContiner>
             <MiddleTabText isSelected={middleTabIndex === 1}>
               후기보기
             </MiddleTabText>
@@ -159,15 +162,15 @@ export default function Main(props: Props) {
           onEndReachedThreshold={0.4}
           onRefresh={onRefresh}
           refreshing={refreshing}
-          ItemSeparatorComponent={HSeperator}
           keyExtractor={(item: PlaceFeedData) => item.id + ""}
           // @ts-ignore
           data={mainPlaceData.pages.map((page) => page.places).flat()}
           renderItem={({ item }) => (
-            <MidFlatListPlace
+            <FlatListPlace
               coverImage={item.coverImage}
               name={item.name}
               id={item.id}
+              views={item.views}
             />
           )}
         />
@@ -237,6 +240,21 @@ const MiddleTab = styled.TouchableOpacity`
 const MiddleTabTextWrapper = styled.View<{ isSelcted: boolean }>`
   border-bottom-width: ${(props) => (props.isSelected ? "1px" : 0)};
   border-color: ${colors.black};
+  position: relative;
+`;
+
+const TagContiner = styled.View`
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #e7ecf3;
+  padding: 1px;
+  border-radius: 2px;
+`;
+
+const TagText = styled(GeneralText)`
+  font-size: 13px;
+  color: ${colors.bareGrey};
 `;
 
 const MiddleTabText = styled(GeneralText)<{ isSelcted: boolean }>`

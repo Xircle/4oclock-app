@@ -44,6 +44,7 @@ export default function App() {
     setReady(true);
   };
 
+
   if (!ready)
     return (
       <AppLoading
