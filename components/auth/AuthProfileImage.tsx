@@ -28,7 +28,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
       includeBase64: true,
     };
     const result = await ImagePicker.launchImageLibrary(option);
-    //console.log(result);
+
     if (result.errorMessage) {
       return Alert.alert(result.errorMessage);
     } else if (!result.didCancel && result?.assets?.[0].uri) {

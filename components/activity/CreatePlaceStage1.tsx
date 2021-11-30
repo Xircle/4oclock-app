@@ -30,9 +30,7 @@ export default function CreatePlaceStage1(props: Props) {
     }
   };
 
-  useEffect(() => {
-    console.log(date);
-  }, [date]);
+
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
