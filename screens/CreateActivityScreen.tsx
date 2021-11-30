@@ -19,6 +19,7 @@ export default function CreateActivityScreen(props: Props) {
   // values
   const position = useRef(new Animated.Value(0)).current;
 
+
   // animations
   const animateByStage = (step: number, position: Animated.Value) =>
     Animated.timing(position, {

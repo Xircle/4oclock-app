@@ -1,6 +1,11 @@
 import styled from "styled-components/native";
 import React, { useRef, useState } from "react";
-import { View, Animated, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  Animated,
+  TouchableWithoutFeedback,
+  Dimensions,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { BlackLabel } from "../../styles/styles";
 
@@ -9,6 +14,8 @@ interface Props {
   height: number;
   title: string;
 }
+
+const { width } = Dimensions.get("window");
 
 export default function ExpandableV({ children, height, title }: Props) {
   // values
@@ -19,6 +26,10 @@ export default function ExpandableV({ children, height, title }: Props) {
     outputRange: ["0deg", "540deg"],
   });
 
+  const opacity = expandableAnim.interpolate({
+    inputRange: [0, height],
+    outputRange: [0, 1],
+  });
   // animations
   const expandTime = () => {
     Animated.timing(expandableAnim, {
@@ -28,7 +39,7 @@ export default function ExpandableV({ children, height, title }: Props) {
     setExpandableState((prev) => prev + 1);
   };
   return (
-    <>
+    <Container>
       <TouchableWithoutFeedback onPress={expandTime}>
         <SpaceBetweenContainer>
           <BlackLabel>{title}</BlackLabel>
@@ -37,10 +48,16 @@ export default function ExpandableV({ children, height, title }: Props) {
           </Animated.View>
         </SpaceBetweenContainer>
       </TouchableWithoutFeedback>
-      <AnimWrapper style={{ height: expandableAnim }}>{children}</AnimWrapper>
-    </>
+      <AnimWrapper style={{ height: expandableAnim, opacity: opacity }}>
+        {children}
+      </AnimWrapper>
+    </Container>
   );
 }
+
+const Container = styled.View`
+  flex: 1;
+`;
 
 const SpaceBetweenContainer = styled.View`
   margin: 10px 0;
@@ -49,4 +66,6 @@ const SpaceBetweenContainer = styled.View`
   align-items: center;
 `;
 
-const AnimWrapper = styled(Animated.createAnimatedComponent(View))``;
+const AnimWrapper = styled(Animated.createAnimatedComponent(View))`
+  width: 100%;
+`;

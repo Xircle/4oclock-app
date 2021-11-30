@@ -6,14 +6,19 @@ import {
   MainHeading,
   SubHeading,
 } from "../../styles/styles";
-import { ScrollView, View, Animated } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { Ionicons } from "@expo/vector-icons";
+import { ScrollView, View, Animated, Dimensions, Platform } from "react-native";
 import ExpandableV from "../UI/ExpandableV";
+import DatePicker from "react-native-date-picker";
 
 interface Props {}
 
+const { width } = Dimensions.get("window");
+
 export default function CreatePlaceStage1(props: Props) {
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+
+  console.log(width);
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -29,7 +34,24 @@ export default function CreatePlaceStage1(props: Props) {
           <MainHeading>모임을 열어볼까?</MainHeading>
         </ExpandableV>
         <ExpandableV title="만남시간" height={100}>
-          <MainHeading>모임을 열어볼까?</MainHeading>
+          <AnimInnerContainer>
+            <PickerContainer onPress={() => setOpen(true)}>
+              <WhiteText>시간 선택하기</WhiteText>
+            </PickerContainer>
+            <DatePicker
+              modal
+              open={open}
+              date={date}
+              minuteInterval={30}
+              onConfirm={(date) => {
+                setOpen(false);
+                setDate(date);
+              }}
+              onCancel={() => {
+                setOpen(false);
+              }}
+            />
+          </AnimInnerContainer>
         </ExpandableV>
         <ExpandableV title="만남장소" height={100}>
           <MainHeading>모임을 열어볼까?</MainHeading>
@@ -45,23 +67,29 @@ export default function CreatePlaceStage1(props: Props) {
   );
 }
 
+const PickerContainer = styled.TouchableOpacity`
+  background-color: ${colors.mainBlue};
+  border-radius: 3px;
+  padding: 5px;
+`;
+
+const WhiteText = styled(BlackLabel)`
+  color: ${colors.bgColor};
+  font-size: 20px;
+`;
+
 const Container = styled.View`
   flex: 1;
   background-color: ${colors.bgColor};
   padding: 0px 30px;
 `;
 
-const InnerContainer = styled.View`
-  margin: 10px 0;
+const AnimContainer = styled.View`
+  width: 100%;
 `;
 
-const SpaceBetweenContainer = styled.View`
-  margin: 10px 0;
-  justify-content: space-between;
+const AnimInnerContainer = styled.View`
+  margin-top: 20px;
   flex-direction: row;
-  align-items: center;
+  justify-content: space-around;
 `;
-
-const SBlackLabel = styled(BlackLabel)``;
-
-const AnimWrapper = styled(Animated.createAnimatedComponent(View))``;
