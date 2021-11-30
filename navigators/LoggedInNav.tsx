@@ -40,7 +40,7 @@ export default function LoggedInNav() {
         name="MyActivities"
         component={MyActivities}
         options={{
-          headerTitle: "프로필 수정하기",
+          headerTitle: "내가 참가한 모임보기",
         }}
       />
       <Stack.Screen
