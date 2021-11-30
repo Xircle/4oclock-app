@@ -168,3 +168,8 @@ export const ModifyStringToStringArray = (
 //   const prevMessageMoment = moment(prevM);
 
 // }
+
+export const getStartDateFromNow = (startDateFromNow) => {
+  if (startDateFromNow === "마감") return startDateFromNow;
+  return `${startDateFromNow}시에 모여`;
+};
