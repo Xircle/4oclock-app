@@ -31,6 +31,7 @@ export default function MyActivities(props: Props) {
                 name={item.name}
                 id={item.id}
                 startDateFromNow={item.startDateFromNow}
+                description={item.description}
               />
             );
           })}
