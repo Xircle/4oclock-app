@@ -18,6 +18,7 @@ import optimizeImage from "../lib/helpers/optimizeImage";
 import { PlaceData } from "../lib/api/types.d";
 import Loader from "../components/UI/Loader";
 import FlatListPlace from "../components/main/FlatListPlace";
+import Swiper from "react-native-swiper";
 
 interface Props {}
 
@@ -66,6 +67,8 @@ export default function Main(props: Props) {
     }
   };
 
+
+
   // values
   const position = useRef(new Animated.Value(0)).current;
   const loading = mainPlaceDataLoading || topCarouselLoading;
@@ -94,12 +97,14 @@ export default function Main(props: Props) {
           elevation: 9,
         }}
       >
-        <TopCarousel
-          horizontal={true}
-          decelerationRate={0}
-          snapToInterval={width}
-          snapToAlignment={"center"}
-          showsVerticalScrollIndicator={false}
+        <Swiper
+          loop
+          horizontal
+          autoplay
+          autoplayTimeout={3.5}
+          containerStyle={{ width: "100%", height: "100%" }}
+          showsButtons={false}
+          showsPagination={false}
         >
           {topCarouselData?.places?.map((item, idx) => {
             if (!item.isClosed || true) {
@@ -114,7 +119,7 @@ export default function Main(props: Props) {
               );
             }
           })}
-        </TopCarousel>
+        </Swiper>
       </TopCarouselContainer>
       <MiddleTabContainer>
         <MiddleTab
@@ -171,6 +176,9 @@ export default function Main(props: Props) {
               name={item.name}
               id={item.id}
               views={item.views}
+              description={item.placeDetail.description}
+              startDateFromNow={item.startDateFromNow}
+              deadline={item.deadline}
             />
           )}
         />

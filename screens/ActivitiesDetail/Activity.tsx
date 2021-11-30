@@ -1,21 +1,16 @@
 import styled from "styled-components/native";
 import React, { useEffect } from "react";
-import {
-  colors,
-  fontFamilies,
-  GeneralText,
-  InfoText,
-} from "../../styles/styles";
-import { Alert, Dimensions, Image, TouchableOpacity, View } from "react-native";
+import { colors, fontFamilies, GeneralText } from "../../styles/styles";
+import { Alert, Dimensions, View } from "react-native";
 import optimizeImage from "../../lib/helpers/optimizeImage";
 import { useNavigation } from "@react-navigation/native";
-import MyBackButton from "../../components/UI/MyBackButton";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "react-query";
 import { PlaceData } from "../../lib/api/types.d";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import { TimeNumberToString } from "../../lib/utils";
+import Swiper from "react-native-swiper";
 
 interface Props {
   coverImage: string;
@@ -41,6 +36,10 @@ export default function Activity({ coverImage, id, name }: Props) {
     }
   );
 
+  useEffect(() => {
+    console.log(activityData);
+  }, [activityData]);
+
   const onPress = () => {
     // @ts-ignore
     navigation.navigate("Reservation", {
@@ -57,7 +56,30 @@ export default function Activity({ coverImage, id, name }: Props) {
   return (
     <Container>
       <ScrollView>
-        <CoverImage source={{ uri: optimizeImage(coverImage) }} />
+        <CarouselContainer>
+          {activityData && (
+            <Swiper
+              loop
+              horizontal
+              autoplay
+              autoplayTimeout={3.5}
+              containerStyle={{ width: "100%", height: "100%" }}
+              showsButtons={false}
+              showsPagination={true}
+            >
+              {activityData?.subImages?.unshift(activityData?.coverImage) &&
+                activityData?.subImages?.map((imageUrl, index) => {
+                  return (
+                    <CoverImage
+                      source={{ uri: optimizeImage(imageUrl) }}
+                      key={index}
+                    />
+                  );
+                })}
+            </Swiper>
+          )}
+        </CarouselContainer>
+
         <InnerWrapper>
           <InnerHeading>{name}</InnerHeading>
           <Title>{activityData?.oneLineIntroText}</Title>
@@ -65,12 +87,18 @@ export default function Activity({ coverImage, id, name }: Props) {
         </InnerWrapper>
         <InnerWrapper upperDividor={true}>
           <InnerHeading>
-            참여 크루원 {activityData?.participantsCount} 명
+            참여 크루원{" "}
+            {activityData?.participantsData.participantsCount
+              ? activityData?.participantsData.participantsCount
+              : "0"}{" "}
+            명
           </InnerHeading>
           <UsernameContainer>
-            {activityData?.participantsUsername?.map((item, index) => (
-              <InnerSubText key={index}>{item}</InnerSubText>
-            ))}
+            {activityData?.participantsData.participantsUsername?.map(
+              (item, index) => (
+                <InnerSubText key={index}>{item}</InnerSubText>
+              )
+            )}
           </UsernameContainer>
         </InnerWrapper>
         <InnerWrapper upperDividor={true}>
@@ -78,13 +106,7 @@ export default function Activity({ coverImage, id, name }: Props) {
           <InfoContainer>
             <InfoWrapper>
               <Ionicons name="alarm-outline" size={32} color={colors.midGrey} />
-              <InnerSubText>
-                {activityData?.startDateFromNow}{" "}
-                {activityData &&
-                  TimeNumberToString(activityData.startTime, {
-                    hasIndicator: true,
-                  })}
-              </InnerSubText>
+              <InnerSubText>{activityData?.startDateFromNow} 시</InnerSubText>
             </InfoWrapper>
             <InfoWrapper>
               <Ionicons
@@ -109,7 +131,7 @@ export default function Activity({ coverImage, id, name }: Props) {
             <InfoWrapper>
               <Ionicons name="cash-outline" size={32} color={colors.midGrey} />
               <InnerSubText>
-                참가비 {activityData?.placeDetail.participationFee}원
+                참가비 {activityData?.placeDetail.participationFee} 원
               </InnerSubText>
             </InfoWrapper>
           </InfoContainer>
@@ -132,6 +154,11 @@ const Container = styled.View`
 `;
 
 const CoverImage = styled.Image`
+  width: 100%;
+  height: 100%;
+`;
+
+const CarouselContainer = styled.View`
   width: ${width + "px"};
   height: ${height * 0.3 + "px"};
 `;
@@ -175,7 +202,6 @@ const UsernameContainer = styled.View`
 
 const InnerSubText = styled(GeneralText)`
   color: ${colors.midGrey};
-  margin-right: 11px;
   font-family: ${fontFamilies.medium};
   margin-left: 22px;
 `;

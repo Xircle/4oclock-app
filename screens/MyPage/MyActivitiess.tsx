@@ -4,6 +4,8 @@ import { MyPlaceData } from "../../lib/api/types";
 import React, { useEffect } from "react";
 import { getMyPlaces } from "../../lib/api/getMyPlaces";
 import { colors, Text } from "../../styles/styles";
+import { ScrollView } from "react-native-gesture-handler";
+import FlatListPlace from "../../components/main/FlatListPlace";
 
 interface Props {}
 
@@ -19,14 +21,38 @@ export default function MyActivities(props: Props) {
   }, [myPlacesData]);
   return (
     <Container>
-      <Text>MyPlaces</Text>
+      <InnerContainer>
+        <ScrollView>
+          {myPlacesData?.map((item, index) => {
+            return (
+              <FlatListPlace
+                key={index}
+                coverImage={item.coverImage}
+                name={item.name}
+                id={item.id}
+                startDateFromNow={item.startDateFromNow}
+              />
+            );
+          })}
+        </ScrollView>
+      </InnerContainer>
+      <BottomSpace />
     </Container>
   );
 }
 
 const Container = styled.View`
   flex: 1;
-  justify-content: center;
-  align-items: center;
   background-color: ${colors.bgColor};
+`;
+
+const InnerContainer = styled.View`
+  flex: 1;
+  padding: 15px;
+`;
+
+const BottomSpace = styled.View`
+  width: 100%;
+  height: 100px;
+  background-color: #f0f0f0;
 `;
