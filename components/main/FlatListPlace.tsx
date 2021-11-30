@@ -4,6 +4,7 @@ import { colors, fontFamilies, GeneralText } from "../../styles/styles";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native";
+import { getStartDateFromNow } from "../../lib/utils";
 
 interface Props {
   coverImage?: string;
@@ -11,9 +12,19 @@ interface Props {
   id?: string;
   views?: number;
   description?: string;
+  startDateFromNow?: string;
+  deadline?: string;
 }
 
-export default function FlatListPlace({ coverImage, name, id, views }: Props) {
+export default function FlatListPlace({
+  coverImage,
+  name,
+  id,
+  views,
+  description,
+  startDateFromNow,
+  deadline,
+}: Props) {
   const navigation = useNavigation();
 
   const onPress = () => {
@@ -33,18 +44,24 @@ export default function FlatListPlace({ coverImage, name, id, views }: Props) {
         </LeftContainer>
         <RightContiner>
           <SpaceBetweenContainer>
-            <TimeText>오늘 15시에 모여</TimeText>
-            <ViewContainer>
-              <Ionicons name="eye" size={12} color={colors.bareGrey} />
-              <ViewText>{views}</ViewText>
-            </ViewContainer>
+            <TimeText>{getStartDateFromNow(startDateFromNow)}</TimeText>
+            {views && (
+              <ViewContainer>
+                <Ionicons name="eye" size={12} color={colors.bareGrey} />
+                <ViewText>{views}</ViewText>
+              </ViewContainer>
+            )}
           </SpaceBetweenContainer>
           <Heading>
             {name.length > 11 ? name.slice(0, 11) + "..." : name}
           </Heading>
-          <DescriptionText>ehofheofheofheofheofho</DescriptionText>
+          <DescriptionText>
+            {description && description.length > 18
+              ? description.slice(0, 18) + "..."
+              : description}
+          </DescriptionText>
           <DeadLineContainer>
-            <DeadLineText>D-1 신청 마감</DeadLineText>
+            <DeadLineText>{deadline}</DeadLineText>
           </DeadLineContainer>
         </RightContiner>
       </Container>
@@ -103,11 +120,11 @@ const RightContiner = styled.View`
 
 const Container = styled.View`
   width: 100%;
-  height: 160px;
+  height: 170px;
   position: relative;
   flex-direction: row;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   border-bottom-width: 0.2px;
   border-bottom-color: ${colors.bareGrey};
 `;
