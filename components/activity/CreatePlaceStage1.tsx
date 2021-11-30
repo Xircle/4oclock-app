@@ -6,8 +6,7 @@ import {
   MainHeading,
   SubHeading,
 } from "../../styles/styles";
-import { ScrollView, View } from "react-native";
-import Animated from "react-native-reanimated";
+import { ScrollView, View, Animated } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -15,8 +14,50 @@ interface Props {}
 
 export default function CreatePlaceStage1(props: Props) {
   // values
+  const [expandableStateTime, setExpandableStateTime] = useState(0);
+  const [expandableStateLocation, setExpandableStateLocation] = useState(0);
+  const expandHeightTime = 100;
+  const expandHeightLocation = 100;
+  const expandableAnimTime = useRef(new Animated.Value(0)).current;
+  const expandableAnimLocation = useRef(new Animated.Value(0)).current;
+
+  const rotationTime = expandableAnimTime.interpolate({
+    inputRange: [
+      0,
+      expandHeightTime / 4,
+      expandHeightTime / 2,
+      (expandHeightTime / 4) * 3,
+      expandHeightTime,
+    ],
+    outputRange: ["0deg", "135deg", "270deg", "405deg", "540deg"],
+  });
+
+  const rotationLocation = expandableAnimLocation.interpolate({
+    inputRange: [
+      0,
+      expandHeightLocation / 4,
+      expandHeightLocation / 2,
+      (expandHeightLocation / 4) * 3,
+      expandHeightLocation,
+    ],
+    outputRange: ["0deg", "135deg", "270deg", "405deg", "540deg"],
+  });
 
   // animations
+  const expandTime = () => {
+    Animated.timing(expandableAnimTime, {
+      toValue: ((expandableStateTime + 1) % 2) * expandHeightTime,
+      useNativeDriver: false,
+    }).start();
+    setExpandableStateTime((prev) => prev + 1);
+  };
+  const expandLocation = () => {
+    Animated.timing(expandableAnimLocation, {
+      toValue: ((expandableStateLocation + 1) % 2) * expandHeightLocation,
+      useNativeDriver: false,
+    }).start();
+    setExpandableStateLocation((prev) => prev + 1);
+  };
 
   return (
     <Container>
@@ -31,19 +72,24 @@ export default function CreatePlaceStage1(props: Props) {
         <InnerContainer>
           <SBlackLabel>모임에 대한 간단한 소개!</SBlackLabel>
         </InnerContainer>
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={expandTime}>
           <SpaceBetweenContainer>
             <SBlackLabel>만남시간</SBlackLabel>
-            <Ionicons name="add-outline" size={24} color="black" />
+            <Animated.View style={{ transform: [{ rotateZ: rotationTime }] }}>
+              <Ionicons name="chevron-down" size={24} color="black" />
+            </Animated.View>
           </SpaceBetweenContainer>
         </TouchableWithoutFeedback>
-
-        <TouchableWithoutFeedback>
+        <AnimWrapper style={{ height: expandableAnimTime }} />
+        <TouchableWithoutFeedback onPress={expandLocation}>
           <SpaceBetweenContainer>
             <SBlackLabel>만남위치</SBlackLabel>
-            <Ionicons name="add-outline" size={24} color="black" />
+            <Animated.View style={{ transform: [{ rotateZ: rotationLocation }] }}>
+              <Ionicons name="chevron-down" size={24} color="black" />
+            </Animated.View>
           </SpaceBetweenContainer>
         </TouchableWithoutFeedback>
+        <AnimWrapper style={{ height: expandableAnimLocation }} />
         <SpaceBetweenContainer>
           <SBlackLabel>참가인원</SBlackLabel>
         </SpaceBetweenContainer>
@@ -74,7 +120,4 @@ const SpaceBetweenContainer = styled.View`
 
 const SBlackLabel = styled(BlackLabel)``;
 
-const AnimationWrapper = styled(Animated.createAnimatedComponent(View))`
-  background-color: ${colors.bgColor};
-  width: 100%;
-`;
+const AnimWrapper = styled(Animated.createAnimatedComponent(View))``;
