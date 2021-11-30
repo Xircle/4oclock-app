@@ -50,10 +50,13 @@ export interface PlaceFeedData {
   isLightning: boolean;
   participantsCount: number;
   startDateFromNow: string;
-  participants: Participants[];
+  // participants: Participants[];
   isParticipating: boolean;
   deadline: string;
   views: number;
+  placeDetail: {
+    description: string;
+  };
 }
 
 export interface ParticipantsListData extends Participants {}
@@ -82,22 +85,29 @@ export interface Review {
   ratings?: number | null;
 }
 
+interface ParticipantsData {
+  leftParticipantsCount: number;
+  participantsCount: number;
+  participantsUsername: string[];
+}
+
 export interface PlaceData {
-  name: string;
-  oneLineIntroText: string;
+  name: string; //
+  oneLineIntroText: string; //
   recommendation: string;
   startDateFromNow: string;
   startTime: number;
   deadline: string;
-  coverImage: string;
-  isClosed: boolean;
+  coverImage: string; //
+  isClosed: boolean; //
   isLightning: boolean;
-  isParticipating: boolean;
+  isParticipating: boolean; //
   participants: PlaceDataParticipantsProfile[];
   participantsCount: number;
   views: number;
   startDateAt: string;
   reviews: Review[];
+  subImages: string[];
   isLightning?: boolean;
   participantsUsername?: string[];
   participantsInfo: {
@@ -114,28 +124,29 @@ export interface PlaceData {
     participationFee: number;
     maxParticipantsNumber?: number;
   };
+  participantsData: ParticipantsData;
 }
 
 export interface CreateActivityData {
   name: string;
-  isLightning: boolean;
+  isLightning: boolean; // depreciated
   maxParticipantsNumber?: string;
-  location: string;
-  oneLineIntroText: string;
+  location: string; // depreciated
+  oneLineIntroText: string; // depreciated
   participationFee: string;
-  recommendation: string;
+  recommendation: string; // depreciated
   startDateAt: Date;
   startTime: string;
-  title: string;
+  title: string; // depreciated
   description: string;
-  categories: string[];
+  categories: string[]; // depreciated
   detailAddress: string;
-  detailLink: string;
-  reviewDescription: string;
+  detailLink: string; // depreciated
+  reviewDescription: string; // depreciated
   coverImageUrl?: string;
   coverImageFile?: File;
-  reviewImagesUrl?: string[];
-  reviewImagesFile?: File[];
+  reviewImagesUrl?: string[]; // depreciated
+  reviewImagesFile?: File[]; // depreciated
 }
 
 // need to change CreatePlaceOutput
