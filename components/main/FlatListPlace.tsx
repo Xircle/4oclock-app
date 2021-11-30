@@ -1,9 +1,9 @@
 import styled from "styled-components/native";
 import React from "react";
 import { colors, fontFamilies, GeneralText } from "../../styles/styles";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { TouchableWithoutFeedback } from "react-native";
 
 interface Props {
   coverImage?: string;
