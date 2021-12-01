@@ -4,6 +4,7 @@ import {
   BigTextInput,
   BlackLabel,
   colors,
+  GeneralText,
   MainHeading,
   SubHeading,
   TextArea,
@@ -11,12 +12,19 @@ import {
 import { ScrollView, View, Animated, Dimensions, Platform } from "react-native";
 import ExpandableV from "../UI/ExpandableV";
 import DatePicker from "react-native-date-picker";
+import { CreateActivityOutput } from "../../lib/api/types";
+import { ActivityAction } from "../../lib/activity/ActivityReducer";
+import { Ionicons } from "@expo/vector-icons";
+import { activityDispatcher } from "../../lib/activity/ActivityDispatcher";
 
-interface Props {}
+interface Props {
+  state: CreateActivityOutput;
+  dispatch: React.Dispatch<ActivityAction>;
+}
 
 const { width } = Dimensions.get("window");
 
-export default function CreatePlaceStage1(props: Props) {
+export default function CreatePlaceStage1({ state, dispatch }: Props) {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [maxParticiapnts, setMaxParticipants] = useState(2);
@@ -30,7 +38,9 @@ export default function CreatePlaceStage1(props: Props) {
     }
   };
 
-
+  useEffect(() => {
+    console.log(state.startDateAt);
+  }, [state.startDateAt]);
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -48,6 +58,11 @@ export default function CreatePlaceStage1(props: Props) {
               returnKeyType="next"
               returnKeyLabel="next"
               autoCorrect={false}
+              defaultValue={state.name ? state.name : ""}
+              onChange={(event) => {
+                const { eventCount, target, text } = event.nativeEvent;
+                activityDispatcher.dispatchName(text, dispatch);
+              }}
             />
           </InnerContainer>
         </ExpandableV>
@@ -61,6 +76,11 @@ export default function CreatePlaceStage1(props: Props) {
               returnKeyLabel="next"
               autoCorrect={false}
               multiline={true}
+              defaultValue={state.description ? state.description : ""}
+              onChange={(event) => {
+                const { eventCount, target, text } = event.nativeEvent;
+                activityDispatcher.dispatchDescription(text, dispatch);
+              }}
             />
           </InnerContainer>
         </ExpandableV>
@@ -77,6 +97,7 @@ export default function CreatePlaceStage1(props: Props) {
               onConfirm={(date) => {
                 setOpen(false);
                 setDate(date);
+                activityDispatcher.dispatchStartDateAt(date, dispatch);
               }}
               onCancel={() => {
                 setOpen(false);
@@ -93,11 +114,44 @@ export default function CreatePlaceStage1(props: Props) {
               returnKeyType="next"
               returnKeyLabel="next"
               autoCorrect={false}
+              defaultValue={state.detailAddress ? state.detailAddress : ""}
+              onChange={(event) => {
+                const { eventCount, target, text } = event.nativeEvent;
+                activityDispatcher.dispatchDetailAddress(text, dispatch);
+              }}
             />
           </InnerContainer>
         </ExpandableV>
         <ExpandableV title="최대 참가인원" height={100}>
-          <MainHeading>모임을 열어볼까?</MainHeading>
+          <InnerContainer>
+            <MaxParticipantsContainer>
+              <MaxPrticipantsButton
+                left={true}
+                onPress={() => {
+                  activityDispatcher.dispatchMaxParticipants(
+                    state.maxParticipantsNumber - 1,
+                    dispatch
+                  );
+                }}
+              >
+                <Ionicons name="remove-outline" size={24} color="black" />
+              </MaxPrticipantsButton>
+              <MaxParticipantsNumber>
+                {state.maxParticipantsNumber}
+              </MaxParticipantsNumber>
+              <MaxPrticipantsButton
+                left={false}
+                onPress={() => {
+                  activityDispatcher.dispatchMaxParticipants(
+                    state.maxParticipantsNumber + 1,
+                    dispatch
+                  );
+                }}
+              >
+                <Ionicons name="add" size={24} color="black" />
+              </MaxPrticipantsButton>
+            </MaxParticipantsContainer>
+          </InnerContainer>
         </ExpandableV>
         <ExpandableV title="참가비" height={80}>
           <InnerContainer>
@@ -108,6 +162,13 @@ export default function CreatePlaceStage1(props: Props) {
               returnKeyType="next"
               returnKeyLabel="next"
               autoCorrect={false}
+              defaultValue={
+                state.participationFee ? state.participationFee : ""
+              }
+              onChange={(event) => {
+                const { eventCount, target, text } = event.nativeEvent;
+                activityDispatcher.dispatchParticipationFee(text, dispatch);
+              }}
             />
           </InnerContainer>
         </ExpandableV>
@@ -116,6 +177,37 @@ export default function CreatePlaceStage1(props: Props) {
     </Container>
   );
 }
+
+const MaxParticipantsContainer = styled.View`
+  width: 280px;
+  flex-direction: row;
+
+  height: 100%;
+  max-height: 60px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  border: 1px solid ${colors.bareGrey};
+`;
+
+const MaxPrticipantsButton = styled.TouchableOpacity<{ left?: boolean }>`
+  width: 60px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props) =>
+    props.left ? colors.bareGrey : colors.lightBlue};
+  height: 100%;
+  border-bottom-left-radius: ${(props) => (props.left ? "30px" : "0px")};
+  border-top-left-radius: ${(props) => (props.left ? "30px" : "0px")};
+  border-bottom-right-radius: ${(props) => (!props.left ? "30px" : "0px")};
+  border-top-right-radius: ${(props) => (!props.left ? "30px" : "0px")};
+`;
+
+const MaxParticipantsNumber = styled(GeneralText)`
+  flex: 1;
+  background-color: ${colors.bgColor};
+  text-align: center;
+`;
 
 const PickerContainer = styled.TouchableOpacity`
   background-color: ${colors.mainBlue};
