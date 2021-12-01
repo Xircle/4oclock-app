@@ -57,7 +57,7 @@ export default function Main(props: Props) {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await queryClient.refetchQueries(["place", "전체", "main"]);
+    await queryClient.refetchQueries(["places"]);
     setRefreshing(false);
   };
 
@@ -66,8 +66,6 @@ export default function Main(props: Props) {
       fetchNextPage();
     }
   };
-
-
 
   // values
   const position = useRef(new Animated.Value(0)).current;
