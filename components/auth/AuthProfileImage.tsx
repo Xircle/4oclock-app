@@ -13,7 +13,6 @@ import { AuthAction, AuthState } from "./types.d";
 import AvatarUri from "../UI/AvatarUri";
 import * as ImagePicker from "react-native-image-picker";
 import { authDispatcher } from "../../lib/auth/AuthDispatcher";
-import { authValidation } from "../../lib/auth/AuthValidation";
 
 interface Props {
   onNext: () => void;
@@ -25,7 +24,6 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
   const fileHandle = async () => {
     const option: ImagePicker.ImageLibraryOptions = {
       mediaType: "photo",
-      includeBase64: true,
     };
     const result = await ImagePicker.launchImageLibrary(option);
 
@@ -43,15 +41,6 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
           name: result.assets[0].fileName,
         };
         authDispatcher.dispatchProfileImg(file, result.assets[0].uri, dispatch);
-
-        // setLocalProfileData((prev) => ({
-        //   ...prev,
-        //   profileImageFile: file,
-        // }));
-        // setLocalProfileData((prev) => ({
-        //   ...prev,
-        //   profileImageUrl: result.assets[0].uri,
-        // }));
       }
     }
   };
