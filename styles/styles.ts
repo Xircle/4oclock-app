@@ -10,6 +10,7 @@ export const colors = {
   midGrey: "#6F7789",
   bareGrey: "#A7B0C0",
   lightBlue: "#DBEDFF",
+  warningRed: "#FF7F7F",
 };
 
 export const fontFamilies = {
