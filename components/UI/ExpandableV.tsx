@@ -7,17 +7,18 @@ import {
   Dimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { BlackLabel } from "../../styles/styles";
+import { BlackLabel, colors } from "../../styles/styles";
 
 interface Props {
   children: React.ReactNode | React.ReactNode[];
   height: number;
   title: string;
+  error?: Boolean | undefined;
 }
 
 const { width } = Dimensions.get("window");
 
-export default function ExpandableV({ children, height, title }: Props) {
+export default function ExpandableV({ children, height, title, error }: Props) {
   // values
   const [expandableState, setExpandableState] = useState(0);
   const expandableAnim = useRef(new Animated.Value(0)).current;
@@ -42,7 +43,7 @@ export default function ExpandableV({ children, height, title }: Props) {
     <Container>
       <TouchableWithoutFeedback onPress={expandTime}>
         <SpaceBetweenContainer>
-          <BlackLabel>{title}</BlackLabel>
+          <SBlackLabel error={error}>{title}</SBlackLabel>
           <Animated.View style={{ transform: [{ rotateZ: rotation }] }}>
             <Ionicons name="chevron-down" size={24} color="black" />
           </Animated.View>
@@ -54,6 +55,10 @@ export default function ExpandableV({ children, height, title }: Props) {
     </Container>
   );
 }
+
+const SBlackLabel = styled(BlackLabel)<{ error?: Boolean }>`
+  color: ${(props) => (props.error ? colors.warningRed : colors.black)};
+`;
 
 const Container = styled.View`
   flex: 1;
