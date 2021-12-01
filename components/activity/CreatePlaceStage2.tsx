@@ -26,11 +26,12 @@ export default function CreatePlaceStage2({
   dispatch,
   state,
 }: Props) {
+
   const ImageHandle = async () => {
     const option: ImagePicker.ImageLibraryOptions = {
       mediaType: "photo",
       selectionLimit: 0,
-      quality: 0,
+      quality: 0.5,
     };
 
     const result = await ImagePicker.launchImageLibrary(option);
