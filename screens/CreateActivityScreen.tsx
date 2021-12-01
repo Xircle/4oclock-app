@@ -10,6 +10,7 @@ import CreatePlaceStage3 from "../components/activity/CreatePlaceStage3";
 import { createPlace } from "../lib/api/createPlace";
 import { CreateActivityOutput } from "../lib/api/types.d";
 import { TouchableOpacity } from "react-native";
+import { activityDispatcher } from "../lib/activity/ActivityDispatcher";
 
 interface Props {}
 
@@ -46,11 +47,12 @@ export default function CreateActivityScreen(props: Props) {
     if (stage === 0) {
       return !state.stage1Valid;
     } else if (stage === 1) {
-      return false;
+      return !state.coverImage || state.subImages.length < 2;
     }
   };
 
   const cleanUp = () => {
+    activityDispatcher.dispatchInitialState(dispatch);
     setStage(0);
     position.setValue(0);
   };
