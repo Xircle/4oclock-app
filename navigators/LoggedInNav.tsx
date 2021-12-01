@@ -2,9 +2,8 @@ import React from "react";
 import MainTabsNav from "./MainTabsNav";
 import { createStackNavigator } from "@react-navigation/stack";
 import MyProfile from "../screens/MyPage/MyProfile";
-import MyActivities from "../screens/MyPage/MyActivitiess";
+import MyActivities from "../screens/MyPage/MyActivities";
 import ActivityStackNav from "./ActivityStackNav";
-import { Platform } from "react-native";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
