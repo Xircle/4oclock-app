@@ -37,7 +37,6 @@ export default function MyActivities(props: Props) {
           })}
         </ScrollView>
       </InnerContainer>
-      <BottomSpace />
     </Container>
   );
 }
