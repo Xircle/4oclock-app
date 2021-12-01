@@ -10,23 +10,29 @@ export type ActivityAction =
   // @ts-ignore
   | { type: "setCoverImageFile"; payload: File }
   // @ts-ignore
-  | { type: "setSubImagesFile"; payload: File[] };
+  | { type: "setSubImagesFile"; payload: File[] }
+  | { type: "setStage1Valid"; payload: Boolean };
 
-export const activityInitialState: CreateActivityOutput = {
+export interface ActivityState extends CreateActivityOutput {
+  stage1Valid: Boolean;
+}
+
+export const activityInitialState: ActivityState = {
   name: "",
-  maxParticipantsNumber: 4,
+  maxParticipantsNumber: 5,
   description: "",
   detailAddress: "",
   coverImage: undefined,
   subImages: [],
   participationFee: "0",
   startDateAt: new Date(),
+  stage1Valid: false,
 };
 
 export function reducer(
-  state: CreateActivityOutput,
+  state: ActivityState,
   action: ActivityAction
-): CreateActivityOutput {
+): ActivityState {
   switch (action.type) {
     case "setName":
       return {
@@ -67,6 +73,11 @@ export function reducer(
       return {
         ...state,
         coverImage: action.payload,
+      };
+    case "setStage1Valid":
+      return {
+        ...state,
+        stage1Valid: action.payload,
       };
     default:
       throw new Error();
