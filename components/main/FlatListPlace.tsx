@@ -45,12 +45,14 @@ export default function FlatListPlace({
         <RightContiner>
           <SpaceBetweenContainer>
             <TimeText>{getStartDateFromNow(startDateFromNow)}</TimeText>
-            {views && (
+            {views ? (
               <ViewContainer>
-                <Ionicons name="eye" size={12} color={colors.bareGrey} />
-                <ViewText>{views}</ViewText>
+                <ViewText>
+                  <Ionicons name="eye" size={12} color={colors.bareGrey} />
+                  {views}
+                </ViewText>
               </ViewContainer>
-            )}
+            ) : null}
           </SpaceBetweenContainer>
           <Heading>
             {name.length > 11 ? name.slice(0, 11) + "..." : name}
