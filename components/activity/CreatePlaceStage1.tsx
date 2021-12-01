@@ -4,6 +4,7 @@ import {
   BigTextInput,
   BlackLabel,
   colors,
+  ErrorMessage,
   GeneralText,
   MainHeading,
   SubHeading,
@@ -12,35 +13,41 @@ import {
 import { ScrollView, View, Animated, Dimensions, Platform } from "react-native";
 import ExpandableV from "../UI/ExpandableV";
 import DatePicker from "react-native-date-picker";
-import { CreateActivityOutput } from "../../lib/api/types";
-import { ActivityAction } from "../../lib/activity/ActivityReducer";
+import {
+  ActivityAction,
+  ActivityState,
+} from "../../lib/activity/ActivityReducer";
 import { Ionicons } from "@expo/vector-icons";
 import { activityDispatcher } from "../../lib/activity/ActivityDispatcher";
+import { activityValidation } from "../../lib/activity/CreateActivityValidation";
+import { createPlaceErrorMessage } from "../../lib/errorMessages";
 
 interface Props {
-  state: CreateActivityOutput;
+  state: ActivityState;
   dispatch: React.Dispatch<ActivityAction>;
 }
 
 const { width } = Dimensions.get("window");
 
 export default function CreatePlaceStage1({ state, dispatch }: Props) {
+  const [nameError, setNameError] = useState(undefined);
+  const [descriptionError, setDescriptionError] = useState(undefined);
+  const [dateError, setDateError] = useState(undefined);
+  const [addressError, setAddressError] = useState(undefined);
+  const [feeError, setFeeError] = useState(undefined);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-  const [maxParticiapnts, setMaxParticipants] = useState(2);
-
-  const changeMaxParticipants = (plus: boolean) => {
-    if (maxParticiapnts > 2 && !plus) {
-      setMaxParticipants((prev) => prev - 1);
-    }
-    if (maxParticiapnts < 8 && plus) {
-      setMaxParticipants((prev) => prev + 1);
-    }
-  };
 
   useEffect(() => {
-    console.log(state.startDateAt);
-  }, [state.startDateAt]);
+    activityDispatcher.dispatchStage1Valid(
+      nameError === false &&
+        descriptionError === false &&
+        dateError === false &&
+        addressError === false &&
+        !feeError,
+      dispatch
+    );
+  }, [nameError, descriptionError, dateError, addressError, feeError]);
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -49,7 +56,11 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
           재밌는 모임을 열어보자~~ 행복하고 재밌는 모임
         </SubHeading>
 
-        <ExpandableV title="어떤 모임인가요? (제목)" height={80}>
+        <ExpandableV
+          title="어떤 모임인가요? (제목)"
+          height={80}
+          error={nameError}
+        >
           <InnerContainer>
             <SBigTextInput
               placeholder="ex. 말이 많아요 / 치믈리에 새내기..."
@@ -62,11 +73,20 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               onChange={(event) => {
                 const { eventCount, target, text } = event.nativeEvent;
                 activityDispatcher.dispatchName(text, dispatch);
+                setNameError(!activityValidation.validateName(text));
               }}
+              error={nameError}
             />
+            {nameError ? (
+              <SErrorMessage>{createPlaceErrorMessage[0]}</SErrorMessage>
+            ) : null}
           </InnerContainer>
         </ExpandableV>
-        <ExpandableV title="모임에 대한 간단한 소개!" height={130}>
+        <ExpandableV
+          title="모임에 대한 간단한 소개!"
+          height={150}
+          error={descriptionError}
+        >
           <InnerContainer style={[{ paddingTop: 15 }, { paddingBottom: 15 }]}>
             <STextArea
               placeholder="ex. 안녕하세요 트와이스를 좋아하는 인문대생입니다 / 취준하느라 너무 힘들어요...! 같이 고민이야기 하실 분!"
@@ -80,11 +100,18 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               onChange={(event) => {
                 const { eventCount, target, text } = event.nativeEvent;
                 activityDispatcher.dispatchDescription(text, dispatch);
+                setDescriptionError(
+                  !activityValidation.validateDescription(text)
+                );
               }}
+              error={descriptionError}
             />
+            {descriptionError ? (
+              <SErrorMessage>{createPlaceErrorMessage[2]}</SErrorMessage>
+            ) : null}
           </InnerContainer>
         </ExpandableV>
-        <ExpandableV title="만남시간" height={80}>
+        <ExpandableV title="만남시간" height={80} error={dateError}>
           <InnerContainer>
             <PickerContainer onPress={() => setOpen(true)}>
               <WhiteText>시간 선택하기</WhiteText>
@@ -98,14 +125,18 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
                 setOpen(false);
                 setDate(date);
                 activityDispatcher.dispatchStartDateAt(date, dispatch);
+                setDateError(!activityValidation.validateTime(date));
               }}
               onCancel={() => {
                 setOpen(false);
               }}
             />
+            {dateError ? (
+              <SErrorMessage>{createPlaceErrorMessage[2]}</SErrorMessage>
+            ) : null}
           </InnerContainer>
         </ExpandableV>
-        <ExpandableV title="만남장소" height={80}>
+        <ExpandableV title="만남장소" height={80} error={addressError}>
           <InnerContainer>
             <SBigTextInput
               placeholder="ex. 말이 많아요 / 치믈리에 새내기..."
@@ -118,8 +149,15 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               onChange={(event) => {
                 const { eventCount, target, text } = event.nativeEvent;
                 activityDispatcher.dispatchDetailAddress(text, dispatch);
+                setAddressError(
+                  !activityValidation.validateDetailAddress(text)
+                );
               }}
+              error={addressError}
             />
+            {addressError ? (
+              <SErrorMessage>{createPlaceErrorMessage[3]}</SErrorMessage>
+            ) : null}
           </InnerContainer>
         </ExpandableV>
         <ExpandableV title="최대 참가인원" height={100}>
@@ -153,7 +191,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
             </MaxParticipantsContainer>
           </InnerContainer>
         </ExpandableV>
-        <ExpandableV title="참가비" height={80}>
+        <ExpandableV title="참가비" height={80} error={feeError}>
           <InnerContainer>
             <SBigTextInput
               placeholder="ex. 말이 많아요 / 치믈리에 새내기..."
@@ -162,14 +200,20 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               returnKeyType="next"
               returnKeyLabel="next"
               autoCorrect={false}
+              keyboardType="number-pad"
               defaultValue={
                 state.participationFee ? state.participationFee : ""
               }
               onChange={(event) => {
                 const { eventCount, target, text } = event.nativeEvent;
                 activityDispatcher.dispatchParticipationFee(text, dispatch);
+                setFeeError(!activityValidation.validateParticipationFee(text));
               }}
+              error={feeError}
             />
+            {feeError ? (
+              <SErrorMessage>{createPlaceErrorMessage[5]}</SErrorMessage>
+            ) : null}
           </InnerContainer>
         </ExpandableV>
         <View style={{ height: 150 }} />
@@ -226,7 +270,12 @@ const Container = styled.View`
   padding: 0px 30px;
 `;
 
-const SBigTextInput = styled(BigTextInput)``;
+const SBigTextInput = styled(BigTextInput)<{ error?: Boolean }>`
+  border: ${(props) =>
+    props.error
+      ? `0.5px solid ${colors.warningRed}`
+      : `0.5px solid ${colors.midGrey}`};
+`;
 
 const InnerContainer = styled.View`
   flex: 1;
@@ -236,4 +285,12 @@ const InnerContainer = styled.View`
 
 const STextArea = styled(TextArea)`
   flex: 1;
+  border: ${(props) =>
+    props.error
+      ? `0.5px solid ${colors.warningRed}`
+      : `0.5px solid ${colors.midGrey}`};
+`;
+
+const SErrorMessage = styled(ErrorMessage)`
+  color: ${colors.warningRed};
 `;
