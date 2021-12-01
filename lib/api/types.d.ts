@@ -129,24 +129,13 @@ export interface PlaceData {
 
 export interface CreateActivityData {
   name: string;
-  isLightning: boolean; // depreciated
-  maxParticipantsNumber?: string;
-  location: string; // depreciated
-  oneLineIntroText: string; // depreciated
+  maxParticipantsNumber?: number;
   participationFee: string;
-  recommendation: string; // depreciated
   startDateAt: Date;
-  startTime: string;
-  title: string; // depreciated
   description: string;
-  categories: string[]; // depreciated
   detailAddress: string;
-  detailLink: string; // depreciated
-  reviewDescription: string; // depreciated
-  coverImageUrl?: string;
-  coverImageFile?: File;
-  reviewImagesUrl?: string[]; // depreciated
-  reviewImagesFile?: File[]; // depreciated
+  coverImage?: File;
+  subImages?: File[];
 }
 
 // need to change CreatePlaceOutput
@@ -188,6 +177,7 @@ export interface MyPlaceData {
   participantsCount: number;
   startDateFromNow: string;
   isClosed: boolean;
+  description: string;
 }
 
 export interface GetMyPlaceOutput extends CoreOutput {
