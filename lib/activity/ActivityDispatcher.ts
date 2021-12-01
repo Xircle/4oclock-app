@@ -41,7 +41,7 @@ export const activityDispatcher = {
   ) => {
     dispatch({
       type: "setParticipationFee",
-      payload: text,
+      payload: Number(text).toString(),
     });
   },
   dispatchStartDateAt: (
@@ -51,16 +51,26 @@ export const activityDispatcher = {
     dispatch({ type: "setStartDateAt", payload: date });
   },
   dispatchCoverImage: (
+    // @ts-ignore
     file: File,
     dispatch: React.Dispatch<ActivityAction>
   ) => {
     dispatch({ type: "setCoverImageFile", payload: file });
   },
+
   dispatchSubImages: (
+    // @ts-ignore
     files: File[],
     dispatch: React.Dispatch<ActivityAction>
   ) => {
     dispatch({ type: "setSubImagesFile", payload: files });
+  },
+  dispatchStage1Valid: (
+    // @ts-ignore
+    bool: Boolean,
+    dispatch: React.Dispatch<ActivityAction>
+  ) => {
+    dispatch({ type: "setStage1Valid", payload: bool });
   },
   dispatchInitialState: (dispatch: React.Dispatch<ActivityAction>) => {
     dispatch({ type: "setName", payload: activityInitialState.name });
