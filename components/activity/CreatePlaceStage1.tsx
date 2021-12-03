@@ -10,7 +10,7 @@ import {
   SubHeading,
   TextArea,
 } from "../../styles/styles";
-import { ScrollView, View, Animated, Dimensions, Platform } from "react-native";
+import { ScrollView, View, Dimensions } from "react-native";
 import ExpandableV from "../UI/ExpandableV";
 import DatePicker from "react-native-date-picker";
 import {
