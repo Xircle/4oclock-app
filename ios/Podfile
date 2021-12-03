@@ -11,10 +11,19 @@ target '4oclockApp' do
   use_expo_modules!
   config = use_native_modules!
 
+  # permission begin
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
+  pod 'Permission-PhotoLibraryAddOnly', :path => "#{permissions_path}/PhotoLibraryAddOnly"
+
+  # permission end
+
+
   use_react_native!(
     :path => config[:reactNativePath],
     :hermes_enabled => podfile_properties['expo.jsEngine'] == 'hermes'
   )
+
 
   # Uncomment to opt-in to using Flipper
   #
