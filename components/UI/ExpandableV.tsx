@@ -36,6 +36,7 @@ export default function ExpandableV({ children, height, title, error }: Props) {
     Animated.timing(expandableAnim, {
       toValue: ((expandableState + 1) % 2) * height,
       useNativeDriver: false,
+      duration: 300,
     }).start();
     setExpandableState((prev) => prev + 1);
   };
