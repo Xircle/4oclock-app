@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React from "react";
-import { TouchableOpacity, ScrollView, Alert } from "react-native";
+import { TouchableOpacity, ScrollView, Alert, Platform } from "react-native";
 import MyBackButton from "../UI/MyBackButton";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -14,6 +14,8 @@ import { CreateActivityOutput } from "../../lib/api/types";
 import { ActivityAction } from "../../lib/activity/ActivityReducer";
 import * as ImagePicker from "react-native-image-picker";
 import { activityDispatcher } from "../../lib/activity/ActivityDispatcher";
+import { Permission } from "../../lib/helpers/permission";
+import { RESULTS } from "react-native-permissions";
 
 interface Props {
   onBackPressed: () => void;
@@ -26,38 +28,46 @@ export default function CreatePlaceStage2({
   dispatch,
   state,
 }: Props) {
-
   const ImageHandle = async () => {
-    const option: ImagePicker.ImageLibraryOptions = {
-      mediaType: "photo",
-      selectionLimit: 0,
-      quality: 0.5,
-    };
+    const permission =
+      Platform.OS === "ios"
+        ? await Permission.askPhotoIos()
+        : await Permission.askPhotoAndroid();
+    console.log(permission);
+    if (permission === RESULTS.GRANTED) {
+      const option: ImagePicker.ImageLibraryOptions = {
+        mediaType: "photo",
+        selectionLimit: 0,
+        quality: 0.5,
+      };
 
-    const result = await ImagePicker.launchImageLibrary(option);
+      const result = await ImagePicker.launchImageLibrary(option);
 
-    if (result.errorMessage) {
-      return Alert.alert(result.errorMessage);
-    } else if (!result.didCancel && result?.assets) {
-      let coverImageFile;
-      let subImgeFiles = [];
-      result.assets.map((item, index) => {
-        if (index === 0) {
-          coverImageFile = {
-            type: "image/jpeg",
-            uri: item.uri,
-            name: item.fileName,
-          };
-        } else {
-          subImgeFiles.push({
-            type: "image/jpeg",
-            uri: item.uri,
-            name: item.fileName,
-          });
-        }
-      });
-      activityDispatcher.dispatchCoverImage(coverImageFile, dispatch);
-      activityDispatcher.dispatchSubImages(subImgeFiles, dispatch);
+      if (result.errorMessage) {
+        return Alert.alert(result.errorMessage);
+      } else if (!result.didCancel && result?.assets) {
+        let coverImageFile;
+        let subImgeFiles = [];
+        result.assets.map((item, index) => {
+          if (index === 0) {
+            coverImageFile = {
+              type: "image/jpeg",
+              uri: item.uri,
+              name: item.fileName,
+            };
+          } else {
+            subImgeFiles.push({
+              type: "image/jpeg",
+              uri: item.uri,
+              name: item.fileName,
+            });
+          }
+        });
+        activityDispatcher.dispatchCoverImage(coverImageFile, dispatch);
+        activityDispatcher.dispatchSubImages(subImgeFiles, dispatch);
+      }
+    } else {
+      Alert.alert("뭔가 잘못됐군,,,,");
     }
   };
 

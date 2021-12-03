@@ -9,7 +9,13 @@ import {
   TextArea,
 } from "../../styles/styles";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
-import { Alert, Dimensions, ScrollView, Text, View } from "react-native";
+import {
+  Alert,
+  Dimensions,
+  Platform,
+  ScrollView,
+  View,
+} from "react-native";
 import AvatarUri from "../../components/UI/AvatarUri";
 import { useMutation, useQuery } from "react-query";
 import { UserData } from "../../lib/api/types";
@@ -28,6 +34,8 @@ import {
   MBTIs,
   MBTIToIndex,
 } from "../../lib/SelectData";
+import { Permission } from "../../lib/helpers/permission";
+import { RESULTS } from "react-native-permissions";
 
 interface Props {}
 export interface ProfileData {
@@ -105,7 +113,7 @@ export default function MyProfile(props: Props) {
     });
     setLoading(false);
     if (!data.ok) return Alert.alert(data.error);
-    Refetch();
+    await Refetch();
     Alert.alert("프로필 편집 성공했습니다");
     navigation.goBack();
   };
@@ -132,34 +140,43 @@ export default function MyProfile(props: Props) {
   }, [isSuccess]);
 
   const fileHandle = async () => {
-    const option: ImagePicker.ImageLibraryOptions = {
-      mediaType: "photo",
-      includeBase64: true,
-    };
-    const result = await ImagePicker.launchImageLibrary(option);
-    //console.log(result);
-    if (result.errorMessage) {
-      return Alert.alert(result.errorMessage);
-    } else if (!result.didCancel && result?.assets?.[0].uri) {
-      if (result.assets?.[0].fileSize > 10000000) {
-        return Alert.alert(
-          "사진 최대 용량을 초과했습니다. 사진 용량은 최대 10MB입니다."
-        );
-      } else {
-        const file = {
-          type: "image/jpeg",
-          uri: result.assets[0].uri,
-          name: result.assets[0].fileName,
-        };
-        setLocalProfileData((prev) => ({
-          ...prev,
-          profileImageFile: file,
-        }));
-        setLocalProfileData((prev) => ({
-          ...prev,
-          profileImageUrl: result.assets[0].uri,
-        }));
+    const permission =
+      Platform.OS === "ios"
+        ? await Permission.askPhotoIos()
+        : await Permission.askPhotoAndroid();
+    console.log(permission);
+    if (permission === RESULTS.GRANTED) {
+      const option: ImagePicker.ImageLibraryOptions = {
+        mediaType: "photo",
+        includeBase64: true,
+      };
+      const result = await ImagePicker.launchImageLibrary(option);
+      //console.log(result);
+      if (result.errorMessage) {
+        return Alert.alert(result.errorMessage);
+      } else if (!result.didCancel && result?.assets?.[0].uri) {
+        if (result.assets?.[0].fileSize > 10000000) {
+          return Alert.alert(
+            "사진 최대 용량을 초과했습니다. 사진 용량은 최대 10MB입니다."
+          );
+        } else {
+          const file = {
+            type: "image/jpeg",
+            uri: result.assets[0].uri,
+            name: result.assets[0].fileName,
+          };
+          setLocalProfileData((prev) => ({
+            ...prev,
+            profileImageFile: file,
+          }));
+          setLocalProfileData((prev) => ({
+            ...prev,
+            profileImageUrl: result.assets[0].uri,
+          }));
+        }
       }
+    } else {
+      Alert.alert("뭔가 잘못됐군,,,,");
     }
   };
 

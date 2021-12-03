@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React, { useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert, Platform, View } from "react-native";
 import {
   colors,
   fontFamilies,
@@ -13,6 +13,8 @@ import { AuthAction, AuthState } from "./types.d";
 import AvatarUri from "../UI/AvatarUri";
 import * as ImagePicker from "react-native-image-picker";
 import { authDispatcher } from "../../lib/auth/AuthDispatcher";
+import { Permission } from "../../lib/helpers/permission";
+import { RESULTS } from "react-native-permissions";
 
 interface Props {
   onNext: () => void;
@@ -22,26 +24,39 @@ interface Props {
 
 export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
   const fileHandle = async () => {
-    const option: ImagePicker.ImageLibraryOptions = {
-      mediaType: "photo",
-    };
-    const result = await ImagePicker.launchImageLibrary(option);
+    const permission =
+      Platform.OS === "ios"
+        ? await Permission.askPhotoIos()
+        : await Permission.askPhotoAndroid();
+    console.log(permission);
+    if (permission === RESULTS.GRANTED) {
+      const option: ImagePicker.ImageLibraryOptions = {
+        mediaType: "photo",
+      };
+      const result = await ImagePicker.launchImageLibrary(option);
 
-    if (result.errorMessage) {
-      return Alert.alert(result.errorMessage);
-    } else if (!result.didCancel && result?.assets?.[0].uri) {
-      if (result.assets?.[0].fileSize > 10000000) {
-        return Alert.alert(
-          "사진 최대 용량을 초과했습니다. 사진 용량은 최대 10MB입니다."
-        );
-      } else {
-        const file = {
-          type: "image/jpeg",
-          uri: result.assets[0].uri,
-          name: result.assets[0].fileName,
-        };
-        authDispatcher.dispatchProfileImg(file, result.assets[0].uri, dispatch);
+      if (result.errorMessage) {
+        return Alert.alert(result.errorMessage);
+      } else if (!result.didCancel && result?.assets?.[0].uri) {
+        if (result.assets?.[0].fileSize > 10000000) {
+          return Alert.alert(
+            "사진 최대 용량을 초과했습니다. 사진 용량은 최대 10MB입니다."
+          );
+        } else {
+          const file = {
+            type: "image/jpeg",
+            uri: result.assets[0].uri,
+            name: result.assets[0].fileName,
+          };
+          authDispatcher.dispatchProfileImg(
+            file,
+            result.assets[0].uri,
+            dispatch
+          );
+        }
       }
+    } else {
+      Alert.alert("뭔가 잘못됐군,,,,");
     }
   };
 
