@@ -54,10 +54,15 @@ export default function MyPage({ isRefetch }: Props) {
           <MainHeading>마이페이지</MainHeading>
           <ProfileContainer>
             {userData?.profileImageUrl && (
-              <AvatarUri
-                size={width * 0.2}
-                source={userData?.profileImageUrl}
-              />
+              <TouchableOpacity
+                /* @ts-ignore */
+                onPress={() => naviagtion.navigate("MyProfile")}
+              >
+                <AvatarUri
+                  size={width * 0.2}
+                  source={userData?.profileImageUrl}
+                />
+              </TouchableOpacity>
             )}
             <ProfileInnerContainer>
               <GeneralText style={{ fontWeight: "600", lineHeight: 28 }}>
