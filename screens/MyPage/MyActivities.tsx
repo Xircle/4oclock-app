@@ -16,9 +16,7 @@ export default function MyActivities(props: Props) {
     { retry: 1, refetchOnWindowFocus: false }
   );
 
-  useEffect(() => {
-    if (myPlacesData) console.log(myPlacesData);
-  }, [myPlacesData]);
+
   return (
     <Container>
       <InnerContainer>
