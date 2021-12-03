@@ -1,10 +1,8 @@
-import styled from "styled-components/native";
-import React, { useEffect } from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Activity from "../screens/ActivitiesDetail/Activity";
 import { LoggedInStackParamList } from "./LoggedInNav";
 import { RouteProp } from "@react-navigation/native";
-import { Platform } from "react-native";
 import Reservation from "../screens/ActivitiesDetail/Reservation";
 import ReservationConfirm from "../screens/ActivitiesDetail/ReservationConfirm";
 
