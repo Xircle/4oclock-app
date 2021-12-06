@@ -186,7 +186,11 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
                   );
                 }}
               >
-                <Ionicons name="remove-outline" size={24} color="black" />
+                <Ionicons
+                  name="remove-outline"
+                  size={35}
+                  color={colors.bgColor}
+                />
               </MaxPrticipantsButton>
               <MaxParticipantsNumber>
                 {state.maxParticipantsNumber}
@@ -200,7 +204,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
                   );
                 }}
               >
-                <Ionicons name="add" size={24} color="black" />
+                <Ionicons name="add" size={35} color={colors.bgColor} />
               </MaxPrticipantsButton>
             </MaxParticipantsContainer>
           </InnerContainer>
@@ -253,7 +257,7 @@ const MaxPrticipantsButton = styled.TouchableOpacity<{ left?: boolean }>`
   align-items: center;
   justify-content: center;
   background-color: ${(props) =>
-    props.left ? colors.bareGrey : colors.lightBlue};
+    props.left ? colors.warningRed : colors.mainBlue};
   height: 100%;
   border-bottom-left-radius: ${(props) => (props.left ? "30px" : "0px")};
   border-top-left-radius: ${(props) => (props.left ? "30px" : "0px")};
