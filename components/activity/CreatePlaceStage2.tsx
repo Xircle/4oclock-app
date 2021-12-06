@@ -91,9 +91,22 @@ export default function CreatePlaceStage2({
     }
   };
 
+  const deleteCoverImage = () => {
+    if (state.subImages) {
+      activityDispatcher.dispatchCoverImage(state.subImages[0], dispatch);
+      activityDispatcher.removeSubImagesByIndex(state.subImages, 0, dispatch);
+    } else {
+      activityDispatcher.dispatchCoverImage(undefined, dispatch);
+    }
+  };
+
   // @ts-ignore
   const deleteSingleSubImage = (toRemove: File) => {
-    activityDispatcher.removeSubImages(state.subImages, toRemove, dispatch);
+    activityDispatcher.removeSubImagesByFile(
+      state.subImages,
+      toRemove,
+      dispatch
+    );
   };
 
   return (
@@ -116,11 +129,7 @@ export default function CreatePlaceStage2({
         </AddPhotoContiner>
         <PhotoContainer>
           {state.coverImage && (
-            <TouchableOpacity
-              onPress={() => {
-                activityDispatcher.dispatchCoverImage(undefined, dispatch);
-              }}
-            >
+            <TouchableOpacity onPress={deleteCoverImage}>
               <Photo source={{ uri: state.coverImage?.uri }} space={3} />
             </TouchableOpacity>
           )}
