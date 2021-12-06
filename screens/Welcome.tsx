@@ -115,12 +115,14 @@ export default function Welcome(props: Props) {
   }, [email, token]);
   useEffect(() => {
     redirectWithExistingToken();
-    // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
-    // return appleAuth.onCredentialRevoked(async () => {
-    //   console.warn(
-    //     "If this function executes, User Credentials have been Revoked"
-    //   );
-    // });
+    if (Platform.OS === "ios") {
+      // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
+      return appleAuth.onCredentialRevoked(async () => {
+        console.warn(
+          "If this function executes, User Credentials have been Revoked"
+        );
+      });
+    }
   }, []);
   return (
     <Container>
