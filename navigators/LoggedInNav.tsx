@@ -4,6 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import MyProfile from "../screens/MyPage/MyProfile";
 import MyActivities from "../screens/MyPage/MyActivities";
 import ActivityStackNav from "./ActivityStackNav";
+import { Ionicons } from "@expo/vector-icons";
+import { colors, fontFamilies } from "../styles/styles";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -22,7 +24,21 @@ const Stack = createStackNavigator<LoggedInStackParamList>();
 
 export default function LoggedInNav() {
   return (
-    <Stack.Navigator screenOptions={{ headerBackTitleVisible: false }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackTitleVisible: false,
+        headerBackImage: () => {
+          return (
+            <Ionicons name="chevron-back" size={24} color={colors.black} />
+          );
+        },
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+          fontFamily: fontFamilies.medium,
+          color: colors.black,
+        },
+      }}
+    >
       <Stack.Screen
         name="Tabs"
         component={MainTabsNav}

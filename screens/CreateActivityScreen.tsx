@@ -19,6 +19,8 @@ const { width } = Dimensions.get("screen");
 export default function CreateActivityScreen(props: Props) {
   const [modal, setModal] = useState(false);
   const [stage, setStage] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
+
   const totalStage = 3;
   const [state, dispatch] = useReducer(reducer, activityInitialState);
   // values
@@ -37,6 +39,7 @@ export default function CreateActivityScreen(props: Props) {
   const nextHandler = async (stage: number) => {
     if (stage === totalStage - 2) {
       const data: CreateActivityOutput = await createPlace(state);
+      dispatch({ type: "setIsFinished", payload: true });
     }
     setStage(stage + 1);
     animateByStage(stage + 1, position).start();
@@ -53,6 +56,7 @@ export default function CreateActivityScreen(props: Props) {
 
   const cleanUp = () => {
     activityDispatcher.dispatchInitialState(dispatch);
+    activityDispatcher.dispatchStage1Valid(false, dispatch);
     setStage(0);
     position.setValue(0);
   };
