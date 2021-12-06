@@ -173,3 +173,14 @@ export const getStartDateFromNow = (startDateFromNow) => {
   if (startDateFromNow === "마감") return startDateFromNow;
   return `${startDateFromNow}시에 모여`;
 };
+
+export const convertTimeCA = (date: Date) => {
+  if (date.getMinutes() % 30 !== 0) return "";
+  const hours =
+    date.getHours() >= 12
+      ? "오후 " + (date.getHours() - 12) + "시 "
+      : "오전 " + date.getHours() + "시 ";
+  return (
+    date.getMonth() + "월 " + date.getDate() + hours + date.getMinutes() + "분"
+  );
+};
