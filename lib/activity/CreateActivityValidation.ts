@@ -18,6 +18,4 @@ export const activityValidation = {
   validateParticipationFee: (fee: string) => {
     return fee.length > 0 && !isNaN(Number(fee));
   },
-  validateCoverImage: () => {},
-  validateSubImage: () => {},
 };
