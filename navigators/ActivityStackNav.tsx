@@ -47,6 +47,9 @@ export default function ActivityStackNav({ route }: Props) {
           fontFamily: fontFamilies.medium,
           color: colors.black,
         },
+        headerStyle: {
+          backgroundColor: colors.bgColor
+        }
       }}
     >
       <Stack.Screen name="Activity" options={{ title: route.params.name }}>

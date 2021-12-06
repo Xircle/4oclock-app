@@ -37,6 +37,9 @@ export default function LoggedInNav() {
           fontFamily: fontFamilies.medium,
           color: colors.black,
         },
+        headerStyle: {
+          backgroundColor: colors.bgColor,
+        },
       }}
     >
       <Stack.Screen

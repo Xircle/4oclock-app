@@ -1,6 +1,5 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {Dimensions } from "react-native";
 import Main from "../screens/Main";
 import RandomProfile from "../screens/RandomProfile";
 import Chat from "../screens/Chat";
@@ -14,7 +13,6 @@ import TabSide from "../components/nav/TabSide";
 interface Props {}
 
 const Tabs = createBottomTabNavigator();
-const { width } = Dimensions.get("window");
 export default function MainTabsNav(props: Props) {
   return (
     <Tabs.Navigator
