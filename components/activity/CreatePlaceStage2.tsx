@@ -127,7 +127,7 @@ export default function CreatePlaceStage2({
             <AddPhotoText>사진추가</AddPhotoText>
           </AddPhotoWrapper>
         </AddPhotoContiner>
-        <PhotoContainer>
+        <PhotoContainer space={3}>
           {state.coverImage && (
             <TouchableOpacity onPress={deleteCoverImage}>
               <Photo source={{ uri: state.coverImage?.uri }} space={3} />
@@ -153,7 +153,7 @@ export default function CreatePlaceStage2({
   );
 }
 
-const PhotoContainer = styled.View`
+const PhotoContainer = styled.View<{ space: number }>`
   margin-top: 22px;
   flex-direction: row;
   justify-content: space-between;
