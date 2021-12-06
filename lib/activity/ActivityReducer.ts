@@ -11,10 +11,12 @@ export type ActivityAction =
   | { type: "setCoverImageFile"; payload: File }
   // @ts-ignore
   | { type: "setSubImagesFile"; payload: File[] }
-  | { type: "setStage1Valid"; payload: Boolean };
+  | { type: "setStage1Valid"; payload: Boolean }
+  | { type: "setIsFinished"; payload: Boolean };
 
 export interface ActivityState extends CreateActivityOutput {
   stage1Valid: Boolean;
+  isFinished: Boolean;
 }
 
 export const activityInitialState: ActivityState = {
@@ -27,6 +29,7 @@ export const activityInitialState: ActivityState = {
   participationFee: "0",
   startDateAt: new Date(),
   stage1Valid: false,
+  isFinished: false,
 };
 
 export function reducer(
@@ -78,6 +81,11 @@ export function reducer(
       return {
         ...state,
         stage1Valid: action.payload,
+      };
+    case "setIsFinished":
+      return {
+        ...state,
+        isFinished: action.payload,
       };
     default:
       throw new Error();
