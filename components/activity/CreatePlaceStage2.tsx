@@ -1,6 +1,13 @@
 import styled from "styled-components/native";
 import React from "react";
-import { TouchableOpacity, ScrollView, Alert, Platform } from "react-native";
+import {
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  Platform,
+  Dimensions,
+  View,
+} from "react-native";
 import MyBackButton from "../UI/MyBackButton";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -22,6 +29,8 @@ interface Props {
   state: CreateActivityOutput;
   dispatch: React.Dispatch<ActivityAction>;
 }
+
+const { width } = Dimensions.get("window");
 
 export default function CreatePlaceStage2({
   onBackPressed,
@@ -49,7 +58,7 @@ export default function CreatePlaceStage2({
         let coverImageFile;
         let subImgeFiles = [];
         result.assets.map((item, index) => {
-          if (index === 0) {
+          if (!state.coverImage && index === 0) {
             coverImageFile = {
               type: "image/jpeg",
               uri: item.uri,
@@ -63,8 +72,13 @@ export default function CreatePlaceStage2({
             });
           }
         });
-        activityDispatcher.dispatchCoverImage(coverImageFile, dispatch);
-        activityDispatcher.dispatchSubImages(subImgeFiles, dispatch);
+        if (!state.coverImage)
+          activityDispatcher.dispatchCoverImage(coverImageFile, dispatch);
+        activityDispatcher.dispatchSubImages(
+          state.subImages,
+          subImgeFiles,
+          dispatch
+        );
       }
     } else {
       if (Platform.OS === "ios") {
@@ -75,6 +89,11 @@ export default function CreatePlaceStage2({
         Alert.alert("사진 접근 허용부탁드립니다~");
       }
     }
+  };
+
+  // @ts-ignore
+  const deleteSingleSubImage = (toRemove: File) => {
+    activityDispatcher.removeSubImages(state.subImages, toRemove, dispatch);
   };
 
   return (
@@ -97,26 +116,45 @@ export default function CreatePlaceStage2({
         </AddPhotoContiner>
         <PhotoContainer>
           {state.coverImage && (
-            <Photo source={{ uri: state.coverImage?.uri }} />
+            <TouchableOpacity
+              onPress={() => {
+                activityDispatcher.dispatchCoverImage(undefined, dispatch);
+              }}
+            >
+              <Photo source={{ uri: state.coverImage?.uri }} space={3} />
+            </TouchableOpacity>
           )}
           {state.subImages?.length > 0 &&
             state.subImages.map((item, index) => {
-              return <Photo source={{ uri: item.uri }} key={index} />;
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    deleteSingleSubImage(item);
+                  }}
+                  key={index}
+                >
+                  <Photo source={{ uri: item.uri }} space={3} />
+                </TouchableOpacity>
+              );
             })}
         </PhotoContainer>
+        <View style={{ height: 150 }} />
       </ScrollView>
     </Container>
   );
 }
 
 const PhotoContainer = styled.View`
+  margin-top: 22px;
   flex-direction: row;
+  justify-content: space-between;
   flex-wrap: wrap;
 `;
 
-const Photo = styled.Image`
-  width: 100px;
-  height: 100px;
+const Photo = styled.Image<{ space: boolean }>`
+  width: ${(props) => (width - props.space * 2 - 60) / 3 + "px"};
+  height: ${(props) => (width - props.space * 2 - 60) / 3 + "px"};
+  margin-bottom: ${(props) => props.space + "px"};
 `;
 
 const Container = styled.View`

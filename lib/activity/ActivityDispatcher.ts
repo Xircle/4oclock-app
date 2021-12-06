@@ -60,10 +60,28 @@ export const activityDispatcher = {
 
   dispatchSubImages: (
     // @ts-ignore
-    files: File[],
+    oldFiles: File[],
+    // @ts-ignore
+    newFiles: File[],
     dispatch: React.Dispatch<ActivityAction>
   ) => {
-    dispatch({ type: "setSubImagesFile", payload: files });
+    dispatch({ type: "setSubImagesFile", payload: oldFiles.concat(newFiles) });
+  },
+  removeSubImages: (
+    // @ts-ignore
+    oldFiles: File[],
+    // @ts-ignore
+    fileToRemove: File,
+    dispatch: React.Dispatch<ActivityAction>
+  ) => {
+    const toRomoveIndex = oldFiles.indexOf(fileToRemove);
+    if (toRomoveIndex !== -1) {
+      oldFiles.splice(toRomoveIndex, 1);
+      dispatch({
+        type: "setSubImagesFile",
+        payload: oldFiles,
+      });
+    }
   },
   dispatchStage1Valid: (
     // @ts-ignore
