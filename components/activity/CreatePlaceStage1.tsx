@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BigTextInput,
   BlackLabel,
@@ -21,13 +21,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { activityDispatcher } from "../../lib/activity/ActivityDispatcher";
 import { activityValidation } from "../../lib/activity/CreateActivityValidation";
 import { createPlaceErrorMessage } from "../../lib/errorMessages";
+import { convertTimeCA } from "../../lib/utils";
 
 interface Props {
   state: ActivityState;
   dispatch: React.Dispatch<ActivityAction>;
 }
-
-const { width } = Dimensions.get("window");
 
 export default function CreatePlaceStage1({ state, dispatch }: Props) {
   const [nameError, setNameError] = useState(undefined);
@@ -48,6 +47,19 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
       dispatch
     );
   }, [nameError, descriptionError, dateError, addressError, feeError]);
+
+  useEffect(() => {
+    if (state.isFinished) {
+      // unmount
+      console.log("clean up");
+      dispatch({ type: "setIsFinished", payload: false });
+      setNameError(undefined);
+      setDescriptionError(undefined);
+      setDateError(undefined);
+      setAddressError(undefined);
+      setFeeError(undefined);
+    }
+  }, [state.isFinished]);
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -133,7 +145,9 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
             />
             {dateError ? (
               <SErrorMessage>{createPlaceErrorMessage[2]}</SErrorMessage>
-            ) : null}
+            ) : (
+              <ErrorMessage>{convertTimeCA(state.startDateAt)}</ErrorMessage>
+            )}
           </InnerContainer>
         </ExpandableV>
         <ExpandableV title="만남장소" height={80} error={addressError}>
