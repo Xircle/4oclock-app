@@ -9,13 +9,7 @@ import {
   TextArea,
 } from "../../styles/styles";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
-import {
-  Alert,
-  Dimensions,
-  Platform,
-  ScrollView,
-  View,
-} from "react-native";
+import { Alert, Dimensions, Platform, ScrollView, View } from "react-native";
 import AvatarUri from "../../components/UI/AvatarUri";
 import { useMutation, useQuery } from "react-query";
 import { UserData } from "../../lib/api/types";
@@ -106,8 +100,10 @@ export default function MyProfile(props: Props) {
       {}
     );
     const editedProfileData: ProfileData = diff(userData, trimedProfileData);
-    if (_.isEqual(editedProfileData, {}))
+    if (_.isEqual(editedProfileData, {})) {
+      setLoading(false);
       return Alert.alert("프로필을 수정해주세요");
+    }
     const { data } = await mutateUserProfile({
       ...editedProfileData,
     });
@@ -148,7 +144,6 @@ export default function MyProfile(props: Props) {
     if (permission === RESULTS.GRANTED) {
       const option: ImagePicker.ImageLibraryOptions = {
         mediaType: "photo",
-        includeBase64: true,
       };
       const result = await ImagePicker.launchImageLibrary(option);
       //console.log(result);
@@ -176,7 +171,13 @@ export default function MyProfile(props: Props) {
         }
       }
     } else {
-      Alert.alert("뭔가 잘못됐군,,,,");
+      if (Platform.OS === "ios") {
+        Alert.alert(
+          "사진 접근 권한이 필요합니다. 설정 > 연고이팅 > 사진 > 모든 사진 허용으로 바꿔주세요~"
+        );
+      } else {
+        Alert.alert("사진 접근 허용부탁드립니다~");
+      }
     }
   };
 
