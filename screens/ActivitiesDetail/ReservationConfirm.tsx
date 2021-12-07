@@ -12,7 +12,7 @@ import { RouteProp, useNavigation } from "@react-navigation/native";
 import { ActivityStackParamList } from "../../navigators/ActivityStackNav";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { TimeNumberToString } from "../../lib/utils";
+import { getStartDateFromNow, TimeNumberToString } from "../../lib/utils";
 
 interface Props {
   route: RouteProp<ActivityStackParamList, "ReservationConfirm">;
@@ -44,10 +44,9 @@ export default function ReservationConfirm({ route }: Props) {
             <DetailWrapper>
               <Ionicons name="alarm-outline" size={32} color={colors.midGrey} />
               <InnerSubText>
-                {route.params?.startDateFromNow}{" "}
-                {TimeNumberToString(route.params?.startTime, {
-                  hasIndicator: true,
-                })}
+                {route.params?.startDateFromNow
+                  ? getStartDateFromNow(route.params.startDateFromNow)
+                  : ""}
               </InnerSubText>
             </DetailWrapper>
             <DetailWrapper>
