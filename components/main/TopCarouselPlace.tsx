@@ -70,7 +70,11 @@ export default function TopCarouselPlace({
           </TagContainer>
 
           <NameText>{name}</NameText>
-          <SubText>{startDateFromNow}</SubText>
+          <SubText>
+            {startDateFromNow === "마감"
+              ? startDateFromNow
+              : startDateFromNow + " 시"}
+          </SubText>
           <SubText>{detailAddress}</SubText>
         </TextContainer>
       </Container>
