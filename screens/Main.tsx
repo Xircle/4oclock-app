@@ -108,11 +108,15 @@ export default function Main(props: Props) {
             if (!item.isClosed || true) {
               return (
                 <TopCarouselPlace
+                  id={item.id}
+                  leftParticipantsCount={item.leftParticipantsCount}
                   coverImageUrl={optimizeImage(item.coverImage)}
                   width={width}
                   height={height * 0.3}
                   key={idx}
                   name={item.name}
+                  startDateFromNow={item.startDateFromNow}
+                  detailAddress={item.placeDetail.detailAddress}
                 />
               );
             }
@@ -170,6 +174,7 @@ export default function Main(props: Props) {
           data={mainPlaceData.pages.map((page) => page.places).flat()}
           renderItem={({ item }) => (
             <FlatListPlace
+              leftParticipantsCount={item.leftParticipantsCount}
               coverImage={item.coverImage}
               name={item.name}
               id={item.id}
