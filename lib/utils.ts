@@ -169,9 +169,17 @@ export const ModifyStringToStringArray = (
 
 // }
 
-export const getStartDateFromNow = (startDateFromNow) => {
+export const getStartDateFromNow = (startDateFromNow: string) => {
   if (startDateFromNow === "마감") return startDateFromNow;
-  return `${startDateFromNow}시에 모여`;
+  const words = startDateFromNow.split(" ");
+  const point = startDateFromNow.lastIndexOf(" ");
+
+  const hourBase24Num = Number(words[words.length - 1]);
+  const hourBse12String =
+    hourBase24Num < 12
+      ? "오전 " + hourBase24Num
+      : "오후 " + (hourBase24Num - 12);
+  return startDateFromNow.substr(0, point).concat(" ", hourBse12String) + " 시";
 };
 
 export const convertTimeCA = (date: Date) => {
