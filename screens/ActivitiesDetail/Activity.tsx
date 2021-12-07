@@ -11,6 +11,7 @@ import { getPlaceById } from "../../lib/api/getPlaceById";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import Swiper from "react-native-swiper";
 import { LinearGradient } from "expo-linear-gradient";
+import { getStartDateFromNow } from "../../lib/utils";
 
 interface Props {
   id: string;
@@ -89,7 +90,7 @@ export default function Activity({ id, name }: Props) {
                 bottom: 18,
               }}
             >
-              {activityData?.subImages?.unshift(activityData?.coverImage) &&
+              {activityData?.subImages?.unshift(activityData?.coverImage) ? (
                 activityData?.subImages?.map((imageUrl, index) => {
                   return (
                     <ActivityImageContainer key={index}>
@@ -109,7 +110,25 @@ export default function Activity({ id, name }: Props) {
                       />
                     </ActivityImageContainer>
                   );
-                })}
+                })
+              ) : (
+                <ActivityImageContainer>
+                  <ActivityImage
+                    source={{ uri: optimizeImage(activityData?.coverImage) }}
+                  />
+                  <LinearGradient
+                    // Background Linear Gradient
+                    colors={["transparent", colors.black]}
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                    }}
+                  />
+                </ActivityImageContainer>
+              )}
             </Swiper>
           )}
         </CarouselContainer>
@@ -140,7 +159,11 @@ export default function Activity({ id, name }: Props) {
           <InfoContainer>
             <InfoWrapper>
               <Ionicons name="alarm-outline" size={32} color={colors.midGrey} />
-              <InnerSubText>{activityData?.startDateFromNow} 시</InnerSubText>
+              <InnerSubText>
+                {activityData?.startDateFromNow
+                  ? getStartDateFromNow(activityData.startDateFromNow)
+                  : ""}
+              </InnerSubText>
             </InfoWrapper>
             <InfoWrapper>
               <Ionicons
