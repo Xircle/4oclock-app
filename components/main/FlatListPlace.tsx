@@ -9,11 +9,12 @@ import { getStartDateFromNow } from "../../lib/utils";
 interface Props {
   coverImage?: string;
   name?: string;
-  id?: string;
+  id: string;
   views?: number;
   description?: string;
   startDateFromNow?: string;
   deadline?: string;
+  leftParticipantsCount: string;
 }
 
 export default function FlatListPlace({
@@ -24,6 +25,7 @@ export default function FlatListPlace({
   description,
   startDateFromNow,
   deadline,
+  leftParticipantsCount,
 }: Props) {
   const navigation = useNavigation();
 
@@ -32,7 +34,6 @@ export default function FlatListPlace({
     navigation.navigate("ActivityStackNav", {
       id: id,
       name: name,
-      coverImage: coverImage,
     });
   };
 
@@ -41,6 +42,13 @@ export default function FlatListPlace({
       <Container>
         <LeftContainer>
           <CoverImage source={{ uri: coverImage }} />
+          <TagContainer isDisabled={startDateFromNow === "마감"}>
+            <Tag>
+              {startDateFromNow === "마감"
+                ? startDateFromNow
+                : "잔여" + leftParticipantsCount + "석"}
+            </Tag>
+          </TagContainer>
         </LeftContainer>
         <RightContiner>
           <SpaceBetweenContainer>
@@ -70,6 +78,25 @@ export default function FlatListPlace({
     </TouchableWithoutFeedback>
   );
 }
+
+const TagContainer = styled.View<{ isDisabled: Boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: ${(props) =>
+    props.isDisabled ? colors.bareGrey : colors.mainBlue};
+  justify-content: center;
+  align-items: center;
+  width: 58px;
+  height: 22px;
+  border-radius: 3px;
+`;
+
+const Tag = styled(GeneralText)`
+  color: ${colors.bgColor};
+  font-size: 11px;
+  font-family: ${fontFamilies.bold};
+`;
 
 const DeadLineContainer = styled.View`
   position: absolute;
@@ -112,6 +139,7 @@ const SpaceBetweenContainer = styled.View`
 
 const LeftContainer = styled.View`
   width: 130px;
+  position: relative;
 `;
 
 const RightContiner = styled.View`
