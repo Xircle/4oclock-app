@@ -77,8 +77,6 @@ export default function Main(props: Props) {
       useNativeDriver: true,
     });
 
-  // pan Resonders
-
   if (loading) return <Loader />;
   return (
     <Container>
