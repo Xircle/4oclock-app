@@ -3,6 +3,11 @@ import { colors, fontFamilies, GeneralText, Text } from "../../styles/styles";
 import React from "react";
 
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
+import {
+  TouchableWithoutFeedbackBase,
+  TouchableWithoutFeedback,
+} from "react-native";
 
 interface Props {
   coverImageUrl: string;
@@ -10,6 +15,10 @@ interface Props {
   height: number;
   key: number;
   name: string;
+  id: string;
+  leftParticipantsCount: number;
+  startDateFromNow: string;
+  detailAddress: string;
 }
 
 export default function TopCarouselPlace({
@@ -17,38 +26,90 @@ export default function TopCarouselPlace({
   width,
   height,
   name,
+  id,
+  leftParticipantsCount,
+  startDateFromNow,
+  detailAddress,
 }: Props) {
+  const navigation = useNavigation();
+  const onPress = () => {
+    // @ts-ignore
+    navigation.navigate("ActivityStackNav", {
+      id: id,
+      name: name,
+    });
+  };
+
   return (
-    <Container>
-      <CoverImage
-        source={{ uri: coverImageUrl }}
-        width={width}
-        height={height}
-      />
-      <LinearGradient
-        // Background Linear Gradient
-        colors={["transparent", colors.black]}
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          borderRadius: 15,
-        }}
-      />
-      <TextContainer>
-        <NameText>{name}</NameText>
-      </TextContainer>
-    </Container>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <Container>
+        <CoverImage
+          source={{ uri: coverImageUrl }}
+          width={width}
+          height={height}
+        />
+        <LinearGradient
+          // Background Linear Gradient
+          colors={["transparent", colors.black]}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            borderRadius: 15,
+          }}
+        />
+        <TextContainer>
+          <TagContainer isDisabled={startDateFromNow === "마감"}>
+            <Tag>
+              {startDateFromNow === "마감"
+                ? startDateFromNow
+                : "잔여 " + leftParticipantsCount + "석"}
+            </Tag>
+          </TagContainer>
+
+          <NameText>{name}</NameText>
+          <SubText>{startDateFromNow}</SubText>
+          <SubText>{detailAddress}</SubText>
+        </TextContainer>
+      </Container>
+    </TouchableWithoutFeedback>
   );
 }
+const TagContainer = styled.View<{ isDisabled: Boolean }>`
+  background-color: ${(props) =>
+    props.isDisabled ? colors.bareGrey : colors.mainBlue};
+  justify-content: center;
+  align-items: center;
+  width: 58px;
+  height: 22px;
+  border-radius: 3px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+`;
+
+const Tag = styled(GeneralText)`
+  color: ${colors.bgColor};
+  font-size: 11px;
+  font-family: ${fontFamilies.bold};
+`;
+
+const SubText = styled(GeneralText)`
+  color: ${colors.bgColor};
+  font-size: 13px;
+  margin-left: 5px;
+  font-family: ${fontFamilies.bold};
+  line-height: 19px;
+`;
 
 const TextContainer = styled.View`
   position: absolute;
   left: 20px;
   bottom: 20px;
 `;
+
+const TextWrapper = styled.View``;
 
 const NameText = styled(GeneralText)`
   color: ${colors.bgColor};
