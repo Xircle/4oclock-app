@@ -55,7 +55,6 @@ export default function ActivityStackNav({ route }: Props) {
       <Stack.Screen name="Activity" options={{ title: route.params.name }}>
         {() => (
           <Activity
-            coverImage={route.params.coverImage}
             id={route.params.id}
             name={route.params.name}
           />

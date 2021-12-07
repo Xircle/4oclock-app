@@ -12,7 +12,6 @@ export type LoggedInStackParamList = {
   MyProfile: undefined;
   MyActivities: undefined;
   ActivityStackNav: {
-    coverImage: string;
     id: string;
     name: string;
     startDateAt: string;
