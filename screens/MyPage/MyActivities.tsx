@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { getMyPlaces } from "../../lib/api/getMyPlaces";
 import { colors, Text } from "../../styles/styles";
 import { ScrollView } from "react-native-gesture-handler";
-import FlatListPlace from "../../components/main/FlatListPlace";
+import FlatListPlace, { Purpose } from "../../components/main/FlatListPlace";
 
 interface Props {}
 
@@ -16,11 +16,10 @@ export default function MyActivities(props: Props) {
     { retry: 1, refetchOnWindowFocus: false }
   );
 
-
   return (
     <Container>
       <InnerContainer>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {myPlacesData?.map((item, index) => {
             return (
               <FlatListPlace
@@ -30,6 +29,7 @@ export default function MyActivities(props: Props) {
                 id={item.id}
                 startDateFromNow={item.startDateFromNow}
                 description={item.description}
+                purpose={Purpose.mypage}
               />
             );
           })}

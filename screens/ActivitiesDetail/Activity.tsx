@@ -50,7 +50,7 @@ export default function Activity({ id, name }: Props) {
 
   return (
     <Container>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <CarouselContainer>
           {activityData && (
             <Swiper
@@ -92,10 +92,9 @@ export default function Activity({ id, name }: Props) {
               {activityData?.subImages?.unshift(activityData?.coverImage) &&
                 activityData?.subImages?.map((imageUrl, index) => {
                   return (
-                    <ActivityImageContainer>
+                    <ActivityImageContainer key={index}>
                       <ActivityImage
                         source={{ uri: optimizeImage(imageUrl) }}
-                        key={index}
                       />
                       <LinearGradient
                         // Background Linear Gradient

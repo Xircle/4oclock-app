@@ -165,6 +165,7 @@ export default function Main(props: Props) {
               <ListSubText>새로운 친구들 사귀는거 얼마나 재밌게요</ListSubText>
             </ListHeaderContainer>
           }
+          showsVerticalScrollIndicator={false}
           onEndReached={loadMore}
           onEndReachedThreshold={0.4}
           onRefresh={onRefresh}
