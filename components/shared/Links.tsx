@@ -1,6 +1,12 @@
 import { Linking } from "react-native";
 
 export const openLink = {
+  LWriteReview: async (id: string) => {
+    await Linking.openURL(
+      "https://www.koreapas.com/m/sofo.php?back=1&Num=a_nam_712"
+    );
+  },
+
   LOpenKakaoChat: async () => {
     await Linking.openURL("http://pf.kakao.com/_Rczhb/chat");
   },
