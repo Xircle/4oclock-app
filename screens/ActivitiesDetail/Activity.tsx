@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React, { useEffect } from "react";
+import React from "react";
 import { colors, fontFamilies, GeneralText } from "../../styles/styles";
 import { Alert, Dimensions, View } from "react-native";
 import optimizeImage from "../../lib/helpers/optimizeImage";
@@ -9,8 +9,8 @@ import { useQuery } from "react-query";
 import { PlaceData } from "../../lib/api/types.d";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
-import { TimeNumberToString } from "../../lib/utils";
 import Swiper from "react-native-swiper";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface Props {
   id: string;
@@ -34,7 +34,6 @@ export default function Activity({ id, name }: Props) {
       refetchOnWindowFocus: false,
     }
   );
-
 
   const onPress = () => {
     // @ts-ignore
@@ -62,14 +61,54 @@ export default function Activity({ id, name }: Props) {
               containerStyle={{ width: "100%", height: "100%" }}
               showsButtons={false}
               showsPagination={true}
+              dot={
+                <View
+                  style={{
+                    backgroundColor: "rgba(255,255,255,.3)",
+                    width: 20,
+                    height: 3,
+                    marginLeft: 7,
+                    marginRight: 7,
+                    borderRadius: 1.5,
+                  }}
+                />
+              }
+              activeDot={
+                <View
+                  style={{
+                    backgroundColor: "#fff",
+                    width: 20,
+                    height: 3,
+                    marginLeft: 7,
+                    marginRight: 7,
+                    borderRadius: 1.5,
+                  }}
+                />
+              }
+              paginationStyle={{
+                bottom: 18,
+              }}
             >
               {activityData?.subImages?.unshift(activityData?.coverImage) &&
                 activityData?.subImages?.map((imageUrl, index) => {
                   return (
-                    <CoverImage
-                      source={{ uri: optimizeImage(imageUrl) }}
-                      key={index}
-                    />
+                    <ActivityImageContainer>
+                      <ActivityImage
+                        source={{ uri: optimizeImage(imageUrl) }}
+                        key={index}
+                      />
+                      <LinearGradient
+                        // Background Linear Gradient
+                        colors={["transparent", colors.black]}
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                        }}
+                      />
+                    </ActivityImageContainer>
                   );
                 })}
             </Swiper>
@@ -149,7 +188,12 @@ const Container = styled.View`
   background-color: ${colors.bgColor};
 `;
 
-const CoverImage = styled.Image`
+const ActivityImageContainer = styled.View`
+  width: 100%;
+  height: 100%;
+`;
+
+const ActivityImage = styled.Image`
   width: 100%;
   height: 100%;
 `;
