@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React from "react";
+import React, { useState } from "react";
 import {
   TouchableOpacity,
   ScrollView,
@@ -23,6 +23,7 @@ import * as ImagePicker from "react-native-image-picker";
 import { activityDispatcher } from "../../lib/activity/ActivityDispatcher";
 import { Permission } from "../../lib/helpers/permission";
 import { RESULTS } from "react-native-permissions";
+import FullScreenLoader from "../UI/FullScreenLoader";
 
 interface Props {
   onBackPressed: () => void;
@@ -37,7 +38,9 @@ export default function CreatePlaceStage2({
   dispatch,
   state,
 }: Props) {
+  const [loading, setLoading] = useState(false);
   const ImageHandle = async () => {
+    setLoading(true);
     const permission =
       Platform.OS === "ios"
         ? await Permission.askPhotoIos()
@@ -53,7 +56,7 @@ export default function CreatePlaceStage2({
       const result = await ImagePicker.launchImageLibrary(option);
 
       if (result.errorMessage) {
-        return Alert.alert(result.errorMessage);
+        Alert.alert(result.errorMessage);
       } else if (!result.didCancel && result?.assets) {
         let coverImageFile;
         let subImgeFiles = [];
@@ -89,6 +92,7 @@ export default function CreatePlaceStage2({
         Alert.alert("사진 접근 허용부탁드립니다~");
       }
     }
+    setLoading(false);
   };
 
   const deleteCoverImage = () => {
@@ -129,29 +133,46 @@ export default function CreatePlaceStage2({
         </AddPhotoContiner>
         <PhotoContainer space={3}>
           {state.coverImage && (
-            <TouchableOpacity onPress={deleteCoverImage}>
+            <PhotoButton onPress={deleteCoverImage}>
               <Photo source={{ uri: state.coverImage?.uri }} space={3} />
-            </TouchableOpacity>
+              <Ionicons
+                name="close-circle"
+                color={colors.bgColor}
+                style={{ position: "absolute", right: 0, top: 0 }}
+                size={22}
+              />
+            </PhotoButton>
           )}
           {state.subImages?.length > 0 &&
             state.subImages.map((item, index) => {
               return (
-                <TouchableOpacity
+                <PhotoButton
                   onPress={() => {
                     deleteSingleSubImage(item);
                   }}
                   key={index}
                 >
                   <Photo source={{ uri: item.uri }} space={3} />
-                </TouchableOpacity>
+                  <Ionicons
+                    name="close-circle"
+                    color={colors.bgColor}
+                    style={{ position: "absolute", right: 0, top: 0 }}
+                    size={22}
+                  />
+                </PhotoButton>
               );
             })}
         </PhotoContainer>
         <View style={{ height: 150 }} />
       </ScrollView>
+      {loading && <FullScreenLoader />}
     </Container>
   );
 }
+
+const PhotoButton = styled.TouchableOpacity`
+  position: relative;
+`;
 
 const PhotoContainer = styled.View<{ space: number }>`
   margin-top: 22px;
