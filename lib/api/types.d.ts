@@ -56,7 +56,9 @@ export interface PlaceFeedData {
   views: number;
   placeDetail: {
     description: string;
+    detailAddress: string;
   };
+  leftParticipantsCount: number;
 }
 
 export interface ParticipantsListData extends Participants {}
