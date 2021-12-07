@@ -48,17 +48,12 @@ export default function ActivityStackNav({ route }: Props) {
           color: colors.black,
         },
         headerStyle: {
-          backgroundColor: colors.bgColor
-        }
+          backgroundColor: colors.bgColor,
+        },
       }}
     >
       <Stack.Screen name="Activity" options={{ title: route.params.name }}>
-        {() => (
-          <Activity
-            id={route.params.id}
-            name={route.params.name}
-          />
-        )}
+        {() => <Activity id={route.params.id} name={route.params.name} />}
       </Stack.Screen>
       <Stack.Screen
         name="Reservation"
