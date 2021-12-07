@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 const { width, height } = Dimensions.get("window");
 
 export const colors = {
+  lightBlack: "#505050",
   black: "#12121D",
   mainBlue: "#18A0FB",
   bgColor: "#FFFFFF",
