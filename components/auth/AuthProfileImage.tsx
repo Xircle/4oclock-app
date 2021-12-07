@@ -15,6 +15,7 @@ import * as ImagePicker from "react-native-image-picker";
 import { authDispatcher } from "../../lib/auth/AuthDispatcher";
 import { Permission } from "../../lib/helpers/permission";
 import { RESULTS } from "react-native-permissions";
+import FullScreenLoader from "../UI/FullScreenLoader";
 
 interface Props {
   onNext: () => void;
@@ -23,7 +24,9 @@ interface Props {
 }
 
 export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
+  const [loading, setLoading] = useState(false);
   const fileHandle = async () => {
+    setLoading(true);
     const permission =
       Platform.OS === "ios"
         ? await Permission.askPhotoIos()
@@ -36,10 +39,10 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
       const result = await ImagePicker.launchImageLibrary(option);
 
       if (result.errorMessage) {
-        return Alert.alert(result.errorMessage);
+        Alert.alert(result.errorMessage);
       } else if (!result.didCancel && result?.assets?.[0].uri) {
         if (result.assets?.[0].fileSize > 10000000) {
-          return Alert.alert(
+          Alert.alert(
             "사진 최대 용량을 초과했습니다. 사진 용량은 최대 10MB입니다."
           );
         } else {
@@ -64,6 +67,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
         Alert.alert("사진 접근 허용부탁드립니다~");
       }
     }
+    setLoading(false);
   };
 
   return (
@@ -79,6 +83,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
         관심사를 즐기는 사진 / 좋아하는 공간에서 찍은 사진 / 라이프 스타일이
         보여지는 사진 / 모임을 즐기고 있는 사진
       </SubInstText>
+      {loading && <FullScreenLoader />}
     </Container>
   );
 }

@@ -30,6 +30,7 @@ import {
 } from "../../lib/SelectData";
 import { Permission } from "../../lib/helpers/permission";
 import { RESULTS } from "react-native-permissions";
+import FullScreenLoader from "../../components/UI/FullScreenLoader";
 
 interface Props {}
 export interface ProfileData {
@@ -136,6 +137,7 @@ export default function MyProfile(props: Props) {
   }, [isSuccess]);
 
   const fileHandle = async () => {
+    setLoading(true);
     const permission =
       Platform.OS === "ios"
         ? await Permission.askPhotoIos()
@@ -148,10 +150,10 @@ export default function MyProfile(props: Props) {
       const result = await ImagePicker.launchImageLibrary(option);
       //console.log(result);
       if (result.errorMessage) {
-        return Alert.alert(result.errorMessage);
+        Alert.alert(result.errorMessage);
       } else if (!result.didCancel && result?.assets?.[0].uri) {
         if (result.assets?.[0].fileSize > 10000000) {
-          return Alert.alert(
+          Alert.alert(
             "사진 최대 용량을 초과했습니다. 사진 용량은 최대 10MB입니다."
           );
         } else {
@@ -179,6 +181,7 @@ export default function MyProfile(props: Props) {
         Alert.alert("사진 접근 허용부탁드립니다~");
       }
     }
+    setLoading(false);
   };
 
   const handleNameChange = (text: string) => {
@@ -268,7 +271,6 @@ export default function MyProfile(props: Props) {
     }));
   };
 
-  if (isFetching || loading) return <Loader />;
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -394,6 +396,7 @@ export default function MyProfile(props: Props) {
         disabled={localValidation.includes(false)}
         title={"수정하기"}
       ></MainButtonWBg>
+      {(isFetching || loading) && <FullScreenLoader />}
     </Container>
   );
 }
