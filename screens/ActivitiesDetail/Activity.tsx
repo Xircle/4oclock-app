@@ -13,14 +13,13 @@ import { TimeNumberToString } from "../../lib/utils";
 import Swiper from "react-native-swiper";
 
 interface Props {
-  coverImage: string;
   id: string;
   name: string;
 }
 
 const { width, height } = Dimensions.get("window");
 
-export default function Activity({ coverImage, id, name }: Props) {
+export default function Activity({ id, name }: Props) {
   const navigation = useNavigation();
 
   const { data: activityData, isLoading } = useQuery<PlaceData | undefined>(
@@ -36,9 +35,6 @@ export default function Activity({ coverImage, id, name }: Props) {
     }
   );
 
-  useEffect(() => {
-    console.log(activityData);
-  }, [activityData]);
 
   const onPress = () => {
     // @ts-ignore
