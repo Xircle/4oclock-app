@@ -28,7 +28,12 @@ export default function LoggedInNav() {
         headerBackTitleVisible: false,
         headerBackImage: () => {
           return (
-            <Ionicons name="chevron-back" size={24} color={colors.black} />
+            <Ionicons
+              name="chevron-back"
+              size={36}
+              color={colors.lightBlack}
+              style={{ marginLeft: 3 }}
+            />
           );
         },
         headerTitleAlign: "center",
