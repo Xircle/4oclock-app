@@ -5,8 +5,16 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native";
 import { getStartDateFromNow } from "../../lib/utils";
+import ReviewButton from "../profile/ReviewButton";
+import { openLink } from "../shared/Links";
+
+export const enum Purpose {
+  main = "main",
+  mypage = "mypage",
+}
 
 interface Props {
+  purpose?: Purpose;
   coverImage?: string;
   name?: string;
   id: string;
@@ -14,7 +22,7 @@ interface Props {
   description?: string;
   startDateFromNow?: string;
   deadline?: string;
-  leftParticipantsCount: string;
+  leftParticipantsCount?: string;
 }
 
 export default function FlatListPlace({
@@ -26,6 +34,7 @@ export default function FlatListPlace({
   startDateFromNow,
   deadline,
   leftParticipantsCount,
+  purpose = Purpose.main,
 }: Props) {
   const navigation = useNavigation();
 
@@ -35,6 +44,10 @@ export default function FlatListPlace({
       id: id,
       name: name,
     });
+  };
+
+  const writeReview = async () => {
+    await openLink.LWriteReview("placeId");
   };
 
   return (
@@ -70,9 +83,16 @@ export default function FlatListPlace({
               ? description.slice(0, 18) + "..."
               : description}
           </DescriptionText>
-          <DeadLineContainer>
-            <DeadLineText>{deadline}</DeadLineText>
-          </DeadLineContainer>
+          {purpose === Purpose.main && (
+            <BottomRightFixedContainer>
+              <DeadLineText>{deadline}</DeadLineText>
+            </BottomRightFixedContainer>
+          )}
+          {purpose === Purpose.mypage && (
+            <BottomRightFixedContainer>
+              <ReviewButton onPress={writeReview} />
+            </BottomRightFixedContainer>
+          )}
         </RightContiner>
       </Container>
     </TouchableWithoutFeedback>
@@ -98,7 +118,7 @@ const Tag = styled(GeneralText)`
   font-family: ${fontFamilies.bold};
 `;
 
-const DeadLineContainer = styled.View`
+const BottomRightFixedContainer = styled.View`
   position: absolute;
   bottom: 0;
   right: 0;
