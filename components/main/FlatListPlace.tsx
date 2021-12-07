@@ -55,13 +55,15 @@ export default function FlatListPlace({
       <Container>
         <LeftContainer>
           <CoverImage source={{ uri: coverImage }} />
-          <TagContainer isDisabled={startDateFromNow === "마감"}>
-            <Tag>
-              {startDateFromNow === "마감"
-                ? startDateFromNow
-                : "잔여" + leftParticipantsCount + "석"}
-            </Tag>
-          </TagContainer>
+          {purpose === Purpose.main && (
+            <TagContainer isDisabled={startDateFromNow === "마감"}>
+              <Tag>
+                {startDateFromNow === "마감"
+                  ? startDateFromNow
+                  : "잔여" + leftParticipantsCount + "석"}
+              </Tag>
+            </TagContainer>
+          )}
         </LeftContainer>
         <RightContiner>
           <SpaceBetweenContainer>
