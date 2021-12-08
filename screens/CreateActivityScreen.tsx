@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
-import React, { useState, useReducer, useRef, useEffect } from "react";
-import { colors, MainHeading, SubHeading, Text } from "../styles/styles";
-import { ScrollView, Animated, Dimensions, View, Modal } from "react-native";
+import React, { useState, useReducer, useRef } from "react";
+import { colors} from "../styles/styles";
+import { Animated, Dimensions, View } from "react-native";
 import MainButtonWBg from "../components/UI/MainButtonWBg";
 import { activityInitialState, reducer } from "../lib/activity/ActivityReducer";
 import CreatePlaceStage1 from "../components/activity/CreatePlaceStage1";
@@ -9,7 +9,6 @@ import CreatePlaceStage2 from "../components/activity/CreatePlaceStage2";
 import CreatePlaceStage3 from "../components/activity/CreatePlaceStage3";
 import { createPlace } from "../lib/api/createPlace";
 import { CreateActivityOutput } from "../lib/api/types.d";
-import { TouchableOpacity } from "react-native";
 import { activityDispatcher } from "../lib/activity/ActivityDispatcher";
 
 interface Props {}
@@ -100,34 +99,6 @@ export default function CreateActivityScreen(props: Props) {
           title={"모임열기"}
         ></MainButtonWBg>
       )}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modal}
-        style={{ backgroundColor: "#444444" }}
-      >
-        <View
-          style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "#000000",
-            opacity: 0.5,
-            position: "absolute",
-          }}
-        ></View>
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <View style={{ width: 100, height: 100, backgroundColor: "#ffffff" }}>
-            <TouchableOpacity
-              onPress={() => setModal((prev) => !prev)}
-              style={{ padding: 15, backgroundColor: "#252667" }}
-            >
-              <Text>colose</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </Container>
   );
 }
