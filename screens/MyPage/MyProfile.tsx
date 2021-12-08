@@ -16,12 +16,10 @@ import { UserData } from "../../lib/api/types";
 import { getUser } from "../../lib/api/getUser";
 import _ from "lodash";
 import MySelect from "../../components/UI/MySelect";
-import SelectButton from "../../components/UI/SelectButton";
 import diff from "object-diff";
 import { useNavigation } from "@react-navigation/native";
 import { editProfile } from "../../lib/api/editProfile";
 import * as ImagePicker from "react-native-image-picker";
-import Loader from "../../components/UI/Loader";
 import {
   DrinkingStyles,
   IndexToMBTI,
@@ -175,7 +173,7 @@ export default function MyProfile(props: Props) {
     } else {
       if (Platform.OS === "ios") {
         Alert.alert(
-          "사진 접근 권한이 필요합니다. 설정 > 연고이팅 > 사진 > 모든 사진 허용으로 바꿔주세요~"
+          "'모든 사진에 대한 접근 허용'이 필요합니다. 설정 > 연고이팅 > 사진 > 모든 사진 허용으로 바꿔주세요~"
         );
       } else {
         Alert.alert("사진 접근 허용부탁드립니다~");
@@ -374,19 +372,6 @@ export default function MyProfile(props: Props) {
               defaultButtonText="음주 스타일을 설정해주세요"
               defaultValueByIndex={localProfileData.drinkingStyle}
             />
-            <SLabel>혹시 맛집 동아리 연고이팅 회원이신가요?</SLabel>
-            <YKButton
-              onPress={() => {
-                setIsYK((prev) => !prev);
-                setLocalProfileData((prev) => ({
-                  ...prev,
-                  isYkClub: !isYK,
-                }));
-              }}
-            >
-              <SelectButton marginRight={15} selected={isYK} />
-              <SLabel style={{ marginTop: 0 }}>예</SLabel>
-            </YKButton>
             <View style={{ height: 150 }} />
           </DetailContainer>
         </InnerContainer>

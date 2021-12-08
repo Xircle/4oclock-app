@@ -61,7 +61,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
     } else {
       if (Platform.OS === "ios") {
         Alert.alert(
-          "사진 접근 권한이 필요합니다. 설정 > 연고이팅 > 사진 > 모든 사진 허용으로 바꿔주세요~"
+          "'모든 사진에 대한 접근 허용'이 필요합니다. 설정 > 연고이팅 > 사진 > 모든 사진 허용으로 바꿔주세요~"
         );
       } else {
         Alert.alert("사진 접근 허용부탁드립니다~");
