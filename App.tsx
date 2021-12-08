@@ -54,10 +54,18 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <DBContext.Provider value={realm}>
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
+        {Platform.OS === "ios" ? (
+          <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+            <NavigationContainer>
+              <Stack.Navigator
+                screenOptions={{ headerShown: false, gestureEnabled: false }}
+              >
+                <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
+                <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </KeyboardAvoidingView>
+        ) : (
           <NavigationContainer>
             <Stack.Navigator
               screenOptions={{ headerShown: false, gestureEnabled: false }}
@@ -66,7 +74,7 @@ export default function App() {
               <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
             </Stack.Navigator>
           </NavigationContainer>
-        </KeyboardAvoidingView>
+        )}
       </DBContext.Provider>
     </QueryClientProvider>
   );
