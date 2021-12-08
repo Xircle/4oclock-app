@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>연고이팅</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -63,9 +65,9 @@
 		</dict>
 	</dict>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>YOUR TEXT</string>
+	<string>모임 생성 또는 프로필 생성 및 수정을 위해 '모든 사진에 대한 접근 허용'을 설정해주세요</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>YOUR TEXT</string>
+	<string>모임 생성 또는 프로필 생성 및 수정을 위해 '모든 사진에 대한 접근 허용'을 설정해주세요</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fonts/SpoqaHanSansNeo-Medium.ttf</string>
