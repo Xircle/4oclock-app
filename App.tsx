@@ -26,7 +26,6 @@ const loadImages = (images) =>
   });
 
 export default function App() {
-  
   const [ready, setReady] = useState(false);
   const [realm, setRealm] = useState(null);
 
@@ -44,7 +43,6 @@ export default function App() {
     setReady(true);
   };
 
-
   if (!ready)
     return (
       <AppLoading
@@ -56,18 +54,10 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <DBContext.Provider value={realm}>
-        {Platform.OS === "ios" ? (
-          <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-            <NavigationContainer>
-              <Stack.Navigator
-                screenOptions={{ headerShown: false, gestureEnabled: false }}
-              >
-                <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
-                <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </KeyboardAvoidingView>
-        ) : (
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
           <NavigationContainer>
             <Stack.Navigator
               screenOptions={{ headerShown: false, gestureEnabled: false }}
@@ -76,7 +66,7 @@ export default function App() {
               <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
             </Stack.Navigator>
           </NavigationContainer>
-        )}
+        </KeyboardAvoidingView>
       </DBContext.Provider>
     </QueryClientProvider>
   );
