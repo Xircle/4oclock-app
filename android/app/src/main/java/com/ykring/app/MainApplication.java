@@ -1,4 +1,4 @@
-package com.fouroclock;
+package com.ykring.app;
 
 import android.app.Application;
 import android.content.Context;

@@ -70,10 +70,11 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
 
         <ExpandableV
           title="어떤 모임인가요? (제목)"
-          height={80}
+          height={120}
           error={nameError}
         >
           <InnerContainer>
+            <InstructionText>검색을 통해 선택해주시기 바랍니다</InstructionText>
             <SBigTextInput
               placeholder="ex. 말이 많아요 / 치믈리에 새내기..."
               autoCapitalize="none"
@@ -89,6 +90,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               }}
               error={nameError}
             />
+
             {nameError ? (
               <SErrorMessage>{createPlaceErrorMessage[0]}</SErrorMessage>
             ) : null}
@@ -311,4 +313,8 @@ const STextArea = styled(TextArea)`
 
 const SErrorMessage = styled(ErrorMessage)`
   color: ${colors.warningRed};
+`;
+
+const InstructionText = styled(ErrorMessage)`
+  color: ${colors.lightBlack};
 `;
