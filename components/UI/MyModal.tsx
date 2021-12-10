@@ -1,8 +1,7 @@
 import styled from "styled-components/native";
 import React from "react";
 import { Modal } from "react-native";
-import { useEffect, useState } from "react";
-import { colors, fontFamilies, GeneralText } from "../../styles/styles";
+import { colors } from "../../styles/styles";
 import { Ionicons } from "@expo/vector-icons";
 
 interface Props {

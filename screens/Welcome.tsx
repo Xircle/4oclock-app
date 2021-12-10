@@ -28,21 +28,20 @@ export default function Welcome(props: Props) {
   const realm = useDB();
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
-  const [appleLoginWarning, setAppleLoginWarning] = useState(true);
-  const [appleWarningVisible, setAppleWarningVisible] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
   const redirectWithExistingToken = async () => {
-    const tt = await storage.getItem("token");
+    const tokenFromStorage = await storage.getItem("token");
 
     /* @ts-ignore */
-    if (tt) navigation.navigate("LoggedInNav");
+    if (tokenFromStorage) navigation.navigate("LoggedInNav");
   };
 
   const redirectWithNewToken = async () => {
     await storage.setItem("token", token);
-    const tt = await storage.getItem("token");
+    const tokenFromStorage = await storage.getItem("token");
 
-    if (tt) {
+    if (tokenFromStorage) {
       /* @ts-ignore */
       navigation.navigate("LoggedInNav");
     }
@@ -61,7 +60,7 @@ export default function Welcome(props: Props) {
       // setToken(token.accessToken);
       getKakaoProfile();
     } catch (e) {
-      console.log(e);
+      setLoginError(true);
     }
   };
 
@@ -84,6 +83,7 @@ export default function Welcome(props: Props) {
         });
       }
     } catch (err) {
+      setLoginError(true);
       throw new Error(err);
     }
   };
@@ -104,6 +104,7 @@ export default function Welcome(props: Props) {
         });
       }
     } catch (err) {
+      setLoginError(true);
       throw new Error(err);
     }
   };
@@ -125,18 +126,15 @@ export default function Welcome(props: Props) {
       if (appleAuthRequestResponse.email) {
         socialRedirectApple(appleAuthRequestResponse.email);
       } else {
-        // modal로 보여줄까?
-        // apple state 두개로
+        setLoginError(true);
       }
+    } else {
+      setLoginError(true);
     }
   };
 
   const appleBtnOnPress = () => {
-    if (appleLoginWarning) {
-      setAppleWarningVisible(true);
-    } else {
-      signInWithApple();
-    }
+    signInWithApple();
   };
 
   useEffect(() => {
@@ -155,15 +153,12 @@ export default function Welcome(props: Props) {
       });
     }
   }, []);
-  const onModalClose = () => {
-    setAppleLoginWarning(false);
-    setAppleWarningVisible(false);
-  };
+
   return (
     <Container>
-      <MyModal visible={appleWarningVisible} onClose={onModalClose}>
-        <ModalHeadiner>애플 로그인</ModalHeadiner>
-        <ModalInfo>'이메일 공유하기'를 꼭 설정해주세요</ModalInfo>
+      <MyModal visible={loginError} onClose={() => setLoginError(false)}>
+        <ModalHeadiner>로그인 실패</ModalHeadiner>
+        <ModalInfo>로그인에 실패하였습니다. 운영진에 문의해주시기 바랍니다</ModalInfo>
       </MyModal>
       <DesignContainer></DesignContainer>
       <ButtonContainer>
