@@ -17,9 +17,7 @@ const { width } = Dimensions.get("screen");
 
 export default function CreateActivityScreen(props: Props) {
   const [manualDisable, setManualDisable] = useState(false);
-  const [modal, setModal] = useState(false);
   const [stage, setStage] = useState(0);
-  const [isFinished, setIsFinished] = useState(false);
 
   const totalStage = 3;
   const [state, dispatch] = useReducer(reducer, activityInitialState);
