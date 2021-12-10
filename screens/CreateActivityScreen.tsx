@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React, { useState, useReducer, useRef } from "react";
-import { colors} from "../styles/styles";
+import { colors } from "../styles/styles";
 import { Animated, Dimensions, View } from "react-native";
 import MainButtonWBg from "../components/UI/MainButtonWBg";
 import { activityInitialState, reducer } from "../lib/activity/ActivityReducer";
@@ -16,6 +16,7 @@ interface Props {}
 const { width } = Dimensions.get("screen");
 
 export default function CreateActivityScreen(props: Props) {
+  const [manualDisable, setManualDisable] = useState(false);
   const [modal, setModal] = useState(false);
   const [stage, setStage] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
@@ -37,7 +38,9 @@ export default function CreateActivityScreen(props: Props) {
   };
   const nextHandler = async (stage: number) => {
     if (stage === totalStage - 2) {
+      setManualDisable(true);
       const data: CreateActivityOutput = await createPlace(state);
+      setManualDisable(false);
       dispatch({ type: "setIsFinished", payload: true });
     }
     setStage(stage + 1);
@@ -47,9 +50,9 @@ export default function CreateActivityScreen(props: Props) {
   // regular functions
   const isDisable = () => {
     if (stage === 0) {
-      return !state.stage1Valid;
+      return !state.stage1Valid || manualDisable;
     } else if (stage === 1) {
-      return !state.coverImage || state.subImages.length < 2;
+      return !state.coverImage || state.subImages.length < 2 || manualDisable;
     }
   };
 

@@ -33,15 +33,18 @@ export default function SignIn({ route }: Props) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    authDispatcher.dispatchInit(
-      route.params.uid,
-      route.params.profileImageUrl,
-      route.params.email,
-      route.params.gender,
-      dispatch
-    );
+    if (route.params.gender) {
+      authDispatcher.dispatchKakao(
+        route.params.uid,
+        route.params.profileImageUrl,
+        route.params.email,
+        route.params.gender,
+        dispatch
+      );
+    } else {
+      authDispatcher.dispatchApple(route.params.email, dispatch);
+    }
   }, []);
-
 
   // values
   const position = useRef(new Animated.Value(0)).current;

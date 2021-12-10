@@ -1,7 +1,7 @@
 import { AuthAction } from "../../components/auth/types";
 
 export const authDispatcher = {
-  dispatchInit: (
+  dispatchKakao: (
     uid: number,
     profileImageUrl: string,
     email: string,
@@ -12,6 +12,9 @@ export const authDispatcher = {
     if (gender) dispatch({ type: "setGender", payload: gender });
     if (profileImageUrl)
       dispatch({ type: "setProfileImgUrl", payload: profileImageUrl });
+    if (email) dispatch({ type: "setEmail", payload: email });
+  },
+  dispatchApple: (email: string, dispatch: React.Dispatch<AuthAction>) => {
     if (email) dispatch({ type: "setEmail", payload: email });
   },
   dispatchPhoneNumber: (text: string, dispatch: React.Dispatch<AuthAction>) => {

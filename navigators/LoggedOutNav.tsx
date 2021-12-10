@@ -7,9 +7,9 @@ import { colors, fontFamilies } from "../styles/styles";
 export type LoggedOutStackParamList = {
   Welcome: undefined;
   SignIn: {
-    profileImageUrl: string;
-    gender: string;
-    uid: number;
+    profileImageUrl?: string;
+    gender?: string;
+    uid?: number;
     email: string;
   };
 };
