@@ -47,7 +47,7 @@ export default function Welcome(props: Props) {
     }
   };
 
-  const getKakaoProfile = async (): Promise<void> => {
+  const getMyKakaoProfile = async (): Promise<void> => {
     // @ts-ignore
     const profile: KakaoProfile = await getKakaoProfile();
     setEmail(profile.email);
@@ -57,8 +57,8 @@ export default function Welcome(props: Props) {
   const signInWithKakao = async (): Promise<void> => {
     try {
       const token: KakaoOAuthToken = await login();
-      // setToken(token.accessToken);
-      getKakaoProfile();
+      console.log(token);
+      getMyKakaoProfile();
     } catch (e) {
       setLoginError(true);
     }
@@ -124,6 +124,7 @@ export default function Welcome(props: Props) {
     // use credentialState response to ensure the user is authenticated
     if (credentialState === appleAuth.State.AUTHORIZED) {
       if (appleAuthRequestResponse.email) {
+        setEmail(appleAuthRequestResponse.email);
         socialRedirectApple(appleAuthRequestResponse.email);
       } else {
         setLoginError(true);
@@ -158,7 +159,9 @@ export default function Welcome(props: Props) {
     <Container>
       <MyModal visible={loginError} onClose={() => setLoginError(false)}>
         <ModalHeadiner>로그인 실패</ModalHeadiner>
-        <ModalInfo>로그인에 실패하였습니다. 운영진에 문의해주시기 바랍니다</ModalInfo>
+        <ModalInfo>
+          로그인에 실패하였습니다. 운영진에 문의해주시기 바랍니다
+        </ModalInfo>
       </MyModal>
       <DesignContainer></DesignContainer>
       <ButtonContainer>
