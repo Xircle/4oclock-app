@@ -1,12 +1,6 @@
 import styled from "styled-components/native";
 import React, { useState, useEffect } from "react";
-import {
-  Dimensions,
-  Modal,
-  Platform,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Dimensions, Platform, TouchableOpacity } from "react-native";
 import {
   KakaoOAuthToken,
   KakaoProfile,
@@ -22,9 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 import { BASE_URL } from "../lib/utils";
 import storage from "../lib/helpers/myAsyncStorage";
 import { colors, fontFamilies, GeneralText } from "../styles/styles";
-import { AppleButton } from "@invertase/react-native-apple-authentication";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
-import { Ionicons } from "@expo/vector-icons";
+import MyModal from "../components/UI/MyModal";
 
 interface Props {}
 
@@ -162,8 +155,16 @@ export default function Welcome(props: Props) {
       });
     }
   }, []);
+  const onModalClose = () => {
+    setAppleLoginWarning(false);
+    setAppleWarningVisible(false);
+  };
   return (
     <Container>
+      <MyModal visible={appleWarningVisible} onClose={onModalClose}>
+        <ModalHeadiner>애플 로그인</ModalHeadiner>
+        <ModalInfo>'이메일 공유하기'를 꼭 설정해주세요</ModalInfo>
+      </MyModal>
       <DesignContainer></DesignContainer>
       <ButtonContainer>
         <KakaoLoginButton
@@ -248,4 +249,14 @@ const ButtonContainer = styled.View`
   justify-content: center;
   align-items: center;
   margin-bottom: 70px;
+`;
+
+const ModalHeadiner = styled(GeneralText)`
+  margin-top: 45px;
+  font-family: ${fontFamilies.medium};
+  font-size: 28px;
+`;
+
+const ModalInfo = styled(GeneralText)`
+  margin-top: 70px;
 `;

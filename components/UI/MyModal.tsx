@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import React from "react";
 import { Modal } from "react-native";
 import { useEffect, useState } from "react";
 import { colors, fontFamilies, GeneralText } from "../../styles/styles";
@@ -13,7 +14,6 @@ interface Props {
 }
 
 export default function MyModal({ children, onClose, visible }: Props) {
-
   return (
     <Modal
       animationType="slide"
@@ -23,9 +23,9 @@ export default function MyModal({ children, onClose, visible }: Props) {
     >
       <ModalOuterWrapper>
         <ModalInnerWrapper>
+          {children}
           <ModalCloseButton onPress={onClose}>
             <Ionicons name="close" color={colors.bgColor} size={30} />
-            {children}
           </ModalCloseButton>
         </ModalInnerWrapper>
       </ModalOuterWrapper>
@@ -42,12 +42,13 @@ const ModalOuterWrapper = styled.View`
 
 const ModalInnerWrapper = styled.View`
   width: 300px;
-  height: 500px;
+  height: 400px;
   background-color: ${colors.bgColor};
   align-items: center;
-  justify-content: space-evenly;
   border-radius: 15px;
   position: relative;
+  padding-top: 60px;
+  padding-bottom: 60px;
 `;
 
 const ModalCloseButton = styled.TouchableOpacity`
