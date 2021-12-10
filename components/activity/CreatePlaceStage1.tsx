@@ -74,9 +74,8 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
           error={nameError}
         >
           <InnerContainer>
-            <InstructionText>검색을 통해 선택해주시기 바랍니다</InstructionText>
             <SBigTextInput
-              placeholder="ex. 말이 많아요 / 치믈리에 새내기..."
+              placeholder="모임을 한마디로 표현해주세요"
               autoCapitalize="none"
               blurOnSubmit={true}
               returnKeyType="next"
@@ -103,7 +102,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
         >
           <InnerContainer style={[{ paddingTop: 15 }, { paddingBottom: 15 }]}>
             <STextArea
-              placeholder="ex. 안녕하세요 트와이스를 좋아하는 인문대생입니다 / 취준하느라 너무 힘들어요...! 같이 고민이야기 하실 분!"
+              placeholder="모임을 재밌게 설명해주세요"
               autoCapitalize="none"
               blurOnSubmit={true}
               returnKeyType="next"
@@ -155,7 +154,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
         <ExpandableV title="만남장소" height={80} error={addressError}>
           <InnerContainer>
             <SBigTextInput
-              placeholder="ex. 말이 많아요 / 치믈리에 새내기..."
+              placeholder="만남 장소를 입력해주세요"
               autoCapitalize="none"
               blurOnSubmit={true}
               returnKeyType="next"
