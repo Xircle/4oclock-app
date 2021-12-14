@@ -183,7 +183,9 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               <SErrorMessage>{searchResult?.[0]?.place_name}</SErrorMessage>
             ) : null}
             <SearchListContainer showsVerticalScrollIndicator={false}>
-              <LocationVRow />
+              {searchResult?.map((item, index) => {
+                return <LocationVRow key={index} placeId={item.place_id} placeName={item.place_name} addressName={item.address_name} categoryGroupName={item.category_group_name}/>;
+              })}
             </SearchListContainer>
           </InnerContainer>
         </ExpandableV>

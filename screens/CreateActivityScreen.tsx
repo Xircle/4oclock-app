@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import React, { useState, useReducer, useRef } from "react";
 import { colors } from "../styles/styles";
-import { Animated, Dimensions, View } from "react-native";
+import { Alert, Animated, Dimensions, View } from "react-native";
 import MainButtonWBg from "../components/UI/MainButtonWBg";
 import { activityInitialState, reducer } from "../lib/activity/ActivityReducer";
 import CreatePlaceStage1 from "../components/activity/CreatePlaceStage1";
@@ -10,6 +10,7 @@ import CreatePlaceStage3 from "../components/activity/CreatePlaceStage3";
 import { createPlace } from "../lib/api/createPlace";
 import { CreateActivityOutput } from "../lib/api/types.d";
 import { activityDispatcher } from "../lib/activity/ActivityDispatcher";
+import FullScreenLoader from '../components/UI/FullScreenLoader';
 
 interface Props {}
 
@@ -18,6 +19,7 @@ const { width } = Dimensions.get("screen");
 export default function CreateActivityScreen(props: Props) {
   const [manualDisable, setManualDisable] = useState(false);
   const [stage, setStage] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const totalStage = 3;
   const [state, dispatch] = useReducer(reducer, activityInitialState);
@@ -37,7 +39,15 @@ export default function CreateActivityScreen(props: Props) {
   const nextHandler = async (stage: number) => {
     if (stage === totalStage - 2) {
       setManualDisable(true);
-      const data: CreateActivityOutput = await createPlace(state);
+      setLoading(true);
+      try {
+        const data: CreateActivityOutput = await createPlace(state);
+      } catch (e) {
+        setLoading(false);
+        setManualDisable(false);
+        Alert.alert("벌레e");
+      }
+      setLoading(false);
       setManualDisable(false);
       dispatch({ type: "setIsFinished", payload: true });
     }
@@ -100,6 +110,7 @@ export default function CreateActivityScreen(props: Props) {
           title={"모임열기"}
         ></MainButtonWBg>
       )}
+      {loading && <FullScreenLoader />}
     </Container>
   );
 }
