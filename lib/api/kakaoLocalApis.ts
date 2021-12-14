@@ -15,22 +15,14 @@ interface kakaoLocalResponse {
 }
 
 export const kakaoLocal = {
-  searchByNameAndKeyword: async (
-    keyword: string
-  ): Promise<kakaoLocalData[] | undefined> => {
-    let searchResearch;
+  searchByNameAndKeyword: async (keyword: string) => {
     const url = `https://dapi.kakao.com/v2/local/search/keyword.json?page=1&size=5&query=${keyword}`;
     //두번째api:"https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&x=127.106604&y=37.64116";
-    const result = await fetch(url, {
+    return await fetch(url, {
       method: "post",
       headers: new Headers({
         Authorization: `KakaoAK ${kakaoRESTApiKey}`, //KakaoAK하고 한 칸 띄워야합니다.
       }),
-    })
-      .then((response) => response.json())
-      .then((responseData: kakaoLocalResponse) => {
-        searchResearch = responseData.documents;
-      });
-    return searchResearch;
+    }).then((response) => response.json());
   },
 };

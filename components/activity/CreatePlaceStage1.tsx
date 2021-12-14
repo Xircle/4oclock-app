@@ -22,7 +22,7 @@ import { activityDispatcher } from "../../lib/activity/ActivityDispatcher";
 import { activityValidation } from "../../lib/activity/CreateActivityValidation";
 import { createPlaceErrorMessage } from "../../lib/errorMessages";
 import { convertTimeCA } from "../../lib/utils";
-import { kakaoLocal } from "../../lib/api/kakaoLocalApi";
+import { kakaoLocal } from "../../lib/api/kakaoLocalApis";
 
 interface Props {
   state: ActivityState;
@@ -167,9 +167,10 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               returnKeyLabel="next"
               autoCorrect={false}
               defaultValue={state.detailAddress ? state.detailAddress : ""}
-              onChange={(event) => {
+              onChange={async (event) => {
                 const { eventCount, target, text } = event.nativeEvent;
-                setSearchResult(kakaoLocal.searchByNameAndKeyword(text));
+                const temp = await kakaoLocal.searchByNameAndKeyword(text);
+                setSearchResult(temp);
                 activityDispatcher.dispatchDetailAddress(text, dispatch);
                 setAddressError(
                   !activityValidation.validateDetailAddress(text)
