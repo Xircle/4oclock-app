@@ -22,7 +22,8 @@ import { activityDispatcher } from "../../lib/activity/ActivityDispatcher";
 import { activityValidation } from "../../lib/activity/CreateActivityValidation";
 import { createPlaceErrorMessage } from "../../lib/errorMessages";
 import { convertTimeCA } from "../../lib/utils";
-import { kakaoLocal } from "../../lib/api/kakaoLocalApis";
+import { kakaoLocal, kakaoLocalData } from "../../lib/api/kakaoLocalApis";
+import LocationVRow from "./locationV/LocationVRow";
 
 interface Props {
   state: ActivityState;
@@ -37,7 +38,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
   const [feeError, setFeeError] = useState(undefined);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-  const [searchResult, setSearchResult] = useState(undefined);
+  const [searchResult, setSearchResult] = useState<kakaoLocalData[]>(undefined);
 
   useEffect(() => {
     activityDispatcher.dispatchStage1Valid(
@@ -157,7 +158,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
             )}
           </InnerContainer>
         </ExpandableV>
-        <ExpandableV title="만남장소" height={80} error={addressError}>
+        <ExpandableV title="만남장소" height={200} error={addressError}>
           <InnerContainer>
             <SBigTextInput
               placeholder="만남 장소를 입력해주세요"
@@ -170,7 +171,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               onChange={async (event) => {
                 const { eventCount, target, text } = event.nativeEvent;
                 const temp = await kakaoLocal.searchByNameAndKeyword(text);
-                setSearchResult(temp);
+                setSearchResult(temp.documents);
                 activityDispatcher.dispatchDetailAddress(text, dispatch);
                 setAddressError(
                   !activityValidation.validateDetailAddress(text)
@@ -178,9 +179,12 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               }}
               error={addressError}
             />
-            {addressError ? (
-              <SErrorMessage>{createPlaceErrorMessage[3]}</SErrorMessage>
+            {searchResult ? (
+              <SErrorMessage>{searchResult?.[0]?.place_name}</SErrorMessage>
             ) : null}
+            <SearchListContainer showsVerticalScrollIndicator={false}>
+              <LocationVRow />
+            </SearchListContainer>
           </InnerContainer>
         </ExpandableV>
         <ExpandableV title="최대 참가인원" height={100}>
@@ -306,7 +310,6 @@ const SBigTextInput = styled(BigTextInput)<{ error?: Boolean }>`
 
 const InnerContainer = styled.View`
   flex: 1;
-  justify-content: center;
   align-items: center;
 `;
 
@@ -324,4 +327,8 @@ const SErrorMessage = styled(ErrorMessage)`
 
 const InstructionText = styled(ErrorMessage)`
   color: ${colors.lightBlack};
+`;
+
+const SearchListContainer = styled.ScrollView`
+  width: 100%;
 `;
