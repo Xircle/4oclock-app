@@ -15,8 +15,8 @@ export interface kakaoLocalResponse {
 }
 
 export const kakaoLocal = {
-  searchByNameAndKeyword: async (keyword: string) => {
-    const url = `https://dapi.kakao.com/v2/local/search/keyword.json?page=1&size=5&query=${keyword}`;
+  searchByNameAndKeyword: async (keyword: string, size: number = 5) => {
+    const url = `https://dapi.kakao.com/v2/local/search/keyword.json?page=1&size=${size}&query=${keyword}`;
 
     return await fetch(url, {
       method: "post",

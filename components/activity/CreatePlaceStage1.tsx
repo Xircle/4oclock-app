@@ -10,7 +10,7 @@ import {
   SubHeading,
   TextArea,
 } from "../../styles/styles";
-import { ScrollView, View, Dimensions } from "react-native";
+import { ScrollView, View } from "react-native";
 import ExpandableV from "../UI/ExpandableV";
 import DatePicker from "react-native-date-picker";
 import {
@@ -331,4 +331,6 @@ const InstructionText = styled(ErrorMessage)`
 
 const SearchListContainer = styled.ScrollView`
   width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
 `;
