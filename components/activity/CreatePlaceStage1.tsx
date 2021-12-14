@@ -22,6 +22,7 @@ import { activityDispatcher } from "../../lib/activity/ActivityDispatcher";
 import { activityValidation } from "../../lib/activity/CreateActivityValidation";
 import { createPlaceErrorMessage } from "../../lib/errorMessages";
 import { convertTimeCA } from "../../lib/utils";
+import { kakaoLocal } from "../../lib/api/kakaoLocalApi";
 
 interface Props {
   state: ActivityState;
@@ -36,6 +37,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
   const [feeError, setFeeError] = useState(undefined);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+  const [searchResult, setSearchResult] = useState(undefined);
 
   useEffect(() => {
     activityDispatcher.dispatchStage1Valid(
@@ -47,6 +49,10 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
       dispatch
     );
   }, [nameError, descriptionError, dateError, addressError, feeError]);
+
+  useEffect(() => {
+    console.log(searchResult);
+  }, [searchResult]);
 
   useEffect(() => {
     if (state.isFinished) {
@@ -163,6 +169,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               defaultValue={state.detailAddress ? state.detailAddress : ""}
               onChange={(event) => {
                 const { eventCount, target, text } = event.nativeEvent;
+                setSearchResult(kakaoLocal.searchByNameAndKeyword(text));
                 activityDispatcher.dispatchDetailAddress(text, dispatch);
                 setAddressError(
                   !activityValidation.validateDetailAddress(text)
