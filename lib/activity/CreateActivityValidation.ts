@@ -13,7 +13,7 @@ export const activityValidation = {
     return time.getTime() - tempTime.getTime() > 1800000;
   },
   validateDetailAddress: (address: string) => {
-    return address.length > 0 && address.length < 30;
+    return address.length > 0;
   },
   validateParticipationFee: (fee: string) => {
     return fee.length > 0 && !isNaN(Number(fee));

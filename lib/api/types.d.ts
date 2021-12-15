@@ -138,6 +138,7 @@ export interface CreateActivityData {
   detailAddress: string;
   coverImage?: File;
   subImages?: File[];
+  placeId?: string;
 }
 
 // need to change CreatePlaceOutput

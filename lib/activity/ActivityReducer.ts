@@ -12,7 +12,8 @@ export type ActivityAction =
   // @ts-ignore
   | { type: "setSubImagesFile"; payload: File[] }
   | { type: "setStage1Valid"; payload: Boolean }
-  | { type: "setIsFinished"; payload: Boolean };
+  | { type: "setIsFinished"; payload: Boolean }
+  | { type: "setPlaceId"; payload: string };
 
 export interface ActivityState extends CreateActivityOutput {
   stage1Valid: Boolean;
@@ -86,6 +87,11 @@ export function reducer(
       return {
         ...state,
         isFinished: action.payload,
+      };
+    case "setPlaceId":
+      return {
+        ...state,
+        placeId: action.payload,
       };
     default:
       throw new Error();
