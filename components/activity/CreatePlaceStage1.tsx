@@ -78,7 +78,6 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
     setPlaceName(placeName);
     setPlaceAddress(addressName);
     activityDispatcher.dispatchDetailAddress(addressName, id, dispatch);
-    activityDispatcher;
     setPlaceSearch("");
     setAddressError(false);
   };
