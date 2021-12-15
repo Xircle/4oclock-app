@@ -25,6 +25,7 @@ export const createPlace = async (
   formData.append("description", placeData.description);
   formData.append("startDateAt", placeData.startDateAt + "");
   formData.append("participationFee", placeData.participationFee);
+  formData.append("placeId", placeData.placeId);
   const { data } = await axiosclient.post<CreateActivityOutput>(
     `${BASE_URL}/place`,
     formData

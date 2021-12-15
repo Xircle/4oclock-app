@@ -8,7 +8,7 @@ export interface kakaoLocalData {
   plce_url: string;
   category_group_code: string;
   category_group_name: string;
-  place_id: string;
+  id: string;
 }
 
 export interface kakaoLocalResponse {

@@ -31,6 +31,7 @@ export const activityInitialState: ActivityState = {
   startDateAt: new Date(),
   stage1Valid: false,
   isFinished: false,
+  placeId: "0",
 };
 
 export function reducer(
