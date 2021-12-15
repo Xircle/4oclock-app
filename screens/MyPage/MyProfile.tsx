@@ -29,6 +29,7 @@ import {
 import { Permission } from "../../lib/helpers/permission";
 import { RESULTS } from "react-native-permissions";
 import FullScreenLoader from "../../components/UI/FullScreenLoader";
+import MyKeyboardAvoidingView from "../../components/UI/MyKeyboardAvoidingView";
 
 interface Props {}
 export interface ProfileData {
@@ -271,111 +272,115 @@ export default function MyProfile(props: Props) {
 
   return (
     <Container>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <InnerContainer>
-          <AvatarWrapper onPress={fileHandle}>
-            <AvatarUri
-              source={localProfileData.profileImageUrl}
-              size={width * 0.5}
-            />
-            <ChangeProfilePicText>프로필사진 수정하기</ChangeProfilePicText>
-          </AvatarWrapper>
-          <DetailContainer>
-            <InfoText>
-              학교와 나이, 성별 변경은 불가해요. 수정을 원하실 경우 마이페이지{" "}
-              {">"} 문의하기 마이페이지에서 상담원에게 문의해주세요!
-            </InfoText>
-            <SLabel>닉네임</SLabel>
-            <SBigTextInput
-              placeholder="USERNAME"
-              autoCapitalize="none"
-              defaultValue={
-                localProfileData.username ? localProfileData.username : ""
-              }
-              onChange={(event) => {
-                const { eventCount, target, text } = event.nativeEvent;
-                handleNameChange(text);
-              }}
-            />
-            {!localValidation[0] && (
-              <ErrorMessage>{errorMessages[0]}</ErrorMessage>
-            )}
-            <SLabel>MBTI</SLabel>
-            <MySelect
-              data={MBTIs}
-              onSelect={(selectedItem, index) => {
-                setLocalProfileData((prev) => ({
-                  ...prev,
-                  MBTI: IndexToMBTI[index],
-                }));
-              }}
-              width={width * 0.81}
-              defaultButtonText="MBTI를 설정해주세요"
-              defaultValueByIndex={MBTIToIndex[localProfileData.MBTI]}
-            />
-            <SLabel>계열이나 직업</SLabel>
-            <SBigTextInput
-              placeholder="ex. 새내기 / 스타트업 마케터 / AI중독 문과생..."
-              autoCapitalize="none"
-              defaultValue={localProfileData.job ? localProfileData.job : ""}
-              onChange={(event) => {
-                const { eventCount, target, text } = event.nativeEvent;
-                handleJobChange(text);
-              }}
-            />
-            {!localValidation[1] && (
-              <ErrorMessage>{errorMessages[1]}</ErrorMessage>
-            )}
-            <SLabel>간단한 자기소개</SLabel>
-            <STextArea
-              placeholder="ex. 미대에 다니는 다양한 삶을 살고 싶어하는 미개봉화석^^
+      <MyKeyboardAvoidingView>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <InnerContainer>
+            <AvatarWrapper onPress={fileHandle}>
+              <AvatarUri
+                source={localProfileData.profileImageUrl}
+                size={width * 0.5}
+              />
+              <ChangeProfilePicText>프로필사진 수정하기</ChangeProfilePicText>
+            </AvatarWrapper>
+            <DetailContainer>
+              <InfoText>
+                학교와 나이, 성별 변경은 불가해요. 수정을 원하실 경우 마이페이지{" "}
+                {">"} 문의하기 마이페이지에서 상담원에게 문의해주세요!
+              </InfoText>
+              <SLabel>닉네임</SLabel>
+              <SBigTextInput
+                placeholder="USERNAME"
+                autoCapitalize="none"
+                defaultValue={
+                  localProfileData.username ? localProfileData.username : ""
+                }
+                onChange={(event) => {
+                  const { eventCount, target, text } = event.nativeEvent;
+                  handleNameChange(text);
+                }}
+              />
+              {!localValidation[0] && (
+                <ErrorMessage>{errorMessages[0]}</ErrorMessage>
+              )}
+              <SLabel>MBTI</SLabel>
+              <MySelect
+                data={MBTIs}
+                onSelect={(selectedItem, index) => {
+                  setLocalProfileData((prev) => ({
+                    ...prev,
+                    MBTI: IndexToMBTI[index],
+                  }));
+                }}
+                width={width * 0.81}
+                defaultButtonText="MBTI를 설정해주세요"
+                defaultValueByIndex={MBTIToIndex[localProfileData.MBTI]}
+              />
+              <SLabel>계열이나 직업</SLabel>
+              <SBigTextInput
+                placeholder="ex. 새내기 / 스타트업 마케터 / AI중독 문과생..."
+                autoCapitalize="none"
+                defaultValue={localProfileData.job ? localProfileData.job : ""}
+                onChange={(event) => {
+                  const { eventCount, target, text } = event.nativeEvent;
+                  handleJobChange(text);
+                }}
+              />
+              {!localValidation[1] && (
+                <ErrorMessage>{errorMessages[1]}</ErrorMessage>
+              )}
+              <SLabel>간단한 자기소개</SLabel>
+              <STextArea
+                placeholder="ex. 미대에 다니는 다양한 삶을 살고 싶어하는 미개봉화석^^
               요즘 스타트업에 관심이 생겨서 관련하신 분들과 이야기하면 좋을 것 같아요ㅎㅎ"
-              autoCapitalize="none"
-              multiline={true}
-              defaultValue={
-                localProfileData.shortBio ? localProfileData.shortBio : ""
-              }
-              onChange={(event) => {
-                const { eventCount, target, text } = event.nativeEvent;
-                handleBioChange(text);
-              }}
-            />
-            {!localValidation[2] && (
-              <ErrorMessage>{errorMessages[2]}</ErrorMessage>
-            )}
-            <SLabel>성격이나 스타일</SLabel>
-            <STextArea
-              placeholder="ex. 친해지면 말 많아요 / 드립력 상 / 조용하고 이야기 잘 들어줘요 / 연락, 답장이 빨라요"
-              autoCapitalize="none"
-              multiline={true}
-              defaultValue={
-                localProfileData.personality ? localProfileData.personality : ""
-              }
-              onChange={(event) => {
-                const { eventCount, target, text } = event.nativeEvent;
-                handlePersonalityChange(text);
-              }}
-            />
-            {!localValidation[3] && (
-              <ErrorMessage>{errorMessages[3]}</ErrorMessage>
-            )}
-            <SLabel>음주 스타일</SLabel>
-            <MySelect
-              data={DrinkingStyles}
-              onSelect={(_, index) => {
-                setLocalProfileData((prev) => ({
-                  ...prev,
-                  drinkingStyle: index,
-                }));
-              }}
-              width={width * 0.81}
-              defaultButtonText="음주 스타일을 설정해주세요"
-              defaultValueByIndex={localProfileData.drinkingStyle}
-            />
-            <View style={{ height: 150 }} />
-          </DetailContainer>
-        </InnerContainer>
-      </ScrollView>
+                autoCapitalize="none"
+                multiline={true}
+                defaultValue={
+                  localProfileData.shortBio ? localProfileData.shortBio : ""
+                }
+                onChange={(event) => {
+                  const { eventCount, target, text } = event.nativeEvent;
+                  handleBioChange(text);
+                }}
+              />
+              {!localValidation[2] && (
+                <ErrorMessage>{errorMessages[2]}</ErrorMessage>
+              )}
+              <SLabel>성격이나 스타일</SLabel>
+              <STextArea
+                placeholder="ex. 친해지면 말 많아요 / 드립력 상 / 조용하고 이야기 잘 들어줘요 / 연락, 답장이 빨라요"
+                autoCapitalize="none"
+                multiline={true}
+                defaultValue={
+                  localProfileData.personality
+                    ? localProfileData.personality
+                    : ""
+                }
+                onChange={(event) => {
+                  const { eventCount, target, text } = event.nativeEvent;
+                  handlePersonalityChange(text);
+                }}
+              />
+              {!localValidation[3] && (
+                <ErrorMessage>{errorMessages[3]}</ErrorMessage>
+              )}
+              <SLabel>음주 스타일</SLabel>
+              <MySelect
+                data={DrinkingStyles}
+                onSelect={(_, index) => {
+                  setLocalProfileData((prev) => ({
+                    ...prev,
+                    drinkingStyle: index,
+                  }));
+                }}
+                width={width * 0.81}
+                defaultButtonText="음주 스타일을 설정해주세요"
+                defaultValueByIndex={localProfileData.drinkingStyle}
+              />
+              <View style={{ height: 150 }} />
+            </DetailContainer>
+          </InnerContainer>
+        </ScrollView>
+      </MyKeyboardAvoidingView>
       <MainButtonWBg
         onPress={updateProfile}
         disabled={localValidation.includes(false)}
