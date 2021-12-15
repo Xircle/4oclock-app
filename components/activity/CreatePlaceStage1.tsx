@@ -39,6 +39,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [searchResult, setSearchResult] = useState<kakaoLocalData[]>(undefined);
+  const [localDetailAddress, setLocalDestailAddress] = useState("");
 
   useEffect(() => {
     activityDispatcher.dispatchStage1Valid(
@@ -67,6 +68,12 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
       setFeeError(undefined);
     }
   }, [state.isFinished]);
+
+  const CTAPlace = (addressName: string, placeName: string, id: string) => {
+    activityDispatcher.dispatchDetailAddress(addressName, dispatch);
+    setLocalDestailAddress("");
+    setAddressError(false);
+  };
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -167,15 +174,12 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               returnKeyType="next"
               returnKeyLabel="next"
               autoCorrect={false}
-              defaultValue={state.detailAddress ? state.detailAddress : ""}
+              defaultValue={localDetailAddress}
               onChange={async (event) => {
                 const { eventCount, target, text } = event.nativeEvent;
                 const temp = await kakaoLocal.searchByNameAndKeyword(text);
                 setSearchResult(temp.documents);
-                activityDispatcher.dispatchDetailAddress(text, dispatch);
-                setAddressError(
-                  !activityValidation.validateDetailAddress(text)
-                );
+                setLocalDestailAddress(text);
               }}
               error={addressError}
             />
@@ -184,7 +188,22 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
             ) : null}
             <SearchListContainer showsVerticalScrollIndicator={false}>
               {searchResult?.map((item, index) => {
-                return <LocationVRow key={index} placeId={item.place_id} placeName={item.place_name} addressName={item.address_name} categoryGroupName={item.category_group_name}/>;
+                return (
+                  <LocationVRow
+                    key={index}
+                    placeId={item.place_id}
+                    placeName={item.place_name}
+                    addressName={item.address_name}
+                    categoryGroupName={item.category_group_name}
+                    onPress={() =>
+                      CTAPlace(
+                        item.address_name,
+                        item.place_name,
+                        item.place_id
+                      )
+                    }
+                  />
+                );
               })}
             </SearchListContainer>
           </InnerContainer>

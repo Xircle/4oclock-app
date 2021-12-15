@@ -1,23 +1,32 @@
 import styled from "styled-components/native";
 import React from "react";
 import { colors, fontFamilies, GeneralText } from "../../../styles/styles";
+import { TouchableOpacity } from "react-native";
 
 interface Props {
   placeId: string;
   placeName: string;
   addressName: string;
   categoryGroupName: string;
+  onPress: () => void;
 }
 
 export default function LocationVRow({
-  placeId,
   placeName,
   addressName,
   categoryGroupName,
+  onPress,
 }: Props) {
   return (
-
-      <Container>
+    <Container>
+      <LeftContainer>
+        <TouchableOpacity onPress={onPress}>
+          <SelectContainer>
+            <SelectText>선택</SelectText>
+          </SelectContainer>
+        </TouchableOpacity>
+      </LeftContainer>
+      <RightContainer>
         <InnerContainer>
           <PlaceName>{placeName}</PlaceName>
           <AddressName>{addressName}</AddressName>
@@ -25,8 +34,8 @@ export default function LocationVRow({
         <InnerContainer>
           <CategoryGroupName>{categoryGroupName}</CategoryGroupName>
         </InnerContainer>
-      </Container>
-
+      </RightContainer>
+    </Container>
   );
 }
 
@@ -51,4 +60,24 @@ const AddressName = styled(GeneralText)`
 
 const CategoryGroupName = styled(GeneralText)``;
 
-const SelectButton = styled.View``;
+const LeftContainer = styled.View`
+  width: 60px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const RightContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const SelectContainer = styled.View`
+  padding: 3px;
+  border-radius: 3px;
+  background-color: ${colors.mainBlue};
+`;
+
+const SelectText = styled(GeneralText)`
+  color: ${colors.bgColor};
+`;
