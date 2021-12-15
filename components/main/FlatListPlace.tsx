@@ -90,7 +90,7 @@ export default function FlatListPlace({
               <DeadLineText>{deadline}</DeadLineText>
             </BottomRightFixedContainer>
           )}
-          {purpose === Purpose.mypage && (
+          {purpose === Purpose.mypage && false && (
             <BottomRightFixedContainer>
               <ReviewButton onPress={writeReview} />
             </BottomRightFixedContainer>
