@@ -34,7 +34,7 @@ export default function AuthProfileMainData({
   state,
   dispatch,
 }: Props) {
-  const univs: string[] = ["고려대학교", "연세대학교", "이화여자대학교"];
+  const univs: string[] = ["고려대학교", "연세대학교", "이화여자대학교", '성신여자대학교', '다른학교입니다' ];
   const [nameError, SetNameError] = useState<boolean>(true);
   const [univError, SetUnivError] = useState<boolean>(true);
   const [ageError, SetAgeError] = useState<boolean>(true);
@@ -43,189 +43,186 @@ export default function AuthProfileMainData({
   const [bioError, SetBioError] = useState<boolean>(true);
 
   return (
-      <Container showsVerticalScrollIndicator={false}>
-        <MainHeading style={{ marginTop: 20 }}>프로필 만들기</MainHeading>
-        <SBigTextInput
-          placeholder="USERNAME"
-          autoCapitalize="none"
-          blurOnSubmit={true}
-          returnKeyType="next"
-          returnKeyLabel="next"
-          autoCorrect={false}
-          defaultValue={state.name ? state.name : ""}
-          onChange={(event) => {
-            const { eventCount, target, text } = event.nativeEvent;
-            authDispatcher.dispatchName(text, dispatch);
-            SetNameError(
-              authValidation.validateName(
-                text,
-                univError || ageError || genderError || bioError || titleError,
+    <Container showsVerticalScrollIndicator={false}>
+      <MainHeading style={{ marginTop: 20 }}>
+        간단한 프로필 만들기 🕺
+      </MainHeading>
+      <SBigTextInput
+        placeholder="USERNAME"
+        autoCapitalize="none"
+        blurOnSubmit={true}
+        returnKeyType="next"
+        returnKeyLabel="next"
+        autoCorrect={false}
+        defaultValue={state.name ? state.name : ""}
+        onChange={(event) => {
+          const { eventCount, target, text } = event.nativeEvent;
+          authDispatcher.dispatchName(text, dispatch);
+          SetNameError(
+            authValidation.validateName(
+              text,
+              univError || ageError || genderError || bioError || titleError,
+              dispatch
+            )
+          );
+        }}
+      />
+      {nameError && <ErrorMessage>{authErrorMessage[0]}</ErrorMessage>}
+      <MySelect
+        data={Universities}
+        onSelect={(selectedItem, index) => {
+          const univ = selectedItem.split(" ")[0];
+          const iG = selectedItem.split(" ")[1];
+          authDispatcher.dispatchUniversity(univ, dispatch);
+          SetUnivError(
+            authValidation.validateUniversity(
+              selectedItem,
+              nameError || ageError || genderError || bioError || titleError,
+              dispatch
+            )
+          );
+        }}
+        width={width - 120}
+        defaultButtonText="학교"
+        defaultValueByIndex={
+          UniversityToIndex[
+            state.university
+          ]
+        }
+      />
+      {!nameError && univError && (
+        <ErrorMessage>{authErrorMessage[1]}</ErrorMessage>
+      )}
+      <SBigTextInput
+        style={{ width: width - 120 }}
+        placeholder="나이"
+        blurOnSubmit={true}
+        returnKeyType="next"
+        returnKeyLabel="next"
+        autoCorrect={false}
+        defaultValue={state.age}
+        keyboardType="number-pad"
+        onChange={(event) => {
+          const { eventCount, target, text } = event.nativeEvent;
+          authDispatcher.dispatchAge(text, dispatch);
+          SetAgeError(
+            authValidation.validateAge(
+              text,
+              univError || nameError || genderError || bioError || titleError,
+              dispatch
+            )
+          );
+        }}
+      />
+      {!nameError && !univError && ageError && (
+        <ErrorMessage>{authErrorMessage[2]}</ErrorMessage>
+      )}
+      <RadioContainer>
+        <Radio
+          onPress={() => {
+            authDispatcher.dispatchGender("female", dispatch);
+            SetGenderError(
+              authValidation.validateGender(
+                "female",
+                univError || nameError || ageError || bioError || titleError,
                 dispatch
               )
             );
           }}
-        />
-        {nameError && <ErrorMessage>{authErrorMessage[0]}</ErrorMessage>}
-        <MySelect
-          data={Universities}
-          onSelect={(selectedItem, index) => {
-            const univ = selectedItem.split(" ")[0];
-            const iG = selectedItem.split(" ")[1];
-            authDispatcher.dispatchUniversity(univ, dispatch);
-            authDispatcher.dispatchIsGraduate(iG === "졸업", dispatch);
-            SetUnivError(
-              authValidation.validateUniversity(
-                selectedItem,
-                nameError || ageError || genderError || bioError || titleError,
+        >
+          <Ionicons
+            name={
+              state.gender === "female"
+                ? "checkmark-circle"
+                : "checkmark-circle-outline"
+            }
+            color={
+              state.gender === "female" ? colors.mainBlue : colors.bareGrey
+            }
+            size={32}
+            style={{ marginRight: 10 }}
+          />
+          <GenderText isSelected={state.gender === "female"}>여자</GenderText>
+        </Radio>
+        <Radio
+          onPress={() => {
+            authDispatcher.dispatchGender("male", dispatch);
+            SetGenderError(
+              authValidation.validateGender(
+                "male",
+                univError || nameError || ageError || bioError || titleError,
                 dispatch
               )
             );
           }}
-          width={width - 120}
-          defaultButtonText="학교"
-          defaultValueByIndex={
-            UniversityToIndex[
-              state.university + (state.isGraduate ? "졸업" : "재학")
-            ]
-          }
-        />
-        {!nameError && univError && (
-          <ErrorMessage>{authErrorMessage[1]}</ErrorMessage>
-        )}
-        <SBigTextInput
-          style={{ width: width - 120 }}
-          placeholder="나이"
-          blurOnSubmit={true}
-          returnKeyType="next"
-          returnKeyLabel="next"
-          autoCorrect={false}
-          defaultValue={state.age}
-          keyboardType="number-pad"
-          onChange={(event) => {
-            const { eventCount, target, text } = event.nativeEvent;
-            authDispatcher.dispatchAge(text, dispatch);
-            SetAgeError(
-              authValidation.validateAge(
-                text,
-                univError || nameError || genderError || bioError || titleError,
-                dispatch
-              )
-            );
-          }}
-        />
-        {!nameError && !univError && ageError && (
-          <ErrorMessage>{authErrorMessage[2]}</ErrorMessage>
-        )}
-        <RadioContainer>
-          <Radio
-            onPress={() => {
-              authDispatcher.dispatchGender("female", dispatch);
-              SetGenderError(
-                authValidation.validateGender(
-                  "female",
-                  univError || nameError || ageError || bioError || titleError,
-                  dispatch
-                )
-              );
-            }}
-          >
-            <Ionicons
-              name={
-                state.gender === "female"
-                  ? "checkmark-circle"
-                  : "checkmark-circle-outline"
-              }
-              color={
-                state.gender === "female" ? colors.mainBlue : colors.bareGrey
-              }
-              size={32}
-              style={{ marginRight: 10 }}
-            />
-            <GenderText isSelected={state.gender === "female"}>여자</GenderText>
-          </Radio>
-          <Radio
-            onPress={() => {
-              authDispatcher.dispatchGender("male", dispatch);
-              SetGenderError(
-                authValidation.validateGender(
-                  "male",
-                  univError || nameError || ageError || bioError || titleError,
-                  dispatch
-                )
-              );
-            }}
-          >
-            <Ionicons
-              name={
-                state.gender === "male"
-                  ? "checkmark-circle"
-                  : "checkmark-circle-outline"
-              }
-              color={
-                state.gender === "male" ? colors.mainBlue : colors.bareGrey
-              }
-              size={32}
-              style={{ marginRight: 10 }}
-            />
-            <GenderText isSelected={state.gender === "male"}>남자</GenderText>
-          </Radio>
-        </RadioContainer>
-        {!nameError && !univError && !ageError && genderError && (
-          <ErrorMessage>{authErrorMessage[3]}</ErrorMessage>
-        )}
-        <SLabel>한줄소개 (스타일/계열/직업...자유롭게)</SLabel>
-        <SBigTextInput
-          placeholder="ex. 말이 많아요 / 치믈리에 새내기..."
-          autoCapitalize="none"
-          blurOnSubmit={true}
-          returnKeyType="next"
-          returnKeyLabel="next"
-          autoCorrect={false}
-          defaultValue={state.title ? state.title : ""}
-          onChange={(event) => {
-            const { eventCount, target, text } = event.nativeEvent;
-            authDispatcher.dispatchTitle(text, dispatch);
-            SetTitleError(
-              authValidation.validateName(
-                text,
-                univError || ageError || genderError || bioError || nameError,
-                dispatch
-              )
-            );
-          }}
-        />
-        {!nameError &&
-          !univError &&
-          !ageError &&
-          !genderError &&
-          titleError && <ErrorMessage>{authErrorMessage[4]}</ErrorMessage>}
-        <SLabel>친구들에게 자기소개를 적어주세요!</SLabel>
-        <STextArea
-          placeholder="ex. 안녕하세요 트와이스를 좋아하는 인문대생입니다 / 취준하느라 너무 힘들어요...! 같이 고민이야기 하실 분!"
-          autoCapitalize="none"
-          blurOnSubmit={true}
-          returnKeyType="next"
-          returnKeyLabel="next"
-          autoCorrect={false}
-          defaultValue={state.bio ? state.bio : ""}
-          multiline={true}
-          onChange={(event) => {
-            const { eventCount, target, text } = event.nativeEvent;
-            authDispatcher.dispatchBio(text, dispatch);
-            SetBioError(
-              authValidation.validateName(
-                text,
-                univError || ageError || genderError || bioError || titleError,
-                dispatch
-              )
-            );
-          }}
-        />
-        {!nameError && !univError && !ageError && !genderError && bioError && (
-          <ErrorMessage>{authErrorMessage[5]}</ErrorMessage>
-        )}
-        <View style={{ height: 150 }}></View>
-      </Container>
+        >
+          <Ionicons
+            name={
+              state.gender === "male"
+                ? "checkmark-circle"
+                : "checkmark-circle-outline"
+            }
+            color={state.gender === "male" ? colors.mainBlue : colors.bareGrey}
+            size={32}
+            style={{ marginRight: 10 }}
+          />
+          <GenderText isSelected={state.gender === "male"}>남자</GenderText>
+        </Radio>
+      </RadioContainer>
+      {!nameError && !univError && !ageError && genderError && (
+        <ErrorMessage>{authErrorMessage[3]}</ErrorMessage>
+      )}
+      <SLabel>한줄소개 (스타일/계열/직업...자유롭게)</SLabel>
+      <SBigTextInput
+        placeholder="ex. 보건 계열 새내기/치믈리에/잉여대학원생"
+        autoCapitalize="none"
+        blurOnSubmit={true}
+        returnKeyType="next"
+        returnKeyLabel="next"
+        autoCorrect={false}
+        defaultValue={state.title ? state.title : ""}
+        onChange={(event) => {
+          const { eventCount, target, text } = event.nativeEvent;
+          authDispatcher.dispatchTitle(text, dispatch);
+          SetTitleError(
+            authValidation.validateName(
+              text,
+              univError || ageError || genderError || bioError || nameError,
+              dispatch
+            )
+          );
+        }}
+      />
+      {!nameError && !univError && !ageError && !genderError && titleError && (
+        <ErrorMessage>{authErrorMessage[4]}</ErrorMessage>
+      )}
+      <SLabel>친구들에게 자기소개를 적어주세요!</SLabel>
+      <STextArea
+        placeholder="ex. 미대에 다니는 다양한 삶을 살고 싶어하는 미개봉화석^^ 요즘 스타트업에 관심이 생겨서 관련하신 분들과 이야기하면 좋을 것 같아용ㅎㅎ"
+        autoCapitalize="none"
+        blurOnSubmit={true}
+        returnKeyType="next"
+        returnKeyLabel="next"
+        autoCorrect={false}
+        defaultValue={state.bio ? state.bio : ""}
+        multiline={true}
+        onChange={(event) => {
+          const { eventCount, target, text } = event.nativeEvent;
+          authDispatcher.dispatchBio(text, dispatch);
+          SetBioError(
+            authValidation.validateName(
+              text,
+              univError || ageError || genderError || bioError || titleError,
+              dispatch
+            )
+          );
+        }}
+      />
+      {!nameError && !univError && !ageError && !genderError && bioError && (
+        <ErrorMessage>{authErrorMessage[5]}</ErrorMessage>
+      )}
+      <View style={{ height: 150 }}></View>
+    </Container>
   );
 }
 

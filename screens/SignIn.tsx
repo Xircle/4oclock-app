@@ -109,7 +109,9 @@ export default function SignIn({ route }: Props) {
       <MyKeyboardAvoidingView>
         <Container>
           <TouchableOpacity onPress={backHandler}>
-            {step > 0 ? <MyBackButton color={colors.black} size={38} /> : null}
+            {step > 0 && step < limit ? (
+              <MyBackButton color={colors.black} size={38} />
+            ) : null}
           </TouchableOpacity>
           <ScaleBarContainer>
             <ScaleBar />
@@ -182,7 +184,7 @@ export default function SignIn({ route }: Props) {
             onPress={() => {
               nextHandler();
             }}
-            title={step === limit - 1 ? "시작하기" : "다음"}
+            title={step === limit - 1 ? "ok 고" : "계속하기"}
             disabled={isDisable()}
           />
         </Container>
