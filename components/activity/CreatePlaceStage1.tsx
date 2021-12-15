@@ -24,6 +24,7 @@ import { createPlaceErrorMessage } from "../../lib/errorMessages";
 import { convertTimeCA } from "../../lib/utils";
 import { kakaoLocal, kakaoLocalData } from "../../lib/api/kakaoLocalApis";
 import LocationVRow from "./locationV/LocationVRow";
+import SelectedLocation from "./locationV/SelectedLocation";
 
 interface Props {
   state: ActivityState;
@@ -39,7 +40,11 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [searchResult, setSearchResult] = useState<kakaoLocalData[]>(undefined);
-  const [localDetailAddress, setLocalDestailAddress] = useState("");
+  const [placeSearch, setPlaceSearch] = useState("");
+
+  // refactor on V2
+  const [placeName, setPlaceName] = useState("");
+  const [placeAddress, setPlaceAddress] = useState("");
 
   useEffect(() => {
     activityDispatcher.dispatchStage1Valid(
@@ -70,8 +75,11 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
   }, [state.isFinished]);
 
   const CTAPlace = (addressName: string, placeName: string, id: string) => {
-    activityDispatcher.dispatchDetailAddress(addressName, dispatch);
-    setLocalDestailAddress("");
+    setPlaceName(placeName);
+    setPlaceAddress(addressName);
+    activityDispatcher.dispatchDetailAddress(addressName, id, dispatch);
+    activityDispatcher;
+    setPlaceSearch("");
     setAddressError(false);
   };
   return (
@@ -167,6 +175,10 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
         </ExpandableV>
         <ExpandableV title="만남장소" height={200} error={addressError}>
           <InnerContainer>
+            {addressError ? (
+              <SErrorMessage>{createPlaceErrorMessage[3]}</SErrorMessage>
+            ) : null}
+            <SelectedLocation placeName={placeName} address={placeAddress} />
             <SBigTextInput
               placeholder="만남 장소를 입력해주세요"
               autoCapitalize="none"
@@ -174,18 +186,16 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               returnKeyType="next"
               returnKeyLabel="next"
               autoCorrect={false}
-              defaultValue={localDetailAddress}
+              defaultValue={placeSearch}
               onChange={async (event) => {
                 const { eventCount, target, text } = event.nativeEvent;
                 const temp = await kakaoLocal.searchByNameAndKeyword(text);
                 setSearchResult(temp.documents);
-                setLocalDestailAddress(text);
+                setPlaceSearch(text);
               }}
               error={addressError}
             />
-            {searchResult ? (
-              <SErrorMessage>{searchResult?.[0]?.place_name}</SErrorMessage>
-            ) : null}
+
             <SearchListContainer showsVerticalScrollIndicator={false}>
               {searchResult?.map((item, index) => {
                 return (
@@ -352,6 +362,7 @@ const InstructionText = styled(ErrorMessage)`
 
 const SearchListContainer = styled.ScrollView`
   width: 100%;
+  margin-top: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
 `;

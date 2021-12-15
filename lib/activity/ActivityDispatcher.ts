@@ -27,13 +27,15 @@ export const activityDispatcher = {
     });
   },
   dispatchDetailAddress: (
-    text: string,
+    placeName: string,
+    placeId: string,
     dispatch: React.Dispatch<ActivityAction>
   ) => {
     dispatch({
       type: "setDetailAddress",
-      payload: text,
+      payload: placeName,
     });
+    dispatch({ type: "setPlaceId", payload: placeId });
   },
   dispatchParticipationFee: (
     text: string,
@@ -67,14 +69,14 @@ export const activityDispatcher = {
   ) => {
     dispatch({ type: "setSubImagesFile", payload: oldFiles.concat(newFiles) });
   },
-  removeSubImagesByFile:  (
+  removeSubImagesByFile: (
     // @ts-ignore
     oldFiles: File[],
     // @ts-ignore
     fileToRemove: File,
     dispatch: React.Dispatch<ActivityAction>
   ) => {
-    const toRomoveIndex =  oldFiles.indexOf(fileToRemove);
+    const toRomoveIndex = oldFiles.indexOf(fileToRemove);
     if (toRomoveIndex !== -1) {
       oldFiles.splice(toRomoveIndex, 1);
       dispatch({
