@@ -19,6 +19,7 @@ import { CreateAccountOutput } from "../lib/api/types";
 import { createAccount } from "../lib/api/createAccount";
 import storage from "../lib/helpers/myAsyncStorage";
 import { useNavigation } from "@react-navigation/native";
+import MyKeyboardAvoidingView from "../components/UI/MyKeyboardAvoidingView";
 
 interface Props {
   route: RouteProp<LoggedOutStackParamList, "SignIn">;
@@ -105,81 +106,87 @@ export default function SignIn({ route }: Props) {
   // pan responders
   return (
     <SafeAreaView style={{ backgroundColor: colors.bgColor, flex: 1 }}>
-      <Container>
-        <TouchableOpacity onPress={backHandler}>
-          <MyBackButton color={colors.black} size={38} />
-        </TouchableOpacity>
-        <ScaleBarContainer>
-          <ScaleBar />
-          <AnimationScaleBar
-            style={{ transform: [{ translateX: scalBarPosition }] }}
+      <MyKeyboardAvoidingView>
+        <Container>
+          <TouchableOpacity onPress={backHandler}>
+            {step > 0 ? <MyBackButton color={colors.black} size={38} /> : null}
+          </TouchableOpacity>
+          <ScaleBarContainer>
+            <ScaleBar />
+            <AnimationScaleBar
+              style={{ transform: [{ translateX: scalBarPosition }] }}
+            />
+          </ScaleBarContainer>
+          <Wrapper>
+            <AnimationWrapper
+              style={{
+                transform: [{ translateX: position }],
+              }}
+            >
+              <AuthPhoneNumber
+                onNext={nextHandler}
+                state={state}
+                dispatch={dispatch}
+              />
+            </AnimationWrapper>
+            <AnimationWrapper
+              style={{
+                transform: [{ translateX: position }],
+                left: width * 1,
+              }}
+            >
+              <AuthProfileMainData
+                onNext={nextHandler}
+                state={state}
+                dispatch={dispatch}
+              />
+            </AnimationWrapper>
+            <AnimationWrapper
+              style={{
+                transform: [{ translateX: position }],
+                left: width * 2,
+              }}
+            >
+              <AuthProfileSubData
+                onNext={nextHandler}
+                state={state}
+                dispatch={dispatch}
+              />
+            </AnimationWrapper>
+            <AnimationWrapper
+              style={{
+                transform: [{ translateX: position }],
+                left: width * 3,
+              }}
+            >
+              <AuthProfileImage
+                onNext={nextHandler}
+                state={state}
+                dispatch={dispatch}
+              />
+            </AnimationWrapper>
+            <AnimationWrapper
+              style={{
+                transform: [{ translateX: position }],
+                left: width * 4,
+              }}
+            >
+              <AuthAgree
+                onNext={nextHandler}
+                state={state}
+                dispatch={dispatch}
+              />
+            </AnimationWrapper>
+          </Wrapper>
+          <MainButtonWBg
+            onPress={() => {
+              nextHandler();
+            }}
+            title={step === limit - 1 ? "시작하기" : "다음"}
+            disabled={isDisable()}
           />
-        </ScaleBarContainer>
-        <Wrapper>
-          <AnimationWrapper
-            style={{
-              transform: [{ translateX: position }],
-            }}
-          >
-            <AuthPhoneNumber
-              onNext={nextHandler}
-              state={state}
-              dispatch={dispatch}
-            />
-          </AnimationWrapper>
-          <AnimationWrapper
-            style={{
-              transform: [{ translateX: position }],
-              left: width * 1,
-            }}
-          >
-            <AuthProfileMainData
-              onNext={nextHandler}
-              state={state}
-              dispatch={dispatch}
-            />
-          </AnimationWrapper>
-          <AnimationWrapper
-            style={{
-              transform: [{ translateX: position }],
-              left: width * 2,
-            }}
-          >
-            <AuthProfileSubData
-              onNext={nextHandler}
-              state={state}
-              dispatch={dispatch}
-            />
-          </AnimationWrapper>
-          <AnimationWrapper
-            style={{
-              transform: [{ translateX: position }],
-              left: width * 3,
-            }}
-          >
-            <AuthProfileImage
-              onNext={nextHandler}
-              state={state}
-              dispatch={dispatch}
-            />
-          </AnimationWrapper>
-          <AnimationWrapper
-            style={{
-              transform: [{ translateX: position }],
-              left: width * 4,
-            }}
-          >
-            <AuthAgree onNext={nextHandler} state={state} dispatch={dispatch} />
-          </AnimationWrapper>
-        </Wrapper>
-        <MainButtonWBg
-          onPress={() => {
-            nextHandler();
-          }}
-          title={step === limit - 1 ? "시작하기" : "다음"}
-          disabled={isDisable()}
-        />
-      </Container>
+        </Container>
+      </MyKeyboardAvoidingView>
     </SafeAreaView>
   );
 }
