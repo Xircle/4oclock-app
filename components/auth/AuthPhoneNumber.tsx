@@ -19,7 +19,7 @@ interface Props {
 
 export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
   return (
-    <MyKeyboardAvoidingView>
+
       <Container>
         <MainHeading style={{ marginTop: 40 }}>
           친구들과 {"\n"}맛있는 밥 먹으러 갈까요?
@@ -42,7 +42,6 @@ export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
           }}
         />
       </Container>
-    </MyKeyboardAvoidingView>
   );
 }
 

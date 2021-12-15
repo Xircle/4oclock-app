@@ -29,7 +29,6 @@ const { width } = Dimensions.get("screen");
 
 export default function AuthProfileSubData({ onNext, state, dispatch }: Props) {
   return (
-    <MyKeyboardAvoidingView>
       <Container showsVerticalScrollIndicator={false}>
         <MainHeading style={{ marginTop: 20 }}>
           회원님을 조금만 더 알려주세요!
@@ -143,7 +142,6 @@ export default function AuthProfileSubData({ onNext, state, dispatch }: Props) {
         </TagContainer>
         <View style={{ height: 150 }}></View>
       </Container>
-    </MyKeyboardAvoidingView>
   );
 }
 

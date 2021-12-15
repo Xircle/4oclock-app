@@ -43,7 +43,6 @@ export default function AuthProfileMainData({
   const [bioError, SetBioError] = useState<boolean>(true);
 
   return (
-    <MyKeyboardAvoidingView>
       <Container showsVerticalScrollIndicator={false}>
         <MainHeading style={{ marginTop: 20 }}>프로필 만들기</MainHeading>
         <SBigTextInput
@@ -227,7 +226,6 @@ export default function AuthProfileMainData({
         )}
         <View style={{ height: 150 }}></View>
       </Container>
-    </MyKeyboardAvoidingView>
   );
 }
 
