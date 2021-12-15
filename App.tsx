@@ -35,7 +35,10 @@ export default function App() {
       schemaVersion: 1,
     });
     setRealm(connection);
-    const images = loadImages([require("./statics/images/anonymous_user.png")]);
+    const images = loadImages([
+      require("./statics/images/anonymous_user.png"),
+      require("./statics/images/landingPageImage.png"),
+    ]);
     await Promise.all([...images]);
   };
   const onFinish = () => {
@@ -53,15 +56,14 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <DBContext.Provider value={realm}>
-      <NavigationContainer>
-              <Stack.Navigator
-                screenOptions={{ headerShown: false, gestureEnabled: false }}
-              >
-                <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
-                <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
-              </Stack.Navigator>
-            </NavigationContainer>
-        
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{ headerShown: false, gestureEnabled: false }}
+          >
+            <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
+            <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </DBContext.Provider>
     </QueryClientProvider>
   );

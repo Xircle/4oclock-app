@@ -1,6 +1,12 @@
 import styled from "styled-components/native";
 import React, { useState, useEffect } from "react";
-import { Dimensions, Platform, TouchableOpacity } from "react-native";
+import {
+  Dimensions,
+  Image,
+  Platform,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
 import {
   KakaoOAuthToken,
   KakaoProfile,
@@ -18,12 +24,17 @@ import storage from "../lib/helpers/myAsyncStorage";
 import { colors, fontFamilies, GeneralText } from "../styles/styles";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 import MyModal from "../components/UI/MyModal";
+import { useAssets } from "expo-asset";
 
 interface Props {}
 
 const { width } = Dimensions.get("window");
 
 export default function Welcome(props: Props) {
+  const [assets] = useAssets([
+    require("../statics/images/landingPageImage.png"),
+  ]);
+
   const navigation = useNavigation();
   const realm = useDB();
   const [email, setEmail] = useState("");
@@ -163,8 +174,28 @@ export default function Welcome(props: Props) {
           로그인에 실패하였습니다. 운영진에 문의해주시기 바랍니다
         </ModalInfo>
       </MyModal>
-      <DesignContainer></DesignContainer>
+      <DesignContainer>
+        <Heading>2021년은 연고이팅에서!</Heading>
+        {assets?.[0] ? (
+          <MainImg source={assets[0]} resizeMode="contain" />
+        ) : null}
+      </DesignContainer>
       <ButtonContainer>
+        <AgreeContainer>
+          <AgreeText>가입하시면</AgreeText>
+          <TouchableOpacity>
+            <CTAAgreeContainer>
+              <AgreeText>이용약관</AgreeText>
+            </CTAAgreeContainer>
+          </TouchableOpacity>
+          <AgreeText>및</AgreeText>
+          <TouchableOpacity>
+            <CTAAgreeContainer>
+              <AgreeText>개인정보 처리방침</AgreeText>
+            </CTAAgreeContainer>
+          </TouchableOpacity>
+          <AgreeText>에 동의하게 됩니다.</AgreeText>
+        </AgreeContainer>
         <KakaoLoginButton
           onPress={signInWithKakao}
           style={{
@@ -210,18 +241,47 @@ export default function Welcome(props: Props) {
   );
 }
 
+const Heading = styled(GeneralText)`
+  font-family: ${fontFamilies.bold};
+  font-size: 25px;
+`;
+
+const MainImg = styled.Image`
+  width: 220px;
+  position: absolute;
+  top: 0px;
+  right: 0;
+`;
+
+const AgreeContainer = styled.View`
+  flex-direction: row;
+  margin-bottom: 8px;
+`;
+
+const AgreeText = styled(GeneralText)`
+  font-family: ${fontFamilies.thin};
+  font-size: 12px;
+  color: ${colors.midGrey};
+`;
+
+const CTAAgreeContainer = styled.View`
+  border-bottom-width: 0.5px;
+  border-color: ${colors.bareGrey};
+`;
+
 const Container = styled.View`
   flex: 1;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 `;
 
 const DesignContainer = styled.View`
-  margin-top: 300px;
-  width: ${width + "px"};
+  width: 100%;
   justify-content: center;
   align-items: center;
-  background-color: tomato;
+  margin-bottom: 40px;
+  position: relative;
+  flex: 1;
 `;
 
 const KakaoLoginButton = styled.TouchableOpacity`
