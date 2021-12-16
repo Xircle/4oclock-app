@@ -59,10 +59,6 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
   }, [nameError, descriptionError, dateError, addressError, feeError]);
 
   useEffect(() => {
-    console.log(searchResult);
-  }, [searchResult]);
-
-  useEffect(() => {
     if (state.isFinished) {
       // unmount
       console.log("clean up");
@@ -78,6 +74,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
   const CTAPlace = (addressName: string, placeName: string, id: string) => {
     setPlaceName(placeName);
     setPlaceAddress(addressName);
+    console.log(addressName + id);
     activityDispatcher.dispatchDetailAddress(addressName, id, dispatch);
     setPlaceSearch("");
     setAddressError(false);
@@ -88,17 +85,17 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
         <ScrollView showsVerticalScrollIndicator={false}>
           <MainHeading>모임을 열어볼까?</MainHeading>
           <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
-            재밌는 모임을 열어보자~~ 행복하고 재밌는 모임
+            재밌는 모임을 열어볼까? 열고 친구들과{"\n"}꿀잼모임😊
           </SubHeading>
 
           <ExpandableV
-            title="어떤 모임인가요? (제목)"
+            title="만들고 싶은 모임 주제를 적어봐! (제목)"
             height={120}
             error={nameError}
           >
             <InnerContainer>
               <SBigTextInput
-                placeholder="모임을 한마디로 표현해주세요"
+                placeholder="친구들과 함께 놀러갈 곳 이름을 적어줘!"
                 autoCapitalize="none"
                 blurOnSubmit={true}
                 returnKeyType="next"
@@ -119,13 +116,13 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
             </InnerContainer>
           </ExpandableV>
           <ExpandableV
-            title="모임에 대한 간단한 소개!"
+            title="어떤 활동을 하는 모임이야?(설명)"
             height={150}
             error={descriptionError}
           >
             <InnerContainer style={[{ paddingTop: 15 }, { paddingBottom: 15 }]}>
               <STextArea
-                placeholder="모임을 재밌게 설명해주세요"
+                placeholder="모임에 대한 설명을 입력해줘! 함께하고 싶은 주제나 내용을 입력하면 좋아"
                 autoCapitalize="none"
                 blurOnSubmit={true}
                 returnKeyType="next"
@@ -147,7 +144,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               ) : null}
             </InnerContainer>
           </ExpandableV>
-          <ExpandableV title="만남시간" height={80} error={dateError}>
+          <ExpandableV title="만남날짜/시간" height={80} error={dateError}>
             <InnerContainer>
               <PickerContainer onPress={() => setOpen(true)}>
                 <WhiteText>시간 선택하기</WhiteText>
@@ -174,7 +171,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               )}
             </InnerContainer>
           </ExpandableV>
-          <ExpandableV title="만남장소" height={200} error={addressError}>
+          <ExpandableV title="만남위치" height={250} error={addressError}>
             <InnerContainer style={{ justifyContent: "flex-start" }}>
               {addressError ? (
                 <SErrorMessage>{createPlaceErrorMessage[3]}</SErrorMessage>
@@ -196,22 +193,17 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
                 }}
                 error={addressError}
               />
-
               <SearchListContainer showsVerticalScrollIndicator={false}>
                 {searchResult?.map((item, index) => {
                   return (
                     <LocationVRow
                       key={index}
-                      placeId={item.place_id}
+                      placeId={item.id}
                       placeName={item.place_name}
                       addressName={item.address_name}
                       categoryGroupName={item.category_group_name}
                       onPress={() =>
-                        CTAPlace(
-                          item.address_name,
-                          item.place_name,
-                          item.place_id
-                        )
+                        CTAPlace(item.address_name, item.place_name, item.id)
                       }
                     />
                   );

@@ -121,7 +121,9 @@ export default function CreatePlaceStage2({
       <ScrollView showsVerticalScrollIndicator={false}>
         <MainHeading>모임을 열어볼까?</MainHeading>
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
-          재밌는 모임을 열어보자~~ 행복하고 재밌는 모임
+          재밌는 모임을 열어볼까? 열고 친구들과 꿀잼 모임😊{"\n"}
+          {"\n"}
+          놀러가는 곳에 관한 장소 사진을 올려줘!
         </SubHeading>
 
         <SBlackLabel>관련 사진 올리기 (3개 이상)</SBlackLabel>
