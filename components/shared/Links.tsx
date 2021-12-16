@@ -29,9 +29,7 @@ export const openLink = {
     await Linking.openURL("https://www.instagram.com/ykuniv_eating_official/");
   },
   LServiceGuide: async () => {
-    await Linking.openURL(
-      "https://www.notion.so/yketing/50e486c6831e4f538be205d11de29be7"
-    );
+    await Linking.openURL("https://bit.ly/3ImoPjY");
   },
   LYoutube: async () => {
     await Linking.openURL(

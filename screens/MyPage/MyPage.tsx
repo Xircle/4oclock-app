@@ -95,19 +95,16 @@ export default function MyPage({ isRefetch }: Props) {
               </RegisteredButton>
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
-              <ListText>맛집 건의하기</ListText>
-            </ListButton>
-            <ListButton onPress={openLink.LOpenKakaoChat}>
-              <ListText>문의하기 / 피드백하기</ListText>
+              <ListText>연고이팅 운영진에게 문의 / 피드백</ListText>
             </ListButton>
             <ListButton onPress={openLink.LServiceAgree}>
-              <ListText>서비스 사용약관</ListText>
+              <ListText>연고이팅 이용자 가이드!</ListText>
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
-              <ListText>유저 신고하기</ListText>
+              <ListText>비매너 유저 신고하기</ListText>
             </ListButton>
-            <ListButton>
-              <ListText>로그아웃하기</ListText>
+            <ListButton onPress={openLink.LOpenKakaoChat}>
+              <ListText>탈퇴하기</ListText>
             </ListButton>
           </ListContainer>
           <FooterContainer>
@@ -121,18 +118,12 @@ export default function MyPage({ isRefetch }: Props) {
               >
                 <Ionicons name="logo-youtube" size={24} color="#ffffff" />
               </SNSContainer>
-              <SNSContainer
-                style={{ marginLeft: 10 }}
-                onPress={openLink.LYoutube}
-              >
-                <Ionicons name="logo-instagram" size={24} color="#ffffff" />
-              </SNSContainer>
             </SNSWrapper>
             <TouchableOpacity onPress={openLink.LPrivacyAgree}>
               <SNSText>개인정보처리방침</SNSText>
             </TouchableOpacity>
             <TouchableOpacity onPress={openLink.LServiceAgree}>
-              <SNSText>마케팅 수신동의 이용약관</SNSText>
+              <SNSText>서비스 사용약관</SNSText>
             </TouchableOpacity>
           </FooterContainer>
         </Container>
