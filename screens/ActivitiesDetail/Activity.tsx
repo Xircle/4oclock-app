@@ -139,13 +139,13 @@ export default function Activity({ id, name }: Props) {
           <Description>{activityData?.placeDetail?.description}</Description>
         </InnerWrapper>
         <InnerWrapper upperDividor={true}>
-          <InnerHeading>
+          <InnerHeadingBlue>
             참여 크루원{" "}
             {activityData?.participantsData.participantsCount
               ? activityData?.participantsData.participantsCount
               : "0"}{" "}
             명
-          </InnerHeading>
+          </InnerHeadingBlue>
           <UsernameContainer>
             {activityData?.participantsData.participantsUsername?.map(
               (item, index) => (
@@ -155,7 +155,7 @@ export default function Activity({ id, name }: Props) {
           </UsernameContainer>
         </InnerWrapper>
         <InnerWrapper upperDividor={true}>
-          <InnerHeading>자세한 정보를 알려줄게</InnerHeading>
+          <InnerHeadingBlue>자세한 정보를 알려줄게</InnerHeadingBlue>
           <InfoContainer>
             <InfoWrapper>
               <Ionicons name="alarm-outline" size={32} color={colors.midGrey} />
@@ -182,7 +182,8 @@ export default function Activity({ id, name }: Props) {
                 color={colors.midGrey}
               />
               <InnerSubText>
-                최대 {activityData?.placeDetail.maxParticipantsNumber} 명
+                최대 {activityData?.placeDetail.maxParticipantsNumber} 명(호스트
+                포함)
               </InnerSubText>
             </InfoWrapper>
             <InfoWrapper>
@@ -196,7 +197,7 @@ export default function Activity({ id, name }: Props) {
         <View style={{ height: 200 }} />
       </ScrollView>
       <MainButtonWBg
-        title={disabled ? "현재 신청이 불가합니다" : "나도 놀러갈래~"}
+        title={disabled ? "현재 신청이 불가합니다" : "나도 놀러갈래! 😚"}
         onPress={onPress}
         disabled={disabled}
       />
@@ -239,6 +240,10 @@ const ScrollView = styled.ScrollView`
 const InnerHeading = styled(GeneralText)`
   font-family: ${fontFamilies.medium};
   font-size: 22px;
+`;
+
+const InnerHeadingBlue = styled(InnerHeading)`
+  color: ${colors.mainBlue};
 `;
 
 const Title = styled(GeneralText)`
