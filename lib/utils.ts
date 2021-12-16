@@ -192,3 +192,4 @@ export const convertTimeCA = (date: Date) => {
     date.getMonth() + "월 " + date.getDate() + hours + date.getMinutes() + "분"
   );
 };
+
