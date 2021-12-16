@@ -19,6 +19,7 @@ import { PlaceData } from "../lib/api/types.d";
 import Loader from "../components/UI/Loader";
 import FlatListPlace from "../components/main/FlatListPlace";
 import Swiper from "react-native-swiper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface Props {}
 
@@ -80,7 +81,8 @@ export default function Main(props: Props) {
   if (loading) return <Loader />;
   return (
     <Container>
-      <TopCarouselContainer
+      {/* 일시적 제거 */}
+      {/* <TopCarouselContainer
         style={{
           shadowColor: "#000",
           shadowOffset: {
@@ -120,83 +122,87 @@ export default function Main(props: Props) {
             }
           })}
         </Swiper>
-      </TopCarouselContainer>
-      <MiddleTabContainer>
-        <MiddleTab
-          onPress={() => {
-            setMiddleTabIndex(0);
-            middleTabAnim(0, position).start();
-          }}
-        >
-          <MiddleTabTextWrapper isSelected={middleTabIndex === 0}>
-            <MiddleTabText isSelected={middleTabIndex === 0}>
-              전체보기
-            </MiddleTabText>
-          </MiddleTabTextWrapper>
-        </MiddleTab>
-        <MiddleTab
-          onPress={() => {
-            setMiddleTabIndex(1);
-            middleTabAnim(1, position).start();
-          }}
-        >
-          <MiddleTabTextWrapper isSelected={middleTabIndex === 1}>
-            <TagContiner>
-              <TagText>커밍쑨</TagText>
-            </TagContiner>
-            <MiddleTabText isSelected={middleTabIndex === 1}>
-              후기보기
-            </MiddleTabText>
-          </MiddleTabTextWrapper>
-        </MiddleTab>
-      </MiddleTabContainer>
+      </TopCarouselContainer> */}
+      <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
+        <MiddleTabContainer>
+          <MiddleTab
+            onPress={() => {
+              setMiddleTabIndex(0);
+              middleTabAnim(0, position).start();
+            }}
+          >
+            <MiddleTabTextWrapper isSelected={middleTabIndex === 0}>
+              <MiddleTabText isSelected={middleTabIndex === 0}>
+                전체보기
+              </MiddleTabText>
+            </MiddleTabTextWrapper>
+          </MiddleTab>
+          <MiddleTab
+            onPress={() => {
+              setMiddleTabIndex(1);
+              middleTabAnim(1, position).start();
+            }}
+          >
+            <MiddleTabTextWrapper isSelected={middleTabIndex === 1}>
+              <TagContiner>
+                <TagText>커밍쑨</TagText>
+              </TagContiner>
+              <MiddleTabText isSelected={middleTabIndex === 1}>
+                후기보기
+              </MiddleTabText>
+            </MiddleTabTextWrapper>
+          </MiddleTab>
+        </MiddleTabContainer>
 
-      <AnimationContainer>
-        <MainAnimWrapper
-          style={{
-            transform: [{ translateX: position }],
-            padding: 20,
-          }}
-          ListHeaderComponent={
-            <ListHeaderContainer>
-              <ListMainText>맛집 뿌셔뿌셔👋</ListMainText>
-              <ListSubText>새로운 친구들 사귀는거 얼마나 재밌게요</ListSubText>
-            </ListHeaderContainer>
-          }
-          showsVerticalScrollIndicator={false}
-          onEndReached={loadMore}
-          onEndReachedThreshold={0.4}
-          onRefresh={onRefresh}
-          refreshing={refreshing}
-          keyExtractor={(item: PlaceFeedData) => item.id + ""}
-          // @ts-ignore
-          data={mainPlaceData.pages.map((page) => page.places).flat()}
-          renderItem={({ item }) => (
-            <FlatListPlace
-              leftParticipantsCount={item.leftParticipantsCount}
-              coverImage={item.coverImage}
-              name={item.name}
-              id={item.id}
-              views={item.views}
-              description={item.placeDetail.description}
-              startDateFromNow={item.startDateFromNow}
-              deadline={item.deadline}
-            />
-          )}
-        />
-
-        <SubAnimWrapper
-          style={{
-            left: width,
-            transform: [{ translateX: position }],
-          }}
-        >
-          <Image
-            source={require("../statics/images/mascot.png")}
-            style={{ width: 300, resizeMode: "contain" }}
+        <AnimationContainer>
+          <MainAnimWrapper
+            style={{
+              transform: [{ translateX: position }],
+              padding: 20,
+            }}
+            ListHeaderComponent={
+              <ListHeaderContainer>
+                <ListMainText>친구들과{"\n"}맛집 투-어 가자 👾</ListMainText>
+                <ListSubText>
+                  새로운 친구들 사귀는거 얼마나 재밌게요 {"><"}
+                </ListSubText>
+              </ListHeaderContainer>
+            }
+            showsVerticalScrollIndicator={false}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.4}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+            keyExtractor={(item: PlaceFeedData) => item.id + ""}
+            // @ts-ignore
+            data={mainPlaceData.pages.map((page) => page.places).flat()}
+            renderItem={({ item }) => (
+              <FlatListPlace
+                leftParticipantsCount={item.leftParticipantsCount}
+                coverImage={item.coverImage}
+                name={item.name}
+                id={item.id}
+                views={item.views}
+                description={item.placeDetail.description}
+                startDateFromNow={item.startDateFromNow}
+                deadline={item.deadline}
+              />
+            )}
           />
-        </SubAnimWrapper>
-      </AnimationContainer>
+
+          <SubAnimWrapper
+            style={{
+              left: width,
+              transform: [{ translateX: position }],
+            }}
+          >
+            <Image
+              source={require("../statics/images/mascot.png")}
+              style={{ width: 300, resizeMode: "contain" }}
+            />
+          </SubAnimWrapper>
+        </AnimationContainer>
+      </SafeAreaView>
     </Container>
   );
 }
