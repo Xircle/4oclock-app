@@ -55,7 +55,7 @@ export default function LoggedInNav() {
         name="MyProfile"
         component={MyProfile}
         options={{
-          headerTitle: "내가 참여한 이팅",
+          headerTitle: "프로필 수정",
         }}
       />
       <Stack.Screen
