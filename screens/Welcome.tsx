@@ -1,12 +1,6 @@
 import styled from "styled-components/native";
 import React, { useState, useEffect } from "react";
-import {
-  Dimensions,
-  Image,
-  Platform,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { Dimensions, Platform, TouchableOpacity } from "react-native";
 import {
   KakaoOAuthToken,
   KakaoProfile,
@@ -25,6 +19,7 @@ import { colors, fontFamilies, GeneralText } from "../styles/styles";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 import MyModal from "../components/UI/MyModal";
 import { useAssets } from "expo-asset";
+import { openLink } from "../components/shared/Links";
 
 interface Props {}
 
@@ -176,26 +171,8 @@ export default function Welcome(props: Props) {
       </MyModal>
       <DesignContainer>
         <Heading>2021년은 연고이팅에서!</Heading>
-        {assets?.[0] ? (
-          <MainImg source={assets[0]} resizeMode="contain" />
-        ) : null}
       </DesignContainer>
       <ButtonContainer>
-        <AgreeContainer>
-          <AgreeText>가입하시면</AgreeText>
-          <TouchableOpacity>
-            <CTAAgreeContainer>
-              <AgreeText>이용약관</AgreeText>
-            </CTAAgreeContainer>
-          </TouchableOpacity>
-          <AgreeText>및</AgreeText>
-          <TouchableOpacity>
-            <CTAAgreeContainer>
-              <AgreeText>개인정보 처리방침</AgreeText>
-            </CTAAgreeContainer>
-          </TouchableOpacity>
-          <AgreeText>에 동의하게 됩니다.</AgreeText>
-        </AgreeContainer>
         <KakaoLoginButton
           onPress={signInWithKakao}
           style={{
@@ -236,6 +213,25 @@ export default function Welcome(props: Props) {
         <TouchableOpacity>
           <LoginText>로그인이 안되시나요?</LoginText>
         </TouchableOpacity>
+        <AgreeContainer>
+          <AgreeText>가입하시면</AgreeText>
+          <TouchableOpacity>
+            <CTAAgreeContainer>
+              <TouchableOpacity onPress={openLink.LServiceAgree}>
+                <AgreeText>이용약관</AgreeText>
+              </TouchableOpacity>
+            </CTAAgreeContainer>
+          </TouchableOpacity>
+          <AgreeText>및</AgreeText>
+          <TouchableOpacity>
+            <CTAAgreeContainer>
+              <TouchableOpacity onPress={openLink.LPrivacyAgree}>
+                <AgreeText>개인정보 처리방침</AgreeText>
+              </TouchableOpacity>
+            </CTAAgreeContainer>
+          </TouchableOpacity>
+          <AgreeText>에 동의하게 됩니다.</AgreeText>
+        </AgreeContainer>
       </ButtonContainer>
     </Container>
   );
@@ -250,12 +246,13 @@ const MainImg = styled.Image`
   width: 220px;
   position: absolute;
   top: 0px;
-  right: 0;
+  left: 0;
 `;
 
 const AgreeContainer = styled.View`
   flex-direction: row;
-  margin-bottom: 8px;
+  margin-top: 60px;
+  margin-bottom: 15px;
 `;
 
 const AgreeText = styled(GeneralText)`
@@ -306,7 +303,6 @@ const ButtonContainer = styled.View`
   width: ${width + "px"};
   justify-content: center;
   align-items: center;
-  margin-bottom: 70px;
 `;
 
 const ModalHeadiner = styled(GeneralText)`
