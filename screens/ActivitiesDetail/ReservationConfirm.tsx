@@ -33,13 +33,11 @@ export default function ReservationConfirm({ route }: Props) {
       <Container>
         <Wrapper>
           <InfoContainer>
-            <MainHeading>친구들과 놀러가기!</MainHeading>
-            <ThanksText>이팅모임을 신청해주셔서 정말 감사합니다 :)</ThanksText>
-            <InfoText>
-              같이 참여하는 친구들의 자세한 프로필을 확인해보세요! 모임에
-              참여하는 친구들을 존중하고 따뜻한 문화를 함께 만들어나가요😊
-            </InfoText>
+            <MainHeading>이팅모임 참석신청 완료 🎉</MainHeading>
           </InfoContainer>
+          <CenteredContainer>
+            <CongratSubText>⭐신청한 모임에 관한 자세한 내용⭐</CongratSubText>
+          </CenteredContainer>
           <DetailContainer>
             <DetailWrapper>
               <Ionicons name="alarm-outline" size={32} color={colors.midGrey} />
@@ -85,22 +83,14 @@ const Container = styled.View`
 
 const InfoContainer = styled.View`
   width: 100%;
-  margin-top: 30px;
-  padding-bottom: 60px;
-  border-bottom-width: 0.3px;
-  border-color: ${colors.bareGrey};
-`;
-const ThanksText = styled(GeneralText)`
-  margin-top: 22px;
-  font-size: 14px;
-  color: ${colors.bareGrey};
+  margin-top: 80px;
+  margin-bottom: 50px;
 `;
 
-const InfoText = styled(GeneralText)`
-  margin-top: 22px;
-  font-size: 15px;
-  color: ${colors.midGrey};
-  line-height: 22px;
+const CongratSubText = styled(GeneralText)`
+  color: ${colors.mainBlue};
+  font-family: ${fontFamilies.medium};
+  margin-top: 12px;
 `;
 
 const DetailContainer = styled.View`
@@ -120,4 +110,16 @@ const InnerSubText = styled(GeneralText)`
   margin-left: 22px;
 `;
 
-const Wrapper = styled.View``;
+const Wrapper = styled.View`
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const CenteredContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  padding-top: 25px;
+  border-top-width: 0.5px;
+  border-color: ${colors.lightBlack};
+`;

@@ -1,6 +1,11 @@
 import styled from "styled-components/native";
-import React, { useEffect, useState } from "react";
-import { colors, GeneralText, MainHeading } from "../../styles/styles";
+import React, { useState } from "react";
+import {
+  colors,
+  fontFamilies,
+  GeneralText,
+  MainHeading,
+} from "../../styles/styles";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { ActivityStackParamList } from "../../navigators/ActivityStackNav";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
@@ -49,12 +54,18 @@ export default function Reservation({ route }: Props) {
   return (
     <Container>
       <InfoContainer>
-        <MainHeading>친구들과 놀러가기!</MainHeading>
-        <ThanksText>이팅모임을 신청해주셔서 정말 감사합니다 :)</ThanksText>
-        <InfoText>
-          같이 참여하는 친구들의 자세한 프로필을 확인해보세요! 모임에 참여하는
-          친구들을 존중하고 따뜻한 문화를 함께 만들어나가요😊
-        </InfoText>
+        <MainHeading>친구들과 놀러가기!🕺</MainHeading>
+        <ThanksText>이제 친구들과 맛잼모임에 놀러가자~!</ThanksText>
+        <InnerInfoContainer>
+          <InfoText>
+            👍 모임 시작 전 참여가 어려워진 경우, 반드시 운영진을 통해서 미리
+            알려주세요!
+          </InfoText>
+          <InfoText style={{ marginTop: 20 }}>
+            ✌ 모임에서 다른 친구들을 존중해주세요. 비매너 친구는 익명신고를
+            통해 연고이팅 운영진에게 말해주세요!
+          </InfoText>
+        </InnerInfoContainer>
       </InfoContainer>
       <SelectContainer>
         <SelectButtonWrapper marginBottom={15}>
@@ -68,6 +79,7 @@ export default function Reservation({ route }: Props) {
               <SelectText>
                 위 사항을 확인하고 이용 규칙을 지키겠습니다
               </SelectText>
+              <MandatorySign>*</MandatorySign>
             </SelectInnerWrapper>
           </SelectButton>
         </SelectButtonWrapper>
@@ -85,6 +97,9 @@ export default function Reservation({ route }: Props) {
             </SelectInnerWrapper>
           </SelectButton>
         </SelectButtonWrapper>
+        <VaccineInfoText>
+          백신 접종 여부 조사를 위해 체크하는 항목이에요:D
+        </VaccineInfoText>
       </SelectContainer>
       <MainButtonWBg
         title="나도 놀러갈래~"
@@ -112,10 +127,24 @@ const ThanksText = styled(GeneralText)`
 `;
 
 const InfoText = styled(GeneralText)`
-  margin-top: 22px;
-  font-size: 15px;
-  color: ${colors.midGrey};
+  font-size: 13px;
+  color: ${colors.lightBlack};
   line-height: 22px;
+  font-family: ${fontFamilies.light};
+`;
+
+const VaccineInfoText = styled(GeneralText)`
+  font-size: 13px;
+  color: ${colors.bareGrey};
+  margin-top: 8px;
+`;
+
+const InnerInfoContainer = styled.View`
+  margin-top: 22px;
+  margin-top: 22px;
+  background-color: rgba(219, 237, 255, 0.39);
+  padding: 20px 16px;
+  border-radius: 10px;
 `;
 
 const SelectContainer = styled.View`
@@ -129,10 +158,16 @@ const SelectButtonWrapper = styled.View<{ marginBottom?: number }>`
 
 const SelectButton = styled.TouchableWithoutFeedback``;
 
-const SelectText = styled.Text`
-  font-size: 16px;
+const SelectText = styled(GeneralText)`
+  font-size: 15px;
   flex-wrap: wrap;
   margin-left: 12px;
+`;
+
+const MandatorySign = styled(GeneralText)`
+  font-size: 15px;
+  color: red;
+  margin-left: 2px;
 `;
 
 const SelectInnerWrapper = styled.View`
