@@ -10,7 +10,7 @@ import CreatePlaceStage3 from "../components/activity/CreatePlaceStage3";
 import { createPlace } from "../lib/api/createPlace";
 import { CreateActivityOutput } from "../lib/api/types.d";
 import { activityDispatcher } from "../lib/activity/ActivityDispatcher";
-import FullScreenLoader from '../components/UI/FullScreenLoader';
+import FullScreenLoader from "../components/UI/FullScreenLoader";
 
 interface Props {}
 
@@ -46,6 +46,7 @@ export default function CreateActivityScreen(props: Props) {
         setLoading(false);
         setManualDisable(false);
         Alert.alert("벌레e");
+        console.log(e);
       }
       setLoading(false);
       setManualDisable(false);
@@ -99,7 +100,7 @@ export default function CreateActivityScreen(props: Props) {
             left: width * 2,
           }}
         >
-          <CreatePlaceStage3 cleanUp={cleanUp} />
+          <CreatePlaceStage3 cleanUp={cleanUp} state={state} />
         </AnimationWrapper>
       </Wrapper>
       {stage < totalStage - 1 && (
@@ -107,7 +108,7 @@ export default function CreateActivityScreen(props: Props) {
           onPress={() => nextHandler(stage)}
           // onPress={() => setModal((prev) => !prev)}
           disabled={isDisable()}
-          title={"모임열기"}
+          title={"모임열기 😏"}
         ></MainButtonWBg>
       )}
       {loading && <FullScreenLoader />}
