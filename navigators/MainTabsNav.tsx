@@ -9,6 +9,7 @@ import { colors } from "../styles/styles";
 import CreateActivityScreen from "../screens/CreateActivityScreen";
 import TabMiddleAdd from "../components/nav/TabMiddleAdd";
 import TabSide from "../components/nav/TabSide";
+import CreateActivityStackNav from "./CreateActivityStackNav";
 
 interface Props {}
 
@@ -49,12 +50,15 @@ export default function MainTabsNav(props: Props) {
       />
       <Tabs.Screen
         name="CreatePlaceT"
-        component={CreateActivityScreen}
+        component={CreateActivityStackNav}
         options={{
           title: "생성하기",
           tabBarIcon: ({ focused, color, size }) => (
             <TabMiddleAdd focused={focused} />
           ),
+          // delete below
+          headerShown: false,
+          tabBarStyle: { display: "none" },
         }}
       />
       {/* <Tabs.Screen

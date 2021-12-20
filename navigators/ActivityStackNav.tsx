@@ -41,9 +41,9 @@ export default function ActivityStackNav({ route }: Props) {
           return (
             <Ionicons
               name="chevron-back"
-              size={36}
+              size={30}
               color={colors.lightBlack}
-              style={{ marginLeft: 3 }}
+              style={{ marginLeft: 12 }}
             />
           );
         },
