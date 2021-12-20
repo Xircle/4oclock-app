@@ -24,7 +24,7 @@ export default function MyModal({ children, onClose, visible }: Props) {
         <ModalInnerWrapper>
           {children}
           <ModalCloseButton onPress={onClose}>
-            <Ionicons name="close" color={colors.bgColor} size={30} />
+            <Ionicons name="close" color={colors.black} size={40} />
           </ModalCloseButton>
         </ModalInnerWrapper>
       </ModalOuterWrapper>
@@ -52,6 +52,6 @@ const ModalInnerWrapper = styled.View`
 
 const ModalCloseButton = styled.TouchableOpacity`
   position: absolute;
-  top: -30px;
-  right: 0;
+  top: 10px;
+  right: 10px;
 `;
