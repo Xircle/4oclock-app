@@ -18,6 +18,7 @@ import { getUser } from "../../lib/api/getUser";
 import { AgeNumberToString } from "../../lib/utils";
 import { useNavigation } from "@react-navigation/native";
 import { openLink } from "../../components/shared/Links";
+import { Account } from "../../lib/helpers/Account";
 
 interface Props {
   isRefetch?: boolean;
@@ -102,6 +103,15 @@ export default function MyPage({ isRefetch }: Props) {
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
               <ListText>비매너 유저 신고하기</ListText>
+            </ListButton>
+            <ListButton
+              onPress={() => {
+                Account.logout();
+                // @ts-ignore
+                naviagtion.navigate("Welcome");
+              }}
+            >
+              <ListText>로그아웃</ListText>
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
               <ListText>탈퇴하기</ListText>

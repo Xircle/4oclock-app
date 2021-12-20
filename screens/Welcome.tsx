@@ -116,6 +116,12 @@ export default function Welcome(props: Props) {
   };
 
   const signInWithApple = async () => {
+    const appleEmail = await storage.getItem("appleEmail");
+    if (appleEmail) {
+      setEmail(appleEmail);
+      socialRedirectApple(appleEmail);
+      return;
+    }
     // performs login request
     const appleAuthRequestResponse = await appleAuth.performRequest({
       requestedOperation: appleAuth.Operation.LOGIN,
@@ -130,6 +136,8 @@ export default function Welcome(props: Props) {
     // use credentialState response to ensure the user is authenticated
     if (credentialState === appleAuth.State.AUTHORIZED) {
       if (appleAuthRequestResponse.email) {
+        await storage.setItem("appleEmail", appleAuthRequestResponse.email);
+
         setEmail(appleAuthRequestResponse.email);
         socialRedirectApple(appleAuthRequestResponse.email);
       } else {
@@ -151,14 +159,7 @@ export default function Welcome(props: Props) {
   }, [email, token]);
   useEffect(() => {
     redirectWithExistingToken();
-    if (Platform.OS === "ios") {
-      // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
-      return appleAuth.onCredentialRevoked(async () => {
-        console.warn(
-          "If this function executes, User Credentials have been Revoked"
-        );
-      });
-    }
+
   }, []);
 
   return (
