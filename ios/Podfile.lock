@@ -42,9 +42,6 @@ PODS:
     - React-Core (= 0.64.3)
     - React-jsi (= 0.64.3)
     - ReactCommon/turbomodule/core (= 0.64.3)
-  - GCDWebServer (3.5.4):
-    - GCDWebServer/Core (= 3.5.4)
-  - GCDWebServer/Core (3.5.4)
   - glog (0.3.5)
   - kakao-login (3.4.2):
     - KakaoSDK (~> 2.4.0)
@@ -355,9 +352,6 @@ PODS:
     - React-cxxreact (= 0.64.3)
     - React-jsi (= 0.64.3)
     - React-perflogger (= 0.64.3)
-  - RealmJS (10.10.0):
-    - GCDWebServer
-    - React
   - RNAppleAuthentication (2.1.5):
     - React-Core
   - RNCAsyncStorage (1.15.11):
@@ -451,7 +445,6 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - RealmJS (from `../node_modules/realm`)
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -464,7 +457,6 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - boost-for-react-native
-    - GCDWebServer
     - KakaoSDK
     - KakaoSDKAuth
     - KakaoSDKCommon
@@ -572,8 +564,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
-  RealmJS:
-    :path: "../node_modules/realm"
   RNAppleAuthentication:
     :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNCAsyncStorage:
@@ -610,7 +600,6 @@ SPEC CHECKSUMS:
   EXUpdatesInterface: e1c01b4f5ec76bd1d6cc714938f9edf5ef6379b9
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
   FBReactNativeSpec: d9cd1693c2621ff19dbcc4c42e08cb09a6f6ce02
-  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   kakao-login: c3a28605d3d2576625781c7643d5e3350e02e719
   KakaoSDK: 1e80d6877c0eac6a310f93c73fb15ca56c05f2bd
@@ -650,7 +639,6 @@ SPEC CHECKSUMS:
   React-RCTVibration: c7f845861e79eae13dc1e8217a3cf47a3945b504
   React-runtimeexecutor: 493d9abb8b23c3f84e19ae221eeba92cadcb70dc
   ReactCommon: 8fea6422328e2fc093e25c9fac67adbcf0f04fb4
-  RealmJS: 804c58c40ba17988188a25373f181eaf34c39b58
   RNAppleAuthentication: 63c2127ace11985b94f852fc480eb84145653712
   RNCAsyncStorage: eb05c0284dd6b50b32f92fad55e2a41e03358c43
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
