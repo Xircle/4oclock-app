@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React, { useState, useEffect } from "react";
-import { Dimensions, Platform, TouchableOpacity } from "react-native";
+import { Alert, Dimensions, Platform, TouchableOpacity } from "react-native";
 import {
   KakaoOAuthToken,
   KakaoProfile,
@@ -11,7 +11,6 @@ import {
 } from "@react-native-seoul/kakao-login";
 import AxiosClient from "../lib/apiClient";
 import { SocialRedirectResponse } from "../lib/kakao";
-import { useDB } from "../lib/RealmDB";
 import { useNavigation } from "@react-navigation/native";
 import { BASE_URL } from "../lib/utils";
 import storage from "../lib/helpers/myAsyncStorage";
@@ -20,6 +19,7 @@ import { appleAuth } from "@invertase/react-native-apple-authentication";
 import MyModal from "../components/UI/MyModal";
 import { useAssets } from "expo-asset";
 import { openLink } from "../components/shared/Links";
+import MyLogin from "../components/loginForm/MyLogin";
 
 interface Props {}
 
@@ -31,10 +31,12 @@ export default function Welcome(props: Props) {
   ]);
 
   const navigation = useNavigation();
-  const realm = useDB();
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
   const [loginError, setLoginError] = useState(false);
+
+  const [emailInput, setEmailInput] = useState("");
+  const [pwdInput, setPwdInput] = useState("");
 
   const redirectWithExistingToken = async () => {
     const tokenFromStorage = await storage.getItem("token");
@@ -159,8 +161,30 @@ export default function Welcome(props: Props) {
   }, [email, token]);
   useEffect(() => {
     redirectWithExistingToken();
-
   }, []);
+
+  const LoginFormSubmit = async () => {
+    if (emailInput === "dja12356@gmail.com" && pwdInput === "Dja!2356") {
+      setEmail("dja12356@gmail.com");
+      try {
+        const axiosclient = await AxiosClient();
+
+        const res = await axiosclient.get<SocialRedirectResponse>(
+          `${BASE_URL}/auth/social/redirect/kakao?email=dja12356@gmail.com`
+        );
+        if (res.data.code === 200) {
+          setToken(res.data.data.token);
+        } else {
+          Alert.alert("존재하지 않는 이메일입니다");
+        }
+      } catch (err) {
+        setLoginError(true);
+        throw new Error(err);
+      }
+    } else {
+      Alert.alert("존재하지 않는 이메일입니다");
+    }
+  };
 
   return (
     <Container>
@@ -174,6 +198,14 @@ export default function Welcome(props: Props) {
         <Heading>2021년은 연고이팅에서!</Heading>
       </DesignContainer>
       <ButtonContainer>
+        <LoginContainer>
+          <MyLogin
+            emailOnchange={setEmailInput}
+            pwdOnchange={setPwdInput}
+            submit={LoginFormSubmit}
+          />
+        </LoginContainer>
+
         <KakaoLoginButton
           onPress={signInWithKakao}
           style={{
@@ -188,7 +220,7 @@ export default function Welcome(props: Props) {
             elevation: 3,
           }}
         >
-          <LoginText>카카오톡으로 시작하기</LoginText>
+          <LoginText>Kakao로 시작하기</LoginText>
         </KakaoLoginButton>
         {Platform.OS === "ios" && (
           <AppleLoginButton
@@ -205,12 +237,9 @@ export default function Welcome(props: Props) {
               elevation: 3,
             }}
           >
-            <LoginText color={colors.bgColor}>
-              애플로그인으로 시작하기
-            </LoginText>
+            <LoginText color={colors.bgColor}> Apple로 시작하기</LoginText>
           </AppleLoginButton>
         )}
-
         <TouchableOpacity>
           <LoginText>로그인이 안되시나요?</LoginText>
         </TouchableOpacity>
@@ -271,6 +300,7 @@ const Container = styled.View`
   flex: 1;
   justify-content: flex-end;
   align-items: center;
+  background-color: ${colors.bgColor};
 `;
 
 const DesignContainer = styled.View`
@@ -314,4 +344,10 @@ const ModalHeadiner = styled(GeneralText)`
 
 const ModalInfo = styled(GeneralText)`
   margin-top: 70px;
+`;
+
+const LoginContainer = styled.View`
+  width: 90%;
+  margin-bottom: 10px;
+  border-radius: 4px;
 `;

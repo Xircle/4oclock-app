@@ -4,8 +4,6 @@ import "react-native-gesture-handler";
 import AppLoading from "expo-app-loading";
 import LoggedOutNav from "./navigators/LoggedOutNav";
 import LoggedInNav from "./navigators/LoggedInNav";
-import Realm from "realm";
-import { DBContext, UserSchema } from "./lib/RealmDB";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Image, LogBox } from "react-native";
@@ -26,15 +24,9 @@ const loadImages = (images) =>
 
 export default function App() {
   const [ready, setReady] = useState(false);
-  const [realm, setRealm] = useState(null);
 
   const startLoading = async () => {
-    const connection = await Realm.open({
-      path: "UserDB",
-      schema: [UserSchema],
-      schemaVersion: 1,
-    });
-    setRealm(connection);
+
     const images = loadImages([
       require("./statics/images/anonymous_user.png"),
       require("./statics/images/landingPageImage.png"),
@@ -55,7 +47,6 @@ export default function App() {
     );
   return (
     <QueryClientProvider client={queryClient}>
-      <DBContext.Provider value={realm}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{ headerShown: false, gestureEnabled: false }}
@@ -64,7 +55,6 @@ export default function App() {
             <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
           </Stack.Navigator>
         </NavigationContainer>
-      </DBContext.Provider>
     </QueryClientProvider>
   );
 }

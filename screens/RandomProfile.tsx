@@ -2,7 +2,6 @@ import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { UserProfile } from "../lib/api/types";
-import { useDB } from "../lib/RealmDB";
 import { Alert, Dimensions } from "react-native";
 import { seeRandomProfile } from "../lib/api/seeRandomProfile";
 import { AgeNumberToString } from "../lib/utils";
@@ -17,7 +16,6 @@ export default function RandomProfile(props: Props) {
   const [isYkOnly, SetIsYkOnly] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
   const [age, setAge] = useState<string>("");
-  const realm = useDB();
   const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
     UserProfile | undefined
   >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {

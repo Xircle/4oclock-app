@@ -9,7 +9,6 @@ import {
   PanResponder,
 } from "react-native";
 import { colors, fontFamilies, GeneralText, Text } from "../styles/styles";
-import { useDB } from "../lib/RealmDB";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { GetPlacesByLocationOutput, PlaceFeedData } from "../lib/api/types";
 import { getPlacesForCarousel, getPlacesMain } from "../lib/api/getPlaces";
@@ -28,7 +27,6 @@ const { width, height } = Dimensions.get("window");
 export default function Main(props: Props) {
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
-  const realm = useDB();
 
   const queryClient = useQueryClient();
 
