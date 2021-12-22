@@ -309,7 +309,7 @@
 				CODE_SIGN_ENTITLEMENTS = 4oclockApp/4oclockApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 7XHHV6M63Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -352,7 +352,7 @@
 				CODE_SIGN_ENTITLEMENTS = 4oclockApp/4oclockAppRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 7XHHV6M63Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
