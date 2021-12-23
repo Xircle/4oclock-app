@@ -47,8 +47,6 @@ export default function Activity({ id, name }: Props) {
     });
   };
 
-  const disabled = activityData?.isParticipating || activityData?.isClosed;
-
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -197,9 +195,22 @@ export default function Activity({ id, name }: Props) {
         <View style={{ height: 200 }} />
       </ScrollView>
       <MainButtonWBg
-        title={disabled ? "현재 신청이 불가합니다" : "나도 놀러갈래! 😚"}
+        title={
+          activityData?.isClosed ||
+          activityData?.placeDetail.maxParticipantsNumber ===
+            activityData?.participantsInfo.total_count
+            ? "마감된 모임입니다"
+            : activityData?.isParticipating
+            ? "이미 신청한 모임입니다"
+            : "나도 놀러갈래! 😚"
+        }
         onPress={onPress}
-        disabled={disabled}
+        disabled={
+          activityData?.isParticipating ||
+          activityData?.isClosed ||
+          activityData?.placeDetail.maxParticipantsNumber ===
+            activityData?.participantsInfo.total_count
+        }
       />
     </Container>
   );
