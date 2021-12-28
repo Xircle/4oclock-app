@@ -7,6 +7,7 @@ import { TouchableWithoutFeedback } from "react-native";
 import { getStartDateFromNow } from "../../lib/utils";
 import ReviewButton from "../profile/ReviewButton";
 import { openLink } from "../shared/Links";
+import optimizeImage from "../../lib/helpers/optimizeImage";
 
 export const enum Purpose {
   main = "main",
@@ -54,7 +55,11 @@ export default function FlatListPlace({
     <TouchableWithoutFeedback onPress={onPress}>
       <Container>
         <LeftContainer>
-          <CoverImage source={{ uri: coverImage }} />
+          <CoverImage
+            source={{
+              uri: optimizeImage(coverImage, { width: 130, height: 130 }),
+            }}
+          />
           {purpose === Purpose.main && (
             <TagContainer isDisabled={startDateFromNow === "마감"}>
               <Tag>

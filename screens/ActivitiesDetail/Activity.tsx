@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { colors, fontFamilies, GeneralText } from "../../styles/styles";
 import { Alert, Dimensions, View } from "react-native";
 import optimizeImage from "../../lib/helpers/optimizeImage";
@@ -12,17 +12,23 @@ import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import Swiper from "react-native-swiper";
 import { LinearGradient } from "expo-linear-gradient";
 import { getStartDateFromNow } from "../../lib/utils";
+import MyBottomModal from "../../components/UI/MyBottomModal";
+import { openLink } from "../../components/shared/Links";
 
 interface Props {
   id: string;
   name: string;
+  modal: boolean;
+  setModal: () => void;
 }
 
 const { width, height } = Dimensions.get("window");
 
-export default function Activity({ id, name }: Props) {
+export default function Activity({ id, name, modal, setModal }: Props) {
   const navigation = useNavigation();
+  const [Images, setImages] = useState([]);
 
+  // api
   const { data: activityData, isLoading } = useQuery<PlaceData | undefined>(
     ["place-detail", id],
     () => getPlaceById(id),
@@ -47,8 +53,27 @@ export default function Activity({ id, name }: Props) {
     });
   };
 
+  const reportCTA = async () => {
+    await openLink.LOpenKakaoChat();
+  };
+
+  useEffect(() => {
+    if (activityData) {
+      setImages(
+        Array(activityData?.coverImage).concat(activityData?.subImages)
+      );
+    }
+  }, [activityData]);
   return (
     <Container>
+      <MyBottomModal onClose={() => {}} visible={modal} setModal={setModal}>
+        <ModalReportButton>
+          <ModalButtonText onPress={reportCTA}>게시글 신고하기</ModalButtonText>
+        </ModalReportButton>
+        <ModalCloseButton onPress={setModal}>
+          <ModalButtonText>닫기</ModalButtonText>
+        </ModalCloseButton>
+      </MyBottomModal>
       <ScrollView showsVerticalScrollIndicator={false}>
         <CarouselContainer>
           {activityData && (
@@ -88,12 +113,17 @@ export default function Activity({ id, name }: Props) {
                 bottom: 18,
               }}
             >
-              {activityData?.subImages?.unshift(activityData?.coverImage) ? (
-                activityData?.subImages?.map((imageUrl, index) => {
+              {Images ? (
+                Images.map((imageUrl, index) => {
                   return (
                     <ActivityImageContainer key={index}>
                       <ActivityImage
-                        source={{ uri: optimizeImage(imageUrl) }}
+                        source={{
+                          uri: optimizeImage(imageUrl, {
+                            width: width,
+                            height: height,
+                          }),
+                        }}
                       />
                       <LinearGradient
                         // Background Linear Gradient
@@ -197,8 +227,7 @@ export default function Activity({ id, name }: Props) {
       <MainButtonWBg
         title={
           activityData?.isClosed ||
-          activityData?.placeDetail.maxParticipantsNumber ===
-            activityData?.participantsInfo.total_count
+          activityData?.participantsData?.leftParticipantsCount === 0
             ? "마감된 모임입니다"
             : activityData?.isParticipating
             ? "이미 신청한 모임입니다"
@@ -208,13 +237,34 @@ export default function Activity({ id, name }: Props) {
         disabled={
           activityData?.isParticipating ||
           activityData?.isClosed ||
-          activityData?.placeDetail.maxParticipantsNumber ===
-            activityData?.participantsInfo.total_count
+          activityData?.participantsData?.leftParticipantsCount === 0
         }
       />
     </Container>
   );
 }
+
+const ModalButton = styled.TouchableOpacity`
+  width: 90%;
+  height: 70px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ModalButtonText = styled(GeneralText)`
+  font-size: 22px;
+  color: ${colors.bgColor};
+  font-family: ${fontFamilies.bold};
+`;
+
+const ModalCloseButton = styled(ModalButton)`
+  background-color: ${colors.bareGrey};
+`;
+
+const ModalReportButton = styled(ModalButton)`
+  background-color: ${colors.warningRed};
+`;
 
 const Container = styled.View`
   flex: 1;

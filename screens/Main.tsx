@@ -131,7 +131,7 @@ export default function Main(props: Props) {
           >
             <MiddleTabTextWrapper isSelected={middleTabIndex === 0}>
               <MiddleTabText isSelected={middleTabIndex === 0}>
-                전체보기
+                정기👾
               </MiddleTabText>
             </MiddleTabTextWrapper>
           </MiddleTab>
@@ -142,18 +142,27 @@ export default function Main(props: Props) {
             }}
           >
             <MiddleTabTextWrapper isSelected={middleTabIndex === 1}>
-              <TagContiner>
-                <TagText>커밍쑨</TagText>
-              </TagContiner>
               <MiddleTabText isSelected={middleTabIndex === 1}>
-                후기보기
+                번개⚡
+              </MiddleTabText>
+            </MiddleTabTextWrapper>
+          </MiddleTab>
+          <MiddleTab
+            onPress={() => {
+              setMiddleTabIndex(2);
+              middleTabAnim(2, position).start();
+            }}
+          >
+            <MiddleTabTextWrapper isSelected={middleTabIndex === 2}>
+              <MiddleTabText isSelected={middleTabIndex === 2}>
+                이벤트💖
               </MiddleTabText>
             </MiddleTabTextWrapper>
           </MiddleTab>
         </MiddleTabContainer>
 
         <AnimationContainer>
-          <MainAnimWrapper
+          <AnimWrapper
             style={{
               transform: [{ translateX: position }],
               padding: 20,
@@ -188,17 +197,76 @@ export default function Main(props: Props) {
             )}
           />
 
-          <SubAnimWrapper
+          <AnimWrapper
             style={{
               left: width,
               transform: [{ translateX: position }],
+              padding: 20,
             }}
-          >
-            <Image
-              source={require("../statics/images/mascot.png")}
-              style={{ width: 300, resizeMode: "contain" }}
-            />
-          </SubAnimWrapper>
+            ListHeaderComponent={
+              <ListHeaderContainer>
+                <ListMainText>색다른{"\n"}만남 가자 ⚡</ListMainText>
+                <ListSubText>
+                  새로운 친구들 사귀는거 얼마나 재밌게요 {"><"}
+                </ListSubText>
+              </ListHeaderContainer>
+            }
+            showsVerticalScrollIndicator={false}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.4}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+            keyExtractor={(item: PlaceFeedData) => item.id + ""}
+            // @ts-ignore
+            data={mainPlaceData.pages.map((page) => page.places).flat()}
+            renderItem={({ item }) => (
+              <FlatListPlace
+                leftParticipantsCount={item.leftParticipantsCount}
+                coverImage={item.coverImage}
+                name={item.name}
+                id={item.id}
+                views={item.views}
+                description={item.placeDetail.description}
+                startDateFromNow={item.startDateFromNow}
+                deadline={item.deadline}
+              />
+            )}
+          />
+          <AnimWrapper
+            style={{
+              left: width * 2,
+              transform: [{ translateX: position }],
+              padding: 20,
+            }}
+            ListHeaderComponent={
+              <ListHeaderContainer>
+                <ListMainText>색다른{"\n"}만남 가자 💖</ListMainText>
+                <ListSubText>
+                  새로운 친구들 사귀는거 얼마나 재밌게요 {"><"}
+                </ListSubText>
+              </ListHeaderContainer>
+            }
+            showsVerticalScrollIndicator={false}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.4}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+            keyExtractor={(item: PlaceFeedData) => item.id + ""}
+            // @ts-ignore
+            data={mainPlaceData.pages.map((page) => page.places).flat()}
+            renderItem={({ item }) => (
+              <FlatListPlace
+                leftParticipantsCount={item.leftParticipantsCount}
+                coverImage={item.coverImage}
+                name={item.name}
+                id={item.id}
+                views={item.views}
+                description={item.placeDetail.description}
+                startDateFromNow={item.startDateFromNow}
+                deadline={item.deadline}
+              />
+            )}
+          />
         </AnimationContainer>
       </SafeAreaView>
     </Container>
@@ -246,7 +314,7 @@ const MiddleTabContainer = styled.View`
 `;
 
 const MiddleTab = styled.TouchableOpacity`
-  flex: 0.45;
+  flex: 0.3;
   justify-content: center;
   align-items: center;
 `;
@@ -277,16 +345,7 @@ const MiddleTabText = styled(GeneralText)<{ isSelcted: boolean }>`
   color: ${(props) => (props.isSelected ? colors.black : colors.bareGrey)};
 `;
 
-const SubAnimWrapper = styled(Animated.createAnimatedComponent(View))`
-  background-color: ${colors.bgColor};
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MainAnimWrapper = styled(Animated.createAnimatedComponent(FlatList))`
+const AnimWrapper = styled(Animated.createAnimatedComponent(FlatList))`
   background-color: ${colors.bgColor};
   width: 100%;
   height: 100%;

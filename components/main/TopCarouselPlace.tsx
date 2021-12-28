@@ -4,10 +4,8 @@ import React from "react";
 
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-import {
-  TouchableWithoutFeedbackBase,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { TouchableWithoutFeedback } from "react-native";
+import optimizeImage from "../../lib/helpers/optimizeImage";
 
 interface Props {
   coverImageUrl: string;
@@ -44,7 +42,9 @@ export default function TopCarouselPlace({
     <TouchableWithoutFeedback onPress={onPress}>
       <Container>
         <CoverImage
-          source={{ uri: coverImageUrl }}
+          source={{
+            uri: optimizeImage(coverImageUrl, { width: width, height: height }),
+          }}
           width={width}
           height={height}
         />
