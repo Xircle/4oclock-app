@@ -189,7 +189,13 @@ export const convertTimeCA = (date: Date) => {
       ? "오후 " + (date.getHours() - 12) + "시 "
       : "오전 " + date.getHours() + "시 ";
   return (
-    date.getMonth() + "월 " + date.getDate() + hours + date.getMinutes() + "분"
+    date.getMonth() +
+    1 +
+    "월 " +
+    date.getDate() +
+    "일 " +
+    hours +
+    date.getMinutes() +
+    "분"
   );
 };
-
