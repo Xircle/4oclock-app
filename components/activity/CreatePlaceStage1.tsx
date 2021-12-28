@@ -249,7 +249,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
           <ExpandableV title="참가비" height={80} error={feeError}>
             <InnerContainer>
               <SBigTextInput
-                placeholder="ex. 말이 많아요 / 치믈리에 새내기..."
+                placeholder="ex. 15000"
                 autoCapitalize="none"
                 blurOnSubmit={true}
                 returnKeyType="next"

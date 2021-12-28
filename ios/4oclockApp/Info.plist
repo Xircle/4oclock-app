@@ -51,19 +51,6 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>모임 생성 또는 프로필 생성 및 수정을 위해 '모든 사진에 대한 접근 허용'을 설정해주세요</string>
 	<key>NSPhotoLibraryUsageDescription</key>
