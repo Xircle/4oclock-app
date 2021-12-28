@@ -37,8 +37,6 @@ export default function MainTabsNav(props: Props) {
           title: "메인",
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
-            // <TabIcon iconName={"home"} color={color} focused={focused} />
-            // <Text>hihi</Text>
             <TabSide
               focused={focused}
               color={color}
@@ -50,15 +48,15 @@ export default function MainTabsNav(props: Props) {
       />
       <Tabs.Screen
         name="CreatePlaceT"
-        component={CreateActivityStackNav}
+        component={CreateActivityScreen}
         options={{
           title: "생성하기",
           tabBarIcon: ({ focused, color, size }) => (
             <TabMiddleAdd focused={focused} />
           ),
           // delete below
-          headerShown: false,
-          tabBarStyle: { display: "none" },
+          // headerShown: false,
+          // tabBarStyle: { display: "none" },
         }}
       />
       {/* <Tabs.Screen

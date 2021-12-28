@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Activity from "../screens/ActivitiesDetail/Activity";
 import { LoggedInStackParamList } from "./LoggedInNav";
@@ -7,6 +7,7 @@ import Reservation from "../screens/ActivitiesDetail/Reservation";
 import ReservationConfirm from "../screens/ActivitiesDetail/ReservationConfirm";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fontFamilies } from "../styles/styles";
+import { TouchableOpacity } from "react-native";
 
 interface Props {
   route: RouteProp<LoggedInStackParamList, "ActivityStackNav">;
@@ -33,6 +34,7 @@ export type ActivityStackParamList = {
 const Stack = createStackNavigator<ActivityStackParamList>();
 
 export default function ActivityStackNav({ route }: Props) {
+  const [expandable, setExpandable] = useState(false);
   return (
     <Stack.Navigator
       screenOptions={{
@@ -57,8 +59,32 @@ export default function ActivityStackNav({ route }: Props) {
         },
       }}
     >
-      <Stack.Screen name="Activity" options={{ title: route.params.name }}>
-        {() => <Activity id={route.params.id} name={route.params.name} />}
+      <Stack.Screen
+        name="Activity"
+        options={{
+          title: route.params.name,
+          headerRight: () => {
+            return (
+              <TouchableOpacity onPress={() => setExpandable(!expandable)}>
+                <Ionicons
+                  name="ellipsis-horizontal"
+                  size={24}
+                  color={colors.lightBlack}
+                  style={{ marginRight: 12 }}
+                />
+              </TouchableOpacity>
+            );
+          },
+        }}
+      >
+        {() => (
+          <Activity
+            id={route.params.id}
+            name={route.params.name}
+            modal={expandable}
+            setModal={() => setExpandable(!expandable)}
+          />
+        )}
       </Stack.Screen>
       <Stack.Screen
         name="Reservation"

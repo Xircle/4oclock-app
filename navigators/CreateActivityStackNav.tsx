@@ -32,7 +32,7 @@ export default function CreateActivityStackNav(props: Props) {
           // @ts-ignore
           <TouchableOpacity onPress={() => navigation.navigate("MainT")}>
             <Ionicons
-              name="home"
+              name="home-outline"
               size={26}
               color={colors.lightBlack}
               style={{ marginRight: 12 }}
