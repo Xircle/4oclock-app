@@ -26,6 +26,7 @@ export const createPlace = async (
   formData.append("startDateAt", placeData.startDateAt + "");
   formData.append("participationFee", placeData.participationFee);
   formData.append("placeId", placeData.placeId);
+  formData.append("isVaccinated", true);
   const { data } = await axiosclient.post<CreateActivityOutput>(
     `${BASE_URL}/place`,
     formData
