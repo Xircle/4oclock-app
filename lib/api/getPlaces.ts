@@ -14,7 +14,7 @@ export const getPlacesForCarousel = async (
   const token = await storage.getItem("token");
   if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
-    `${BASE_URL}/place?location=${selectedLocation}&page=${page}&limit=${limit}`,
+    `${BASE_URL}/place?location=${selectedLocation}&page=${page}&limit=${limit}&placeType=All`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -27,14 +27,14 @@ export const getPlacesForCarousel = async (
   return data;
 };
 
-export const getPlacesMain = async ({
+export const getPlacesRegular = async ({
   pageParam,
 }): Promise<GetPlacesByLocationOutput | undefined> => {
   const axiosclient = await AxiosClient();
   const token = await storage.getItem("token");
   if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
-    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=10`,
+    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=10&placeType=Regular-meeting`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -46,3 +46,45 @@ export const getPlacesMain = async ({
   }
   return data;
 };
+
+export const getPlacesEvent = async ({
+  pageParam,
+}): Promise<GetPlacesByLocationOutput | undefined> => {
+  const axiosclient = await AxiosClient();
+  const token = await storage.getItem("token");
+  if (!token) return;
+  const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
+    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=10&placeType=Event`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (!data.ok) {
+    throw new Error(data.error);
+  }
+  return data;
+};
+
+export const getPlacesLightning = async ({
+  pageParam,
+}): Promise<GetPlacesByLocationOutput | undefined> => {
+  const axiosclient = await AxiosClient();
+  const token = await storage.getItem("token");
+  if (!token) return;
+  const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
+    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=10&placeType=Lightning`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (!data.ok) {
+    throw new Error(data.error);
+  }
+  return data;
+};
+
+// to be changed

@@ -11,7 +11,12 @@ import {
 import { colors, fontFamilies, GeneralText, Text } from "../styles/styles";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { GetPlacesByLocationOutput, PlaceFeedData } from "../lib/api/types";
-import { getPlacesForCarousel, getPlacesMain } from "../lib/api/getPlaces";
+import {
+  getPlacesEvent,
+  getPlacesForCarousel,
+  getPlacesLightning,
+  getPlacesRegular,
+} from "../lib/api/getPlaces";
 import TopCarouselPlace from "../components/main/TopCarouselPlace";
 import optimizeImage from "../lib/helpers/optimizeImage";
 import { PlaceData } from "../lib/api/types.d";
@@ -37,15 +42,17 @@ export default function Main(props: Props) {
     retry: 1,
     refetchOnWindowFocus: false,
   });
+
+  // main
   const {
-    data: mainPlaceData,
-    isLoading: mainPlaceDataLoading,
-    hasNextPage,
-    fetchNextPage,
+    data: mainRegularData,
+    isLoading: mainRegularDataLoading,
+    hasNextPage: hasNextPageRegular,
+    fetchNextPage: fetchNextPageRegular,
   } = useInfiniteQuery<GetPlacesByLocationOutput | undefined>(
-    ["places", "전체", "main"],
+    ["places", "Regular-meeting"],
     // @ts-ignore
-    getPlacesMain,
+    getPlacesRegular,
     {
       getNextPageParam: (currentPage) => {
         const nextPage = currentPage.meta.page + 1;
@@ -54,21 +61,70 @@ export default function Main(props: Props) {
     }
   );
 
-  const onRefresh = async () => {
+  const {
+    data: mainLightningData,
+    isLoading: mainLightningDataLoading,
+    hasNextPage: hasNextPageLightning,
+    fetchNextPage: fetchNextPageLightning,
+  } = useInfiniteQuery<GetPlacesByLocationOutput | undefined>(
+    ["places", "Lightning"],
+    // @ts-ignore
+    getPlacesLightning,
+    {
+      getNextPageParam: (currentPage) => {
+        const nextPage = currentPage.meta.page + 1;
+        return nextPage > currentPage.meta.totalPages ? null : nextPage;
+      },
+    }
+  );
+
+  const {
+    data: mainEventData,
+    isLoading: mainEventDataLoading,
+    hasNextPage: hasNextPageEvent,
+    fetchNextPage: fetchNextPageEvent,
+  } = useInfiniteQuery<GetPlacesByLocationOutput | undefined>(
+    ["places", "Event"],
+    // @ts-ignore
+    getPlacesEvent,
+    {
+      getNextPageParam: (currentPage) => {
+        const nextPage = currentPage.meta.page + 1;
+        return nextPage > currentPage.meta.totalPages ? null : nextPage;
+      },
+    }
+  );
+
+  const onRefresh = async (type: string) => {
     setRefreshing(true);
-    await queryClient.refetchQueries(["places"]);
+    await queryClient.refetchQueries(["places", type]);
     setRefreshing(false);
   };
 
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
+  const loadMoreRegular = () => {
+    if (hasNextPageRegular) {
+      fetchNextPageRegular();
+    }
+  };
+  const loadMoreLightning = () => {
+    if (hasNextPageLightning) {
+      fetchNextPageLightning();
+    }
+  };
+
+  const loadMoreEvent = () => {
+    if (hasNextPageEvent) {
+      fetchNextPageEvent();
     }
   };
 
   // values
   const position = useRef(new Animated.Value(0)).current;
-  const loading = mainPlaceDataLoading || topCarouselLoading;
+  const loading =
+    mainRegularDataLoading ||
+    topCarouselLoading ||
+    mainEventDataLoading ||
+    mainLightningDataLoading;
   // animations
   const middleTabAnim = (middleTab: number, position: Animated.Value) =>
     Animated.timing(position, {
@@ -176,13 +232,13 @@ export default function Main(props: Props) {
               </ListHeaderContainer>
             }
             showsVerticalScrollIndicator={false}
-            onEndReached={loadMore}
+            onEndReached={loadMoreRegular}
             onEndReachedThreshold={0.4}
-            onRefresh={onRefresh}
+            onRefresh={() => onRefresh("regular")}
             refreshing={refreshing}
             keyExtractor={(item: PlaceFeedData) => item.id + ""}
             // @ts-ignore
-            data={mainPlaceData.pages.map((page) => page.places).flat()}
+            data={mainRegularData.pages.map((page) => page.places).flat()}
             renderItem={({ item }) => (
               <FlatListPlace
                 leftParticipantsCount={item.leftParticipantsCount}
@@ -212,13 +268,13 @@ export default function Main(props: Props) {
               </ListHeaderContainer>
             }
             showsVerticalScrollIndicator={false}
-            onEndReached={loadMore}
+            onEndReached={loadMoreLightning}
             onEndReachedThreshold={0.4}
-            onRefresh={onRefresh}
+            onRefresh={() => onRefresh("lightning")}
             refreshing={refreshing}
             keyExtractor={(item: PlaceFeedData) => item.id + ""}
             // @ts-ignore
-            data={mainPlaceData.pages.map((page) => page.places).flat()}
+            data={mainLightningData.pages?.map((page) => page.places).flat()}
             renderItem={({ item }) => (
               <FlatListPlace
                 leftParticipantsCount={item.leftParticipantsCount}
@@ -247,13 +303,13 @@ export default function Main(props: Props) {
               </ListHeaderContainer>
             }
             showsVerticalScrollIndicator={false}
-            onEndReached={loadMore}
+            onEndReached={loadMoreEvent}
             onEndReachedThreshold={0.4}
-            onRefresh={onRefresh}
+            onRefresh={() => onRefresh("Event")}
             refreshing={refreshing}
             keyExtractor={(item: PlaceFeedData) => item.id + ""}
             // @ts-ignore
-            data={mainPlaceData.pages.map((page) => page.places).flat()}
+            data={mainEventData.pages?.map((page) => page.places).flat()}
             renderItem={({ item }) => (
               <FlatListPlace
                 leftParticipantsCount={item.leftParticipantsCount}
