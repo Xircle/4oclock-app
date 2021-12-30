@@ -115,29 +115,31 @@ export default function Activity({ id, name, modal, setModal }: Props) {
             >
               {Images ? (
                 Images.map((imageUrl, index) => {
-                  return (
-                    <ActivityImageContainer key={index}>
-                      <ActivityImage
-                        source={{
-                          uri: optimizeImage(imageUrl, {
-                            width: width,
-                            height: height,
-                          }),
-                        }}
-                      />
-                      <LinearGradient
-                        // Background Linear Gradient
-                        colors={["transparent", colors.black]}
-                        style={{
-                          position: "absolute",
-                          left: 0,
-                          right: 0,
-                          top: 0,
-                          bottom: 0,
-                        }}
-                      />
-                    </ActivityImageContainer>
-                  );
+                  if (imageUrl) {
+                    return (
+                      <ActivityImageContainer key={index}>
+                        <ActivityImage
+                          source={{
+                            uri: optimizeImage(imageUrl, {
+                              width: width,
+                              height: height,
+                            }),
+                          }}
+                        />
+                        <LinearGradient
+                          // Background Linear Gradient
+                          colors={["transparent", colors.black]}
+                          style={{
+                            position: "absolute",
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                          }}
+                        />
+                      </ActivityImageContainer>
+                    );
+                  }
                 })
               ) : (
                 <ActivityImageContainer>
