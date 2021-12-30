@@ -26,6 +26,7 @@ import { kakaoLocal, kakaoLocalData } from "../../lib/api/kakaoLocalApis";
 import LocationVRow from "./locationV/LocationVRow";
 import SelectedLocation from "./locationV/SelectedLocation";
 import MyKeyboardAvoidingView from "../UI/MyKeyboardAvoidingView";
+import CreatePlaceTypeSelector from "./CreatePlaceTypeSelector";
 
 interface Props {
   state: ActivityState;
@@ -79,6 +80,10 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
     setPlaceSearch("");
     setAddressError(false);
   };
+
+  const setActivityType = (type: string) => {
+    activityDispatcher.dispatchActivityType(type, dispatch);
+  };
   return (
     <MyKeyboardAvoidingView>
       <Container>
@@ -88,6 +93,12 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
             재밌는 모임을 열어볼까? 열고 친구들과{"\n"}꿀잼모임😊
           </SubHeading>
 
+          <InnerContainer style={{ paddingBottom: 5 }}>
+            <CreatePlaceTypeSelector
+              onPress={setActivityType}
+              selectedType={state.activityType}
+            />
+          </InnerContainer>
           <ExpandableV
             title="만들고 싶은 모임 주제를 적어봐! (제목)"
             height={120}

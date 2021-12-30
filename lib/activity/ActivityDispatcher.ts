@@ -52,6 +52,12 @@ export const activityDispatcher = {
   ) => {
     dispatch({ type: "setStartDateAt", payload: date });
   },
+  dispatchActivityType: (
+    type: string,
+    dispatch: React.Dispatch<ActivityAction>
+  ) => {
+    dispatch({ type: "setActivityType", payload: type });
+  },
   dispatchCoverImage: (
     // @ts-ignore
     file: File,

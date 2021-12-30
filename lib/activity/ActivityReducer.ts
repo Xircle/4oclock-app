@@ -13,11 +13,13 @@ export type ActivityAction =
   | { type: "setSubImagesFile"; payload: File[] }
   | { type: "setStage1Valid"; payload: Boolean }
   | { type: "setIsFinished"; payload: Boolean }
-  | { type: "setPlaceId"; payload: string };
+  | { type: "setPlaceId"; payload: string }
+  | { type: "setActivityType"; payload: string };
 
 export interface ActivityState extends CreateActivityOutput {
   stage1Valid: Boolean;
   isFinished: Boolean;
+  activityType: string;
 }
 
 export const activityInitialState: ActivityState = {
@@ -32,6 +34,7 @@ export const activityInitialState: ActivityState = {
   stage1Valid: false,
   isFinished: false,
   placeId: "0",
+  activityType: "정기",
 };
 
 export function reducer(
@@ -93,6 +96,11 @@ export function reducer(
       return {
         ...state,
         placeId: action.payload,
+      };
+    case "setActivityType":
+      return {
+        ...state,
+        activityType: action.payload,
       };
     default:
       throw new Error();

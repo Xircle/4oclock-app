@@ -1,9 +1,16 @@
-import { CreateActivityOutput, CreateActivityData } from "./types.d";
+import { CreateActivityOutput } from "./types.d";
 import AxiosClient from "../apiClient";
 import { BASE_URL } from "../utils";
+import { ActivityState } from "../activity/ActivityReducer";
+
+const typeKoToEn = {
+  정기: "Regular-meeting",
+  이벤트: "Event",
+  번개: "Lightning",
+};
 
 export const createPlace = async (
-  placeData: CreateActivityData
+  placeData: ActivityState
 ): Promise<CreateActivityOutput> => {
   const formData = new FormData();
   const axiosclient = await AxiosClient();
@@ -27,9 +34,13 @@ export const createPlace = async (
   formData.append("participationFee", placeData.participationFee);
   formData.append("placeId", placeData.placeId);
   formData.append("isVaccinated", true);
+  formData.append("placeType", typeKoToEn[placeData.activityType]);
+  console.log(typeKoToEn[placeData.activityType]);
   const { data } = await axiosclient.post<CreateActivityOutput>(
     `${BASE_URL}/place`,
     formData
   );
   return data;
 };
+
+// to be changed
