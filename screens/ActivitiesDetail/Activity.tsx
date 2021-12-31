@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
 import { colors, fontFamilies, GeneralText } from "../../styles/styles";
-import { Alert, Dimensions, View } from "react-native";
+import { Alert, Dimensions, TouchableOpacity, View } from "react-native";
 import optimizeImage from "../../lib/helpers/optimizeImage";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -11,9 +11,10 @@ import { getPlaceById } from "../../lib/api/getPlaceById";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import Swiper from "react-native-swiper";
 import { LinearGradient } from "expo-linear-gradient";
-import { getStartDateFromNow } from "../../lib/utils";
+import { CompareTimeReg, getStartDateFromNow } from "../../lib/utils";
 import MyBottomModal from "../../components/UI/MyBottomModal";
 import { openLink } from "../../components/shared/Links";
+import MyModal from "../../components/UI/MyModal";
 
 interface Props {
   id: string;
@@ -27,6 +28,7 @@ const { width, height } = Dimensions.get("window");
 export default function Activity({ id, name, modal, setModal }: Props) {
   const navigation = useNavigation();
   const [Images, setImages] = useState([]);
+  const [alert, setAlert] = useState(undefined);
 
   // api
   const { data: activityData, isLoading } = useQuery<PlaceData | undefined>(
@@ -42,7 +44,28 @@ export default function Activity({ id, name, modal, setModal }: Props) {
     }
   );
 
-  const onPress = () => {
+  const onPressMain = () => {
+    if (
+      activityData.placeType === "Regular-meeting" &&
+      CompareTimeReg(activityData.startDateAt)
+    ) {
+      if (alert === undefined) {
+        setAlert(true);
+        return;
+      }
+    }
+    // @ts-ignore
+    navigation.navigate("Reservation", {
+      detailAddress: activityData?.placeDetail.detailAddress,
+      participationFee: activityData?.placeDetail.participationFee,
+      startDateFromNow: activityData?.startDateFromNow,
+      startTime: activityData?.startDateAt,
+      placeId: id,
+    });
+  };
+
+  const onPressAlert = () => {
+    setAlert(false);
     // @ts-ignore
     navigation.navigate("Reservation", {
       detailAddress: activityData?.placeDetail.detailAddress,
@@ -66,9 +89,25 @@ export default function Activity({ id, name, modal, setModal }: Props) {
   }, [activityData]);
   return (
     <Container>
+      <MyModal visible={alert === true} onClose={() => setAlert(false)}>
+        <AlertWrapper>
+          <AlertHeading>현재는 해당 팀 크루원들만 참여가능합니다.</AlertHeading>
+          <CenterView>
+            <AlertInfoText>
+              다른 팀 크루원들은 모임 일{"\n"}하루 전부터 참여가능!
+            </AlertInfoText>
+          </CenterView>
+
+          <CenterView>
+            <AlertCTAButton onPress={onPressAlert}>
+              <AlertCTAButtonText>해당 팀원입니다</AlertCTAButtonText>
+            </AlertCTAButton>
+          </CenterView>
+        </AlertWrapper>
+      </MyModal>
       <MyBottomModal onClose={() => {}} visible={modal} setModal={setModal}>
-        <ModalReportButton>
-          <ModalButtonText onPress={reportCTA}>게시글 신고하기</ModalButtonText>
+        <ModalReportButton onPress={reportCTA}>
+          <ModalButtonText>게시글 신고하기</ModalButtonText>
         </ModalReportButton>
         <ModalCloseButton onPress={setModal}>
           <ModalButtonText>닫기</ModalButtonText>
@@ -235,7 +274,7 @@ export default function Activity({ id, name, modal, setModal }: Props) {
             ? "이미 신청한 모임입니다"
             : "나도 놀러갈래! 😚"
         }
-        onPress={onPress}
+        onPress={onPressMain}
         disabled={
           activityData?.isParticipating ||
           activityData?.isClosed ||
@@ -245,6 +284,47 @@ export default function Activity({ id, name, modal, setModal }: Props) {
     </Container>
   );
 }
+
+const AlertWrapper = styled.View`
+  flex: 1;
+`;
+
+const AlertHeading = styled(GeneralText)`
+  font-size: 23px;
+  line-height: 40px;
+  padding: 0px 15px;
+  text-align: center;
+  margin-top: 10px;
+`;
+
+const AlertInfoText = styled(GeneralText)`
+  color: ${colors.lightBlack};
+  font-size: 14px;
+  line-height: 26px;
+  margin-top: 22px;
+  text-align: center;
+`;
+
+const CenterView = styled.View`
+  justify-content: center;
+  align-items: center;
+`;
+
+const AlertCTAButton = styled.TouchableOpacity`
+  width: 200px;
+  height: 70px;
+  background-color: ${colors.mainBlue};
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+`;
+
+const AlertCTAButtonText = styled(GeneralText)`
+  font-size: 20px;
+  color: ${colors.bgColor};
+  font-family: ${fontFamilies.bold};
+`;
 
 const ModalButton = styled.TouchableOpacity`
   width: 90%;

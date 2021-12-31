@@ -147,6 +147,13 @@ export const IsMessageDividor = (prevM: Date, curM: Date): boolean => {
   );
 };
 
+export const CompareTimeReg = (meetingD: string): boolean => {
+  console.log(moment(meetingD).subtract(1, "days"));
+  return moment(meetingD)
+    .subtract(1, "days")
+    .isAfter(moment(Date.now()), "day");
+};
+
 /**
  *
  * @param prevM index -1
