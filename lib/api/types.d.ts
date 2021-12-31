@@ -111,6 +111,7 @@ export interface PlaceData {
   reviews: Review[];
   subImages: string[];
   isLightning?: boolean;
+  placeType?: string;
   participantsUsername?: string[];
   participantsInfo: {
     total_count: number;

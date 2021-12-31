@@ -226,15 +226,13 @@ export default function Main(props: Props) {
             ListHeaderComponent={
               <ListHeaderContainer>
                 <ListMainText>친구들과{"\n"}맛집 투-어 가자 👾</ListMainText>
-                <ListSubText>
-                  새로운 친구들 사귀는거 얼마나 재밌게요 {"><"}
-                </ListSubText>
+                <ListSubText>크루원들과 서울 맛집 정복!!</ListSubText>
               </ListHeaderContainer>
             }
             showsVerticalScrollIndicator={false}
             onEndReached={loadMoreRegular}
             onEndReachedThreshold={0.4}
-            onRefresh={() => onRefresh("regular")}
+            onRefresh={() => onRefresh("Regular-meeting")}
             refreshing={refreshing}
             keyExtractor={(item: PlaceFeedData) => item.id + ""}
             // @ts-ignore
@@ -261,7 +259,7 @@ export default function Main(props: Props) {
             }}
             ListHeaderComponent={
               <ListHeaderContainer>
-                <ListMainText>색다른{"\n"}만남 가자 ⚡</ListMainText>
+                <ListMainText>심심할 땐{"\n"}짜릿한 번개 ⚡</ListMainText>
                 <ListSubText>
                   새로운 친구들 사귀는거 얼마나 재밌게요 {"><"}
                 </ListSubText>
@@ -270,7 +268,7 @@ export default function Main(props: Props) {
             showsVerticalScrollIndicator={false}
             onEndReached={loadMoreLightning}
             onEndReachedThreshold={0.4}
-            onRefresh={() => onRefresh("lightning")}
+            onRefresh={() => onRefresh("Lightning")}
             refreshing={refreshing}
             keyExtractor={(item: PlaceFeedData) => item.id + ""}
             // @ts-ignore
@@ -296,9 +294,9 @@ export default function Main(props: Props) {
             }}
             ListHeaderComponent={
               <ListHeaderContainer>
-                <ListMainText>색다른{"\n"}만남 가자 💖</ListMainText>
+                <ListMainText>설레이는{"\n"}깜짝 이벤트 💖</ListMainText>
                 <ListSubText>
-                  새로운 친구들 사귀는거 얼마나 재밌게요 {"><"}
+                  운영진들이 야심차게 준비한 이벤트 {"><"}
                 </ListSubText>
               </ListHeaderContainer>
             }
