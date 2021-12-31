@@ -35,7 +35,6 @@ export const createPlace = async (
   formData.append("placeId", placeData.placeId);
   formData.append("isVaccinated", true);
   formData.append("placeType", typeKoToEn[placeData.activityType]);
-  console.log(typeKoToEn[placeData.activityType]);
   const { data } = await axiosclient.post<CreateActivityOutput>(
     `${BASE_URL}/place`,
     formData
