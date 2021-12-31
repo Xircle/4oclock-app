@@ -20,6 +20,7 @@ import MyModal from "../components/UI/MyModal";
 import { useAssets } from "expo-asset";
 import { openLink } from "../components/shared/Links";
 import MyLogin from "../components/loginForm/MyLogin";
+import jwt_decode from "jwt-decode";
 
 interface Props {}
 
@@ -99,7 +100,6 @@ export default function Welcome(props: Props) {
   const socialRedirectApple = async (email: string) => {
     try {
       const axiosclient = await AxiosClient();
-
       const res = await axiosclient.get<SocialRedirectResponse>(
         `${BASE_URL}/auth/social/redirect/kakao?email=${email}`
       );
@@ -129,7 +129,10 @@ export default function Welcome(props: Props) {
       requestedOperation: appleAuth.Operation.LOGIN,
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
-
+    //@ts-ignore
+    const { email, email_verified, is_private_email, sub } = jwt_decode(
+      appleAuthRequestResponse.identityToken
+    );
     // get current authentication state for user
     // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
     const credentialState = await appleAuth.getCredentialStateForUser(
@@ -137,11 +140,10 @@ export default function Welcome(props: Props) {
     );
     // use credentialState response to ensure the user is authenticated
     if (credentialState === appleAuth.State.AUTHORIZED) {
-      if (appleAuthRequestResponse.email) {
-        await storage.setItem("appleEmail", appleAuthRequestResponse.email);
-
-        setEmail(appleAuthRequestResponse.email);
-        socialRedirectApple(appleAuthRequestResponse.email);
+      if (email) {
+        await storage.setItem("appleEmail", email);
+        setEmail(email);
+        socialRedirectApple(email);
       } else {
         setLoginError(true);
       }
@@ -240,7 +242,7 @@ export default function Welcome(props: Props) {
             <LoginText color={colors.bgColor}> Apple로 시작하기</LoginText>
           </AppleLoginButton>
         )}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={openLink.LOpenKakaoChat}>
           <LoginText>로그인이 안되시나요?</LoginText>
         </TouchableOpacity>
         <AgreeContainer>
