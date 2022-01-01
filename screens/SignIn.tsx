@@ -20,6 +20,7 @@ import { createAccount } from "../lib/api/createAccount";
 import storage from "../lib/helpers/myAsyncStorage";
 import { useNavigation } from "@react-navigation/native";
 import MyKeyboardAvoidingView from "../components/UI/MyKeyboardAvoidingView";
+import FullScreenLoader from "../components/UI/FullScreenLoader";
 
 interface Props {
   route: RouteProp<LoggedOutStackParamList, "SignIn">;
@@ -32,6 +33,7 @@ export default function SignIn({ route }: Props) {
   const [step, setStep] = useState(0);
   const limit = 5;
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (route.params.gender) {
@@ -73,6 +75,7 @@ export default function SignIn({ route }: Props) {
       animateByStage(step + 1, position).start();
     } else {
       try {
+        setLoading(true);
         const data: CreateAccountOutput = await createAccount(state);
         if (!data.ok) {
           console.log(data.error);
@@ -81,7 +84,9 @@ export default function SignIn({ route }: Props) {
           /* @ts-ignore */
           navigation.navigate("LoggedInNav");
         }
+        setLoading(false);
       } catch (err) {
+        setLoading(false);
         console.log(err);
         throw new Error();
       }
@@ -189,6 +194,7 @@ export default function SignIn({ route }: Props) {
           />
         </Container>
       </MyKeyboardAvoidingView>
+      {loading && <FullScreenLoader />}
     </SafeAreaView>
   );
 }
