@@ -135,7 +135,6 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               <STextArea
                 placeholder="모임에 대한 설명을 입력해줘! 함께하고 싶은 주제나 내용을 입력하면 좋아"
                 autoCapitalize="none"
-                blurOnSubmit={true}
                 returnKeyType="next"
                 returnKeyLabel="next"
                 autoCorrect={false}
