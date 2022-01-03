@@ -83,7 +83,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
         관심사를 즐기는 사진 / 좋아하는 공간에서 찍은 사진 / 라이프 스타일이
         보여지는 사진 / 친구들과 함께 찍은 사진 등등 자유롭게!
       </SubInstText>
-      {loading && <FullScreenLoader />}
+      {loading && <FullScreenLoader notFullScreen />}
     </Container>
   );
 }
@@ -91,6 +91,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
 const Container = styled.ScrollView`
   background-color: ${colors.bgColor};
   padding: 15px;
+  flex: 1;
 `;
 const AvatarContainer = styled.TouchableOpacity`
   align-items: center;
