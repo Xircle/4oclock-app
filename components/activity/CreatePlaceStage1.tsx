@@ -61,8 +61,6 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
 
   useEffect(() => {
     if (state.isFinished) {
-      // unmount
-      console.log("clean up");
       dispatch({ type: "setIsFinished", payload: false });
       setNameError(undefined);
       setDescriptionError(undefined);
@@ -75,7 +73,6 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
   const CTAPlace = (addressName: string, placeName: string, id: string) => {
     setPlaceName(placeName);
     setPlaceAddress(addressName);
-    console.log(addressName + id);
     activityDispatcher.dispatchDetailAddress(addressName, id, dispatch);
     setPlaceSearch("");
     setAddressError(false);

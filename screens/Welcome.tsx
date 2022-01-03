@@ -66,7 +66,6 @@ export default function Welcome(props: Props) {
   const signInWithKakao = async (): Promise<void> => {
     try {
       const token: KakaoOAuthToken = await login();
-      console.log(token);
       getMyKakaoProfile();
     } catch (e) {
       setLoginError(true);

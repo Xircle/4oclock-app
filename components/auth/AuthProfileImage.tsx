@@ -31,7 +31,6 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
       Platform.OS === "ios"
         ? await Permission.askPhotoIos()
         : await Permission.askPhotoAndroid();
-    console.log(permission);
     if (permission === RESULTS.GRANTED) {
       const option: ImagePicker.ImageLibraryOptions = {
         mediaType: "photo",
