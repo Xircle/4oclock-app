@@ -6,6 +6,7 @@ import MyActivities from "../screens/MyPage/MyActivities";
 import ActivityStackNav from "./ActivityStackNav";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fontFamilies } from "../styles/styles";
+import { Participants } from "../lib/api/types";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -16,6 +17,7 @@ export type LoggedInStackParamList = {
     name: string;
     startDateAt: string;
     startTime: number;
+    participants: Participants[];
   };
 };
 
