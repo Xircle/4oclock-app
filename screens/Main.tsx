@@ -247,6 +247,7 @@ export default function Main(props: Props) {
                 description={item.placeDetail.description}
                 startDateFromNow={item.startDateFromNow}
                 deadline={item.deadline}
+                participants={item.participants}
               />
             )}
           />
@@ -283,6 +284,7 @@ export default function Main(props: Props) {
                 description={item.placeDetail.description}
                 startDateFromNow={item.startDateFromNow}
                 deadline={item.deadline}
+                participants={item.participants}
               />
             )}
           />
@@ -318,6 +320,7 @@ export default function Main(props: Props) {
                 description={item.placeDetail.description}
                 startDateFromNow={item.startDateFromNow}
                 deadline={item.deadline}
+                participants={item.participants}
               />
             )}
           />

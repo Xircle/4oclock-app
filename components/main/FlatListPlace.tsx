@@ -8,6 +8,9 @@ import { getStartDateFromNow } from "../../lib/utils";
 import ReviewButton from "../profile/ReviewButton";
 import { openLink } from "../shared/Links";
 import optimizeImage from "../../lib/helpers/optimizeImage";
+import { Participants } from "../../lib/api/types";
+import AvatarUri from "../UI/AvatarUri";
+import { LinearGradient } from "expo-linear-gradient";
 
 export const enum Purpose {
   main = "main",
@@ -24,6 +27,7 @@ interface Props {
   startDateFromNow?: string;
   deadline?: string;
   leftParticipantsCount?: string;
+  participants?: Participants[];
 }
 
 export default function FlatListPlace({
@@ -36,6 +40,7 @@ export default function FlatListPlace({
   deadline,
   leftParticipantsCount,
   purpose = Purpose.main,
+  participants,
 }: Props) {
   const navigation = useNavigation();
 
@@ -44,6 +49,7 @@ export default function FlatListPlace({
     navigation.navigate("ActivityStackNav", {
       id: id,
       name: name,
+      participants: participants,
     });
   };
 
@@ -60,14 +66,18 @@ export default function FlatListPlace({
               uri: optimizeImage(coverImage, { width: 130, height: 130 }),
             }}
           />
-          {purpose === Purpose.main && (
-            <TagContainer isDisabled={startDateFromNow === "마감"}>
+          {purpose === Purpose.main && startDateFromNow !== "마감" ? (
+            <TagContainer>
               <Tag>
                 {startDateFromNow === "마감"
                   ? startDateFromNow
                   : "잔여" + leftParticipantsCount + "석"}
               </Tag>
             </TagContainer>
+          ) : (
+            <LeftContainerOverlay>
+              <ClosedText>마 감</ClosedText>
+            </LeftContainerOverlay>
           )}
         </LeftContainer>
         <RightContiner>
@@ -90,6 +100,20 @@ export default function FlatListPlace({
               ? description.slice(0, 18) + "..."
               : description}
           </DescriptionText>
+          <AvatarContainer>
+            {participants?.map((item, index) => {
+              if (index < 4) {
+                return (
+                  <AvartarWrapper key={item.userId}>
+                    <AvatarUri source={item.profileImgUrl} size={38} />
+                  </AvartarWrapper>
+                );
+              }
+            })}
+            {participants?.length > 4 ? (
+              <AvatarNumText>+ {participants.length - 4}</AvatarNumText>
+            ) : null}
+          </AvatarContainer>
           {purpose === Purpose.main && (
             <BottomRightFixedContainer>
               <DeadLineText>{deadline}</DeadLineText>
@@ -105,6 +129,37 @@ export default function FlatListPlace({
     </TouchableWithoutFeedback>
   );
 }
+
+const ClosedText = styled(GeneralText)`
+  color: ${colors.bgColor};
+  font-family: ${fontFamilies.bold};
+  font-size: 22px;
+`;
+
+const LeftContainerOverlay = styled.View`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(52, 52, 52, 0.6);
+  border-radius: 5px;
+`;
+
+const AvatarNumText = styled(GeneralText)`
+  color: ${colors.lightBlack};
+  margin-left: 10px;
+`;
+
+const AvatarContainer = styled.View`
+  flex-direction: row;
+  margin-top: 8px;
+  align-items: center;
+`;
+
+const AvartarWrapper = styled.View`
+  margin-left: -5px;
+`;
 
 const TagContainer = styled.View<{ isDisabled: Boolean }>`
   position: absolute;
