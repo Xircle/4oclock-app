@@ -2,6 +2,7 @@ import styled from "styled-components/native";
 import React from "react";
 import { Asset, useAssets } from "expo-asset";
 import { View } from "react-native";
+import optimizeImage from "../../lib/helpers/optimizeImage";
 
 interface Props {
   source?: string;
@@ -16,7 +17,14 @@ export default function AvatarUri({ size, source }: Props) {
     return <View></View>;
   } else {
     return (
-      <AvatarImage source={source ? { uri: source } : assets[0]} size={size} />
+      <AvatarImage
+        source={
+          source
+            ? { uri: optimizeImage(source, { width: size, height: size }) }
+            : assets[0]
+        }
+        size={size}
+      />
     );
   }
 }
