@@ -2,7 +2,6 @@ import { Animated, Dimensions, Modal, PanResponder, View } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../styles/styles";
 import React, { useRef } from "react";
-
 interface Props {
   children: React.ReactNode | React.ReactNode[];
   width?: number;
@@ -12,13 +11,14 @@ interface Props {
   setModal: () => void;
 }
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export default function MyBottomModal({
   visible,
   onClose,
   children,
   setModal,
+  height,
 }: Props) {
   // pan responders
 
@@ -42,6 +42,7 @@ export default function MyBottomModal({
 
           elevation: 24,
         }}
+        height={height}
       >
         {children}
       </ModalWrapper>
@@ -53,9 +54,9 @@ const Container = styled.TouchableOpacity`
   flex: 1;
 `;
 
-const ModalWrapper = styled.View`
+const ModalWrapper = styled.View<{ height: number }>`
   width: ${width + "px"};
-  height: ${"200px"};
+  height: ${(props) => (props.height ? props.height + "px" : "200px")};
   background-color: ${colors.bgColor};
   border-top-right-radius: 25px;
   border-top-left-radius: 25px;
