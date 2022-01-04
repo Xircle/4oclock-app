@@ -6,7 +6,7 @@ import optimizeImage from "../../lib/helpers/optimizeImage";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "react-query";
-import { PlaceData } from "../../lib/api/types.d";
+import { Participants, PlaceData } from "../../lib/api/types.d";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import Swiper from "react-native-swiper";
@@ -15,17 +15,25 @@ import { CompareTimeReg, getStartDateFromNow } from "../../lib/utils";
 import MyBottomModal from "../../components/UI/MyBottomModal";
 import { openLink } from "../../components/shared/Links";
 import MyModal from "../../components/UI/MyModal";
+import AvatarUri from "../../components/UI/AvatarUri";
 
 interface Props {
   id: string;
   name: string;
   modal: boolean;
   setModal: () => void;
+  participants: Participants[];
 }
 
 const { width, height } = Dimensions.get("window");
 
-export default function Activity({ id, name, modal, setModal }: Props) {
+export default function Activity({
+  id,
+  name,
+  modal,
+  setModal,
+  participants,
+}: Props) {
   const navigation = useNavigation();
   const [Images, setImages] = useState([]);
   const [alert, setAlert] = useState(undefined);
@@ -43,6 +51,10 @@ export default function Activity({ id, name, modal, setModal }: Props) {
       refetchOnWindowFocus: false,
     }
   );
+
+  useEffect(() => {
+    console.log(participants);
+  }, []);
 
   const onPressMain = () => {
     if (
@@ -227,11 +239,17 @@ export default function Activity({ id, name, modal, setModal }: Props) {
             명
           </InnerHeadingBlue>
           <UsernameContainer>
-            {activityData?.participantsData.participantsUsername?.map(
-              (item, index) => (
-                <InnerSubText key={index}>{item}</InnerSubText>
-              )
-            )}
+            {participants?.map((item, index) => {
+              if (item.profileImgUrl) {
+                return (
+                  <AvatarWrapper key={item.userId}>
+                    <AvatarUri source={item.profileImgUrl} size={45} />
+                  </AvatarWrapper>
+                );
+              } else {
+                null;
+              }
+            })}
           </UsernameContainer>
         </InnerWrapper>
         <InnerWrapper upperDividor={true}>
@@ -298,6 +316,11 @@ export default function Activity({ id, name, modal, setModal }: Props) {
 
 const AlertWrapper = styled.View`
   flex: 1;
+`;
+
+const AvatarWrapper = styled.View`
+  margin-right: 4px;
+  margin-bottom: 4px;
 `;
 
 const AlertHeading = styled(GeneralText)`
