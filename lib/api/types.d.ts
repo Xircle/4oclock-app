@@ -59,6 +59,7 @@ export interface PlaceFeedData {
     detailAddress: string;
   };
   leftParticipantsCount: number;
+  participants: Participants[];
 }
 
 export interface ParticipantsListData extends Participants {}
@@ -302,3 +303,5 @@ export interface SendMessageInput {
 export interface GetReviewsOutput extends CoreOutput {
   reviews: Review[];
 }
+
+export interface ParticipantsInfo {}
