@@ -9,9 +9,10 @@ export default function optimizeImage(
   url: string,
   resizeOptions?: options
 ): string {
+  if (url.startsWith("http:")) return url.replace("http:", "https:");
   if (!url) return "";
-  if (!url.includes(IMAGE_ORIGIN!)) return url;
-  if (url.includes(".svg")) return url;
+  if (!url.startsWith(IMAGE_ORIGIN!)) return url;
+  if (url.endsWith(".svg")) return url;
 
   let replaced = url.replace(IMAGE_ORIGIN!, CDN_IMAGE_DOMAIN!); // Cloudfront
 
