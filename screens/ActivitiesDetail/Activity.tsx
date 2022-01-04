@@ -105,7 +105,18 @@ export default function Activity({ id, name, modal, setModal }: Props) {
           </CenterView>
         </AlertWrapper>
       </MyModal>
-      <MyBottomModal onClose={() => {}} visible={modal} setModal={setModal}>
+      <MyBottomModal
+        onClose={() => {}}
+        visible={modal}
+        setModal={setModal}
+        height={280}
+      >
+        <ModalReportButton onPress={reportCTA}>
+          <ModalButtonText>작성자 차단하기</ModalButtonText>
+        </ModalReportButton>
+        <ModalReportButton onPress={reportCTA}>
+          <ModalButtonText>작성자 신고하기</ModalButtonText>
+        </ModalReportButton>
         <ModalReportButton onPress={reportCTA}>
           <ModalButtonText>게시글 신고하기</ModalButtonText>
         </ModalReportButton>
@@ -334,6 +345,18 @@ const ModalButton = styled.TouchableOpacity`
   justify-content: center;
 `;
 
+const ReportContainer = styled.View`
+  width: 100%;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-bottom: 2px;
+`;
+
+const ReportText = styled(GeneralText)`
+  font-size: 12px;
+  color: ${colors.lightBlack};
+`;
+
 const ModalButtonText = styled(GeneralText)`
   font-size: 22px;
   color: ${colors.bgColor};
@@ -342,10 +365,12 @@ const ModalButtonText = styled(GeneralText)`
 
 const ModalCloseButton = styled(ModalButton)`
   background-color: ${colors.bareGrey};
+  height: 50px;
 `;
 
 const ModalReportButton = styled(ModalButton)`
   background-color: ${colors.warningRed};
+  height: 50px;
 `;
 
 const Container = styled.View`
