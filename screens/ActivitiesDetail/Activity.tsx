@@ -16,6 +16,7 @@ import MyBottomModal from "../../components/UI/MyBottomModal";
 import { openLink } from "../../components/shared/Links";
 import MyModal from "../../components/UI/MyModal";
 import AvatarUri from "../../components/UI/AvatarUri";
+import FastImage from "react-native-fast-image";
 
 interface Props {
   id: string;
@@ -52,20 +53,16 @@ export default function Activity({
     }
   );
 
-  useEffect(() => {
-    console.log(participants);
-  }, []);
-
   const onPressMain = () => {
-    if (
-      activityData.placeType === "Regular-meeting" &&
-      CompareTimeReg(activityData.startDateAt)
-    ) {
-      if (alert === undefined) {
-        setAlert(true);
-        return;
-      }
-    }
+    // if (
+    //   activityData.placeType === "Regular-meeting" &&
+    //   CompareTimeReg(activityData.startDateAt)
+    // ) {
+    //   if (alert === undefined) {
+    //     setAlert(true);
+    //     return;
+    //   }
+    // }
     // @ts-ignore
     navigation.navigate("Reservation", {
       detailAddress: activityData?.placeDetail.detailAddress,
@@ -101,7 +98,7 @@ export default function Activity({
   }, [activityData]);
   return (
     <Container>
-      <MyModal visible={alert === true} onClose={() => setAlert(false)}>
+      {/* <MyModal visible={alert === true} onClose={() => setAlert(false)}>
         <AlertWrapper>
           <AlertHeading>현재는 해당 팀 크루원들만 참여가능합니다.</AlertHeading>
           <CenterView>
@@ -116,7 +113,7 @@ export default function Activity({
             </AlertCTAButton>
           </CenterView>
         </AlertWrapper>
-      </MyModal>
+      </MyModal> */}
       <MyBottomModal
         onClose={() => {}}
         visible={modal}
@@ -184,11 +181,11 @@ export default function Activity({
                           source={{
                             uri: optimizeImage(imageUrl, {
                               width: width,
-                              height: height,
+                              height: 100,
                             }),
                           }}
                         />
-                        <LinearGradient
+                        {/* <LinearGradient
                           // Background Linear Gradient
                           colors={["transparent", colors.black]}
                           style={{
@@ -198,7 +195,7 @@ export default function Activity({
                             top: 0,
                             bottom: 0,
                           }}
-                        />
+                        /> */}
                       </ActivityImageContainer>
                     );
                   }
@@ -243,7 +240,20 @@ export default function Activity({
               if (item.profileImgUrl) {
                 return (
                   <AvatarWrapper key={item.userId}>
-                    <AvatarUri source={item.profileImgUrl} size={45} />
+                    <TouchableOpacity
+                      onPress={() =>
+                        //@ts-ignore
+                        navigation.navigate("FriendProfile", {
+                          id: item.userId,
+                        })
+                      }
+                    >
+                      <AvatarUri
+                        source={item.profileImgUrl}
+                        size={45}
+                        isSmall
+                      />
+                    </TouchableOpacity>
                   </AvatarWrapper>
                 );
               } else {
@@ -407,7 +417,7 @@ const ActivityImageContainer = styled.View`
   height: 100%;
 `;
 
-const ActivityImage = styled.Image`
+const ActivityImage = styled(FastImage)`
   width: 100%;
   height: 100%;
 `;

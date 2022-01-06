@@ -34,7 +34,7 @@ export const activityInitialState: ActivityState = {
   stage1Valid: false,
   isFinished: false,
   placeId: "0",
-  activityType: "정기",
+  activityType: "번개",
 };
 
 export function reducer(
