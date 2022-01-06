@@ -33,11 +33,6 @@ enum Gender {
 export interface Participants {
   userId: string;
   profileImgUrl: string;
-  gender: Gender;
-  age: number;
-  job: string;
-  shortBio: string;
-  isYkClub: boolean;
 }
 export interface PlaceFeedData {
   id: string;
@@ -50,7 +45,6 @@ export interface PlaceFeedData {
   isLightning: boolean;
   participantsCount: number;
   startDateFromNow: string;
-  // participants: Participants[];
   isParticipating: boolean;
   deadline: string;
   views: number;
