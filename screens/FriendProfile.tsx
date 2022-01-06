@@ -2,44 +2,37 @@ import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { UserProfile } from "../lib/api/types";
-import { Alert, Dimensions } from "react-native";
-import { seeRandomProfile } from "../lib/api/seeRandomProfile";
 import { AgeNumberToString } from "../lib/utils";
 import { colors } from "../styles/styles";
 import Loader from "../components/UI/Loader";
 import ProfileV from "../components/profile/ProfileV";
+import { seeUserById } from "../lib/api/seeUserById";
+import { RouteProp } from "@react-navigation/native";
+import { LoggedInStackParamList } from "../navigators/LoggedInNav";
 
-interface Props {}
+interface Props {
+  route: RouteProp<LoggedInStackParamList, "FriendProfile">;
+}
 
-export default function RandomProfile(props: Props) {
-  const [isYkClub, SetIsYkClub] = useState<boolean>(false);
-  const [isYkOnly, SetIsYkOnly] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(true);
+export default function FriendProfile({ route }: Props) {
   const [age, setAge] = useState<string>("");
-  const { data: randomProfileData, refetch, isLoading, isFetching } = useQuery<
+  const { data: profileData, isLoading, isFetching } = useQuery<
     UserProfile | undefined
-  >(["randomProfile"], () => seeRandomProfile(isYkClub && isYkOnly), {
+  >(["friendProfile", route.params.id], () => seeUserById(route.params.id), {
     retry: 1,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
 
-  const refetchRandomProfileData = () => {
-    refetch();
-  };
-
   useEffect(() => {
-    setLoading(isFetching);
-  }, [isFetching]);
-  useEffect(() => {
-    if (randomProfileData) {
-      setAge(AgeNumberToString(randomProfileData.age));
+    if (profileData) {
+      setAge(AgeNumberToString(profileData.age));
     }
-  }, [randomProfileData?.age]);
+  }, [profileData?.age]);
 
   return (
     <Wrapper>
-      {loading && (
+      {(isLoading || isFetching) && (
         <LoaderWrapper
           style={{
             transform: [{ translateX: -15 }],
@@ -49,12 +42,7 @@ export default function RandomProfile(props: Props) {
           <Loader color={colors.mainBlue} large={true} />
         </LoaderWrapper>
       )}
-      <ProfileV
-        randomProfileData={randomProfileData}
-        onPressNext={refetchRandomProfileData}
-        enableChat={true}
-        enableNext={true}
-      />
+      <ProfileV profileData={profileData} />
     </Wrapper>
   );
 }
