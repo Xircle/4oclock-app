@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Main from "../screens/Main";
-import RandomProfile from "../screens/RandomProfile";
+import FriendProfile from "../screens/FriendProfile";
 import Chat from "../screens/Chat";
 import MyPage from "../screens/MyPage/MyPage";
 import TabIcon from "../components/nav/TabIcon";

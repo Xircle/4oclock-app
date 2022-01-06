@@ -7,6 +7,7 @@ import ActivityStackNav from "./ActivityStackNav";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fontFamilies } from "../styles/styles";
 import { Participants } from "../lib/api/types";
+import FriendProfile from "../screens/FriendProfile";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -19,6 +20,7 @@ export type LoggedInStackParamList = {
     startTime: number;
     participants: Participants[];
   };
+  FriendProfile: { id: string };
 };
 
 const Stack = createStackNavigator<LoggedInStackParamList>();
@@ -71,6 +73,13 @@ export default function LoggedInNav() {
         name="ActivityStackNav"
         options={{ headerShown: false }}
         component={ActivityStackNav}
+      />
+      <Stack.Screen
+        name="FriendProfile"
+        options={{
+          headerTitle: "참가자 프로필",
+        }}
+        component={FriendProfile}
       />
     </Stack.Navigator>
   );
