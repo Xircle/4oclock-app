@@ -12,6 +12,7 @@ import { colors, fontFamilies, GeneralText, Text } from "../styles/styles";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { GetPlacesByLocationOutput, PlaceFeedData } from "../lib/api/types";
 import {
+  getPlacesAll,
   getPlacesEvent,
   getPlacesForCarousel,
   getPlacesLightning,
@@ -29,9 +30,25 @@ interface Props {}
 
 const { width, height } = Dimensions.get("window");
 
+const renderItem = ({ item }) => (
+  <FlatListPlace
+    leftParticipantsCount={item.leftParticipantsCount}
+    coverImage={item.coverImage}
+    name={item.name}
+    id={item.id}
+    views={item.views}
+    description={item.placeDetail.description}
+    startDateFromNow={item.startDateFromNow}
+    deadline={item.deadline}
+    participants={item.participants}
+  />
+);
+
 export default function Main(props: Props) {
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
+  const [secondTap, setSecondTap] = useState(false);
+  const [thirdTap, setThirdTap] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -125,7 +142,7 @@ export default function Main(props: Props) {
     topCarouselLoading ||
     mainEventDataLoading ||
     mainLightningDataLoading;
-  // animations
+  //animations
   const middleTabAnim = (middleTab: number, position: Animated.Value) =>
     Animated.timing(position, {
       toValue: middleTab * width * -1,
@@ -187,31 +204,33 @@ export default function Main(props: Props) {
           >
             <MiddleTabTextWrapper isSelected={middleTabIndex === 0}>
               <MiddleTabText isSelected={middleTabIndex === 0}>
-                정기👾
-              </MiddleTabText>
-            </MiddleTabTextWrapper>
-          </MiddleTab>
-          <MiddleTab
-            onPress={() => {
-              setMiddleTabIndex(1);
-              middleTabAnim(1, position).start();
-            }}
-          >
-            <MiddleTabTextWrapper isSelected={middleTabIndex === 1}>
-              <MiddleTabText isSelected={middleTabIndex === 1}>
                 번개⚡
               </MiddleTabText>
             </MiddleTabTextWrapper>
           </MiddleTab>
           <MiddleTab
             onPress={() => {
+              setSecondTap(true);
+              setMiddleTabIndex(1);
+              middleTabAnim(1, position).start();
+            }}
+          >
+            <MiddleTabTextWrapper isSelected={middleTabIndex === 1}>
+              <MiddleTabText isSelected={middleTabIndex === 1}>
+                이벤트💖
+              </MiddleTabText>
+            </MiddleTabTextWrapper>
+          </MiddleTab>
+          <MiddleTab
+            onPress={() => {
+              setThirdTap(true);
               setMiddleTabIndex(2);
               middleTabAnim(2, position).start();
             }}
           >
             <MiddleTabTextWrapper isSelected={middleTabIndex === 2}>
               <MiddleTabText isSelected={middleTabIndex === 2}>
-                이벤트💖
+                정기👾
               </MiddleTabText>
             </MiddleTabTextWrapper>
           </MiddleTab>
@@ -225,41 +244,6 @@ export default function Main(props: Props) {
             }}
             ListHeaderComponent={
               <ListHeaderContainer>
-                <ListMainText>친구들과{"\n"}맛집 투-어 가자 👾</ListMainText>
-                <ListSubText>크루원들과 서울 맛집 정복!!</ListSubText>
-              </ListHeaderContainer>
-            }
-            showsVerticalScrollIndicator={false}
-            onEndReached={loadMoreRegular}
-            onEndReachedThreshold={0.4}
-            onRefresh={() => onRefresh("Regular-meeting")}
-            refreshing={refreshing}
-            keyExtractor={(item: PlaceFeedData) => item.id + ""}
-            // @ts-ignore
-            data={mainRegularData.pages.map((page) => page.places).flat()}
-            renderItem={({ item }) => (
-              <FlatListPlace
-                leftParticipantsCount={item.leftParticipantsCount}
-                coverImage={item.coverImage}
-                name={item.name}
-                id={item.id}
-                views={item.views}
-                description={item.placeDetail.description}
-                startDateFromNow={item.startDateFromNow}
-                deadline={item.deadline}
-                participants={item.participants}
-              />
-            )}
-          />
-
-          <AnimWrapper
-            style={{
-              left: width,
-              transform: [{ translateX: position }],
-              padding: 20,
-            }}
-            ListHeaderComponent={
-              <ListHeaderContainer>
                 <ListMainText>심심할 땐{"\n"}짜릿한 번개 ⚡</ListMainText>
                 <ListSubText>
                   새로운 친구들 사귀는거 얼마나 재밌게요 {"><"}
@@ -268,62 +252,64 @@ export default function Main(props: Props) {
             }
             showsVerticalScrollIndicator={false}
             onEndReached={loadMoreLightning}
-            onEndReachedThreshold={0.4}
+            onEndReachedThreshold={0}
             onRefresh={() => onRefresh("Lightning")}
             refreshing={refreshing}
             keyExtractor={(item: PlaceFeedData) => item.id + ""}
             // @ts-ignore
-            data={mainLightningData.pages?.map((page) => page.places).flat()}
-            renderItem={({ item }) => (
-              <FlatListPlace
-                leftParticipantsCount={item.leftParticipantsCount}
-                coverImage={item.coverImage}
-                name={item.name}
-                id={item.id}
-                views={item.views}
-                description={item.placeDetail.description}
-                startDateFromNow={item.startDateFromNow}
-                deadline={item.deadline}
-                participants={item.participants}
-              />
-            )}
+            data={mainLightningData.pages.map((page) => page.places).flat()}
+            renderItem={renderItem}
           />
-          <AnimWrapper
-            style={{
-              left: width * 2,
-              transform: [{ translateX: position }],
-              padding: 20,
-            }}
-            ListHeaderComponent={
-              <ListHeaderContainer>
-                <ListMainText>설레이는{"\n"}깜짝 이벤트 💖</ListMainText>
-                <ListSubText>
-                  운영진들이 야심차게 준비한 이벤트 {"><"}
-                </ListSubText>
-              </ListHeaderContainer>
-            }
-            showsVerticalScrollIndicator={false}
-            onEndReached={loadMoreEvent}
-            onEndReachedThreshold={0.4}
-            onRefresh={() => onRefresh("Event")}
-            refreshing={refreshing}
-            keyExtractor={(item: PlaceFeedData) => item.id + ""}
-            // @ts-ignore
-            data={mainEventData.pages?.map((page) => page.places).flat()}
-            renderItem={({ item }) => (
-              <FlatListPlace
-                leftParticipantsCount={item.leftParticipantsCount}
-                coverImage={item.coverImage}
-                name={item.name}
-                id={item.id}
-                views={item.views}
-                description={item.placeDetail.description}
-                startDateFromNow={item.startDateFromNow}
-                deadline={item.deadline}
-                participants={item.participants}
-              />
-            )}
-          />
+          {secondTap && (
+            <AnimWrapper
+              style={{
+                left: width,
+                transform: [{ translateX: position }],
+                padding: 20,
+              }}
+              ListHeaderComponent={
+                <ListHeaderContainer>
+                  <ListMainText>설레이는{"\n"}깜짝 이벤트 💖</ListMainText>
+                  <ListSubText>
+                    운영진들이 야심차게 준비한 이벤트 {"><"}
+                  </ListSubText>
+                </ListHeaderContainer>
+              }
+              showsVerticalScrollIndicator={false}
+              onEndReached={loadMoreEvent}
+              onEndReachedThreshold={0}
+              onRefresh={() => onRefresh("Event")}
+              refreshing={refreshing}
+              keyExtractor={(item: PlaceFeedData) => item.id + ""}
+              // @ts-ignore
+              data={mainEventData.pages?.map((page) => page.places).flat()}
+              renderItem={renderItem}
+            />
+          )}
+          {thirdTap && (
+            <AnimWrapper
+              style={{
+                left: width * 2,
+                transform: [{ translateX: position }],
+                padding: 20,
+              }}
+              ListHeaderComponent={
+                <ListHeaderContainer>
+                  <ListMainText>친구들과{"\n"}맛집 투-어 가자 👾</ListMainText>
+                  <ListSubText>크루원들과 서울 맛집 정복!!</ListSubText>
+                </ListHeaderContainer>
+              }
+              showsVerticalScrollIndicator={false}
+              onEndReached={loadMoreRegular}
+              onEndReachedThreshold={0}
+              onRefresh={() => onRefresh("Regular-meeting")}
+              refreshing={refreshing}
+              keyExtractor={(item: PlaceFeedData) => item.id + ""}
+              // @ts-ignore
+              data={mainRegularData.pages?.map((page) => page.places).flat()}
+              renderItem={renderItem}
+            />
+          )}
         </AnimationContainer>
       </SafeAreaView>
     </Container>
