@@ -11,6 +11,7 @@ import optimizeImage from "../../lib/helpers/optimizeImage";
 import { Participants } from "../../lib/api/types";
 import AvatarUri from "../UI/AvatarUri";
 import { LinearGradient } from "expo-linear-gradient";
+import FastImage from "react-native-fast-image";
 
 export const enum Purpose {
   main = "main",
@@ -64,6 +65,7 @@ export default function FlatListPlace({
           <CoverImage
             source={{
               uri: optimizeImage(coverImage, { width: 130, height: 130 }),
+              priority: FastImage.priority.high,
             }}
           />
           {purpose === Purpose.main && startDateFromNow !== "마감" ? (
@@ -105,7 +107,7 @@ export default function FlatListPlace({
               if (index < 4) {
                 return (
                   <AvartarWrapper key={item.userId}>
-                    <AvatarUri source={item.profileImgUrl} size={38} />
+                    <AvatarUri source={item.profileImgUrl} size={38} isSmall />
                   </AvartarWrapper>
                 );
               }
@@ -241,7 +243,7 @@ const Container = styled.View`
   border-bottom-color: ${colors.bareGrey};
 `;
 
-const CoverImage = styled.Image`
+const CoverImage = styled(FastImage)`
   width: 100%;
   height: 100%;
   border-radius: 5px;
