@@ -20,30 +20,20 @@ import { useNavigation } from "@react-navigation/native";
 import { openLink } from "../../components/shared/Links";
 import { Account } from "../../lib/helpers/Account";
 
-interface Props {
-  isRefetch?: boolean;
-}
+interface Props {}
 
 const { width, height } = Dimensions.get("window");
 
-export default function MyPage({ isRefetch }: Props) {
+export default function MyPage(props: Props) {
   const naviagtion = useNavigation();
-  const [result, setResult] = useState<string>("");
 
-  const { data: userData, isLoading, refetch } = useQuery<UserData | undefined>(
+  const { data: userData } = useQuery<UserData | undefined>(
     ["userProfile"],
     () => getUser(),
     {
       retry: 1,
     }
   );
-  if (isRefetch) {
-    refetch();
-  }
-
-  useEffect(() => {
-    refetch();
-  }, []);
 
   return (
     <Wrapper>

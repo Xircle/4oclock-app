@@ -54,9 +54,6 @@ export default function MainTabsNav(props: Props) {
           tabBarIcon: ({ focused, color, size }) => (
             <TabMiddleAdd focused={focused} />
           ),
-          // delete below
-          // headerShown: false,
-          // tabBarStyle: { display: "none" },
         }}
       />
       {/* <Tabs.Screen
