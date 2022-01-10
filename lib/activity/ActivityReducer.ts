@@ -24,7 +24,7 @@ export interface ActivityState extends CreateActivityOutput {
 
 export const activityInitialState: ActivityState = {
   name: "",
-  maxParticipantsNumber: 5,
+  maxParticipantsNumber: 4,
   description: "",
   detailAddress: "",
   coverImage: undefined,

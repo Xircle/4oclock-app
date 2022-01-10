@@ -5,7 +5,7 @@ export const activityDispatcher = {
     newNum: number,
     dispatch: React.Dispatch<ActivityAction>
   ) => {
-    if (newNum >= 2 && newNum <= 8)
+    if (newNum >= 1 && newNum <= 8)
       dispatch({
         type: "setMaxParticipantsNumber",
         payload: newNum,
@@ -143,6 +143,10 @@ export const activityDispatcher = {
     dispatch({
       type: "setSubImagesFile",
       payload: activityInitialState.subImages,
+    });
+    dispatch({
+      type: "setActivityType",
+      payload: activityInitialState.activityType,
     });
   },
 };
