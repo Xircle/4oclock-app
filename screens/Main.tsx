@@ -244,10 +244,14 @@ export default function Main(props: Props) {
             }}
             ListHeaderComponent={
               <ListHeaderContainer>
-                <ListMainText>심심할 땐{"\n"}짜릿한 번개 ⚡</ListMainText>
-                <ListSubText>
-                  새로운 친구들 사귀는거 얼마나 재밌게요 {"><"}
-                </ListSubText>
+                <LightningMainText>
+                  [첫 번개 EVENT] 선착순 24명 5000원 쏜다!
+                </LightningMainText>
+                <LightningSubText>
+                  번개를 자유롭게 올리고 참여 가능 한 탭! 😎{"\n"}
+                  번개 개설 후 운영진에게 말씀해주시면 전체단톡에 올려드려요--!
+                  {"\n"}
+                </LightningSubText>
               </ListHeaderContainer>
             }
             showsVerticalScrollIndicator={false}
@@ -295,8 +299,11 @@ export default function Main(props: Props) {
               }}
               ListHeaderComponent={
                 <ListHeaderContainer>
-                  <ListMainText>친구들과{"\n"}맛집 투-어 가자 👾</ListMainText>
-                  <ListSubText>크루원들과 서울 맛집 정복!!</ListSubText>
+                  <ListMainText>정기모임 👾</ListMainText>
+                  <ListSubText>
+                    다른 팀의 정기모임 빈 자리가 올라와요:){"\n"}
+                    참여 해주시면, 운영진이 팀 단톡에 초대해드려요!
+                  </ListSubText>
                 </ListHeaderContainer>
               }
               showsVerticalScrollIndicator={false}
@@ -318,7 +325,6 @@ export default function Main(props: Props) {
 
 const ListHeaderContainer = styled.View`
   width: 100%;
-  height: 100px;
   padding: 0px 20px;
 `;
 
@@ -332,6 +338,15 @@ const ListSubText = styled(GeneralText)`
   color: ${colors.bareGrey};
   margin-top: 14px;
   font-size: 14px;
+`;
+
+const LightningSubText = styled(ListSubText)`
+  margin-top: 5px;
+`;
+
+const LightningMainText = styled(GeneralText)`
+  color: ${colors.lightBlack};
+  font-family: ${fontFamilies.bold};
 `;
 
 const TopCarousel = styled.ScrollView``;
