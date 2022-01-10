@@ -2,7 +2,7 @@ import { ActivityAction } from "./ActivityReducer";
 
 export const activityValidation = {
   validateName: (name: string) => {
-    return name.length > 2 && name.length < 13;
+    return name.length > 2 && name.length < 21;
   },
   validateDescription: (description: string) => {
     return description.length > 0 && description.length < 500;
