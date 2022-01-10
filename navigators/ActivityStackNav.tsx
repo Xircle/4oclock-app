@@ -21,6 +21,7 @@ export type ActivityStackParamList = {
     participationFee: number;
     startTime: number;
     placeId: string;
+    placeType: string;
   };
   ReservationConfirm: {
     startDateFromNow: string;
@@ -28,6 +29,7 @@ export type ActivityStackParamList = {
     participationFee: number;
     startTime: number;
     isVaccinated: boolean;
+    placeType: string;
   };
 };
 

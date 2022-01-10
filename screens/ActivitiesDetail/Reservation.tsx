@@ -44,6 +44,7 @@ export default function Reservation({ route }: Props) {
         participationFee: route.params.participationFee,
         startDateFromNow: route.params.startDateFromNow,
         startTime: route.params.startTime,
+        placeType: route.params.placeType,
       });
     } catch (err) {
       console.log(err);

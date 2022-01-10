@@ -36,7 +36,15 @@ export default function ReservationConfirm({ route }: Props) {
             <MainHeading>이팅모임 참석신청 완료 🎉</MainHeading>
           </InfoContainer>
           <CenteredContainer>
-            <CongratSubText>⭐신청한 모임에 관한 자세한 내용⭐</CongratSubText>
+            <CongratMainText>
+              ⭐신청한 모임에 관한 자세한 내용⭐
+            </CongratMainText>
+            {route.params.placeType === "Lightning" && (
+              <CongratSubText>
+                운영진이 모임 전날 같은 번개를 신청한 친구들과 단톡을
+                만들어드려요!
+              </CongratSubText>
+            )}
           </CenteredContainer>
           <DetailContainer>
             <DetailWrapper>
@@ -87,10 +95,15 @@ const InfoContainer = styled.View`
   margin-bottom: 50px;
 `;
 
-const CongratSubText = styled(GeneralText)`
+const CongratMainText = styled(GeneralText)`
   color: ${colors.mainBlue};
   font-family: ${fontFamilies.medium};
   margin-top: 12px;
+`;
+
+const CongratSubText = styled(CongratMainText)`
+  color: ${colors.midGrey};
+  line-height: 28px;
 `;
 
 const DetailContainer = styled.View`
