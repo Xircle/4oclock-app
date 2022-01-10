@@ -27,7 +27,7 @@ interface Props {
   description?: string;
   startDateFromNow?: string;
   deadline?: string;
-  leftParticipantsCount?: string;
+  leftParticipantsCount?: number;
   participants?: Participants[];
 }
 
@@ -68,7 +68,9 @@ export default function FlatListPlace({
               priority: FastImage.priority.high,
             }}
           />
-          {purpose === Purpose.main && startDateFromNow !== "마감" ? (
+          {purpose === Purpose.main &&
+          startDateFromNow !== "마감" &&
+          leftParticipantsCount > 0 ? (
             <TagContainer>
               <Tag>
                 {startDateFromNow === "마감"
