@@ -71,7 +71,7 @@ export default function CreateActivityScreen(props: Props) {
     if (stage === 0) {
       return !state.stage1Valid || manualDisable;
     } else if (stage === 1) {
-      return !state.coverImage || state.subImages.length < 2 || manualDisable;
+      return !state.coverImage || manualDisable;
     }
   };
 
