@@ -11,10 +11,9 @@ import { getPlaceById } from "../../lib/api/getPlaceById";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import Swiper from "react-native-swiper";
 import { LinearGradient } from "expo-linear-gradient";
-import { CompareTimeReg, getStartDateFromNow } from "../../lib/utils";
+import {  getStartDateFromNow } from "../../lib/utils";
 import MyBottomModal from "../../components/UI/MyBottomModal";
 import { openLink } from "../../components/shared/Links";
-import MyModal from "../../components/UI/MyModal";
 import AvatarUri from "../../components/UI/AvatarUri";
 import FastImage from "react-native-fast-image";
 
