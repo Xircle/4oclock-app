@@ -34,6 +34,7 @@
 2. 메인 스크린 pagenation (스크롤 끝나면 다음 페이지가 로드되는거) threshold 조정 — done
 ###### 이든이랑 같이
 2. 선택 업데이트, 강제 업데이트
-3. 랜덤 프로필 재기획 + 기능
+	1. http://onelink.to/tqctmc <- google play, appstore link
+4. 랜덤 프로필 재기획 + 기능
     1. 기수 구분 및 기존 유저 케이스 나누기
         1. 기수가 array of int 면 좋을 거같음 (다수 참여자)
