@@ -1,7 +1,5 @@
-# 4oclock-app
-4oclock Application, powered by React Native
+# Update Log
 
-##Update Log
 2021.01.12 2차 업데이트 1.12 업데이트 버전 1.2x
 
 혼자
