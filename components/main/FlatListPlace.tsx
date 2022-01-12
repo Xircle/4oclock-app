@@ -10,7 +10,6 @@ import { openLink } from "../shared/Links";
 import optimizeImage from "../../lib/helpers/optimizeImage";
 import { Participants } from "../../lib/api/types";
 import AvatarUri from "../UI/AvatarUri";
-import { LinearGradient } from "expo-linear-gradient";
 import FastImage from "react-native-fast-image";
 
 export const enum Purpose {
@@ -72,16 +71,15 @@ export default function FlatListPlace({
           startDateFromNow !== "마감" &&
           leftParticipantsCount > 0 ? (
             <TagContainer>
-              <Tag>
-                {startDateFromNow === "마감"
-                  ? startDateFromNow
-                  : "잔여" + leftParticipantsCount + "석"}
-              </Tag>
+              <Tag>잔여{leftParticipantsCount}석</Tag>
             </TagContainer>
           ) : (
-            <LeftContainerOverlay>
-              <ClosedText>마 감</ClosedText>
-            </LeftContainerOverlay>
+            purpose === Purpose.main ||
+            (startDateFromNow === "마감" && (
+              <LeftContainerOverlay>
+                <ClosedText>마 감</ClosedText>
+              </LeftContainerOverlay>
+            ))
           )}
         </LeftContainer>
         <RightContiner>
@@ -118,14 +116,28 @@ export default function FlatListPlace({
               <AvatarNumText>+ {participants.length - 4}</AvatarNumText>
             ) : null}
           </AvatarContainer>
-          {purpose === Purpose.main && (
+          {purpose === Purpose.main &&
+            startDateFromNow !== "마감" &&
+            leftParticipantsCount > 0 && (
+              <BottomRightFixedContainer>
+                <DeadLineText>{deadline}</DeadLineText>
+              </BottomRightFixedContainer>
+            )}
+          {purpose === Purpose.mypage && (
             <BottomRightFixedContainer>
-              <DeadLineText>{deadline}</DeadLineText>
-            </BottomRightFixedContainer>
-          )}
-          {purpose === Purpose.mypage && false && (
-            <BottomRightFixedContainer>
-              <ReviewButton onPress={writeReview} />
+              {startDateFromNow !== "마감" ? (
+                <CancelButton>
+                  <CancelText>
+                    <Ionicons
+                      name="alert"
+                      size={18}
+                      color={colors.warningRed}
+                    />
+                    취소하기
+                  </CancelText>
+                </CancelButton>
+              ) : null}
+              {/* <ReviewButton onPress={writeReview} /> */}
             </BottomRightFixedContainer>
           )}
         </RightContiner>
@@ -138,6 +150,14 @@ const ClosedText = styled(GeneralText)`
   color: ${colors.bgColor};
   font-family: ${fontFamilies.bold};
   font-size: 22px;
+`;
+
+const CancelButton = styled.TouchableOpacity`
+  align-items: center;
+`;
+
+const CancelText = styled(GeneralText)`
+  color: ${colors.warningRed};
 `;
 
 const LeftContainerOverlay = styled.View`
