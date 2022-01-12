@@ -1,9 +1,14 @@
 import styled from "styled-components/native";
-import React from "react";
-import { colors, fontFamilies, GeneralText } from "../../styles/styles";
+import React, { useState } from "react";
+import {
+  TextArea,
+  colors,
+  fontFamilies,
+  GeneralText,
+} from "../../styles/styles";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { TouchableWithoutFeedback } from "react-native";
+import { Alert, TouchableWithoutFeedback } from "react-native";
 import { getStartDateFromNow } from "../../lib/utils";
 import ReviewButton from "../profile/ReviewButton";
 import { openLink } from "../shared/Links";
@@ -11,6 +16,9 @@ import optimizeImage from "../../lib/helpers/optimizeImage";
 import { Participants } from "../../lib/api/types";
 import AvatarUri from "../UI/AvatarUri";
 import FastImage from "react-native-fast-image";
+import MyBottomModal from "../UI/MyBottomModal";
+import { useMutation } from "react-query";
+import { cancelReservation } from "../../lib/api/cancelReservation";
 
 export const enum Purpose {
   main = "main",
@@ -28,6 +36,8 @@ interface Props {
   deadline?: string;
   leftParticipantsCount?: number;
   participants?: Participants[];
+  refetch?: () => {};
+  isRefetch?: boolean;
 }
 
 export default function FlatListPlace({
@@ -40,9 +50,18 @@ export default function FlatListPlace({
   deadline,
   leftParticipantsCount,
   purpose = Purpose.main,
+  refetch,
+  isRefetch,
   participants,
 }: Props) {
   const navigation = useNavigation();
+  const [cancelModal, setCancelModal] = useState(false);
+  const [cancelReason, setCancelReason] = useState("");
+
+  const {
+    mutateAsync: mutateCancelReservation,
+    isLoading: isPatching,
+  } = useMutation(cancelReservation);
 
   const onPress = () => {
     // @ts-ignore
@@ -53,13 +72,70 @@ export default function FlatListPlace({
     });
   };
 
+  const CancelReservation = async () => {
+    if (!id) return;
+    const { data } = await mutateCancelReservation({
+      placeId: id,
+      cancelReason: "기타",
+      detailReason: cancelReason,
+    });
+    if (!data.ok) {
+      throw new Error(data.error);
+    }
+    Alert.alert("예약이 취소되었습니다");
+    setCancelModal(false);
+    if (isRefetch) {
+      refetch();
+    }
+  };
+
   const writeReview = async () => {
     await openLink.LWriteReview("placeId");
   };
-
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <Container>
+        <MyBottomModal
+          onClose={() => {}}
+          visible={cancelModal}
+          setModal={() => setCancelModal(false)}
+          height={startDateFromNow?.startsWith("오늘") ? 300 : 500}
+        >
+          {startDateFromNow?.startsWith("오늘") ? (
+            <ModalWrapper>
+              <ModalHeading>모임 당일에는 취소가 불가능합니다</ModalHeading>
+              <ModalInstruction>
+                다른 크루분들을 위해 모임 당일 취소를 불가하는 방침을 가지고
+                있습니다.{"\n"}불가피한 상황일 경우에만 (ex.코로나) 운영진께
+                문의 부탁드립니다.
+              </ModalInstruction>
+              <ModalCloseButton onPress={() => setCancelModal(false)}>
+                <ModalCloseButtonText>닫기</ModalCloseButtonText>
+              </ModalCloseButton>
+            </ModalWrapper>
+          ) : (
+            <ModalWrapper>
+              <ModalHeading>{name}</ModalHeading>
+              <CancelReservationContainer showsVerticalScrollIndicator={false}>
+                <CancelSubHeading>사유</CancelSubHeading>
+                <STextArea
+                  placeholder="친구들과 함께 놀러갈 곳 이름을 적어줘!"
+                  autoCapitalize="none"
+                  multiline={true}
+                  autoCorrect={false}
+                  defaultValue={""}
+                  onChange={(event) => {
+                    const { eventCount, target, text } = event.nativeEvent;
+                    setCancelReason(text);
+                  }}
+                />
+              </CancelReservationContainer>
+              <ModalCloseButton onPress={CancelReservation}>
+                <ModalCloseButtonText>취소하기</ModalCloseButtonText>
+              </ModalCloseButton>
+            </ModalWrapper>
+          )}
+        </MyBottomModal>
         <LeftContainer>
           <CoverImage
             source={{
@@ -74,12 +150,11 @@ export default function FlatListPlace({
               <Tag>잔여{leftParticipantsCount}석</Tag>
             </TagContainer>
           ) : (
-            purpose === Purpose.main ||
-            (startDateFromNow === "마감" && (
+            (purpose === Purpose.main || startDateFromNow === "마감") && (
               <LeftContainerOverlay>
                 <ClosedText>마 감</ClosedText>
               </LeftContainerOverlay>
-            ))
+            )
           )}
         </LeftContainer>
         <RightContiner>
@@ -126,7 +201,7 @@ export default function FlatListPlace({
           {purpose === Purpose.mypage && (
             <BottomRightFixedContainer>
               {startDateFromNow !== "마감" ? (
-                <CancelButton>
+                <CancelButton onPress={() => setCancelModal(true)}>
                   <CancelText>
                     <Ionicons
                       name="alert"
@@ -145,6 +220,58 @@ export default function FlatListPlace({
     </TouchableWithoutFeedback>
   );
 }
+
+const ModalButton = styled.TouchableOpacity`
+  width: 280px;
+  height: 70px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const STextArea = styled(TextArea)`
+  margin-top: 20px;
+  height: 150px;
+`;
+
+const ModalCloseButton = styled(ModalButton)`
+  background-color: ${colors.bareGrey};
+  height: 50px;
+`;
+
+const ModalCloseButtonText = styled(GeneralText)`
+  color: ${colors.bgColor};
+  font-family: ${fontFamilies.bold};
+`;
+
+const ModalWrapper = styled.View`
+  flex: 1;
+  padding: 30px 20px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
+const CancelReservationContainer = styled.ScrollView`
+  flex: 1;
+  margin: 50px 0;
+  width: 100%;
+`;
+
+const CancelSubHeading = styled(GeneralText)`
+  font-family: ${fontFamilies.bold};
+  color: ${colors.lightBlack};
+  font-size: 22px;
+`;
+
+const ModalHeading = styled(GeneralText)`
+  font-size: 24px;
+`;
+
+const ModalInstruction = styled(GeneralText)`
+  color: ${colors.lightBlack};
+  line-height: 28px;
+`;
 
 const ClosedText = styled(GeneralText)`
   color: ${colors.bgColor};
