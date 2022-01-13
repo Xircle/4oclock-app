@@ -12,11 +12,13 @@ import TabSide from "../components/nav/TabSide";
 import CreateActivityStackNav from "./CreateActivityStackNav";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {}
 
 const Tabs = createBottomTabNavigator();
 export default function MainTabsNav(props: Props) {
+  const navigation = useNavigation();
   return (
     <Tabs.Navigator
       screenOptions={{
@@ -40,7 +42,11 @@ export default function MainTabsNav(props: Props) {
           headerShown: true,
           headerTitle: "채팅 테스트",
           headerRight: () => (
-            <TouchableOpacity style={{ marginRight: 8 }}>
+            <TouchableOpacity
+              style={{ marginRight: 8 }}
+              // @ts-ignore
+              onPress={() => navigation.navigate("ChatStackNav")}
+            >
               <Ionicons
                 name="chatbubble-ellipses-outline"
                 size={30}

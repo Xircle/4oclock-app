@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { colors, fontFamilies } from "../styles/styles";
 import { Participants } from "../lib/api/types";
 import FriendProfile from "../screens/FriendProfile";
+import ChatStackNav from "./ChatStackNav";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -21,6 +22,7 @@ export type LoggedInStackParamList = {
     participants: Participants[];
   };
   FriendProfile: { id: string };
+  ChatStackNav: undefined;
 };
 
 const Stack = createStackNavigator<LoggedInStackParamList>();
@@ -81,6 +83,7 @@ export default function LoggedInNav() {
         }}
         component={FriendProfile}
       />
+      <Stack.Screen name="ChatStackNav" component={ChatStackNav} />
     </Stack.Navigator>
   );
 }

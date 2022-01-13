@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { GeneralText } from "../../styles/styles";
+import React from "react";
 
 interface Props {}
 
