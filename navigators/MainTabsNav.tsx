@@ -10,6 +10,8 @@ import CreateActivityScreen from "../screens/CreateActivityScreen";
 import TabMiddleAdd from "../components/nav/TabMiddleAdd";
 import TabSide from "../components/nav/TabSide";
 import CreateActivityStackNav from "./CreateActivityStackNav";
+import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
 
 interface Props {}
 
@@ -35,7 +37,17 @@ export default function MainTabsNav(props: Props) {
         component={Main}
         options={{
           title: "메인",
-          headerShown: false,
+          headerShown: true,
+          headerTitle: "채팅 테스트",
+          headerRight: () => (
+            <TouchableOpacity style={{ marginRight: 8 }}>
+              <Ionicons
+                name="chatbubble-ellipses-outline"
+                size={30}
+                color={colors.lightBlack}
+              />
+            </TouchableOpacity>
+          ),
           tabBarIcon: ({ focused, color, size }) => (
             <TabSide
               focused={focused}
