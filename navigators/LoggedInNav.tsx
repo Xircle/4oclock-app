@@ -83,7 +83,13 @@ export default function LoggedInNav() {
         }}
         component={FriendProfile}
       />
-      <Stack.Screen name="ChatStackNav" component={ChatStackNav} />
+      <Stack.Screen
+        name="ChatStackNav"
+        component={ChatStackNav}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   );
 }
