@@ -1,13 +1,6 @@
 import styled from "styled-components/native";
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Dimensions,
-  Animated,
-  View,
-  Image,
-  FlatList,
-  PanResponder,
-} from "react-native";
+import React, { useRef, useState } from "react";
+import { Dimensions, Animated, FlatList, PanResponder } from "react-native";
 import { colors, fontFamilies, GeneralText, Text } from "../styles/styles";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { GetPlacesByLocationOutput, PlaceFeedData } from "../lib/api/types";
@@ -194,131 +187,130 @@ export default function Main(props: Props) {
           })}
         </Swiper>
       </TopCarouselContainer> */}
-      <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
-        <MiddleTabContainer>
-          <MiddleTab
-            onPress={() => {
-              setMiddleTabIndex(0);
-              middleTabAnim(0, position).start();
-            }}
-          >
-            <MiddleTabTextWrapper isSelected={middleTabIndex === 0}>
-              <MiddleTabText isSelected={middleTabIndex === 0}>
-                번개⚡
-              </MiddleTabText>
-            </MiddleTabTextWrapper>
-          </MiddleTab>
-          <MiddleTab
-            onPress={() => {
-              setSecondTap(true);
-              setMiddleTabIndex(1);
-              middleTabAnim(1, position).start();
-            }}
-          >
-            <MiddleTabTextWrapper isSelected={middleTabIndex === 1}>
-              <MiddleTabText isSelected={middleTabIndex === 1}>
-                이벤트💖
-              </MiddleTabText>
-            </MiddleTabTextWrapper>
-          </MiddleTab>
-          <MiddleTab
-            onPress={() => {
-              setThirdTap(true);
-              setMiddleTabIndex(2);
-              middleTabAnim(2, position).start();
-            }}
-          >
-            <MiddleTabTextWrapper isSelected={middleTabIndex === 2}>
-              <MiddleTabText isSelected={middleTabIndex === 2}>
-                정기👾
-              </MiddleTabText>
-            </MiddleTabTextWrapper>
-          </MiddleTab>
-        </MiddleTabContainer>
 
-        <AnimationContainer>
+      <MiddleTabContainer>
+        <MiddleTab
+          onPress={() => {
+            setMiddleTabIndex(0);
+            middleTabAnim(0, position).start();
+          }}
+        >
+          <MiddleTabTextWrapper isSelected={middleTabIndex === 0}>
+            <MiddleTabText isSelected={middleTabIndex === 0}>
+              번개⚡
+            </MiddleTabText>
+          </MiddleTabTextWrapper>
+        </MiddleTab>
+        <MiddleTab
+          onPress={() => {
+            setSecondTap(true);
+            setMiddleTabIndex(1);
+            middleTabAnim(1, position).start();
+          }}
+        >
+          <MiddleTabTextWrapper isSelected={middleTabIndex === 1}>
+            <MiddleTabText isSelected={middleTabIndex === 1}>
+              이벤트💖
+            </MiddleTabText>
+          </MiddleTabTextWrapper>
+        </MiddleTab>
+        <MiddleTab
+          onPress={() => {
+            setThirdTap(true);
+            setMiddleTabIndex(2);
+            middleTabAnim(2, position).start();
+          }}
+        >
+          <MiddleTabTextWrapper isSelected={middleTabIndex === 2}>
+            <MiddleTabText isSelected={middleTabIndex === 2}>
+              정기👾
+            </MiddleTabText>
+          </MiddleTabTextWrapper>
+        </MiddleTab>
+      </MiddleTabContainer>
+
+      <AnimationContainer>
+        <AnimWrapper
+          style={{
+            transform: [{ translateX: position }],
+            padding: 20,
+          }}
+          ListHeaderComponent={
+            <ListHeaderContainer>
+              <LightningMainText>
+                [첫 번개 EVENT] 선착순 24명 5000원 쏜다!
+              </LightningMainText>
+              <LightningSubText>
+                번개를 자유롭게 올리고 참여 가능 한 탭! 😎{"\n"}
+                번개 개설 후 운영진에게 말씀해주시면 전체단톡에 올려드려요--!
+                {"\n"}
+              </LightningSubText>
+            </ListHeaderContainer>
+          }
+          showsVerticalScrollIndicator={false}
+          onEndReached={loadMoreLightning}
+          onEndReachedThreshold={0.2}
+          onRefresh={() => onRefresh("Lightning")}
+          refreshing={refreshing}
+          keyExtractor={(item: PlaceFeedData) => item.id + ""}
+          // @ts-ignore
+          data={mainLightningData.pages.map((page) => page.places).flat()}
+          renderItem={renderItem}
+        />
+        {secondTap && (
           <AnimWrapper
             style={{
+              left: width,
               transform: [{ translateX: position }],
               padding: 20,
             }}
             ListHeaderComponent={
               <ListHeaderContainer>
-                <LightningMainText>
-                  [첫 번개 EVENT] 선착순 24명 5000원 쏜다!
-                </LightningMainText>
-                <LightningSubText>
-                  번개를 자유롭게 올리고 참여 가능 한 탭! 😎{"\n"}
-                  번개 개설 후 운영진에게 말씀해주시면 전체단톡에 올려드려요--!
-                  {"\n"}
-                </LightningSubText>
+                <ListMainText>설레이는{"\n"}깜짝 이벤트 💖</ListMainText>
+                <ListSubText>
+                  운영진들이 야심차게 준비한 이벤트 {"><"}
+                </ListSubText>
               </ListHeaderContainer>
             }
             showsVerticalScrollIndicator={false}
-            onEndReached={loadMoreLightning}
-            onEndReachedThreshold={0}
-            onRefresh={() => onRefresh("Lightning")}
+            onEndReached={loadMoreEvent}
+            onEndReachedThreshold={0.2}
+            onRefresh={() => onRefresh("Event")}
             refreshing={refreshing}
             keyExtractor={(item: PlaceFeedData) => item.id + ""}
             // @ts-ignore
-            data={mainLightningData.pages.map((page) => page.places).flat()}
+            data={mainEventData.pages?.map((page) => page.places).flat()}
             renderItem={renderItem}
           />
-          {secondTap && (
-            <AnimWrapper
-              style={{
-                left: width,
-                transform: [{ translateX: position }],
-                padding: 20,
-              }}
-              ListHeaderComponent={
-                <ListHeaderContainer>
-                  <ListMainText>설레이는{"\n"}깜짝 이벤트 💖</ListMainText>
-                  <ListSubText>
-                    운영진들이 야심차게 준비한 이벤트 {"><"}
-                  </ListSubText>
-                </ListHeaderContainer>
-              }
-              showsVerticalScrollIndicator={false}
-              onEndReached={loadMoreEvent}
-              onEndReachedThreshold={0}
-              onRefresh={() => onRefresh("Event")}
-              refreshing={refreshing}
-              keyExtractor={(item: PlaceFeedData) => item.id + ""}
-              // @ts-ignore
-              data={mainEventData.pages?.map((page) => page.places).flat()}
-              renderItem={renderItem}
-            />
-          )}
-          {thirdTap && (
-            <AnimWrapper
-              style={{
-                left: width * 2,
-                transform: [{ translateX: position }],
-                padding: 20,
-              }}
-              ListHeaderComponent={
-                <ListHeaderContainer>
-                  <ListMainText>정기모임 👾</ListMainText>
-                  <ListSubText>
-                    다른 팀의 정기모임 빈 자리가 올라와요:){"\n"}
-                    참여 해주시면, 운영진이 팀 단톡에 초대해드려요!
-                  </ListSubText>
-                </ListHeaderContainer>
-              }
-              showsVerticalScrollIndicator={false}
-              onEndReached={loadMoreRegular}
-              onEndReachedThreshold={0}
-              onRefresh={() => onRefresh("Regular-meeting")}
-              refreshing={refreshing}
-              keyExtractor={(item: PlaceFeedData) => item.id + ""}
-              // @ts-ignore
-              data={mainRegularData.pages?.map((page) => page.places).flat()}
-              renderItem={renderItem}
-            />
-          )}
-        </AnimationContainer>
-      </SafeAreaView>
+        )}
+        {thirdTap && (
+          <AnimWrapper
+            style={{
+              left: width * 2,
+              transform: [{ translateX: position }],
+              padding: 20,
+            }}
+            ListHeaderComponent={
+              <ListHeaderContainer>
+                <ListMainText>정기모임 👾</ListMainText>
+                <ListSubText>
+                  다른 팀의 정기모임 빈 자리가 올라와요:){"\n"}
+                  참여 해주시면, 운영진이 팀 단톡에 초대해드려요!
+                </ListSubText>
+              </ListHeaderContainer>
+            }
+            showsVerticalScrollIndicator={false}
+            onEndReached={loadMoreRegular}
+            onEndReachedThreshold={0.2}
+            onRefresh={() => onRefresh("Regular-meeting")}
+            refreshing={refreshing}
+            keyExtractor={(item: PlaceFeedData) => item.id + ""}
+            // @ts-ignore
+            data={mainRegularData.pages?.map((page) => page.places).flat()}
+            renderItem={renderItem}
+          />
+        )}
+      </AnimationContainer>
     </Container>
   );
 }
