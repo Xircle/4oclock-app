@@ -252,19 +252,23 @@ export interface GetPlaceParticipantListOutput extends CoreOutput {
   participants?: PlaceParticipantListData;
 }
 
+export interface IMessageRoom {
+  isMe: boolean;
+  isRead: boolean;
+  content: string;
+}
+
+export interface IReceiverRoom {
+  id: string;
+  profileImageUrl: string;
+  username: string;
+}
+
 // My Room
 export interface IRoom {
   id: string;
-  receiver: {
-    id: string;
-    profileImageUrl: string;
-    username: string;
-  };
-  lastMessage: {
-    isMe: boolean;
-    isRead: boolean;
-    content: string;
-  };
+  receiver: IReceiverRoom;
+  lastMessage: IMessageRoom;
   latestMessageAt: Date;
 }
 
