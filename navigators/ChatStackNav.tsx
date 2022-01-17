@@ -3,12 +3,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { RouteProp } from "@react-navigation/native";
 import ChatList from "../screens/Chat/ChatList";
 import ChatRoom from "../screens/Chat/ChatRoom";
-import { Ionicons } from '@expo/vector-icons';
-import { colors, fontFamilies } from '../styles/styles';
+import { Ionicons } from "@expo/vector-icons";
+import { colors, fontFamilies } from "../styles/styles";
 
 export type ChatStackParamList = {
   ChatList: undefined;
-  ChatRoom: { sender: string };
+  ChatRoom: { senderName: string; senderId: string; roomId: string };
 };
 
 const Stack = createStackNavigator<ChatStackParamList>();
@@ -39,8 +39,16 @@ export default function ChatStackNav(props: Props) {
         },
       }}
     >
-      <Stack.Screen name="ChatList" component={ChatList} options={{headerTitle: '채팅'}}></Stack.Screen>
-      <Stack.Screen name="ChatRoom" component={ChatRoom} options={{headerTitle: '채팅'}}></Stack.Screen>
+      <Stack.Screen
+        name="ChatList"
+        component={ChatList}
+        options={{ headerTitle: "채팅" }}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="ChatRoom"
+        component={ChatRoom}
+        options={{ headerTitle: "채팅" }}
+      ></Stack.Screen>
     </Stack.Navigator>
   );
 }
