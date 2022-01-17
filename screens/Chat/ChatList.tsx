@@ -33,6 +33,7 @@ export default function ChatList(props: Props) {
       keyExtractor={(item: IRoom) => item.id + ""}
       renderItem={({ item }) => (
         <ChatListFlatList
+          roomId={item.id}
           lastMessage={item.lastMessage}
           receiver={item.receiver}
           latestMessageAt={item.latestMessageAt}
