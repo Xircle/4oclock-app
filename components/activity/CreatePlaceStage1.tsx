@@ -88,8 +88,8 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
     activityDispatcher.dispatchActivityType(type, dispatch);
   };
   return (
-    <MyKeyboardAvoidingView>
-      <Container>
+    <Container>
+      <MyKeyboardAvoidingView keyboardVerticalOffset={100}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <MainHeading>모임을 열어볼까?</MainHeading>
           <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
@@ -318,8 +318,8 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
           </ExpandableV>
           <View style={{ height: 150 }} />
         </ScrollView>
-      </Container>
-    </MyKeyboardAvoidingView>
+      </MyKeyboardAvoidingView>
+    </Container>
   );
 }
 
