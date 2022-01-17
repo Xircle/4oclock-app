@@ -10,6 +10,7 @@ import { getRoomMessages } from "../../lib/api/getRoomMessages";
 import { Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import MyKeyboardAvoidingView from "../../components/UI/MyKeyboardAvoidingView";
+import ChatMessage from "../../components/chat/ChatMessage";
 
 interface Props {
   route: RouteProp<ChatStackParamList, "ChatRoom">;
@@ -60,10 +61,25 @@ export default function ChatRoom({ route }: Props) {
       setMessages((prev) => [...prev, ...fetchedMessagesData?.messages]);
     }
   }, [page, fetchedMessagesData, isFetching]);
+
   return (
     <Container edges={["bottom"]}>
       <MyKeyboardAvoidingView keyboardVerticalOffset={100}>
-        <MessageContainer></MessageContainer>
+        <MessageContainer
+          showsVerticalScrollIndicator={false}
+          inverted
+          data={messages}
+          keyExtractor={(item: IMessage) => item.sentAt}
+          renderItem={({ item }) => (
+            <ChatMessage
+              content={item.content}
+              isMe={item.isMe}
+              isRead={item.isRead}
+              sentAt={item.sentAt}
+            />
+          )}
+        />
+
         <InputContainer>
           <ChatInput />
           <SendButton>
@@ -77,15 +93,20 @@ export default function ChatRoom({ route }: Props) {
 
 const Container = styled.SafeAreaView`
   flex: 1;
+  background-color: ${colors.bgColor};
+`;
+
+const MessageWrapper = styled.View`
+  width: 100%;
 `;
 
 const SendButton = styled.TouchableOpacity`
   margin-left: 10px;
 `;
 
-const MessageContainer = styled.View`
+const MessageContainer = styled.FlatList`
   flex: 1;
-  background-color: red;
+  border: 1px solid red;
 `;
 
 const InputContainer = styled.View`
