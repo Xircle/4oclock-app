@@ -12,12 +12,14 @@ interface Props {
   lastMessage: IMessageRoom;
   receiver: IReceiverRoom;
   latestMessageAt: Date;
+  roomId: string;
 }
 
 export default function ChatListFlatList({
   lastMessage,
   receiver,
   latestMessageAt,
+  roomId,
 }: Props) {
   const navigation = useNavigation();
 
@@ -25,7 +27,11 @@ export default function ChatListFlatList({
     <TouchableWithoutFeedback
       onPress={() =>
         // @ts-ignore
-        navigation.navigate("ChatRoom", { sender: receiver.username })
+        navigation.navigate("ChatRoom", {
+          senderName: receiver.username,
+          senderId: receiver.id,
+          roomId: roomId,
+        })
       }
     >
       <Container>
