@@ -16,7 +16,7 @@ import { getUser } from "../lib/api/getUser";
 
 interface Props {}
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 export default function CreateActivityScreen(props: Props) {
   const [manualDisable, setManualDisable] = useState(false);
