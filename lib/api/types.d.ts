@@ -161,6 +161,7 @@ export interface UserData {
   drinkingStyle?: number;
   personality?: string;
   accountType?: string;
+  fk_user_id?: string;
 }
 
 export interface GetUserOutput extends CoreOutput {
