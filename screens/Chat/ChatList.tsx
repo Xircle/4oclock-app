@@ -5,26 +5,29 @@ import { useQuery } from "react-query";
 import { getMyRooms } from "../../lib/api/getMyRooms";
 import { GetMyRooms, IRoom } from "../../lib/api/types.d";
 import ChatListFlatList from "../../components/chat/ChatListFlatList";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {}
 
 export default function ChatList(props: Props) {
-  const { data: chatRoomData, isLoading } = useQuery<GetMyRooms | undefined>(
-    ["room"],
-    () => getMyRooms(),
-    {
-      retry: 1,
-      refetchOnWindowFocus: true,
-      refetchOnMount: true,
-      refetchOnReconnect: true,
-    }
-  );
+  const navigation = useNavigation();
+  const { data: chatRoomData, isLoading, refetch } = useQuery<
+    GetMyRooms | undefined
+  >(["room"], () => getMyRooms(), {
+    retry: 1,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+  });
 
   useEffect(() => {
-    if (chatRoomData) {
-      console.log(chatRoomData);
-    }
-  }, [chatRoomData]);
+    const unsubscribe = navigation.addListener("focus", (e) => {
+      // Do something
+      if (!isLoading) refetch();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <Container
