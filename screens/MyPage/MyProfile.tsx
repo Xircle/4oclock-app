@@ -48,7 +48,7 @@ export interface ProfileData {
   personality?: string;
 }
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 export default function MyProfile(props: Props) {
   const [loading, setLoading] = useState(false);
