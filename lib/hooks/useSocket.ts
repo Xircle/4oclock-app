@@ -26,7 +26,7 @@ export const useSocket = async (roomId: string): Promise<UseSocketOutput> => {
         authorization: `Bearer ${token || ""}`,
       },
     });
-    //console.log("create socket", roomId, existingSockets[roomId]);
+    // console.log("create socket", roomId, existingSockets[roomId]);
   }
 
   return [existingSockets[roomId], disconnect];
