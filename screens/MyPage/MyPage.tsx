@@ -25,15 +25,23 @@ interface Props {}
 const { width, height } = Dimensions.get("window");
 
 export default function MyPage(props: Props) {
-  const naviagtion = useNavigation();
+  const navigation = useNavigation();
 
-  const { data: userData } = useQuery<UserData | undefined>(
+  const { data: userData, isLoading, refetch } = useQuery<UserData | undefined>(
     ["userProfile"],
     () => getUser(),
     {
       retry: 1,
     }
   );
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", (e) => {
+      // Do something
+      if (!isLoading) refetch();
+    });
+    return unsubscribe;
+  }, []);
 
   return (
     <Wrapper>
@@ -47,7 +55,7 @@ export default function MyPage(props: Props) {
             {userData?.profileImageUrl && (
               <TouchableOpacity
                 /* @ts-ignore */
-                onPress={() => naviagtion.navigate("MyProfile")}
+                onPress={() => navigation.navigate("MyProfile")}
               >
                 <AvatarUri
                   size={width * 0.2}
@@ -66,14 +74,14 @@ export default function MyPage(props: Props) {
             </ProfileInnerContainer>
           </ProfileContainer>
           {/* @ts-ignore */}
-          <SXLButton onPress={() => naviagtion.navigate("MyProfile")}>
+          <SXLButton onPress={() => navigation.navigate("MyProfile")}>
             <SXLButtonText>프로필 수정하기</SXLButtonText>
           </SXLButton>
           <ListContainer>
             <ListButton>
               <RegisteredButton
                 // @ts-ignore
-                onPress={() => naviagtion.navigate("MyActivities")}
+                onPress={() => navigation.navigate("MyActivities")}
               >
                 <ListText style={{ fontFamily: fontFamilies.bold }}>
                   신청한 모임 {userData?.reservation_count}
@@ -98,7 +106,7 @@ export default function MyPage(props: Props) {
               onPress={() => {
                 Account.logout();
                 // @ts-ignore
-                naviagtion.navigate("Welcome");
+                navigation.navigate("Welcome");
               }}
             >
               <ListText>로그아웃</ListText>
