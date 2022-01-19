@@ -15,7 +15,7 @@ interface Props {
   enableChat?: boolean;
 }
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 export default function ProfileV({
   profileData,
