@@ -1,6 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { RouteProp } from "@react-navigation/native";
 import ChatList from "../screens/Chat/ChatList";
 import ChatRoom from "../screens/Chat/ChatRoom";
 import { Ionicons } from "@expo/vector-icons";
