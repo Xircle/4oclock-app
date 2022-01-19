@@ -26,7 +26,7 @@ interface Props {
   route: RouteProp<LoggedOutStackParamList, "SignIn">;
 }
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 export default function SignIn({ route }: Props) {
   const navigation = useNavigation();
