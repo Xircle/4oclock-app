@@ -24,7 +24,7 @@ export const createAccount = async (
   formData.append("location", state.location + "");
   formData.append("isMarketingAgree", state.agree4 + "");
   formData.append("MBTI", state.MBTI);
-  formData.append("personality", state.personality);
+    formData.append("personality", state.personality);
   formData.append("drinkingStyle", state.drinkingStyle + "");
   const { data } = await axiosclient.post<CreateAccountOutput>(
     `${BASE_URL}/auth/social/register/kakao`,

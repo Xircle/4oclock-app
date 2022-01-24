@@ -86,15 +86,6 @@ export const BigTextInput = styled.TextInput`
   font-family: ${fontFamilies.regular};
 `;
 
-export const ChatInput = styled(BigTextInput)`
-  width: 85%;
-  padding: 12px 10px;
-  border-radius: 0px;
-  border-width: 0px;
-  border-bottom-color: ${colors.black};
-  border-bottom-width: 1px;
-`;
-
 export const GreyLabel = styled.Text`
   color: ${colors.midGrey};
   font-size: 16px;

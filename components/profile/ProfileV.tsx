@@ -8,17 +8,17 @@ import { colors, fontFamilies, InfoBox, InfoText } from "../../styles/styles";
 import AvatarUri from "../UI/AvatarUri";
 
 interface Props {
-  profileData: UserProfile;
+  randomProfileData: UserProfile;
   onPressNext?: () => void;
   enableNext?: boolean;
   onPressChat?: () => void;
   enableChat?: boolean;
 }
 
-const { width } = Dimensions.get("window");
+const { width } = Dimensions.get("screen");
 
 export default function ProfileV({
-  profileData,
+  randomProfileData,
   onPressNext,
   onPressChat,
   enableChat,
@@ -38,23 +38,28 @@ export default function ProfileV({
         >
           <Container>
             <AvatarUri
-              source={profileData?.profileImageUrl}
+              source={randomProfileData?.profileImageUrl}
               size={width * 0.5}
             />
-            <BigBlackText>{profileData?.username}</BigBlackText>
-            <MidGreyText>{profileData?.job || ""}</MidGreyText>
+            <BigBlackText>{randomProfileData?.username}</BigBlackText>
+            <MidGreyText>{randomProfileData?.job || ""}</MidGreyText>
 
             <InnerContainer>
               <InnerContent>
-                <SmallBlackText>{profileData?.MBTI}</SmallBlackText>
-                <SmallBlackText>{profileData?.personality}</SmallBlackText>
+                <SmallBlackText>{randomProfileData?.MBTI}</SmallBlackText>
+                <SmallBlackText>
+                  {randomProfileData?.personality}
+                </SmallBlackText>
               </InnerContent>
-              <ShortBioText>{profileData?.shortBio}</ShortBioText>
+              <ShortBioText>{randomProfileData?.shortBio}</ShortBioText>
               <GraySubText>
-                {profileData?.university || "두근두근대"} /{" "}
-                {AgeNumberToString(profileData?.age) || "나잇살"} /{" "}
-                {profileData
-                  ? profileData.gender === "Male"
+                {randomProfileData?.location
+                  ? randomProfileData?.location
+                  : "대한민국 어딘가"}{" "}
+                / {randomProfileData?.university || "고연이대"} /{" "}
+                {AgeNumberToString(randomProfileData?.age) || "나잇살"} /{" "}
+                {randomProfileData
+                  ? randomProfileData.gender === "Male"
                     ? "남"
                     : "여"
                   : "남성역"}

@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import styled from "styled-components/native";
 import { MyPlaceData } from "../../lib/api/types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { getMyPlaces } from "../../lib/api/getMyPlaces";
 import { colors, Text } from "../../styles/styles";
 import { ScrollView } from "react-native-gesture-handler";
@@ -10,7 +10,7 @@ import FlatListPlace, { Purpose } from "../../components/main/FlatListPlace";
 interface Props {}
 
 export default function MyActivities(props: Props) {
-  const { data: myPlacesData, isLoading, refetch } = useQuery<MyPlaceData[]>(
+  const { data: myPlacesData, isLoading } = useQuery<MyPlaceData[]>(
     "myPlaces",
     () => getMyPlaces(),
     { retry: 1, refetchOnWindowFocus: false }
@@ -30,8 +30,6 @@ export default function MyActivities(props: Props) {
                 startDateFromNow={item.startDateFromNow}
                 description={item.description}
                 purpose={Purpose.mypage}
-                refetch={refetch}
-                isRefetch={true}
               />
             );
           })}

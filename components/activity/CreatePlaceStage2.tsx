@@ -17,7 +17,8 @@ import {
   MainHeading,
   SubHeading,
 } from "../../styles/styles";
-import { ActivityAction, ActivityState } from "../../lib/activity/ActivityReducer";
+import { CreateActivityOutput } from "../../lib/api/types";
+import { ActivityAction } from "../../lib/activity/ActivityReducer";
 import * as ImagePicker from "react-native-image-picker";
 import { activityDispatcher } from "../../lib/activity/ActivityDispatcher";
 import { Permission } from "../../lib/helpers/permission";
@@ -26,7 +27,7 @@ import FullScreenLoader from "../UI/FullScreenLoader";
 
 interface Props {
   onBackPressed: () => void;
-  state: ActivityState;
+  state: CreateActivityOutput;
   dispatch: React.Dispatch<ActivityAction>;
 }
 
@@ -44,6 +45,7 @@ export default function CreatePlaceStage2({
       Platform.OS === "ios"
         ? await Permission.askPhotoIos()
         : await Permission.askPhotoAndroid();
+    console.log(permission);
     if (permission === RESULTS.GRANTED) {
       const option: ImagePicker.ImageLibraryOptions = {
         mediaType: "photo",

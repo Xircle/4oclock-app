@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import "react-native-gesture-handler";
 import AppLoading from "expo-app-loading";

@@ -85,15 +85,6 @@ PODS:
   - KakaoSDKUser (2.4.1):
     - KakaoSDKAuth (= 2.4.1)
     - KakaoSDKCommon (= 2.4.1)
-  - libwebp (1.2.1):
-    - libwebp/demux (= 1.2.1)
-    - libwebp/mux (= 1.2.1)
-    - libwebp/webp (= 1.2.1)
-  - libwebp/demux (1.2.1):
-    - libwebp/webp
-  - libwebp/mux (1.2.1):
-    - libwebp/demux
-  - libwebp/webp (1.2.1)
   - Permission-PhotoLibrary (3.1.0):
     - RNPermissions
   - Permission-PhotoLibraryAddOnly (3.1.0):
@@ -365,10 +356,6 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.15.11):
     - React-Core
-  - RNFastImage (8.5.11):
-    - React-Core
-    - SDWebImage (~> 5.11.1)
-    - SDWebImageWebPCoder (~> 0.8.4)
   - RNGestureHandler (1.10.3):
     - React-Core
   - RNPermissions (3.1.0):
@@ -405,12 +392,6 @@ PODS:
   - RNScreens (3.8.0):
     - React-Core
     - React-RCTImage
-  - SDWebImage (5.11.1):
-    - SDWebImage/Core (= 5.11.1)
-  - SDWebImage/Core (5.11.1)
-  - SDWebImageWebPCoder (0.8.4):
-    - libwebp (~> 1.0)
-    - SDWebImage/Core (~> 5.10)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -466,7 +447,6 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
-  - RNFastImage (from `../node_modules/react-native-fast-image`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -486,9 +466,6 @@ SPEC REPOS:
     - KakaoSDKTalk
     - KakaoSDKTemplate
     - KakaoSDKUser
-    - libwebp
-    - SDWebImage
-    - SDWebImageWebPCoder
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -591,8 +568,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
-  RNFastImage:
-    :path: "../node_modules/react-native-fast-image"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNPermissions:
@@ -636,7 +611,6 @@ SPEC CHECKSUMS:
   KakaoSDKTalk: 749828662e4ac7a9f17bb1664b58526da289d18c
   KakaoSDKTemplate: 8bb288765bfc0195631da809b2d707f09495acdf
   KakaoSDKUser: 11955811d99d1ff1f1dfd5428afe69937e31ccef
-  libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   Permission-PhotoLibrary: 9dcf80d1353d81b9f1e210c34291591236aaf2b6
   Permission-PhotoLibraryAddOnly: 3d359683511129433080279c409b29e792d69c71
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
@@ -667,13 +641,10 @@ SPEC CHECKSUMS:
   ReactCommon: 8fea6422328e2fc093e25c9fac67adbcf0f04fb4
   RNAppleAuthentication: 63c2127ace11985b94f852fc480eb84145653712
   RNCAsyncStorage: eb05c0284dd6b50b32f92fad55e2a41e03358c43
-  RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNPermissions: 4b54095940aea8c03fa3e6c92d4ac3647b31ed4e
   RNReanimated: 024eff8202342abf4b24e11575a16afc441dabfe
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
-  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
 PODFILE CHECKSUM: 1ee095b8dd512d2e2bd3aea4e65fa166a57cf5dd

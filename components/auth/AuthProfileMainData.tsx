@@ -27,20 +27,14 @@ interface Props {
   dispatch: React.Dispatch<AuthAction>;
 }
 
-const { width } = Dimensions.get("window");
+const { width } = Dimensions.get("screen");
 
 export default function AuthProfileMainData({
   onNext,
   state,
   dispatch,
 }: Props) {
-  const univs: string[] = [
-    "고려대학교",
-    "연세대학교",
-    "이화여자대학교",
-    "성신여자대학교",
-    "다른학교입니다",
-  ];
+  const univs: string[] = ["고려대학교", "연세대학교", "이화여자대학교", '성신여자대학교', '다른학교입니다' ];
   const [nameError, SetNameError] = useState<boolean>(true);
   const [univError, SetUnivError] = useState<boolean>(true);
   const [ageError, SetAgeError] = useState<boolean>(true);
@@ -90,7 +84,11 @@ export default function AuthProfileMainData({
         }}
         width={width - 120}
         defaultButtonText="학교"
-        defaultValueByIndex={UniversityToIndex[state.university]}
+        defaultValueByIndex={
+          UniversityToIndex[
+            state.university
+          ]
+        }
       />
       {!nameError && univError && (
         <ErrorMessage>{authErrorMessage[1]}</ErrorMessage>
@@ -202,6 +200,9 @@ export default function AuthProfileMainData({
       <STextArea
         placeholder="ex. 미대에 다니는 다양한 삶을 살고 싶어하는 미개봉화석^^ 요즘 스타트업에 관심이 생겨서 관련하신 분들과 이야기하면 좋을 것 같아용ㅎㅎ"
         autoCapitalize="none"
+        blurOnSubmit={true}
+        returnKeyType="next"
+        returnKeyLabel="next"
         autoCorrect={false}
         defaultValue={state.bio ? state.bio : ""}
         multiline={true}
@@ -209,7 +210,7 @@ export default function AuthProfileMainData({
           const { eventCount, target, text } = event.nativeEvent;
           authDispatcher.dispatchBio(text, dispatch);
           SetBioError(
-            authValidation.validateBio(
+            authValidation.validateName(
               text,
               univError || ageError || genderError || bioError || titleError,
               dispatch

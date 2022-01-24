@@ -7,21 +7,14 @@ interface options {
 }
 export default function optimizeImage(
   url: string,
-  resizeOptions?: options,
-  isSmallAvatar?: boolean
+  resizeOptions?: options
 ): string {
-  if (url.startsWith("http:")) {
-    if (isSmallAvatar && url.endsWith("640.jpg")) {
-      return "https:" + url.slice(5, -11) + "110x110.jpg";
-    }
-    return "https:" + url.slice(5);
-  }
   if (!url) return "";
-  if (!url.startsWith(IMAGE_ORIGIN!)) return url;
-  if (url.endsWith(".svg")) return url;
+  if (!url.includes(IMAGE_ORIGIN!)) return url;
+  if (url.includes(".svg")) return url;
 
-  // Cloudfront
-  let replaced = CDN_IMAGE_DOMAIN + url.slice(IMAGE_ORIGIN.length);
+  let replaced = url.replace(IMAGE_ORIGIN!, CDN_IMAGE_DOMAIN!); // Cloudfront
+
   if (!resizeOptions) {
     return replaced;
   }

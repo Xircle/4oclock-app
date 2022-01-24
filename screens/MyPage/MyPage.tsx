@@ -20,12 +20,15 @@ import { useNavigation } from "@react-navigation/native";
 import { openLink } from "../../components/shared/Links";
 import { Account } from "../../lib/helpers/Account";
 
-interface Props {}
+interface Props {
+  isRefetch?: boolean;
+}
 
 const { width, height } = Dimensions.get("window");
 
-export default function MyPage(props: Props) {
-  const navigation = useNavigation();
+export default function MyPage({ isRefetch }: Props) {
+  const naviagtion = useNavigation();
+  const [result, setResult] = useState<string>("");
 
   const { data: userData, isLoading, refetch } = useQuery<UserData | undefined>(
     ["userProfile"],
@@ -34,13 +37,12 @@ export default function MyPage(props: Props) {
       retry: 1,
     }
   );
+  if (isRefetch) {
+    refetch();
+  }
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", (e) => {
-      // Do something
-      if (!isLoading) refetch();
-    });
-    return unsubscribe;
+    refetch();
   }, []);
 
   return (
@@ -55,7 +57,7 @@ export default function MyPage(props: Props) {
             {userData?.profileImageUrl && (
               <TouchableOpacity
                 /* @ts-ignore */
-                onPress={() => navigation.navigate("MyProfile")}
+                onPress={() => naviagtion.navigate("MyProfile")}
               >
                 <AvatarUri
                   size={width * 0.2}
@@ -74,14 +76,14 @@ export default function MyPage(props: Props) {
             </ProfileInnerContainer>
           </ProfileContainer>
           {/* @ts-ignore */}
-          <SXLButton onPress={() => navigation.navigate("MyProfile")}>
+          <SXLButton onPress={() => naviagtion.navigate("MyProfile")}>
             <SXLButtonText>프로필 수정하기</SXLButtonText>
           </SXLButton>
           <ListContainer>
             <ListButton>
               <RegisteredButton
                 // @ts-ignore
-                onPress={() => navigation.navigate("MyActivities")}
+                onPress={() => naviagtion.navigate("MyActivities")}
               >
                 <ListText style={{ fontFamily: fontFamilies.bold }}>
                   신청한 모임 {userData?.reservation_count}
@@ -106,7 +108,7 @@ export default function MyPage(props: Props) {
               onPress={() => {
                 Account.logout();
                 // @ts-ignore
-                navigation.navigate("Welcome");
+                naviagtion.navigate("Welcome");
               }}
             >
               <ListText>로그아웃</ListText>

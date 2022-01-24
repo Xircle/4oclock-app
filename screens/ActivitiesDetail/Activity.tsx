@@ -6,36 +6,29 @@ import optimizeImage from "../../lib/helpers/optimizeImage";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "react-query";
-import { Participants, PlaceData } from "../../lib/api/types.d";
+import { PlaceData } from "../../lib/api/types.d";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import Swiper from "react-native-swiper";
 import { LinearGradient } from "expo-linear-gradient";
-import {  getStartDateFromNow } from "../../lib/utils";
+import { CompareTimeReg, getStartDateFromNow } from "../../lib/utils";
 import MyBottomModal from "../../components/UI/MyBottomModal";
 import { openLink } from "../../components/shared/Links";
-import AvatarUri from "../../components/UI/AvatarUri";
-import FastImage from "react-native-fast-image";
+import MyModal from "../../components/UI/MyModal";
 
 interface Props {
   id: string;
   name: string;
   modal: boolean;
   setModal: () => void;
-  participants: Participants[];
 }
 
 const { width, height } = Dimensions.get("window");
 
-export default function Activity({
-  id,
-  name,
-  modal,
-  setModal,
-  participants,
-}: Props) {
+export default function Activity({ id, name, modal, setModal }: Props) {
   const navigation = useNavigation();
   const [Images, setImages] = useState([]);
+  const [alert, setAlert] = useState(undefined);
 
   // api
   const { data: activityData, isLoading } = useQuery<PlaceData | undefined>(
@@ -52,6 +45,15 @@ export default function Activity({
   );
 
   const onPressMain = () => {
+    if (
+      activityData.placeType === "Regular-meeting" &&
+      CompareTimeReg(activityData.startDateAt)
+    ) {
+      if (alert === undefined) {
+        setAlert(true);
+        return;
+      }
+    }
     // @ts-ignore
     navigation.navigate("Reservation", {
       detailAddress: activityData?.placeDetail.detailAddress,
@@ -59,7 +61,18 @@ export default function Activity({
       startDateFromNow: activityData?.startDateFromNow,
       startTime: activityData?.startDateAt,
       placeId: id,
-      placeType: activityData?.placeType,
+    });
+  };
+
+  const onPressAlert = () => {
+    setAlert(false);
+    // @ts-ignore
+    navigation.navigate("Reservation", {
+      detailAddress: activityData?.placeDetail.detailAddress,
+      participationFee: activityData?.placeDetail.participationFee,
+      startDateFromNow: activityData?.startDateFromNow,
+      startTime: activityData?.startDateAt,
+      placeId: id,
     });
   };
 
@@ -76,18 +89,23 @@ export default function Activity({
   }, [activityData]);
   return (
     <Container>
-      <MyBottomModal
-        onClose={() => {}}
-        visible={modal}
-        setModal={setModal}
-        height={280}
-      >
-        <ModalReportButton onPress={reportCTA}>
-          <ModalButtonText>작성자 차단하기</ModalButtonText>
-        </ModalReportButton>
-        <ModalReportButton onPress={reportCTA}>
-          <ModalButtonText>작성자 신고하기</ModalButtonText>
-        </ModalReportButton>
+      <MyModal visible={alert === true} onClose={() => setAlert(false)}>
+        <AlertWrapper>
+          <AlertHeading>현재는 해당 팀 크루원들만 참여가능합니다.</AlertHeading>
+          <CenterView>
+            <AlertInfoText>
+              다른 팀 크루원들은 모임 일{"\n"}하루 전부터 참여가능!
+            </AlertInfoText>
+          </CenterView>
+
+          <CenterView>
+            <AlertCTAButton onPress={onPressAlert}>
+              <AlertCTAButtonText>해당 팀원입니다</AlertCTAButtonText>
+            </AlertCTAButton>
+          </CenterView>
+        </AlertWrapper>
+      </MyModal>
+      <MyBottomModal onClose={() => {}} visible={modal} setModal={setModal}>
         <ModalReportButton onPress={reportCTA}>
           <ModalButtonText>게시글 신고하기</ModalButtonText>
         </ModalReportButton>
@@ -143,8 +161,19 @@ export default function Activity({
                           source={{
                             uri: optimizeImage(imageUrl, {
                               width: width,
-                              height: 100,
+                              height: height,
                             }),
+                          }}
+                        />
+                        <LinearGradient
+                          // Background Linear Gradient
+                          colors={["transparent", colors.black]}
+                          style={{
+                            position: "absolute",
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
                           }}
                         />
                       </ActivityImageContainer>
@@ -175,6 +204,7 @@ export default function Activity({
 
         <InnerWrapper>
           <InnerHeading>{name}</InnerHeading>
+          <Title>{activityData?.oneLineIntroText}</Title>
           <Description>{activityData?.placeDetail?.description}</Description>
         </InnerWrapper>
         <InnerWrapper upperDividor={true}>
@@ -186,30 +216,11 @@ export default function Activity({
             명
           </InnerHeadingBlue>
           <UsernameContainer>
-            {participants?.map((item, index) => {
-              if (item.profileImgUrl) {
-                return (
-                  <AvatarWrapper key={item.userId}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        //@ts-ignore
-                        navigation.navigate("FriendProfile", {
-                          id: item.userId,
-                        })
-                      }
-                    >
-                      <AvatarUri
-                        source={item.profileImgUrl}
-                        size={45}
-                        isSmall
-                      />
-                    </TouchableOpacity>
-                  </AvatarWrapper>
-                );
-              } else {
-                null;
-              }
-            })}
+            {activityData?.participantsData.participantsUsername?.map(
+              (item, index) => (
+                <InnerSubText key={index}>{item}</InnerSubText>
+              )
+            )}
           </UsernameContainer>
         </InnerWrapper>
         <InnerWrapper upperDividor={true}>
@@ -240,7 +251,8 @@ export default function Activity({
                 color={colors.midGrey}
               />
               <InnerSubText>
-                최대 {activityData?.placeDetail.maxParticipantsNumber} 명
+                최대 {activityData?.placeDetail.maxParticipantsNumber} 명(호스트
+                포함)
               </InnerSubText>
             </InfoWrapper>
             <InfoWrapper>
@@ -273,11 +285,46 @@ export default function Activity({
   );
 }
 
-const AvatarWrapper = styled.View`
-  margin-right: 4px;
-  margin-bottom: 4px;
+const AlertWrapper = styled.View`
+  flex: 1;
 `;
 
+const AlertHeading = styled(GeneralText)`
+  font-size: 23px;
+  line-height: 40px;
+  padding: 0px 15px;
+  text-align: center;
+  margin-top: 10px;
+`;
+
+const AlertInfoText = styled(GeneralText)`
+  color: ${colors.lightBlack};
+  font-size: 14px;
+  line-height: 26px;
+  margin-top: 22px;
+  text-align: center;
+`;
+
+const CenterView = styled.View`
+  justify-content: center;
+  align-items: center;
+`;
+
+const AlertCTAButton = styled.TouchableOpacity`
+  width: 200px;
+  height: 70px;
+  background-color: ${colors.mainBlue};
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+`;
+
+const AlertCTAButtonText = styled(GeneralText)`
+  font-size: 20px;
+  color: ${colors.bgColor};
+  font-family: ${fontFamilies.bold};
+`;
 
 const ModalButton = styled.TouchableOpacity`
   width: 90%;
@@ -287,7 +334,6 @@ const ModalButton = styled.TouchableOpacity`
   justify-content: center;
 `;
 
-
 const ModalButtonText = styled(GeneralText)`
   font-size: 22px;
   color: ${colors.bgColor};
@@ -296,12 +342,10 @@ const ModalButtonText = styled(GeneralText)`
 
 const ModalCloseButton = styled(ModalButton)`
   background-color: ${colors.bareGrey};
-  height: 50px;
 `;
 
 const ModalReportButton = styled(ModalButton)`
   background-color: ${colors.warningRed};
-  height: 50px;
 `;
 
 const Container = styled.View`
@@ -315,7 +359,7 @@ const ActivityImageContainer = styled.View`
   height: 100%;
 `;
 
-const ActivityImage = styled(FastImage)`
+const ActivityImage = styled.Image`
   width: 100%;
   height: 100%;
 `;
@@ -353,11 +397,10 @@ const Title = styled(GeneralText)`
 `;
 
 const Description = styled(GeneralText)`
-  margin-top: 18px;
+  margin-top: 11px;
   font-size: 13px;
   font-family: ${fontFamilies.light};
   color: ${colors.midGrey};
-  line-height: 21px;
 `;
 
 const UsernameContainer = styled.View`

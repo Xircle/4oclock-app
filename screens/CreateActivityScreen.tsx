@@ -8,15 +8,13 @@ import CreatePlaceStage1 from "../components/activity/CreatePlaceStage1";
 import CreatePlaceStage2 from "../components/activity/CreatePlaceStage2";
 import CreatePlaceStage3 from "../components/activity/CreatePlaceStage3";
 import { createPlace } from "../lib/api/createPlace";
-import { CreateActivityOutput, UserData } from "../lib/api/types.d";
+import { CreateActivityOutput } from "../lib/api/types.d";
 import { activityDispatcher } from "../lib/activity/ActivityDispatcher";
 import FullScreenLoader from "../components/UI/FullScreenLoader";
-import { useQuery } from "react-query";
-import { getUser } from "../lib/api/getUser";
 
 interface Props {}
 
-const { width } = Dimensions.get("window");
+const { width } = Dimensions.get("screen");
 
 export default function CreateActivityScreen(props: Props) {
   const [manualDisable, setManualDisable] = useState(false);
@@ -27,14 +25,6 @@ export default function CreateActivityScreen(props: Props) {
   const [state, dispatch] = useReducer(reducer, activityInitialState);
   // values
   const position = useRef(new Animated.Value(0)).current;
-
-  const { data: userData } = useQuery<UserData | undefined>(
-    ["userProfile"],
-    () => getUser(),
-    {
-      retry: 1,
-    }
-  );
 
   // animations
   const animateByStage = (step: number, position: Animated.Value) =>
@@ -71,7 +61,7 @@ export default function CreateActivityScreen(props: Props) {
     if (stage === 0) {
       return !state.stage1Valid || manualDisable;
     } else if (stage === 1) {
-      return !state.coverImage || manualDisable;
+      return !state.coverImage || state.subImages.length < 2 || manualDisable;
     }
   };
 
@@ -90,11 +80,7 @@ export default function CreateActivityScreen(props: Props) {
             transform: [{ translateX: position }],
           }}
         >
-          <CreatePlaceStage1
-            state={state}
-            dispatch={dispatch}
-            admin={userData?.accountType === "Admin"}
-          />
+          <CreatePlaceStage1 state={state} dispatch={dispatch} />
         </AnimationWrapper>
         <AnimationWrapper
           style={{

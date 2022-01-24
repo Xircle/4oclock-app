@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Main from "../screens/Main";
-import FriendProfile from "../screens/FriendProfile";
+import RandomProfile from "../screens/RandomProfile";
 import Chat from "../screens/Chat";
 import MyPage from "../screens/MyPage/MyPage";
 import TabIcon from "../components/nav/TabIcon";
@@ -10,15 +10,11 @@ import CreateActivityScreen from "../screens/CreateActivityScreen";
 import TabMiddleAdd from "../components/nav/TabMiddleAdd";
 import TabSide from "../components/nav/TabSide";
 import CreateActivityStackNav from "./CreateActivityStackNav";
-import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 interface Props {}
 
 const Tabs = createBottomTabNavigator();
 export default function MainTabsNav(props: Props) {
-  const navigation = useNavigation();
   return (
     <Tabs.Navigator
       screenOptions={{
@@ -39,21 +35,7 @@ export default function MainTabsNav(props: Props) {
         component={Main}
         options={{
           title: "메인",
-          headerShown: true,
-          headerTitle: "채팅 테스트",
-          headerRight: () => (
-            <TouchableOpacity
-              style={{ marginRight: 8 }}
-              // @ts-ignore
-              onPress={() => navigation.navigate("ChatStackNav")}
-            >
-              <Ionicons
-                name="chatbubble-ellipses-outline"
-                size={30}
-                color={colors.lightBlack}
-              />
-            </TouchableOpacity>
-          ),
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             <TabSide
               focused={focused}
@@ -72,6 +54,9 @@ export default function MainTabsNav(props: Props) {
           tabBarIcon: ({ focused, color, size }) => (
             <TabMiddleAdd focused={focused} />
           ),
+          // delete below
+          // headerShown: false,
+          // tabBarStyle: { display: "none" },
         }}
       />
       {/* <Tabs.Screen

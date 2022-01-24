@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Animated,
@@ -14,18 +14,11 @@ interface Props {
   height: number;
   title: string;
   error?: Boolean | undefined;
-  refreshCount?: number;
 }
 
 const { width } = Dimensions.get("window");
 
-export default function ExpandableV({
-  children,
-  height,
-  title,
-  error,
-  refreshCount,
-}: Props) {
+export default function ExpandableV({ children, height, title, error }: Props) {
   // values
   const [expandableState, setExpandableState] = useState(0);
   const expandableAnim = useRef(new Animated.Value(0)).current;
@@ -47,10 +40,6 @@ export default function ExpandableV({
     }).start();
     setExpandableState((prev) => prev + 1);
   };
-
-  useEffect(() => {
-    expandableAnim.setValue(0);
-  }, [refreshCount]);
   return (
     <Container>
       <TouchableWithoutFeedback onPress={expandTime}>
