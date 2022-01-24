@@ -25,7 +25,7 @@ interface Props {
   dispatch: React.Dispatch<AuthAction>;
 }
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 export default function AuthProfileSubData({ onNext, state, dispatch }: Props) {
   return (

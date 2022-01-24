@@ -66,7 +66,6 @@ export default function Welcome(props: Props) {
   const signInWithKakao = async (): Promise<void> => {
     try {
       const token: KakaoOAuthToken = await login();
-      console.log(token);
       getMyKakaoProfile();
     } catch (e) {
       setLoginError(true);
@@ -81,7 +80,9 @@ export default function Welcome(props: Props) {
         `${BASE_URL}/auth/social/redirect/kakao?email=${profile.email}`
       );
       if (res.data.code === 200) {
+        await storage.setItem("uid", res.data.data.uid);
         setToken(res.data.data.token);
+        await storage.setItem("uid", res.data.data.uid);
       } else if (res.data.code === 401) {
         // @ts-ignore
         navigation.navigate("SignIn", {
@@ -104,7 +105,9 @@ export default function Welcome(props: Props) {
         `${BASE_URL}/auth/social/redirect/kakao?email=${email}`
       );
       if (res.data.code === 200) {
+        await storage.setItem("uid", res.data.data.uid);
         setToken(res.data.data.token);
+        await storage.setItem("uid", res.data.data.uid);
       } else if (res.data.code === 401) {
         // @ts-ignore
         navigation.navigate("SignIn", {
@@ -172,9 +175,10 @@ export default function Welcome(props: Props) {
         const axiosclient = await AxiosClient();
 
         const res = await axiosclient.get<SocialRedirectResponse>(
-          `${BASE_URL}/auth/social/redirect/kakao?email=dja12356@gmail.com`
+          `${BASE_URL}/auth/social/redirect/kakao?email=she_lock@naver.com`
         );
         if (res.data.code === 200) {
+          await storage.setItem("uid", res.data.data.uid);
           setToken(res.data.data.token);
         } else {
           Alert.alert("존재하지 않는 이메일입니다");

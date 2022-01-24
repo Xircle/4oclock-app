@@ -1,0 +1,70 @@
+{
+  "coverImage": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-fb5fc0b3-f936-44ed-a75a-8f2f90c3763a-1642336732019-rn_image_picker_lib_temp_3f717948-a74e-428f-8e20-a5b4b3ff5fec.jpg",
+  "createdAt": "2022-01-16T03:38:52.120Z",
+  "id": "2d23dd3f-7260-4836-86d9-49a62ed5d235",
+  "isClosed": true,
+  "isParticipating": false,
+  "kakaoPlaceId": "26902347",
+  "location": "전체",
+  "name": "춘자ㄱㄱ",
+  "oneLineIntroText": "",
+  "participants": [
+    {
+      "age": 21,
+      "gender": "Male",
+      "isYkClub": true,
+      "job": "댕댕이 집사",
+      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-fb5fc0b3-f936-44ed-a75a-8f2f90c3763a-1633782796317-1633782659188.jpg",
+      "shortBio": "강아지🐶나 고양이🐱 사진 보여주면 경계심 완전 풀어요. 세상에 나쁜 집사는 없다",
+      "userId": "fb5fc0b3-f936-44ed-a75a-8f2f90c3763a"
+    },
+    {
+      "age": 24,
+      "gender": "Male",
+      "isYkClub": true,
+      "job": "대학생",
+      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-5c0ce336-55ab-4d78-806a-fbfec0d4b390-1642172397154-rn_image_picker_lib_temp_3269524a-a9ba-46c2-aac7-76308d545d7b.jpg",
+      "shortBio": "맛집 탐방에 진심인 사람입니다~~! 술도 즐기고 사람만나는거 좋아해요 같이 즐겁게 대화해요!!",
+      "userId": "5c0ce336-55ab-4d78-806a-fbfec0d4b390"
+    },
+    {
+      "age": 23,
+      "gender": "Female",
+      "isYkClub": true,
+      "job": "노는게제일좋아",
+      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-0-1641808548179-19215BCC-3019-49CA-A1E9-1E8CC4DAB243.jpg",
+      "shortBio": "미개봉중고",
+      "userId": "7ff8720b-626b-40be-af3a-661a97e3661f"
+    },
+    {
+      "age": 23,
+      "gender": "Female",
+      "isYkClub": true,
+      "job": ".",
+      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-0-1642335070840-BD8AE1BE-04D5-41B4-AE2D-C6E94BB095D8.jpg",
+      "shortBio": "안녕하세요 !",
+      "userId": "444e0c87-e4cd-4977-a7d7-d0dc6b18d1e4"
+    }
+  ],
+  "participantsData": { "leftParticipantsCount": 3, "participantsCount": 4 },
+  "placeDetail": {
+    "categories": null,
+    "createdAt": "2022-01-16T03:38:52.120Z",
+    "description": "적셔적셔~먹고죽어~",
+    "detailAddress": "서울 성북구 안암동5가 104-127",
+    "detailLink": "",
+    "id": "f5625abb-81fa-4929-a6c3-8a8bb14a28e1",
+    "maxParticipantsNumber": 7,
+    "participationFee": 0,
+    "place_id": "2d23dd3f-7260-4836-86d9-49a62ed5d235",
+    "title": null,
+    "updatedAt": "2022-01-16T03:38:52.120Z"
+  },
+  "placeType": "Lightning",
+  "recommendation": null,
+  "startDateAt": "2022-01-23T08:00:00.000Z",
+  "startDateFromNow": "이번주 일요일 17",
+  "subImages": [],
+  "updatedAt": "2022-01-16T21:21:32.897Z",
+  "views": 163
+}

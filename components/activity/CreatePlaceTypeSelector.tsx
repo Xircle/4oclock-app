@@ -10,7 +10,7 @@ interface Props {
 
 const { width } = Dimensions.get("window");
 
-const types = ["정기", "번개", "이벤트"];
+const types = [ "번개", "이벤트", '정기'];
 
 export default function CreatePlaceTypeSelector({
   onPress,

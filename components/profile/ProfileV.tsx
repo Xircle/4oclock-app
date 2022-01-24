@@ -8,17 +8,17 @@ import { colors, fontFamilies, InfoBox, InfoText } from "../../styles/styles";
 import AvatarUri from "../UI/AvatarUri";
 
 interface Props {
-  randomProfileData: UserProfile;
+  profileData: UserProfile;
   onPressNext?: () => void;
   enableNext?: boolean;
   onPressChat?: () => void;
   enableChat?: boolean;
 }
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 export default function ProfileV({
-  randomProfileData,
+  profileData,
   onPressNext,
   onPressChat,
   enableChat,
@@ -38,28 +38,23 @@ export default function ProfileV({
         >
           <Container>
             <AvatarUri
-              source={randomProfileData?.profileImageUrl}
+              source={profileData?.profileImageUrl}
               size={width * 0.5}
             />
-            <BigBlackText>{randomProfileData?.username}</BigBlackText>
-            <MidGreyText>{randomProfileData?.job || ""}</MidGreyText>
+            <BigBlackText>{profileData?.username}</BigBlackText>
+            <MidGreyText>{profileData?.job || ""}</MidGreyText>
 
             <InnerContainer>
               <InnerContent>
-                <SmallBlackText>{randomProfileData?.MBTI}</SmallBlackText>
-                <SmallBlackText>
-                  {randomProfileData?.personality}
-                </SmallBlackText>
+                <SmallBlackText>{profileData?.MBTI}</SmallBlackText>
+                <SmallBlackText>{profileData?.personality}</SmallBlackText>
               </InnerContent>
-              <ShortBioText>{randomProfileData?.shortBio}</ShortBioText>
+              <ShortBioText>{profileData?.shortBio}</ShortBioText>
               <GraySubText>
-                {randomProfileData?.location
-                  ? randomProfileData?.location
-                  : "대한민국 어딘가"}{" "}
-                / {randomProfileData?.university || "고연이대"} /{" "}
-                {AgeNumberToString(randomProfileData?.age) || "나잇살"} /{" "}
-                {randomProfileData
-                  ? randomProfileData.gender === "Male"
+                {profileData?.university || "두근두근대"} /{" "}
+                {AgeNumberToString(profileData?.age) || "나잇살"} /{" "}
+                {profileData
+                  ? profileData.gender === "Male"
                     ? "남"
                     : "여"
                   : "남성역"}

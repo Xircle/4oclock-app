@@ -24,7 +24,7 @@ export interface ActivityState extends CreateActivityOutput {
 
 export const activityInitialState: ActivityState = {
   name: "",
-  maxParticipantsNumber: 5,
+  maxParticipantsNumber: 4,
   description: "",
   detailAddress: "",
   coverImage: undefined,
@@ -34,7 +34,7 @@ export const activityInitialState: ActivityState = {
   stage1Valid: false,
   isFinished: false,
   placeId: "0",
-  activityType: "정기",
+  activityType: "번개",
 };
 
 export function reducer(

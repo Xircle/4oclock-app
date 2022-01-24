@@ -21,6 +21,7 @@ export type ActivityStackParamList = {
     participationFee: number;
     startTime: number;
     placeId: string;
+    placeType: string;
   };
   ReservationConfirm: {
     startDateFromNow: string;
@@ -28,6 +29,7 @@ export type ActivityStackParamList = {
     participationFee: number;
     startTime: number;
     isVaccinated: boolean;
+    placeType: string;
   };
 };
 
@@ -81,6 +83,7 @@ export default function ActivityStackNav({ route }: Props) {
           <Activity
             id={route.params.id}
             name={route.params.name}
+            participants={route.params.participants}
             modal={expandable}
             setModal={() => setExpandable(!expandable)}
           />

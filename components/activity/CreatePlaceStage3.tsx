@@ -11,17 +11,24 @@ import {
 import { CreateActivityOutput } from "../../lib/api/types";
 import { Ionicons } from "@expo/vector-icons";
 import { convertTimeCA } from "../../lib/utils";
+import { ActivityState } from "../../lib/activity/ActivityReducer";
 
 interface Props {
   cleanUp: () => void;
-  state: CreateActivityOutput;
+  state: ActivityState;
 }
 
 export default function CreatePlaceStage3({ cleanUp, state }: Props) {
   return (
     <Container>
       <MainHeading> 🎉성공적으로 열렸어 🎉 </MainHeading>
-      <CongratSubText>⭐생성한 모임에 관한 자세한 내용⭐</CongratSubText>
+      <CongratMainText>⭐생성한 모임에 관한 자세한 내용⭐</CongratMainText>
+      {state.activityType === "번개" ? (
+        <CongratSubText>
+          번개 개설 후 운영진에게 말씀해주시면{"\n"}전체 단톡에 올려드려요--!
+          {"\n"}더 많은 친구들이 참여할 수 있어요 {"><"}
+        </CongratSubText>
+      ) : null}
       <DetailContainer>
         <DetailWrapper>
           <Ionicons name="alarm-outline" size={32} color={colors.midGrey} />
@@ -43,10 +50,18 @@ export default function CreatePlaceStage3({ cleanUp, state }: Props) {
   );
 }
 
-const CongratSubText = styled(GeneralText)`
+const CongratMainText = styled(GeneralText)`
   color: ${colors.mainBlue};
   font-family: ${fontFamilies.medium};
-  margin-top: 12px;
+  margin-top: 50px;
+`;
+
+const CongratSubText = styled(GeneralText)`
+  color: ${colors.midGrey};
+  font-family: ${fontFamilies.medium};
+  margin-top: 18px;
+  width: 70%;
+  line-height: 26px;
 `;
 
 const Container = styled.View`

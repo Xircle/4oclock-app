@@ -8,7 +8,7 @@ export const authErrorMessage: string[] = [
 ];
 
 export const createPlaceErrorMessage: string[] = [
-  "3자 이상 12자 이하의 모임 제목을 입력해주세요",
+  "3자 이상 20자 이하의 모임 제목을 입력해주세요",
   "500자 이하의 모임 소개글을 입력해주세요",
   "만남 시간을 설정해주세요 (현재로부터 30분 이후)",
   "만남 장소를 설정해주세요",

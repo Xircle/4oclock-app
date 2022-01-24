@@ -48,7 +48,7 @@ export interface ProfileData {
   personality?: string;
 }
 
-const { width } = Dimensions.get("screen");
+const { width } = Dimensions.get("window");
 
 export default function MyProfile(props: Props) {
   const [loading, setLoading] = useState(false);
@@ -141,13 +141,11 @@ export default function MyProfile(props: Props) {
       Platform.OS === "ios"
         ? await Permission.askPhotoIos()
         : await Permission.askPhotoAndroid();
-    console.log(permission);
     if (permission === RESULTS.GRANTED) {
       const option: ImagePicker.ImageLibraryOptions = {
         mediaType: "photo",
       };
       const result = await ImagePicker.launchImageLibrary(option);
-      //console.log(result);
       if (result.errorMessage) {
         Alert.alert(result.errorMessage);
       } else if (!result.didCancel && result?.assets?.[0].uri) {

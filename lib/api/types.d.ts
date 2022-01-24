@@ -33,11 +33,6 @@ enum Gender {
 export interface Participants {
   userId: string;
   profileImgUrl: string;
-  gender: Gender;
-  age: number;
-  job: string;
-  shortBio: string;
-  isYkClub: boolean;
 }
 export interface PlaceFeedData {
   id: string;
@@ -50,7 +45,6 @@ export interface PlaceFeedData {
   isLightning: boolean;
   participantsCount: number;
   startDateFromNow: string;
-  // participants: Participants[];
   isParticipating: boolean;
   deadline: string;
   views: number;
@@ -59,6 +53,7 @@ export interface PlaceFeedData {
     detailAddress: string;
   };
   leftParticipantsCount: number;
+  participants: Participants[];
 }
 
 export interface ParticipantsListData extends Participants {}
@@ -166,6 +161,7 @@ export interface UserData {
   drinkingStyle?: number;
   personality?: string;
   accountType?: string;
+  fk_user_id?: string;
 }
 
 export interface GetUserOutput extends CoreOutput {
@@ -257,19 +253,23 @@ export interface GetPlaceParticipantListOutput extends CoreOutput {
   participants?: PlaceParticipantListData;
 }
 
+export interface IMessageRoom {
+  isMe: boolean;
+  isRead: boolean;
+  content: string;
+}
+
+export interface IReceiverRoom {
+  id: string;
+  profileImageUrl: string;
+  username: string;
+}
+
 // My Room
 export interface IRoom {
   id: string;
-  receiver: {
-    id: string;
-    profileImageUrl: string;
-    username: string;
-  };
-  lastMessage: {
-    isMe: boolean;
-    isRead: boolean;
-    content: string;
-  };
+  receiver: IReceiverRoom;
+  lastMessage: IMessageRoom;
   latestMessageAt: Date;
 }
 
@@ -302,3 +302,5 @@ export interface SendMessageInput {
 export interface GetReviewsOutput extends CoreOutput {
   reviews: Review[];
 }
+
+export interface ParticipantsInfo {}

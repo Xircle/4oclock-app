@@ -34,7 +34,27 @@ export const getPlacesRegular = async ({
   const token = await storage.getItem("token");
   if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
-    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=10&placeType=Regular-meeting`,
+    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Regular-meeting`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (!data.ok) {
+    throw new Error(data.error);
+  }
+  return data;
+};
+
+export const getPlacesAll = async ({
+  pageParam,
+}): Promise<GetPlacesByLocationOutput | undefined> => {
+  const axiosclient = await AxiosClient();
+  const token = await storage.getItem("token");
+  if (!token) return;
+  const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
+    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=All`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -54,7 +74,7 @@ export const getPlacesEvent = async ({
   const token = await storage.getItem("token");
   if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
-    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=10&placeType=Event`,
+    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Event`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -74,7 +94,7 @@ export const getPlacesLightning = async ({
   const token = await storage.getItem("token");
   if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
-    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=10&placeType=Lightning`,
+    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Lightning`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

@@ -27,13 +27,15 @@ import LocationVRow from "./locationV/LocationVRow";
 import SelectedLocation from "./locationV/SelectedLocation";
 import MyKeyboardAvoidingView from "../UI/MyKeyboardAvoidingView";
 import CreatePlaceTypeSelector from "./CreatePlaceTypeSelector";
+import storage from "../../lib/helpers/myAsyncStorage";
 
 interface Props {
   state: ActivityState;
   dispatch: React.Dispatch<ActivityAction>;
+  admin?: boolean;
 }
 
-export default function CreatePlaceStage1({ state, dispatch }: Props) {
+export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
   const [nameError, setNameError] = useState(undefined);
   const [descriptionError, setDescriptionError] = useState(undefined);
   const [dateError, setDateError] = useState(undefined);
@@ -43,6 +45,7 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
   const [open, setOpen] = useState(false);
   const [searchResult, setSearchResult] = useState<kakaoLocalData[]>(undefined);
   const [placeSearch, setPlaceSearch] = useState("");
+  const [refreshCount, setRefreshCount] = useState(0);
 
   // refactor on V2
   const [placeName, setPlaceName] = useState("");
@@ -61,21 +64,21 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
 
   useEffect(() => {
     if (state.isFinished) {
-      // unmount
-      console.log("clean up");
+      setRefreshCount((prev) => prev + 1);
       dispatch({ type: "setIsFinished", payload: false });
       setNameError(undefined);
       setDescriptionError(undefined);
       setDateError(undefined);
       setAddressError(undefined);
       setFeeError(undefined);
+      setSearchResult(undefined);
+      setPlaceName("");
     }
   }, [state.isFinished]);
 
   const CTAPlace = (addressName: string, placeName: string, id: string) => {
     setPlaceName(placeName);
     setPlaceAddress(addressName);
-    console.log(addressName + id);
     activityDispatcher.dispatchDetailAddress(addressName, id, dispatch);
     setPlaceSearch("");
     setAddressError(false);
@@ -85,24 +88,27 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
     activityDispatcher.dispatchActivityType(type, dispatch);
   };
   return (
-    <MyKeyboardAvoidingView>
-      <Container>
+    <Container>
+      <MyKeyboardAvoidingView keyboardVerticalOffset={100}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <MainHeading>모임을 열어볼까?</MainHeading>
           <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
             재밌는 모임을 열어볼까? 열고 친구들과{"\n"}꿀잼모임😊
           </SubHeading>
+          {admin && (
+            <InnerContainer style={{ paddingBottom: 5 }}>
+              <CreatePlaceTypeSelector
+                onPress={setActivityType}
+                selectedType={state.activityType}
+              />
+            </InnerContainer>
+          )}
 
-          <InnerContainer style={{ paddingBottom: 5 }}>
-            <CreatePlaceTypeSelector
-              onPress={setActivityType}
-              selectedType={state.activityType}
-            />
-          </InnerContainer>
           <ExpandableV
             title="만들고 싶은 모임 주제를 적어봐! (제목)"
             height={120}
             error={nameError}
+            refreshCount={refreshCount}
           >
             <InnerContainer>
               <SBigTextInput
@@ -130,12 +136,12 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
             title="어떤 활동을 하는 모임이야?(설명)"
             height={150}
             error={descriptionError}
+            refreshCount={refreshCount}
           >
             <InnerContainer style={[{ paddingTop: 15 }, { paddingBottom: 15 }]}>
               <STextArea
                 placeholder="모임에 대한 설명을 입력해줘! 함께하고 싶은 주제나 내용을 입력하면 좋아"
                 autoCapitalize="none"
-                blurOnSubmit={true}
                 returnKeyType="next"
                 returnKeyLabel="next"
                 autoCorrect={false}
@@ -155,7 +161,12 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               ) : null}
             </InnerContainer>
           </ExpandableV>
-          <ExpandableV title="만남날짜/시간" height={80} error={dateError}>
+          <ExpandableV
+            title="만남날짜/시간"
+            height={80}
+            error={dateError}
+            refreshCount={refreshCount}
+          >
             <InnerContainer>
               <PickerContainer onPress={() => setOpen(true)}>
                 <WhiteText>시간 선택하기</WhiteText>
@@ -182,13 +193,19 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               )}
             </InnerContainer>
           </ExpandableV>
-          <ExpandableV title="만남위치" height={250} error={addressError}>
+          <ExpandableV
+            title="만남위치"
+            height={250}
+            error={addressError}
+            refreshCount={refreshCount}
+          >
             <InnerContainer style={{ justifyContent: "flex-start" }}>
               {addressError ? (
                 <SErrorMessage>{createPlaceErrorMessage[3]}</SErrorMessage>
               ) : null}
-              <SelectedLocation placeName={placeName} address={placeAddress} />
+
               <SBigTextInput
+                style={{ marginTop: 5 }}
                 placeholder="만남 장소를 입력해주세요"
                 autoCapitalize="none"
                 blurOnSubmit={true}
@@ -204,6 +221,12 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
                 }}
                 error={addressError}
               />
+              {placeName ? (
+                <SelectedLocation
+                  placeName={placeName}
+                  address={placeAddress}
+                />
+              ) : null}
               <SearchListContainer showsVerticalScrollIndicator={false}>
                 {searchResult?.map((item, index) => {
                   return (
@@ -222,7 +245,11 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               </SearchListContainer>
             </InnerContainer>
           </ExpandableV>
-          <ExpandableV title="최대 참가인원" height={100}>
+          <ExpandableV
+            title="최대 참가인원"
+            height={100}
+            refreshCount={refreshCount}
+          >
             <InnerContainer>
               <MaxParticipantsContainer>
                 <MaxPrticipantsButton
@@ -257,7 +284,12 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
               </MaxParticipantsContainer>
             </InnerContainer>
           </ExpandableV>
-          <ExpandableV title="참가비" height={80} error={feeError}>
+          <ExpandableV
+            title="참가비"
+            height={80}
+            error={feeError}
+            refreshCount={refreshCount}
+          >
             <InnerContainer>
               <SBigTextInput
                 placeholder="ex. 15000"
@@ -286,8 +318,8 @@ export default function CreatePlaceStage1({ state, dispatch }: Props) {
           </ExpandableV>
           <View style={{ height: 150 }} />
         </ScrollView>
-      </Container>
-    </MyKeyboardAvoidingView>
+      </MyKeyboardAvoidingView>
+    </Container>
   );
 }
 
@@ -370,7 +402,6 @@ const InstructionText = styled(ErrorMessage)`
 
 const SearchListContainer = styled.ScrollView`
   width: 100%;
-  margin-top: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
 `;
