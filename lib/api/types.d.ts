@@ -121,6 +121,7 @@ export interface PlaceData {
     detailLink: string;
     participationFee: number;
     maxParticipantsNumber?: number;
+    kakaoLink?: string;
   };
   participantsData: ParticipantsData;
 }
@@ -135,6 +136,7 @@ export interface CreateActivityData {
   coverImage?: File;
   subImages?: File[];
   placeId?: string;
+  kakaoLink?: string;
 }
 
 // need to change CreatePlaceOutput
@@ -203,6 +205,7 @@ interface UserProfile {
   drinkingStyle?: number;
   personality?: string;
   phoneNumber?: string;
+  fk_user_id?: string;
 }
 
 export interface SeeRandomProfile extends CoreOutput {
