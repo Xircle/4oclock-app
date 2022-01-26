@@ -32,6 +32,8 @@ export default function MyActivities(props: Props) {
                 purpose={Purpose.mypage}
                 refetch={refetch}
                 isRefetch={true}
+                kakaoPlaceId={item.kakaoPlaceId}
+                isClosed={item.isClosed}
               />
             );
           })}
