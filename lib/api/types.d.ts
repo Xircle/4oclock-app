@@ -162,6 +162,7 @@ export interface UserData {
   personality?: string;
   accountType?: string;
   fk_user_id?: string;
+  team?: string;
 }
 
 export interface GetUserOutput extends CoreOutput {
@@ -178,6 +179,7 @@ export interface MyPlaceData {
   startDateFromNow: string;
   isClosed: boolean;
   description: string;
+  kakaoPlaceId?: string;
 }
 
 export interface GetMyPlaceOutput extends CoreOutput {
