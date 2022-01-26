@@ -9,6 +9,7 @@ import ProfileV from "../components/profile/ProfileV";
 import { seeUserById } from "../lib/api/seeUserById";
 import { RouteProp } from "@react-navigation/native";
 import { LoggedInStackParamList } from "../navigators/LoggedInNav";
+import storage from "../lib/helpers/myAsyncStorage";
 
 interface Props {
   route: RouteProp<LoggedInStackParamList, "FriendProfile">;
@@ -16,6 +17,7 @@ interface Props {
 
 export default function FriendProfile({ route }: Props) {
   const [age, setAge] = useState<string>("");
+  const [showPN, setShowPN] = useState<boolean>(false);
   const { data: profileData, isLoading, isFetching } = useQuery<
     UserProfile | undefined
   >(["friendProfile", route.params.id], () => seeUserById(route.params.id), {
@@ -24,9 +26,17 @@ export default function FriendProfile({ route }: Props) {
     refetchOnWindowFocus: false,
   });
 
+  const setAccountType = async () => {
+    const accountType = await storage.getItem("accountType");
+    console.log(accountType);
+    if (accountType === "Admin") setShowPN(true);
+  };
+
   useEffect(() => {
+    setAccountType();
     if (profileData) {
       setAge(AgeNumberToString(profileData.age));
+      console.log(profileData);
     }
   }, [profileData?.age]);
 
@@ -42,7 +52,7 @@ export default function FriendProfile({ route }: Props) {
           <Loader color={colors.mainBlue} large={true} />
         </LoaderWrapper>
       )}
-      <ProfileV profileData={profileData} />
+      <ProfileV profileData={profileData} showPN={showPN} />
     </Wrapper>
   );
 }
