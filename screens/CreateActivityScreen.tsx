@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React, { useState, useReducer, useRef } from "react";
+import React, { useState, useReducer, useRef, useEffect } from "react";
 import { colors } from "../styles/styles";
 import { Alert, Animated, Dimensions, View } from "react-native";
 import MainButtonWBg from "../components/UI/MainButtonWBg";
@@ -13,6 +13,7 @@ import { activityDispatcher } from "../lib/activity/ActivityDispatcher";
 import FullScreenLoader from "../components/UI/FullScreenLoader";
 import { useQuery } from "react-query";
 import { getUser } from "../lib/api/getUser";
+import storage from "../lib/helpers/myAsyncStorage";
 
 interface Props {}
 
@@ -20,6 +21,7 @@ const { width } = Dimensions.get("window");
 
 export default function CreateActivityScreen(props: Props) {
   const [manualDisable, setManualDisable] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [stage, setStage] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -28,14 +30,15 @@ export default function CreateActivityScreen(props: Props) {
   // values
   const position = useRef(new Animated.Value(0)).current;
 
-  const { data: userData } = useQuery<UserData | undefined>(
-    ["userProfile"],
-    () => getUser(),
-    {
-      retry: 1,
-    }
-  );
+  const setAccountType = async () => {
+    const accountType = await storage.getItem("accountType");
+    console.log(accountType);
+    if (accountType === "Admin") setIsAdmin(true);
+  };
 
+  useEffect(() => {
+    setAccountType();
+  }, []);
   // animations
   const animateByStage = (step: number, position: Animated.Value) =>
     Animated.timing(position, {
@@ -51,7 +54,7 @@ export default function CreateActivityScreen(props: Props) {
       setManualDisable(true);
       setLoading(true);
       try {
-        const data: CreateActivityOutput = await createPlace(state);
+        await createPlace(state);
       } catch (e) {
         setLoading(false);
         setManualDisable(false);
@@ -93,7 +96,7 @@ export default function CreateActivityScreen(props: Props) {
           <CreatePlaceStage1
             state={state}
             dispatch={dispatch}
-            admin={userData?.accountType === "Admin"}
+            admin={isAdmin}
           />
         </AnimationWrapper>
         <AnimationWrapper
