@@ -23,11 +23,9 @@ export const createPlace = async (
     }
   }
   formData.append("name", placeData.name);
-  if (placeData.maxParticipantsNumber)
-    formData.append(
-      "maxParticipantsNumber",
-      placeData.maxParticipantsNumber + ""
-    );
+  if (placeData.maxParticipantsNumber) {
+    formData.append("maxParticipantsNumber", placeData.maxParticipantsNumber);
+  }
   formData.append("detailAddress", placeData.detailAddress);
   formData.append("description", placeData.description);
   formData.append("startDateAt", placeData.startDateAt + "");
