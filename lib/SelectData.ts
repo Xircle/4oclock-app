@@ -89,3 +89,14 @@ export const UniversityToIndex = {
   선신여자대학교: 3,
   다른학교입니다: 4,
 };
+
+export const teams = ["A", "B", "C", "D", "E", "F"];
+
+export const teamToIndex = {
+  A: 0,
+  B: 1,
+  C: 2,
+  D: 3,
+  E: 4,
+  F: 5,
+};

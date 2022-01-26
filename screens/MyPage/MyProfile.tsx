@@ -25,6 +25,8 @@ import {
   IndexToMBTI,
   MBTIs,
   MBTIToIndex,
+  teams,
+  teamToIndex,
 } from "../../lib/SelectData";
 import { Permission } from "../../lib/helpers/permission";
 import { RESULTS } from "react-native-permissions";
@@ -46,6 +48,7 @@ export interface ProfileData {
   MBTI?: string;
   drinkingStyle?: number;
   personality?: string;
+  team?: string;
 }
 
 const { width } = Dimensions.get("window");
@@ -128,6 +131,7 @@ export default function MyProfile(props: Props) {
         MBTI: userData?.MBTI,
         personality: userData?.personality,
         drinkingStyle: userData?.drinkingStyle,
+        team: userData?.team,
       });
       if (userData?.isYkClub) {
         setIsYK(userData?.isYkClub);
@@ -312,6 +316,20 @@ export default function MyProfile(props: Props) {
                 width={width * 0.81}
                 defaultButtonText="MBTI를 설정해주세요"
                 defaultValueByIndex={MBTIToIndex[localProfileData.MBTI]}
+              />
+              <SLabel>팀</SLabel>
+              <MySelect
+                data={teams}
+                onSelect={(selectedItem, index) => {
+                  console.log(selectedItem);
+                  setLocalProfileData((prev) => ({
+                    ...prev,
+                    team: selectedItem,
+                  }));
+                }}
+                width={width * 0.81}
+                defaultButtonText="팀을 선택해주세요"
+                defaultValueByIndex={teamToIndex[localProfileData.team]}
               />
               <SLabel>계열이나 직업</SLabel>
               <SBigTextInput

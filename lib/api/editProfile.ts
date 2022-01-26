@@ -23,6 +23,10 @@ export const editProfile = async (
   if (typeof editedProfileData.isYkClub === "boolean") {
     formData.append("isYkClub", String(editedProfileData.isYkClub));
   }
+
+  // for testing
+  formData.append("team", editedProfileData.team);
+
   editedProfileData.MBTI && formData.append("MBTI", editedProfileData.MBTI);
   editedProfileData.personality &&
     formData.append("personality", editedProfileData.personality);
