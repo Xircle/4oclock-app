@@ -34,6 +34,7 @@ const renderItem = ({ item }) => (
     startDateFromNow={item.startDateFromNow}
     deadline={item.deadline}
     participants={item.participants}
+    isClosed={item.isClosed}
   />
 );
 
