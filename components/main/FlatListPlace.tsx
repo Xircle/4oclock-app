@@ -38,6 +38,8 @@ interface Props {
   participants?: Participants[];
   refetch?: () => {};
   isRefetch?: boolean;
+  kakaoPlaceId?: string;
+  isClosed?: boolean;
 }
 
 export default function FlatListPlace({
@@ -53,6 +55,8 @@ export default function FlatListPlace({
   refetch,
   isRefetch,
   participants,
+  kakaoPlaceId,
+  isClosed,
 }: Props) {
   const navigation = useNavigation();
   const [cancelModal, setCancelModal] = useState(false);
@@ -89,8 +93,8 @@ export default function FlatListPlace({
     }
   };
 
-  const writeReview = async () => {
-    await openLink.LWriteReview("placeId");
+  const writeReview = async (kid: string) => {
+    await openLink.LWriteReview(kid);
   };
   return (
     <TouchableWithoutFeedback onPress={onPress}>
@@ -144,13 +148,13 @@ export default function FlatListPlace({
             }}
           />
           {purpose === Purpose.main &&
-          startDateFromNow !== "마감" &&
+          !isClosed &&
           leftParticipantsCount > 0 ? (
             <TagContainer>
               <Tag>잔여{leftParticipantsCount}석</Tag>
             </TagContainer>
           ) : (
-            (purpose === Purpose.main || startDateFromNow === "마감") && (
+            (purpose === Purpose.main || isClosed) && (
               <LeftContainerOverlay>
                 <ClosedText>마 감</ClosedText>
               </LeftContainerOverlay>
@@ -191,16 +195,14 @@ export default function FlatListPlace({
               <AvatarNumText>+ {participants.length - 4}</AvatarNumText>
             ) : null}
           </AvatarContainer>
-          {purpose === Purpose.main &&
-            startDateFromNow !== "마감" &&
-            leftParticipantsCount > 0 && (
-              <BottomRightFixedContainer>
-                <DeadLineText>{deadline}</DeadLineText>
-              </BottomRightFixedContainer>
-            )}
+          {purpose === Purpose.main && !isClosed && leftParticipantsCount > 0 && (
+            <BottomRightFixedContainer>
+              <DeadLineText>{deadline}</DeadLineText>
+            </BottomRightFixedContainer>
+          )}
           {purpose === Purpose.mypage && (
             <BottomRightFixedContainer>
-              {startDateFromNow !== "마감" ? (
+              {!isClosed ? (
                 <CancelButton onPress={() => setCancelModal(true)}>
                   <CancelText>
                     <Ionicons
@@ -211,8 +213,9 @@ export default function FlatListPlace({
                     취소하기
                   </CancelText>
                 </CancelButton>
+              ) : kakaoPlaceId ? (
+                <ReviewButton onPress={() => writeReview(kakaoPlaceId)} />
               ) : null}
-              {/* <ReviewButton onPress={writeReview} /> */}
             </BottomRightFixedContainer>
           )}
         </RightContiner>
