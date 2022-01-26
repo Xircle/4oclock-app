@@ -19,6 +19,7 @@ import { AgeNumberToString } from "../../lib/utils";
 import { useNavigation } from "@react-navigation/native";
 import { openLink } from "../../components/shared/Links";
 import { Account } from "../../lib/helpers/Account";
+import storage from "../../lib/helpers/myAsyncStorage";
 
 interface Props {}
 
@@ -34,6 +35,16 @@ export default function MyPage(props: Props) {
       retry: 1,
     }
   );
+
+  const setAccountTypeToLocalStorage = async (type: string) => {
+    await storage.setItem("accountType", type);
+  };
+
+  useEffect(() => {
+    if (userData?.accountType) {
+      setAccountTypeToLocalStorage(userData?.accountType);
+    }
+  }, [userData]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", (e) => {
