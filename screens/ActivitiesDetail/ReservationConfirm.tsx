@@ -13,6 +13,7 @@ import { ActivityStackParamList } from "../../navigators/ActivityStackNav";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { getStartDateFromNow, TimeNumberToString } from "../../lib/utils";
+import { openLink } from "../../components/shared/Links";
 
 interface Props {
   route: RouteProp<ActivityStackParamList, "ReservationConfirm">;
@@ -25,8 +26,6 @@ export default function ReservationConfirm({ route }: Props) {
     // @ts-ignore
     navigation.navigate("MainT");
   };
-
-  const goMyActivities = () => {};
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bgColor }}>
@@ -71,14 +70,31 @@ export default function ReservationConfirm({ route }: Props) {
             </DetailWrapper>
           </DetailContainer>
         </Wrapper>
+        <BottomButtonContainer>
+          {route.params?.kakaoLink && (
+            <XLButton
+              onPress={() => openLink.LOpenLink(route.params?.kakaoLink)}
+              disabled={false}
+            >
+              <XLButtonText>오픈 채팅 입장하기</XLButtonText>
+            </XLButton>
+          )}
 
-        <XLButton onPress={goMain} disabled={false}>
-          <XLButtonText>홈으로 돌아가기</XLButtonText>
-        </XLButton>
+          <SpaceForBottom />
+          <XLButton onPress={goMain} disabled={false} bgColor={colors.bareGrey}>
+            <XLButtonText>홈으로 돌아가기</XLButtonText>
+          </XLButton>
+        </BottomButtonContainer>
       </Container>
     </SafeAreaView>
   );
 }
+
+const SpaceForBottom = styled.View`
+  height: 30px;
+`;
+
+const BottomButtonContainer = styled.View``;
 
 const Container = styled.View`
   flex: 1;

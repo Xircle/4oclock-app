@@ -1,6 +1,9 @@
 import { Linking } from "react-native";
 
 export const openLink = {
+  LOpenLink: async (url: string) => {
+    await Linking.openURL(url)
+  },
   LWriteReview: async (id: string) => {
     await Linking.openURL(`https://www.koreapas.com/m/sofo.php?kid=${id}`);
   },

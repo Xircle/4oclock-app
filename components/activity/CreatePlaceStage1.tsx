@@ -161,6 +161,33 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
             </InnerContainer>
           </ExpandableV>
           <ExpandableV
+            title="오픈 카카오톡 채팅방 링크"
+            height={120}
+            error={descriptionError}
+            refreshCount={refreshCount}
+          >
+            <InnerContainer style={[{ paddingTop: 15 }, { paddingBottom: 15 }]}>
+              <SBigTextInput
+                placeholder="ex: https://open.kakao.com/o/srFhbIBd "
+                autoCapitalize="none"
+                blurOnSubmit={true}
+                returnKeyType="next"
+                returnKeyLabel="next"
+                autoCorrect={false}
+                defaultValue={state.kakaoLink ? state.kakaoLink : ""}
+                onChange={(event) => {
+                  const { eventCount, target, text } = event.nativeEvent;
+                  activityDispatcher.dispatchKakaoLink(text, dispatch);
+                  // setNameError(!activityValidation.validateName(text));
+                }}
+                error={nameError}
+              />
+              {descriptionError ? (
+                <SErrorMessage>{createPlaceErrorMessage[2]}</SErrorMessage>
+              ) : null}
+            </InnerContainer>
+          </ExpandableV>
+          <ExpandableV
             title="만남날짜/시간"
             height={80}
             error={dateError}

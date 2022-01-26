@@ -60,6 +60,7 @@ export default function Activity({
       startTime: activityData?.startDateAt,
       placeId: id,
       placeType: activityData?.placeType,
+      kakaoLink: activityData.placeDetail.kakaoLink,
     });
   };
 
@@ -72,7 +73,6 @@ export default function Activity({
       setImages(
         Array(activityData?.coverImage).concat(activityData?.subImages)
       );
-      console.log(activityData);
     }
   }, [activityData]);
   return (

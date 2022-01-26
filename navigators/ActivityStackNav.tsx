@@ -22,6 +22,7 @@ export type ActivityStackParamList = {
     startTime: number;
     placeId: string;
     placeType: string;
+    kakaoLink?: string;
   };
   ReservationConfirm: {
     startDateFromNow: string;
@@ -30,6 +31,7 @@ export type ActivityStackParamList = {
     startTime: number;
     isVaccinated: boolean;
     placeType: string;
+    kakaoLink?: string;
   };
 };
 

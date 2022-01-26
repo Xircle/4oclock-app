@@ -45,6 +45,7 @@ export default function Reservation({ route }: Props) {
         startDateFromNow: route.params.startDateFromNow,
         startTime: route.params.startTime,
         placeType: route.params.placeType,
+        kakaoLink: route.params.kakaoLink,
       });
     } catch (err) {
       console.log(err);

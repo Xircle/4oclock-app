@@ -17,6 +17,15 @@ export const activityDispatcher = {
       payload: text,
     });
   },
+  dispatchKakaoLink: (
+    link: string,
+    dispatch: React.Dispatch<ActivityAction>
+  ) => {
+    dispatch({
+      type: "setKakaoLink",
+      payload: link,
+    });
+  },
   dispatchDescription: (
     text: string,
     dispatch: React.Dispatch<ActivityAction>
