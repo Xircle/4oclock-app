@@ -202,6 +202,7 @@ interface UserProfile {
   MBTI?: string;
   drinkingStyle?: number;
   personality?: string;
+  phoneNumber?: string;
 }
 
 export interface SeeRandomProfile extends CoreOutput {
