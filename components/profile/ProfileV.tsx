@@ -13,6 +13,7 @@ interface Props {
   enableNext?: boolean;
   onPressChat?: () => void;
   enableChat?: boolean;
+  showPN?: boolean;
 }
 
 const { width } = Dimensions.get("window");
@@ -23,6 +24,7 @@ export default function ProfileV({
   onPressChat,
   enableChat,
   enableNext,
+  showPN,
 }: Props) {
   return (
     <>
@@ -48,6 +50,9 @@ export default function ProfileV({
               <InnerContent>
                 <SmallBlackText>{profileData?.MBTI}</SmallBlackText>
                 <SmallBlackText>{profileData?.personality}</SmallBlackText>
+                {showPN ? (
+                  <SmallBlackText>{profileData?.phoneNumber}</SmallBlackText>
+                ) : null}
               </InnerContent>
               <ShortBioText>{profileData?.shortBio}</ShortBioText>
               <GraySubText>
