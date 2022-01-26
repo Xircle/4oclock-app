@@ -7,7 +7,7 @@ import { colors } from "../styles/styles";
 import Loader from "../components/UI/Loader";
 import ProfileV from "../components/profile/ProfileV";
 import { seeUserById } from "../lib/api/seeUserById";
-import { RouteProp } from "@react-navigation/native";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import { LoggedInStackParamList } from "../navigators/LoggedInNav";
 import storage from "../lib/helpers/myAsyncStorage";
 
@@ -16,6 +16,7 @@ interface Props {
 }
 
 export default function FriendProfile({ route }: Props) {
+  const navigation = useNavigation();
   const [age, setAge] = useState<string>("");
   const [showPN, setShowPN] = useState<boolean>(false);
   const { data: profileData, isLoading, isFetching } = useQuery<
@@ -52,7 +53,21 @@ export default function FriendProfile({ route }: Props) {
           <Loader color={colors.mainBlue} large={true} />
         </LoaderWrapper>
       )}
-      <ProfileV profileData={profileData} showPN={showPN} />
+      <ProfileV
+        profileData={profileData}
+        showPN={showPN}
+        enableChat={true}
+        onPressChat={() =>
+          navigation.navigate("ChatStackNav", {
+            screen: "ChatRoom",
+            params: {
+              senderName: profileData.username,
+              senderId: profileData.fk_user_id,
+              roomId: "0",
+            },
+          })
+        }
+      />
     </Wrapper>
   );
 }

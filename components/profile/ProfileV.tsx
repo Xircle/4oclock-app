@@ -71,7 +71,7 @@ export default function ProfileV({
       </View>
       <ButtonContainer>
         {enableChat && (
-          <ChatButton fullWidth={!enableNext}>
+          <ChatButton fullWidth={!enableNext} onPress={onPressChat}>
             <ChatText>채팅하기</ChatText>
           </ChatButton>
         )}

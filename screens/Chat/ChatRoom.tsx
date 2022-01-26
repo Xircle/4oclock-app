@@ -39,7 +39,6 @@ export default function ChatRoom({ route }: Props) {
     if (!socket) {
       SetUpSocket();
     }
-
   }, []);
 
   // api
@@ -148,6 +147,9 @@ export default function ChatRoom({ route }: Props) {
       ];
       return messages;
     });
+    console.log(route.params.senderId);
+    console.log(route.params.roomId);
+    console.log(route.params.senderName);
     // POST 비동기로 요청
     mutateMessage({
       content: messageInput,
@@ -155,6 +157,7 @@ export default function ChatRoom({ route }: Props) {
       roomId: route.params.roomId,
       // isRead: isReceiverJoining,
     }).then((res) => {
+      console.log(res.data);
       if (!res.data.ok) {
         Alert.alert("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
         // 전송에 실패했으므로, 로컬의 message의 말풍선에 X 추가한다.
