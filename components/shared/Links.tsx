@@ -2,9 +2,7 @@ import { Linking } from "react-native";
 
 export const openLink = {
   LWriteReview: async (id: string) => {
-    await Linking.openURL(
-      "https://www.koreapas.com/m/sofo.php?back=1&Num=a_nam_712"
-    );
+    await Linking.openURL(`https://www.koreapas.com/m/sofo.php?kid=${id}`);
   },
 
   LOpenKakaoChat: async () => {
