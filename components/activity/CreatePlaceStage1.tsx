@@ -27,7 +27,6 @@ import LocationVRow from "./locationV/LocationVRow";
 import SelectedLocation from "./locationV/SelectedLocation";
 import MyKeyboardAvoidingView from "../UI/MyKeyboardAvoidingView";
 import CreatePlaceTypeSelector from "./CreatePlaceTypeSelector";
-import storage from "../../lib/helpers/myAsyncStorage";
 
 interface Props {
   state: ActivityState;
