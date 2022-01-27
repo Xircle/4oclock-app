@@ -96,6 +96,7 @@ export default function FlatListPlace({
   const writeReview = async (kid: string) => {
     await openLink.LWriteReview(kid);
   };
+
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <Container>
@@ -202,7 +203,7 @@ export default function FlatListPlace({
           )}
           {purpose === Purpose.mypage && (
             <BottomRightFixedContainer>
-              {!isClosed ? (
+              {startDateFromNow !== '마감' ? (
                 <CancelButton onPress={() => setCancelModal(true)}>
                   <CancelText>
                     <Ionicons
