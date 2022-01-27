@@ -45,14 +45,13 @@ export default function ProfileV({
             />
             <BigBlackText>{profileData?.username}</BigBlackText>
             <MidGreyText>{profileData?.job || ""}</MidGreyText>
-
+            {showPN ? (
+              <SmallBlackText>{profileData?.phoneNumber}</SmallBlackText>
+            ) : null}
             <InnerContainer>
               <InnerContent>
                 <SmallBlackText>{profileData?.MBTI}</SmallBlackText>
                 <SmallBlackText>{profileData?.personality}</SmallBlackText>
-                {showPN ? (
-                  <SmallBlackText>{profileData?.phoneNumber}</SmallBlackText>
-                ) : null}
               </InnerContent>
               <ShortBioText>{profileData?.shortBio}</ShortBioText>
               <GraySubText>
