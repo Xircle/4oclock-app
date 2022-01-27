@@ -58,6 +58,7 @@ export default function FriendProfile({ route }: Props) {
         showPN={showPN}
         enableChat={true}
         onPressChat={() =>
+          // @ts-ignore
           navigation.navigate("ChatStackNav", {
             screen: "ChatRoom",
             params: {
