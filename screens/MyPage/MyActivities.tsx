@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
 import styled from "styled-components/native";
 import { MyPlaceData } from "../../lib/api/types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { getMyPlaces } from "../../lib/api/getMyPlaces";
-import { colors, Text } from "../../styles/styles";
+import { colors } from "../../styles/styles";
 import { ScrollView } from "react-native-gesture-handler";
 import FlatListPlace, { Purpose } from "../../components/main/FlatListPlace";
 
