@@ -12,30 +12,29 @@ interface Props {
 const { width } = Dimensions.get("window");
 
 export default function TabMiddleAdd({ focused }: Props) {
-  
   return (
-    <Container width={width} focused={focused}>
-      {/* <Ionicons name="add-circle" color={colors.mainBlue} size={width} /> */}
-      <Label>모임 개설</Label>
-    </Container>
+    <Ionicons
+      name={focused ? "add-circle" : "add-circle-outline"}
+      color={focused ? colors.mainBlue : colors.bareGrey}
+      size={25}
+    />
   );
 }
 
-const Container = styled.View<{ width: number, focused: boolean }>`
+const Container = styled.View<{ width: number; focused: boolean }>`
   height: 40px;
-  width: 80px;
+  width: 40px;
   border-radius: 40px;
   align-items: center;
   justify-content: center;
-  background-color: ${props => props.focused ? colors.mainBlue : colors.bareGrey};
+  background-color: ${(props) =>
+    props.focused ? colors.mainBlue : colors.bareGrey};
 `;
 
 const Label = styled(GeneralText)`
   color: ${colors.bgColor};
 `;
 
-const BigLabel = styled(Label)`
-  font-size: 55px;
-  font-family: ${fontFamilies.bold};
-  transform: translateY(0px);
+const Wrapper = styled.View`
+  margin: auto;
 `;

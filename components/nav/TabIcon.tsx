@@ -1,5 +1,6 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { colors } from "../../styles/styles";
 
 interface Props {
   iconName: string;
@@ -13,7 +14,7 @@ export default function TabIcon({ iconName, color, focused, size }: Props) {
     <Ionicons
       //@ts-ignore
       name={focused ? iconName : `${iconName}-outline`}
-      color={color}
+      color={colors.mainBlue}
       size={size ? size : 27}
     />
   );

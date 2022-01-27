@@ -1,18 +1,15 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Main from "../screens/Main";
-import FriendProfile from "../screens/FriendProfile";
-import Chat from "../screens/Chat";
 import MyPage from "../screens/MyPage/MyPage";
 import TabIcon from "../components/nav/TabIcon";
 import { colors } from "../styles/styles";
 import CreateActivityScreen from "../screens/CreateActivityScreen";
-import TabMiddleAdd from "../components/nav/TabMiddleAdd";
 import TabSide from "../components/nav/TabSide";
-import CreateActivityStackNav from "./CreateActivityStackNav";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import ChatList from "../screens/Chat/ChatList";
 
 interface Props {}
 
@@ -39,8 +36,8 @@ export default function MainTabsNav(props: Props) {
         component={Main}
         options={{
           title: "메인",
-          headerShown: true,
-          headerTitle: "채팅 테스트",
+          headerShown: false,
+          headerTitle: "",
           headerRight: () => (
             <TouchableOpacity
               style={{ marginRight: 8 }}
@@ -59,7 +56,22 @@ export default function MainTabsNav(props: Props) {
               focused={focused}
               color={color}
               size={size}
-              title={"이팅모임"}
+              title={"이팅"}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="ChatT"
+        component={ChatList}
+        options={{
+          title: "메세지",
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabSide
+              focused={focused}
+              color={color}
+              size={size}
+              title={"메세지"}
             />
           ),
         }}
@@ -70,7 +82,12 @@ export default function MainTabsNav(props: Props) {
         options={{
           title: "생성하기",
           tabBarIcon: ({ focused, color, size }) => (
-            <TabMiddleAdd focused={focused} />
+            <TabIcon
+              iconName={"add-circle"}
+              color={color}
+              focused={focused}
+              size={size + 18}
+            />
           ),
         }}
       />
@@ -83,20 +100,21 @@ export default function MainTabsNav(props: Props) {
           ),
         }}
       /> */}
-      {/* <Tabs.Screen
-        name="ChatT"
-        component={Chat}
+      <Tabs.Screen
+        name="RandomProfileT"
         options={{
-          title: "메세지",
           tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon
-              iconName={"chatbubble-ellipses"}
-              color={color}
+            <TabSide
               focused={focused}
+              color={color}
+              size={size}
+              title={"크루원"}
             />
           ),
+          headerShown: false,
         }}
-      /> */}
+        component={MyPage}
+      />
       <Tabs.Screen
         name="MyPage"
         options={{
@@ -105,7 +123,7 @@ export default function MainTabsNav(props: Props) {
               focused={focused}
               color={color}
               size={size}
-              title={"마이 / 후기"}
+              title={"마이"}
             />
           ),
           headerShown: false,
