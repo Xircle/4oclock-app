@@ -36,13 +36,22 @@ export default function MyPage(props: Props) {
     }
   );
 
-  const setAccountTypeToLocalStorage = async (type: string) => {
-    await storage.setItem("accountType", type);
+  const saveToLocalStorage = async (variable: string, value: string) => {
+    await storage.setItem(variable, value);
   };
 
   useEffect(() => {
     if (userData?.accountType) {
-      setAccountTypeToLocalStorage(userData?.accountType);
+      saveToLocalStorage("accountType", userData?.accountType);
+    }
+    if (userData?.team) {
+      saveToLocalStorage("team", userData?.team);
+      console.log(userData?.team);
+    }
+    if (userData?.isYkClub) {
+      saveToLocalStorage("isYkClub", "true");
+    } else {
+      saveToLocalStorage("isYkClub", "false");
     }
   }, [userData]);
 

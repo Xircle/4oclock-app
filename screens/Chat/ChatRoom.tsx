@@ -39,6 +39,7 @@ export default function ChatRoom({ route }: Props) {
     if (!socket) {
       SetUpSocket();
     }
+    if (route.params.roomId) console.log(route.params.roomId);
   }, []);
 
   // api

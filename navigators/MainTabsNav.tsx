@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ChatList from "../screens/Chat/ChatList";
+import RnadomProfile from "../screens/RandomProfile";
 
 interface Props {}
 
@@ -113,7 +114,7 @@ export default function MainTabsNav(props: Props) {
           ),
           headerShown: false,
         }}
-        component={MyPage}
+        component={RnadomProfile}
       />
       <Tabs.Screen
         name="MyPage"

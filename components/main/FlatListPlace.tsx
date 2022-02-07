@@ -62,10 +62,9 @@ export default function FlatListPlace({
   const [cancelModal, setCancelModal] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
 
-  const {
-    mutateAsync: mutateCancelReservation,
-    isLoading: isPatching,
-  } = useMutation(cancelReservation);
+  const { mutateAsync: mutateCancelReservation } = useMutation(
+    cancelReservation
+  );
 
   const onPress = () => {
     // @ts-ignore
@@ -100,7 +99,7 @@ export default function FlatListPlace({
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <Container>
-        <MyBottomModal
+        {purpose === Purpose.mypage && <MyBottomModal
           onClose={() => {}}
           visible={cancelModal}
           setModal={() => setCancelModal(false)}
@@ -140,7 +139,8 @@ export default function FlatListPlace({
               </ModalCloseButton>
             </ModalWrapper>
           )}
-        </MyBottomModal>
+        </MyBottomModal>}
+        
         <LeftContainer>
           <CoverImage
             source={{
@@ -203,7 +203,7 @@ export default function FlatListPlace({
           )}
           {purpose === Purpose.mypage && (
             <BottomRightFixedContainer>
-              {startDateFromNow !== '마감' ? (
+              {startDateFromNow !== "마감" ? (
                 <CancelButton onPress={() => setCancelModal(true)}>
                   <CancelText>
                     <Ionicons

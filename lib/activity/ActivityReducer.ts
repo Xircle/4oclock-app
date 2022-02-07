@@ -15,13 +15,13 @@ export type ActivityAction =
   | { type: "setIsFinished"; payload: Boolean }
   | { type: "setPlaceId"; payload: string }
   | { type: "setActivityType"; payload: string }
-  | { type: "setKakaoLink"; payload: string };
+  | { type: "setKakaoLink"; payload: string }
+  | { type: "setTeam"; payload: string };
 
 export interface ActivityState extends CreateActivityOutput {
   stage1Valid: Boolean;
   isFinished: Boolean;
   activityType: string;
-  
 }
 
 export const activityInitialState: ActivityState = {
@@ -38,6 +38,7 @@ export const activityInitialState: ActivityState = {
   placeId: "0",
   activityType: "번개",
   kakaoLink: "",
+  team: "",
 };
 
 export function reducer(
@@ -109,6 +110,11 @@ export function reducer(
       return {
         ...state,
         kakaoLink: action.payload,
+      };
+    case "setTeam":
+      return {
+        ...state,
+        team: action.payload,
       };
     default:
       throw new Error();

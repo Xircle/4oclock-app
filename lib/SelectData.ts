@@ -90,13 +90,13 @@ export const UniversityToIndex = {
   다른학교입니다: 4,
 };
 
-export const teams = ["A", "B", "C", "D", "E", "F"];
+export const teams = ["팀을 선택해주세요", "A", "B", "C", "D", "E", "F"];
 
 export const teamToIndex = {
-  A: 0,
-  B: 1,
-  C: 2,
-  D: 3,
-  E: 4,
-  F: 5,
+  A: 1,
+  B: 2,
+  C: 3,
+  D: 4,
+  E: 5,
+  F: 6,
 };

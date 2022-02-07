@@ -21,7 +21,7 @@ export type LoggedInStackParamList = {
     startTime: number;
     participants: Participants[];
   };
-  FriendProfile: { id: string };
+  FriendProfile: { id?: string };
   ChatStackNav: undefined;
 };
 

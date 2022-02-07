@@ -10,10 +10,10 @@ import {
 } from "../../styles/styles";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { ActivityStackParamList } from "../../navigators/ActivityStackNav";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { getStartDateFromNow, TimeNumberToString } from "../../lib/utils";
 import { openLink } from "../../components/shared/Links";
+import { SafeAreaView } from "react-native";
 
 interface Props {
   route: RouteProp<ActivityStackParamList, "ReservationConfirm">;

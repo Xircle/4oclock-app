@@ -17,7 +17,6 @@ interface Props {
 
 export default function FriendProfile({ route }: Props) {
   const navigation = useNavigation();
-  const [age, setAge] = useState<string>("");
   const [showPN, setShowPN] = useState<boolean>(false);
   const { data: profileData, isLoading, isFetching } = useQuery<
     UserProfile | undefined
@@ -27,18 +26,14 @@ export default function FriendProfile({ route }: Props) {
     refetchOnWindowFocus: false,
   });
 
-  const setAccountType = async () => {
+  const getAccountType = async () => {
     const accountType = await storage.getItem("accountType");
-    console.log(accountType);
+
     if (accountType === "Admin") setShowPN(true);
   };
 
   useEffect(() => {
-    setAccountType();
-    if (profileData) {
-      setAge(AgeNumberToString(profileData.age));
-      console.log(profileData);
-    }
+    getAccountType();
   }, [profileData?.age]);
 
   return (

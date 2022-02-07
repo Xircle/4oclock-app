@@ -1,12 +1,12 @@
 import { CreateAccountOutput } from "./types";
 import AxiosClient from "../apiClient";
 import { CoreOutput } from "./types";
-import { ProfileData } from "../../screens/MyPage/MyProfile";
+import { EditProfileData } from "../../screens/MyPage/MyProfile";
 import { AxiosResponse } from "axios";
 import { BASE_URL } from "../utils";
 
 export const editProfile = async (
-  editedProfileData: ProfileData
+  editedProfileData: EditProfileData
 ): Promise<AxiosResponse<CoreOutput>> => {
   const formData = new FormData();
   const axiosclient = await AxiosClient();
@@ -25,12 +25,23 @@ export const editProfile = async (
   }
 
   // for testing
-  formData.append("team", editedProfileData.team);
+  if (
+    editedProfileData.team &&
+    editedProfileData.team !== "팀을 선택해주세요"
+  ) {
+    formData.append("team", editedProfileData.team);
+  }
 
   editedProfileData.MBTI && formData.append("MBTI", editedProfileData.MBTI);
   editedProfileData.personality &&
     formData.append("personality", editedProfileData.personality);
   (editedProfileData.drinkingStyle || editedProfileData.drinkingStyle === 0) &&
     formData.append("drinkingStyle", editedProfileData.drinkingStyle + "");
-  return axiosclient.put<CreateAccountOutput>(`${BASE_URL}/user`, formData);
+  console.log(editedProfileData.code);
+  return axiosclient.put<CreateAccountOutput>(
+    editedProfileData.code
+      ? `${BASE_URL}/user?code=${editedProfileData.code}`
+      : `${BASE_URL}/user`,
+    formData
+  );
 };

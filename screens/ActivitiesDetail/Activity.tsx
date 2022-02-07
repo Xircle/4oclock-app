@@ -6,7 +6,7 @@ import optimizeImage from "../../lib/helpers/optimizeImage";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "react-query";
-import { Participants, PlaceData } from "../../lib/api/types.d";
+import { Participants, PlaceData, UserData } from "../../lib/api/types.d";
 import { getPlaceById } from "../../lib/api/getPlaceById";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import Swiper from "react-native-swiper";
@@ -16,6 +16,8 @@ import MyBottomModal from "../../components/UI/MyBottomModal";
 import { openLink } from "../../components/shared/Links";
 import AvatarUri from "../../components/UI/AvatarUri";
 import FastImage from "react-native-fast-image";
+import storage from "../../lib/helpers/myAsyncStorage";
+import { getUser } from "../../lib/api/getUser";
 
 interface Props {
   id: string;
@@ -50,8 +52,22 @@ export default function Activity({
       refetchOnWindowFocus: false,
     }
   );
+  const { data: userData } = useQuery<UserData | undefined>(
+    ["userProfile"],
+    () => getUser(),
+    {
+      retry: 1,
+    }
+  );
 
-  const onPressMain = () => {
+  const onPressMain = async (): Promise<void> => {
+    if (activityData?.placeType === "Regular-meeting") {
+      if (!userData?.isYkClub) {
+        Alert.alert("활동 코드를 입력해주세요");
+        return;
+      }
+    }
+
     // @ts-ignore
     navigation.navigate("Reservation", {
       detailAddress: activityData?.placeDetail.detailAddress,

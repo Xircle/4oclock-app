@@ -54,6 +54,8 @@ export interface PlaceFeedData {
   };
   leftParticipantsCount: number;
   participants: Participants[];
+  team?: string;
+  myTeam?: boolean;
 }
 
 export interface ParticipantsListData extends Participants {}
@@ -137,6 +139,7 @@ export interface CreateActivityData {
   subImages?: File[];
   placeId?: string;
   kakaoLink?: string;
+  team?: string;
 }
 
 // need to change CreatePlaceOutput

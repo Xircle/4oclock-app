@@ -39,11 +39,6 @@ export default function ChatStackNav(props: Props) {
       }}
     >
       <Stack.Screen
-        name="ChatList"
-        component={ChatList}
-        options={{ headerTitle: "채팅" }}
-      ></Stack.Screen>
-      <Stack.Screen
         name="ChatRoom"
         component={ChatRoom}
         options={{ headerTitle: "채팅" }}

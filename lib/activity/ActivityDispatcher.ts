@@ -35,6 +35,12 @@ export const activityDispatcher = {
       payload: text,
     });
   },
+  dispatchTeam: (team: string, dispatch: React.Dispatch<ActivityAction>) => {
+    dispatch({
+      type: "setTeam",
+      payload: team,
+    });
+  },
   dispatchDetailAddress: (
     placeName: string,
     placeId: string,
@@ -156,6 +162,14 @@ export const activityDispatcher = {
     dispatch({
       type: "setActivityType",
       payload: activityInitialState.activityType,
+    });
+    dispatch({
+      type: "setTeam",
+      payload: activityInitialState.team,
+    });
+    dispatch({
+      type: "setKakaoLink",
+      payload: activityInitialState.kakaoLink,
     });
   },
 };

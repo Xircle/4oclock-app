@@ -32,9 +32,12 @@ export const getPlacesRegular = async ({
 }): Promise<GetPlacesByLocationOutput | undefined> => {
   const axiosclient = await AxiosClient();
   const token = await storage.getItem("token");
+  const team = await storage.getItem("team");
   if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
-    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Regular-meeting`,
+    team
+      ? `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Regular-meeting&team=${team}`
+      : `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Regular-meeting`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

@@ -51,13 +51,17 @@ export interface ProfileData {
   team?: string;
 }
 
+export interface EditProfileData extends ProfileData {
+  code?: string;
+}
+
 const { width } = Dimensions.get("window");
 
 export default function MyProfile(props: Props) {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const [isYK, setIsYK] = useState(false);
-  const [localProfileData, setLocalProfileData] = useState<ProfileData>({});
+  const [localProfileData, setLocalProfileData] = useState<EditProfileData>({});
   const [localValidation, setLocalValidation] = useState<boolean[]>([
     true,
     true,
@@ -391,6 +395,19 @@ export default function MyProfile(props: Props) {
                 width={width * 0.81}
                 defaultButtonText="음주 스타일을 설정해주세요"
                 defaultValueByIndex={localProfileData.drinkingStyle}
+              />
+              <SLabel>연고이팅 활동 코드</SLabel>
+              <SBigTextInput
+                placeholder="활동 코드"
+                autoCapitalize="none"
+                defaultValue={""}
+                onChange={(event) => {
+                  const { eventCount, target, text } = event.nativeEvent;
+                  setLocalProfileData((prev) => ({
+                    ...prev,
+                    code: text,
+                  }));
+                }}
               />
               <View style={{ height: 150 }} />
             </DetailContainer>

@@ -10,7 +10,7 @@ import {
   SubHeading,
   TextArea,
 } from "../../styles/styles";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Dimensions } from "react-native";
 import ExpandableV from "../UI/ExpandableV";
 import DatePicker from "react-native-date-picker";
 import {
@@ -27,12 +27,16 @@ import LocationVRow from "./locationV/LocationVRow";
 import SelectedLocation from "./locationV/SelectedLocation";
 import MyKeyboardAvoidingView from "../UI/MyKeyboardAvoidingView";
 import CreatePlaceTypeSelector from "./CreatePlaceTypeSelector";
+import MySelect from "../UI/MySelect";
+import { teams } from "../../lib/SelectData";
 
 interface Props {
   state: ActivityState;
   dispatch: React.Dispatch<ActivityAction>;
   admin?: boolean;
 }
+
+const { width } = Dimensions.get("window");
 
 export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
   const [nameError, setNameError] = useState(undefined);
@@ -131,6 +135,35 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
               ) : null}
             </InnerContainer>
           </ExpandableV>
+          {state.activityType === "정기" && (
+            <ExpandableV
+              title="어떤 팀에 열려있는 모임이야? (팀)"
+              height={120}
+              error={nameError}
+              refreshCount={refreshCount}
+            >
+              <InnerContainer>
+                <MySelect
+                  data={teams}
+                  onSelect={(selectedItem, index) => {
+                    console.log(selectedItem);
+                    // setLocalProfileData((prev) => ({
+                    //   ...prev,
+                    //   team: selectedItem,
+                    // }));
+                    if (index !== 0) {
+                      activityDispatcher.dispatchTeam(selectedItem, dispatch);
+                    } else {
+                      activityDispatcher.dispatchTeam("", dispatch);
+                    }
+                  }}
+                  width={width * 0.81}
+                  defaultButtonText="팀을 선택해주세요"
+                />
+              </InnerContainer>
+            </ExpandableV>
+          )}
+
           <ExpandableV
             title="어떤 활동을 하는 모임이야?(설명)"
             height={150}

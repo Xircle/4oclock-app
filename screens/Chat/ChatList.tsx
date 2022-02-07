@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { colors, GeneralText } from "../../styles/styles";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { getMyRooms } from "../../lib/api/getMyRooms";
 import { GetMyRooms, IRoom } from "../../lib/api/types.d";
@@ -25,9 +25,8 @@ export default function ChatList(props: Props) {
       // Do something
       if (!isLoading) refetch();
     });
-
     return unsubscribe;
-  }, [navigation]);
+  }, []);
 
   return (
     <Container

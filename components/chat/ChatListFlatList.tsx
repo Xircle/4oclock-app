@@ -27,10 +27,13 @@ export default function ChatListFlatList({
     <TouchableWithoutFeedback
       onPress={() =>
         // @ts-ignore
-        navigation.navigate("ChatRoom", {
-          senderName: receiver.username,
-          senderId: receiver.id,
-          roomId: roomId,
+        navigation.navigate("ChatStackNav", {
+          screen: "ChatRoom",
+          params: {
+            senderName: receiver.username,
+            senderId: receiver.id,
+            roomId: roomId,
+          },
         })
       }
     >
