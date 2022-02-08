@@ -26,10 +26,10 @@ export default function App() {
   const [ready, setReady] = useState(false);
 
   const startLoading = async () => {
-
     const images = loadImages([
       require("./statics/images/anonymous_user.png"),
       require("./statics/images/landingPageImage.png"),
+      require("./statics/images/RegularHeader.jpeg"),
     ]);
     await Promise.all([...images]);
   };
@@ -47,14 +47,14 @@ export default function App() {
     );
   return (
     <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{ headerShown: false, gestureEnabled: false }}
-          >
-            <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
-            <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
-          </Stack.Navigator>
-        </NavigationContainer>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{ headerShown: false, gestureEnabled: false }}
+        >
+          <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
+          <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </QueryClientProvider>
   );
 }

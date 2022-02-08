@@ -6,6 +6,7 @@ import {
   FlatList,
   PanResponder,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
 import { colors, fontFamilies, GeneralText, Text } from "../styles/styles";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
@@ -23,6 +24,9 @@ import { PlaceData } from "../lib/api/types.d";
 import Loader from "../components/UI/Loader";
 import FlatListPlace from "../components/main/FlatListPlace";
 import Swiper from "react-native-swiper";
+import { useNavigation } from "@react-navigation/native";
+import { useAssets } from "expo-asset";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface Props {}
 
@@ -43,28 +47,87 @@ const renderItem = ({ item }) => (
   />
 );
 
-const renderRegular = ({ item }) => (
-  <FlatListPlace
-    leftParticipantsCount={item.leftParticipantsCount}
-    coverImage={item.coverImage}
-    name={item.name}
-    id={item.id}
-    views={item.views}
-    description={item.placeDetail.description}
-    startDateFromNow={item.startDateFromNow}
-    deadline={item.deadline}
-    participants={item.participants}
-    isClosed={item.isClosed}
-  />
-);
-
 export default function Main(props: Props) {
+  const [assets, error] = useAssets([
+    require("../statics/images/RegularHeader.jpeg"),
+  ]);
+  const navigation = useNavigation();
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const [secondTap, setSecondTap] = useState(false);
   const [thirdTap, setThirdTap] = useState(false);
-
+  const [temp, setTemp] = useState([]);
   const queryClient = useQueryClient();
+
+  const renderRegular = ({ item, index }) => {
+    if (!item.isClosed) {
+      if (index === 0) {
+        if (item.myTeam) {
+          return (
+            <>
+              <RegularDividorContainer>
+                <RegularDividorHeader>
+                  # 이주의 우리조 모임 🔥
+                </RegularDividorHeader>
+                <RegularDividorMainText>
+                  아래 모임들 중 하나를 선택해서 참여해주세요! 선착순으로
+                  마감되니 서두르시길!
+                </RegularDividorMainText>
+              </RegularDividorContainer>
+              <FlatListPlace
+                leftParticipantsCount={item.leftParticipantsCount}
+                coverImage={item.coverImage}
+                name={item.name}
+                id={item.id}
+                views={item.views}
+                description={item.placeDetail.description}
+                startDateFromNow={item.startDateFromNow}
+                deadline={item.deadline}
+                participants={item.participants}
+                isClosed={item.isClosed}
+              />
+            </>
+          );
+        }
+      } else if (temp[index - 1].myTeam !== temp[index].myTeam) {
+        return (
+          <>
+            <RegularDividorContainer>
+              <RegularDividorHeader>
+                # 지금 올라오는 정기모임 🎉
+              </RegularDividorHeader>
+            </RegularDividorContainer>
+            <FlatListPlace
+              leftParticipantsCount={item.leftParticipantsCount}
+              coverImage={item.coverImage}
+              name={item.name}
+              id={item.id}
+              views={item.views}
+              description={item.placeDetail.description}
+              startDateFromNow={item.startDateFromNow}
+              deadline={item.deadline}
+              participants={item.participants}
+              isClosed={item.isClosed}
+            />
+          </>
+        );
+      }
+    }
+    return (
+      <FlatListPlace
+        leftParticipantsCount={item.leftParticipantsCount}
+        coverImage={item.coverImage}
+        name={item.name}
+        id={item.id}
+        views={item.views}
+        description={item.placeDetail.description}
+        startDateFromNow={item.startDateFromNow}
+        deadline={item.deadline}
+        participants={item.participants}
+        isClosed={item.isClosed}
+      />
+    );
+  };
 
   // api call
   const { data: topCarouselData, isLoading: topCarouselLoading } = useQuery<
@@ -164,7 +227,10 @@ export default function Main(props: Props) {
     });
 
   useEffect(() => {
-    if (mainRegularData) console.log(mainRegularData.pages[0].places);
+    if (mainRegularData) {
+      // @ts-ignore
+      setTemp(mainRegularData.pages?.map((page) => page.places).flat());
+    }
   }, [mainRegularData]);
 
   if (loading) return <Loader />;
@@ -262,16 +328,37 @@ export default function Main(props: Props) {
               padding: 20,
             }}
             ListHeaderComponent={
-              <ListHeaderContainer>
-                <LightningMainText>
-                  [첫 번개 EVENT] 선착순 24명 5000원 쏜다!
-                </LightningMainText>
-                <LightningSubText>
-                  번개를 자유롭게 올리고 참여 가능 한 탭! 😎{"\n"}
-                  번개 개설 후 운영진에게 말씀해주시면 전체단톡에 올려드려요--!
-                  {"\n"}
-                </LightningSubText>
-              </ListHeaderContainer>
+              <TouchableOpacity
+                //@ts-ignore
+                onPress={() => navigation.navigate("LightningGuide")}
+              >
+                <RegularMainListHeaderContainer>
+                  <RegularMainListHeaderImage
+                    source={require("../statics/images/LightningHeader.jpeg")}
+                  />
+                  <LinearGradient
+                    // Background Linear Gradient
+                    colors={["transparent", colors.black]}
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      borderRadius: 15,
+                      opacity: 0.7,
+                    }}
+                  />
+                  <RMLTextWrapper>
+                    <RegularMainListHeaderSubHeading>
+                      연고이팅이 처음이라고?
+                    </RegularMainListHeaderSubHeading>
+                    <RegularMainListHeaderHeading>
+                      연고이팅 번개모임 가이드 {">"}
+                    </RegularMainListHeaderHeading>
+                  </RMLTextWrapper>
+                </RegularMainListHeaderContainer>
+              </TouchableOpacity>
             }
             showsVerticalScrollIndicator={false}
             onEndReached={loadMoreLightning}
@@ -291,13 +378,37 @@ export default function Main(props: Props) {
                 padding: 20,
               }}
               ListHeaderComponent={
-                <ListHeaderContainer>
-                  <ListMainText>정기모임 👾</ListMainText>
-                  <ListSubText>
-                    다른 팀의 정기모임 빈 자리가 올라와요:){"\n"}
-                    참여 해주시면, 운영진이 팀 단톡에 초대해드려요!
-                  </ListSubText>
-                </ListHeaderContainer>
+                <TouchableOpacity
+                  //@ts-ignore
+                  onPress={() => navigation.navigate("RegularGuide")}
+                >
+                  <RegularMainListHeaderContainer>
+                    <RegularMainListHeaderImage
+                      source={require("../statics/images/RegularHeader.jpeg")}
+                    />
+                    <LinearGradient
+                      // Background Linear Gradient
+                      colors={["transparent", colors.black]}
+                      style={{
+                        position: "absolute",
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0,
+                        borderRadius: 15,
+                        opacity: 0.7,
+                      }}
+                    />
+                    <RMLTextWrapper>
+                      <RegularMainListHeaderSubHeading>
+                        연고이팅이 처음이라고?
+                      </RegularMainListHeaderSubHeading>
+                      <RegularMainListHeaderHeading>
+                        연고이팅 정기모임 가이드 {">"}
+                      </RegularMainListHeaderHeading>
+                    </RMLTextWrapper>
+                  </RegularMainListHeaderContainer>
+                </TouchableOpacity>
               }
               showsVerticalScrollIndicator={false}
               onEndReached={loadMoreRegular}
@@ -306,8 +417,8 @@ export default function Main(props: Props) {
               refreshing={refreshing}
               keyExtractor={(item: PlaceFeedData) => item.id + ""}
               // @ts-ignore
-              data={mainRegularData.pages?.map((page) => page.places).flat()}
-              renderItem={renderItem}
+              data={temp}
+              renderItem={renderRegular}
             />
           )}
           {thirdTap && (
@@ -342,9 +453,57 @@ export default function Main(props: Props) {
   );
 }
 
+const RegularMainListHeaderContainer = styled.View`
+  width: 100%;
+  height: 110px;
+  border-radius: 15px;
+
+  justify-content: flex-end;
+`;
+
+const RMLTextWrapper = styled.View`
+  padding: 11px;
+  padding-left: 13px;
+`;
+
+const RegularMainListHeaderImage = styled.Image`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 15px;
+`;
+
+const RegularMainListHeaderHeading = styled(GeneralText)`
+  color: ${colors.bgColor};
+  font-size: 20px;
+  font-family: ${fontFamilies.bold};
+`;
+
+const RegularMainListHeaderSubHeading = styled(RegularMainListHeaderHeading)`
+  font-size: 12px;
+  font-family: ${fontFamilies.regular};
+  padding-bottom: 2px;
+`;
+
 const ListHeaderContainer = styled.View`
   width: 100%;
   padding: 0px 20px;
+`;
+
+const RegularDividorContainer = styled.View`
+  width: 100%;
+  padding-top: 15px;
+`;
+
+const RegularDividorHeader = styled(GeneralText)`
+  font-family: ${fontFamilies.bold};
+  font-size: 20px;
+`;
+
+const RegularDividorMainText = styled(GeneralText)`
+  font-size: 12px;
+  color: ${colors.midGrey};
+  padding-top: 13px;
 `;
 
 const ListMainText = styled(GeneralText)`
