@@ -29,6 +29,9 @@ import MyKeyboardAvoidingView from "../UI/MyKeyboardAvoidingView";
 import CreatePlaceTypeSelector from "./CreatePlaceTypeSelector";
 import MySelect from "../UI/MySelect";
 import { teams } from "../../lib/SelectData";
+import { getTeams } from "../../lib/api/getTeams";
+import { useQuery } from "react-query";
+import { TeamData } from "../../lib/api/types";
 
 interface Props {
   state: ActivityState;
@@ -50,9 +53,26 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
   const [placeSearch, setPlaceSearch] = useState("");
   const [refreshCount, setRefreshCount] = useState(0);
 
+  const [localTeamNames, setLocalTeamNames] = useState<string[]>([]);
   // refactor on V2
   const [placeName, setPlaceName] = useState("");
   const [placeAddress, setPlaceAddress] = useState("");
+
+  const { data: teamsData } = useQuery<TeamData[] | undefined>(
+    ["teams"],
+    () => getTeams(),
+    {
+      retry: 1,
+    }
+  );
+
+  useEffect(() => {
+    if (teamsData && localTeamNames.length === 0) {
+      teamsData.forEach((team, index) => {
+        setLocalTeamNames((prev) => [...prev, team.name]);
+      });
+    }
+  }, [teamsData]);
 
   useEffect(() => {
     activityDispatcher.dispatchStage1Valid(
@@ -144,7 +164,7 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
             >
               <InnerContainer>
                 <MySelect
-                  data={teams}
+                  data={localTeamNames}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem);
                     // setLocalProfileData((prev) => ({

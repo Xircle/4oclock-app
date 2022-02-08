@@ -25,13 +25,13 @@ import {
   IndexToMBTI,
   MBTIs,
   MBTIToIndex,
-  teams,
-  teamToIndex,
 } from "../../lib/SelectData";
 import { Permission } from "../../lib/helpers/permission";
 import { RESULTS } from "react-native-permissions";
 import FullScreenLoader from "../../components/UI/FullScreenLoader";
 import MyKeyboardAvoidingView from "../../components/UI/MyKeyboardAvoidingView";
+import { TeamData } from "../../lib/api/types.d";
+import { getTeams } from "../../lib/api/getTeams";
 
 interface Props {}
 export interface ProfileData {
@@ -68,6 +68,8 @@ export default function MyProfile(props: Props) {
     true,
     true,
   ]);
+  const [localTeamNames, setLocalTeamNames] = useState<string[]>([]);
+  const [localMyTeam, setLocalMyTeam] = useState("");
 
   const errorMessages: string[] = [
     "20자 이하의 이름을 입력해주세요",
@@ -75,12 +77,19 @@ export default function MyProfile(props: Props) {
     "1000자 이하의 자기소개를 입력해주세요",
     "200자 이하의 성격이나 스타일을 입력해주세요",
   ];
-
+  const { data: teamsData } = useQuery<TeamData[] | undefined>(
+    ["teams"],
+    () => getTeams(),
+    {
+      retry: 1,
+    }
+  );
   const { data: userData, isFetching, isSuccess, refetch } = useQuery<
     UserData | undefined
   >(["userProfile"], () => getUser(), {
     retry: 2,
   });
+
   const { mutateAsync: mutateUserProfile, isLoading: isUpdating } = useMutation(
     editProfile
   );
@@ -120,28 +129,6 @@ export default function MyProfile(props: Props) {
     Alert.alert("프로필 편집 성공했습니다");
     navigation.goBack();
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      setLocalProfileData({
-        username: userData?.username,
-        shortBio: userData?.shortBio,
-        job: userData?.job,
-        profileImageUrl: userData?.profileImageUrl,
-        location: userData?.location,
-        activities: userData?.activities,
-        gender: userData?.gender,
-        isYkClub: userData?.isYkClub,
-        MBTI: userData?.MBTI,
-        personality: userData?.personality,
-        drinkingStyle: userData?.drinkingStyle,
-        team: userData?.team,
-      });
-      if (userData?.isYkClub) {
-        setIsYK(userData?.isYkClub);
-      }
-    }
-  }, [isSuccess]);
 
   const fileHandle = async () => {
     setLoading(true);
@@ -276,6 +263,39 @@ export default function MyProfile(props: Props) {
     }));
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      setLocalProfileData({
+        username: userData?.username,
+        shortBio: userData?.shortBio,
+        job: userData?.job,
+        profileImageUrl: userData?.profileImageUrl,
+        location: userData?.location,
+        activities: userData?.activities,
+        gender: userData?.gender,
+        isYkClub: userData?.isYkClub,
+        MBTI: userData?.MBTI,
+        personality: userData?.personality,
+        drinkingStyle: userData?.drinkingStyle,
+        team: userData?.team,
+      });
+      if (userData?.isYkClub) {
+        setIsYK(userData?.isYkClub);
+      }
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (teamsData && localTeamNames.length === 0) {
+      teamsData.forEach((team, index) => {
+        setLocalTeamNames((prev) => [...prev, team.name]);
+        if (index === teamsData.length - 1) {
+          setLocalMyTeam(userData?.team);
+        }
+      });
+    }
+  }, [teamsData]);
+
   return (
     <Container>
       <MyKeyboardAvoidingView>
@@ -323,9 +343,8 @@ export default function MyProfile(props: Props) {
               />
               <SLabel>팀</SLabel>
               <MySelect
-                data={teams}
+                data={localTeamNames}
                 onSelect={(selectedItem, index) => {
-                  console.log(selectedItem);
                   setLocalProfileData((prev) => ({
                     ...prev,
                     team: selectedItem,
@@ -333,7 +352,7 @@ export default function MyProfile(props: Props) {
                 }}
                 width={width * 0.81}
                 defaultButtonText="팀을 선택해주세요"
-                defaultValueByIndex={teamToIndex[localProfileData.team]}
+                defaultValue={localMyTeam}
               />
               <SLabel>계열이나 직업</SLabel>
               <SBigTextInput
