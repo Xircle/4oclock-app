@@ -174,6 +174,15 @@ export interface GetUserOutput extends CoreOutput {
   data: Userdata;
 }
 
+export interface TeamData {
+  id: number;
+  name: string;
+}
+
+export interface GetTeamsOutput extends CoreOutput {
+  teams: TeamData[];
+}
+
 // My Xircle I've registered
 export interface MyPlaceData {
   id: string;
