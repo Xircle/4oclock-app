@@ -58,7 +58,7 @@ export default function CreateActivityScreen(props: Props) {
       } catch (e) {
         setLoading(false);
         setManualDisable(false);
-        Alert.alert("벌레e");
+        Alert.alert("일시적 오류가 발생했습니다");
         console.log(e);
       }
       setLoading(false);
