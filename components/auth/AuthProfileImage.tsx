@@ -72,7 +72,7 @@ export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
   return (
     <Container showsVerticalScrollIndicator={false}>
       <MainHeading style={{ marginTop: 20 }}>마지막! 프로필 사진</MainHeading>
-      <InfoText>너의 개성을 보여줘:)</InfoText>
+      <InfoText>꼭! 프로필 가이드를 준수한 사진을 올려주세요!</InfoText>
       <AvatarContainer onPress={fileHandle}>
         <AvatarUri size={100} source={state.profileImgUrl} />
         <AvatarText>프로필 사진 업로드하기</AvatarText>

@@ -15,7 +15,7 @@ import {
   TextArea,
 } from "../../styles/styles";
 import { authErrorMessage } from "../../lib/errorMessages";
-import { Universities, UniversityToIndex } from "../../lib/SelectData";
+import { Universities } from "../../lib/SelectData";
 import { Dimensions, View } from "react-native";
 import MySelect from "../UI/MySelect";
 import { Ionicons } from "@expo/vector-icons";
@@ -54,7 +54,7 @@ export default function AuthProfileMainData({
         간단한 프로필 만들기 🕺
       </MainHeading>
       <SBigTextInput
-        placeholder="USERNAME"
+        placeholder="이름을 적어줘!"
         autoCapitalize="none"
         blurOnSubmit={true}
         returnKeyType="next"
@@ -90,7 +90,7 @@ export default function AuthProfileMainData({
         }}
         width={width - 120}
         defaultButtonText="학교"
-        defaultValueByIndex={UniversityToIndex[state.university]}
+        defaultValue={state.university}
       />
       {!nameError && univError && (
         <ErrorMessage>{authErrorMessage[1]}</ErrorMessage>
