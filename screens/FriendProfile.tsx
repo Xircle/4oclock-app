@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { UserProfile } from "../lib/api/types";
 import { AgeNumberToString } from "../lib/utils";
 import { colors } from "../styles/styles";
@@ -10,6 +10,8 @@ import { seeUserById } from "../lib/api/seeUserById";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { LoggedInStackParamList } from "../navigators/LoggedInNav";
 import storage from "../lib/helpers/myAsyncStorage";
+import { getMyRooms } from "../lib/api/getMyRooms";
+import { Alert } from 'react-native';
 
 interface Props {
   route: RouteProp<LoggedInStackParamList, "FriendProfile">;
@@ -25,7 +27,7 @@ export default function FriendProfile({ route }: Props) {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
-
+  const { mutateAsync: mutateChatRoomData } = useMutation(getMyRooms);
   const getAccountType = async () => {
     const accountType = await storage.getItem("accountType");
 
@@ -36,6 +38,37 @@ export default function FriendProfile({ route }: Props) {
     getAccountType();
   }, [profileData?.age]);
 
+  const pressChat = async () => {
+    try {
+      const { myRooms } = await mutateChatRoomData();
+      if (myRooms.find((room) => room.receiver.id === profileData.fk_user_id)) {
+        console.log("found");
+        // @ts-ignore
+        navigation.navigate("ChatStackNav", {
+          screen: "ChatRoom",
+          params: {
+            senderName: profileData.username,
+            senderId: profileData.fk_user_id,
+            roomId: myRooms.find(
+              (room) => room.receiver.id === profileData.fk_user_id
+            ).id,
+          },
+        });
+      } else {
+        // @ts-ignore
+        navigation.navigate("ChatStackNav", {
+          screen: "ChatRoom",
+          params: {
+            senderName: profileData.username,
+            senderId: profileData.fk_user_id,
+            roomId: "0",
+          },
+        });
+      }
+    } catch (e) {
+      Alert.alert('일시적 에러가 발생했습니다. 앱 종료 후 다시 시작해주세요')
+    }
+  };
   return (
     <Wrapper>
       {(isLoading || isFetching) && (
@@ -52,17 +85,7 @@ export default function FriendProfile({ route }: Props) {
         profileData={profileData}
         showPN={showPN}
         enableChat={true}
-        onPressChat={() =>
-          // @ts-ignore
-          navigation.navigate("ChatStackNav", {
-            screen: "ChatRoom",
-            params: {
-              senderName: profileData.username,
-              senderId: profileData.fk_user_id,
-              roomId: "0",
-            },
-          })
-        }
+        onPressChat={pressChat}
       />
     </Wrapper>
   );
