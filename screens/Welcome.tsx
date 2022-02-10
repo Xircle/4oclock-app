@@ -201,7 +201,7 @@ export default function Welcome(props: Props) {
         </ModalInfo>
       </MyModal>
       <DesignContainer>
-        <Heading>2021년은 연고이팅에서!</Heading>
+        <Heading>2022년은🎉{"\n"}연고이팅에서 놀자!</Heading>
       </DesignContainer>
       <ButtonContainer>
         <LoginContainer>
