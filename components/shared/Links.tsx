@@ -2,7 +2,7 @@ import { Linking } from "react-native";
 
 export const openLink = {
   LOpenLink: async (url: string) => {
-    await Linking.openURL(url)
+    await Linking.openURL(url);
   },
   LWriteReview: async (id: string) => {
     await Linking.openURL(`https://www.koreapas.com/m/sofo.php?kid=${id}`);
@@ -18,7 +18,7 @@ export const openLink = {
   },
   LServiceAgree: async () => {
     await Linking.openURL(
-      "https://sixth-lace-751.notion.site/578c7e0e670845ab9de63ad54edf4fc8"
+      "https://longhaired-gym-a5e.notion.site/bf4fee3b18ff43d988f6532105d51604"
     );
   },
   LLocationAgree: async () => {
@@ -27,19 +27,26 @@ export const openLink = {
     );
   },
   LInstagram: async () => {
-    await Linking.openURL("https://www.instagram.com/ykuniv_eating_official/");
+    await Linking.openURL(
+      "https://instagram.com/univ.eating_official?utm_medium=copy_link"
+    );
   },
   LServiceGuide: async () => {
     await Linking.openURL("https://bit.ly/3ImoPjY");
   },
   LYoutube: async () => {
     await Linking.openURL(
-      "https://www.youtube.com/channel/UCNIwL_pCvrAt_hTp0ysZo-Q"
+      "https://youtube.com/channel/UCev1islBkJuHDZgbdcGOnlg"
     );
   },
   LPrivacyAgree: async () => {
     await Linking.openURL(
       "https://sixth-lace-751.notion.site/91c032eabd624b3a8744f8d699b40787"
+    );
+  },
+  LOpenKakaoChatGUide: async () => {
+    await Linking.openURL(
+      "https://longhaired-gym-a5e.notion.site/b8c0db81145043d99ab757cb747e7a42"
     );
   },
 };
