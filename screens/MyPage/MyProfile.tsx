@@ -12,7 +12,7 @@ import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import { Alert, Dimensions, Platform, ScrollView, View } from "react-native";
 import AvatarUri from "../../components/UI/AvatarUri";
 import { useMutation, useQuery } from "react-query";
-import { UserData } from "../../lib/api/types";
+import { TeamData, UserData } from "../../lib/api/types";
 import { getUser } from "../../lib/api/getUser";
 import _ from "lodash";
 import MySelect from "../../components/UI/MySelect";
@@ -30,7 +30,6 @@ import { Permission } from "../../lib/helpers/permission";
 import { RESULTS } from "react-native-permissions";
 import FullScreenLoader from "../../components/UI/FullScreenLoader";
 import MyKeyboardAvoidingView from "../../components/UI/MyKeyboardAvoidingView";
-import { TeamData } from "../../lib/api/types.d";
 import { getTeams } from "../../lib/api/getTeams";
 
 interface Props {}

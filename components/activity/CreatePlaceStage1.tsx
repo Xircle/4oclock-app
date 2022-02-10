@@ -28,7 +28,6 @@ import SelectedLocation from "./locationV/SelectedLocation";
 import MyKeyboardAvoidingView from "../UI/MyKeyboardAvoidingView";
 import CreatePlaceTypeSelector from "./CreatePlaceTypeSelector";
 import MySelect from "../UI/MySelect";
-import { teams } from "../../lib/SelectData";
 import { getTeams } from "../../lib/api/getTeams";
 import { useQuery } from "react-query";
 import { TeamData } from "../../lib/api/types";

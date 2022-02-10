@@ -1,11 +1,6 @@
 import styled from "styled-components/native";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Dimensions,
-  Animated,
-  FlatList,
-  SafeAreaView,
-} from "react-native";
+import { Dimensions, Animated, FlatList, SafeAreaView } from "react-native";
 import { colors, fontFamilies, GeneralText, Text } from "../styles/styles";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { GetPlacesByLocationOutput, PlaceFeedData } from "../lib/api/types";
@@ -401,7 +396,7 @@ export default function Main(props: Props) {
             renderItem={renderItem}
             ListHeaderComponent={
               <LightningInfoContainer>
-                <LightningInfoText>
+                <LightningInfoText style={{ fontSize: 14, lineHeight: 22 }}>
                   크루원 누구나 자유롭게 번개를 올리고 참여할 수 있어요!항상
                   올라오는 꿀잼 번개! 심심하면 놀러오라구{"><"}
                 </LightningInfoText>
