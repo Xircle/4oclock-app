@@ -20,7 +20,12 @@ export default function AvatarUri({ size, source, isSmall }: Props) {
       />
     );
   } else {
-    return null;
+    return (
+      <AvatarImage
+        source={require("../../statics/images/anonymous_user.png")}
+        size={size}
+      />
+    );
   }
 }
 
