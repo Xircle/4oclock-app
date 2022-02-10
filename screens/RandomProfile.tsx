@@ -2,17 +2,13 @@ import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { UserProfile } from "../lib/api/types";
-import { AgeNumberToString } from "../lib/utils";
 import { colors } from "../styles/styles";
 import Loader from "../components/UI/Loader";
 import ProfileV from "../components/profile/ProfileV";
-import { seeUserById } from "../lib/api/seeUserById";
-import { RouteProp, useNavigation } from "@react-navigation/native";
-import { LoggedInStackParamList } from "../navigators/LoggedInNav";
+import {  useNavigation } from "@react-navigation/native";
 import storage from "../lib/helpers/myAsyncStorage";
 import { seeRandomProfile } from "../lib/api/seeRandomProfile";
 import { Alert, SafeAreaView } from "react-native";
-import { GetMyRooms } from "../lib/api/types.d";
 import { getMyRooms } from "../lib/api/getMyRooms";
 
 interface Props {}
