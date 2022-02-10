@@ -23,7 +23,7 @@ interface Props {
 export default function ChatRoom({ route }: Props) {
   const [page, setPage] = useState(1);
   const [messages, setMessages] = useState<IMessage[]>([]);
-  const roomId = route.params.roomId;
+  const [roomId, setRoomId] = useState(route.params.roomId);
   const [isEntering, setIsEntering] = useState(false);
   const [isReceiverJoining, setIsReceiverJoining] = useState(false);
   const [messageInput, SetMessageInput] = useState("");
@@ -132,7 +132,7 @@ export default function ChatRoom({ route }: Props) {
 
   const { mutateAsync: mutateMessage } = useMutation(sendMessage);
 
-  const onSubmitHandler = useCallback(() => {
+  const onSubmitHandler = useCallback(async () => {
     if (messageInput.trim().length === 0 || !userData?.fk_user_id) return;
     SetMessageInput("");
     // 로컬 message state 에 동기화
@@ -148,14 +148,14 @@ export default function ChatRoom({ route }: Props) {
       ];
       return messages;
     });
-    console.log(route.params.senderId);
-    console.log(route.params.roomId);
-    console.log(route.params.senderName);
+    //console.log(route.params.senderId);
+    console.log(roomId);
+    //console.log(route.params.senderName);
     // POST 비동기로 요청
     mutateMessage({
       content: messageInput,
       receiverId: route.params.senderId,
-      roomId: route.params.roomId,
+      roomId: roomId,
       // isRead: isReceiverJoining,
     }).then((res) => {
       console.log(res.data);
@@ -166,11 +166,12 @@ export default function ChatRoom({ route }: Props) {
       }
       SetMessageInput("");
       if (roomId === "0" && res.data.createdRoomId) {
+        setRoomId(res.data.createdRoomId);
         // 만약 unmount되었을 때 이 promise는 실행이 될까?
-        storage.setItem(
-          `chat-${route.params.senderId}`,
-          res.data.createdRoomId
-        );
+        // storage.setItem(
+        //   `chat-${route.params.senderId}`,
+        //   res.data.createdRoomId
+        // );
       }
     });
     // socket emit
@@ -193,7 +194,7 @@ export default function ChatRoom({ route }: Props) {
           showsVerticalScrollIndicator={false}
           inverted
           data={messages}
-          keyExtractor={(item: IMessage) => item.sentAt}
+          keyExtractor={(item: IMessage) => item.sentAt + "" + Math.random()}
           renderItem={({ item }) => (
             <ChatMessage
               content={item.content}
