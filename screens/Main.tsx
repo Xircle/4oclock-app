@@ -4,29 +4,23 @@ import {
   Dimensions,
   Animated,
   FlatList,
-  PanResponder,
   SafeAreaView,
-  TouchableOpacity,
 } from "react-native";
 import { colors, fontFamilies, GeneralText, Text } from "../styles/styles";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { GetPlacesByLocationOutput, PlaceFeedData } from "../lib/api/types";
 import {
-  getPlacesAll,
   getPlacesEvent,
   getPlacesForCarousel,
   getPlacesLightning,
   getPlacesRegular,
 } from "../lib/api/getPlaces";
-import TopCarouselPlace from "../components/main/TopCarouselPlace";
-import optimizeImage from "../lib/helpers/optimizeImage";
-import { PlaceData } from "../lib/api/types.d";
 import Loader from "../components/UI/Loader";
 import FlatListPlace from "../components/main/FlatListPlace";
 import Swiper from "react-native-swiper";
-import { useNavigation } from "@react-navigation/native";
-import { useAssets } from "expo-asset";
 import { LinearGradient } from "expo-linear-gradient";
+import { openLink } from "../components/shared/Links";
+import { TouchableWithoutFeedback } from "react-native";
 
 interface Props {}
 
@@ -48,10 +42,6 @@ const renderItem = ({ item }) => (
 );
 
 export default function Main(props: Props) {
-  const [assets, error] = useAssets([
-    require("../statics/images/RegularHeader.jpeg"),
-  ]);
-  const navigation = useNavigation();
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const [secondTap, setSecondTap] = useState(false);
@@ -67,11 +57,11 @@ export default function Main(props: Props) {
             <>
               <RegularDividorContainer>
                 <RegularDividorHeader>
-                  # 이주의 우리조 모임 🔥
+                  # 이번주 우리 팀 정기모임🔥
                 </RegularDividorHeader>
                 <RegularDividorMainText>
-                  아래 모임들 중 하나를 선택해서 참여해주세요! 선착순으로
-                  마감되니 서두르시길!
+                  이번주에 열린 우리 팀 정기모임 2개 중 하나를 선택해서
+                  참여해주세요!{"\n"} 선착순으로 마감되니 빨리 ㄱㄱ
                 </RegularDividorMainText>
               </RegularDividorContainer>
               <FlatListPlace
@@ -94,8 +84,12 @@ export default function Main(props: Props) {
           <>
             <RegularDividorContainer>
               <RegularDividorHeader>
-                # 지금 올라오는 정기모임 🎉
+                # 지금 올라온 정기모임 🎉
               </RegularDividorHeader>
+              <RegularDividorMainText>
+                이번주에 우리 팀 참여가 불가하다고?! 담당 운영진에게 연락을 주고
+                {"\n"}다른 팀 정기모임에 참여해봐!
+              </RegularDividorMainText>
             </RegularDividorContainer>
             <FlatListPlace
               leftParticipantsCount={item.leftParticipantsCount}
@@ -237,48 +231,117 @@ export default function Main(props: Props) {
   return (
     <SafeAreaView style={{ backgroundColor: colors.bgColor, flex: 1 }}>
       <Container>
-        {/* 일시적 제거 */}
-        {/* <TopCarouselContainer
-        style={{
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 4,
-          },
-          shadowOpacity: 0.32,
-          shadowRadius: 5.46,
-
-          elevation: 9,
-        }}
-      >
-        <Swiper
-          loop
-          horizontal
-          autoplay
-          autoplayTimeout={3.5}
-          containerStyle={{ width: "100%", height: "100%" }}
-          showsButtons={false}
-          showsPagination={false}
-        >
-          {topCarouselData?.places?.map((item, idx) => {
-            if (!item.isClosed || true) {
-              return (
-                <TopCarouselPlace
-                  id={item.id}
-                  leftParticipantsCount={item.leftParticipantsCount}
-                  coverImageUrl={optimizeImage(item.coverImage)}
-                  width={width}
-                  height={height * 0.3}
-                  key={idx}
-                  name={item.name}
-                  startDateFromNow={item.startDateFromNow}
-                  detailAddress={item.placeDetail.detailAddress}
+        <TopCarouselContainer>
+          <Swiper
+            loop
+            horizontal
+            autoplay
+            autoplayTimeout={3.5}
+            containerStyle={{ width: "100%", height: "100%" }}
+            showsButtons={false}
+            showsPagination={false}
+          >
+            <TouchableWithoutFeedback
+              onPress={() =>
+                openLink.LOpenLink(
+                  "https://longhaired-gym-a5e.notion.site/250885c37ef3433690f141e4bcae2d30"
+                )
+              }
+            >
+              <RegularMainListHeaderContainer>
+                <RegularMainListHeaderImage
+                  source={require("../statics/images/calendar.jpeg")}
                 />
-              );
-            }
-          })}
-        </Swiper>
-      </TopCarouselContainer> */}
+                <LinearGradient
+                  // Background Linear Gradient
+                  colors={["transparent", colors.black]}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    opacity: 0.7,
+                  }}
+                />
+                <RMLTextWrapper>
+                  <RegularMainListHeaderSubHeading>
+                    2/14~3/13에 어떤 활동들이 열릴까?
+                  </RegularMainListHeaderSubHeading>
+                  <RegularMainListHeaderHeading>
+                    연고이팅 2기 달력 {">"}
+                  </RegularMainListHeaderHeading>
+                </RMLTextWrapper>
+              </RegularMainListHeaderContainer>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() =>
+                openLink.LOpenLink(
+                  "https://longhaired-gym-a5e.notion.site/54081710685b456aa31ec0665c21267f"
+                )
+              }
+            >
+              <RegularMainListHeaderContainer>
+                <RegularMainListHeaderImage
+                  source={require("../statics/images/RegularHeader.jpeg")}
+                />
+                <LinearGradient
+                  // Background Linear Gradient
+                  colors={["transparent", colors.black]}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    opacity: 0.7,
+                  }}
+                />
+                <RMLTextWrapper>
+                  <RegularMainListHeaderSubHeading>
+                    연고이팅 처음 가입했다면 필독!
+                  </RegularMainListHeaderSubHeading>
+                  <RegularMainListHeaderHeading>
+                    연고이팅 정기모임 가이드 {">"}
+                  </RegularMainListHeaderHeading>
+                </RMLTextWrapper>
+              </RegularMainListHeaderContainer>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() =>
+                openLink.LOpenLink(
+                  "https://longhaired-gym-a5e.notion.site/823262fe528e4d3d9ceca8800764dcfe"
+                )
+              }
+            >
+              <RegularMainListHeaderContainer>
+                <RegularMainListHeaderImage
+                  source={require("../statics/images/LightningHeader.jpeg")}
+                />
+                <LinearGradient
+                  // Background Linear Gradient
+                  colors={["transparent", colors.black]}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    opacity: 0.7,
+                  }}
+                />
+                <RMLTextWrapper>
+                  <RegularMainListHeaderSubHeading>
+                    연고이팅 번개는 누구나 열고 참여가능하다구 {"><"}
+                  </RegularMainListHeaderSubHeading>
+                  <RegularMainListHeaderHeading>
+                    연고이팅 번개모임 가이드 {">"}
+                  </RegularMainListHeaderHeading>
+                </RMLTextWrapper>
+              </RegularMainListHeaderContainer>
+            </TouchableWithoutFeedback>
+          </Swiper>
+        </TopCarouselContainer>
 
         <MiddleTabContainer>
           <MiddleTab
@@ -327,39 +390,6 @@ export default function Main(props: Props) {
               transform: [{ translateX: position }],
               padding: 20,
             }}
-            ListHeaderComponent={
-              <TouchableOpacity
-                //@ts-ignore
-                onPress={() => navigation.navigate("LightningGuide")}
-              >
-                <RegularMainListHeaderContainer>
-                  <RegularMainListHeaderImage
-                    source={require("../statics/images/LightningHeader.jpeg")}
-                  />
-                  <LinearGradient
-                    // Background Linear Gradient
-                    colors={["transparent", colors.black]}
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      bottom: 0,
-                      borderRadius: 15,
-                      opacity: 0.7,
-                    }}
-                  />
-                  <RMLTextWrapper>
-                    <RegularMainListHeaderSubHeading>
-                      연고이팅이 처음이라고?
-                    </RegularMainListHeaderSubHeading>
-                    <RegularMainListHeaderHeading>
-                      연고이팅 번개모임 가이드 {">"}
-                    </RegularMainListHeaderHeading>
-                  </RMLTextWrapper>
-                </RegularMainListHeaderContainer>
-              </TouchableOpacity>
-            }
             showsVerticalScrollIndicator={false}
             onEndReached={loadMoreLightning}
             onEndReachedThreshold={0.2}
@@ -369,6 +399,14 @@ export default function Main(props: Props) {
             // @ts-ignore
             data={mainLightningData.pages.map((page) => page.places).flat()}
             renderItem={renderItem}
+            ListHeaderComponent={
+              <LightningInfoContainer>
+                <LightningInfoText>
+                  크루원 누구나 자유롭게 번개를 올리고 참여할 수 있어요!항상
+                  올라오는 꿀잼 번개! 심심하면 놀러오라구{"><"}
+                </LightningInfoText>
+              </LightningInfoContainer>
+            }
           />
           {secondTap && (
             <AnimWrapper
@@ -377,45 +415,20 @@ export default function Main(props: Props) {
                 transform: [{ translateX: position }],
                 padding: 20,
               }}
-              ListHeaderComponent={
-                <TouchableOpacity
-                  //@ts-ignore
-                  onPress={() => navigation.navigate("RegularGuide")}
-                >
-                  <RegularMainListHeaderContainer>
-                    <RegularMainListHeaderImage
-                      source={require("../statics/images/RegularHeader.jpeg")}
-                    />
-                    <LinearGradient
-                      // Background Linear Gradient
-                      colors={["transparent", colors.black]}
-                      style={{
-                        position: "absolute",
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0,
-                        borderRadius: 15,
-                        opacity: 0.7,
-                      }}
-                    />
-                    <RMLTextWrapper>
-                      <RegularMainListHeaderSubHeading>
-                        연고이팅이 처음이라고?
-                      </RegularMainListHeaderSubHeading>
-                      <RegularMainListHeaderHeading>
-                        연고이팅 정기모임 가이드 {">"}
-                      </RegularMainListHeaderHeading>
-                    </RMLTextWrapper>
-                  </RegularMainListHeaderContainer>
-                </TouchableOpacity>
-              }
               showsVerticalScrollIndicator={false}
               onEndReached={loadMoreRegular}
               onEndReachedThreshold={0.2}
               onRefresh={() => onRefresh("Regular-meeting")}
               refreshing={refreshing}
               keyExtractor={(item: PlaceFeedData) => item.id + ""}
+              ListHeaderComponent={
+                <LightningInfoContainer>
+                  <LightningInfoText style={{ fontSize: 14, lineHeight: 22 }}>
+                    (매우중요) 정기모임 참여는 마이페이지 {">"} 프로필
+                    수정하기에서 팀과 활동코드를 입력해 주셔야지만 가능해요!
+                  </LightningInfoText>
+                </LightningInfoContainer>
+              }
               // @ts-ignore
               data={temp}
               renderItem={renderRegular}
@@ -455,9 +468,8 @@ export default function Main(props: Props) {
 
 const RegularMainListHeaderContainer = styled.View`
   width: 100%;
-  height: 110px;
-  border-radius: 15px;
-
+  height: 100%;
+  background-color: ${colors.black};
   justify-content: flex-end;
 `;
 
@@ -470,7 +482,6 @@ const RegularMainListHeaderImage = styled.Image`
   width: 100%;
   height: 100%;
   position: absolute;
-  border-radius: 15px;
 `;
 
 const RegularMainListHeaderHeading = styled(GeneralText)`
@@ -536,7 +547,7 @@ const Container = styled.View`
 
 const TopCarouselContainer = styled.View`
   width: ${width + "px"};
-  height: ${height * 0.3 + "px"};
+  height: 150px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 `;
@@ -594,4 +605,13 @@ const AnimationContainer = styled.View`
 
 const HSeperator = styled.View`
   height: 20px;
+`;
+
+const LightningInfoContainer = styled.View``;
+
+const LightningInfoText = styled(GeneralText)`
+  line-height: 24px;
+  color: ${colors.midGrey};
+  padding-left: 10px;
+  padding-right: 10px;
 `;
