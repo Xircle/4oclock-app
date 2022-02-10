@@ -15,4 +15,5 @@ export const createPlaceErrorMessage: string[] = [
   "최대 참가인원을 설정해주세요",
   "참가비를 원 단위로 입력해주세요",
   "3장 이상의 모임(장소) 사진을 선정해주세요",
+  "그룹 오픈 카카오 채팅 링크는 https://open.kakao.com/o/g 로 시작합니다.",
 ];

@@ -21,7 +21,7 @@ const { width } = Dimensions.get("window");
 
 export default function CreateActivityScreen(props: Props) {
   const [manualDisable, setManualDisable] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [stage, setStage] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +33,7 @@ export default function CreateActivityScreen(props: Props) {
   const setAccountType = async () => {
     const accountType = await storage.getItem("accountType");
     console.log(accountType);
-    if (accountType === "Admin") setIsAdmin(true);
+    if (accountType === "Admin" || accountType === "Owner") setIsAuthorized(true);
   };
 
   useEffect(() => {
@@ -96,7 +96,7 @@ export default function CreateActivityScreen(props: Props) {
           <CreatePlaceStage1
             state={state}
             dispatch={dispatch}
-            admin={isAdmin}
+            admin={isAuthorized}
           />
         </AnimationWrapper>
         <AnimationWrapper
