@@ -63,7 +63,17 @@ export default function Activity({
   const onPressMain = async (): Promise<void> => {
     if (activityData?.placeType === "Regular-meeting") {
       if (!userData?.isYkClub) {
-        Alert.alert("활동 코드를 입력해주세요");
+        Alert.alert("활동 코드를 입력해주세요", "", [
+          {
+            text: "활동코드 입력하기",
+            //@ts-ignore
+            onPress: () => navigation.navigate("MyProfile"),
+          },
+          {
+            text: "닫기",
+            onPress: () => {},
+          },
+        ]);
         return;
       }
     }
@@ -276,12 +286,15 @@ export default function Activity({
           activityData?.participantsData?.leftParticipantsCount === 0
             ? "마감된 모임입니다"
             : activityData?.isParticipating
-            ? "이미 신청한 모임입니다"
+            ? "오픈 채팅방 넘어가기"
             : "나도 놀러갈래! 😚"
         }
-        onPress={onPressMain}
+        onPress={
+          activityData?.isParticipating
+            ? () => openLink.LOpenLink(activityData.placeDetail.kakaoLink)
+            : onPressMain
+        }
         disabled={
-          activityData?.isParticipating ||
           activityData?.isClosed ||
           activityData?.participantsData?.leftParticipantsCount === 0
         }

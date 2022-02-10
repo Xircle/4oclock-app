@@ -106,7 +106,7 @@ export default function Reservation({ route }: Props) {
       <MainButtonWBg
         title="나도 놀러갈래~"
         onPress={CTAHandler}
-        disabled={!agree}
+        disabled={!agree || !isVaccinated}
       />
     </Container>
   );
