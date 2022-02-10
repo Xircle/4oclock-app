@@ -99,48 +99,52 @@ export default function FlatListPlace({
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <Container>
-        {purpose === Purpose.mypage && <MyBottomModal
-          onClose={() => {}}
-          visible={cancelModal}
-          setModal={() => setCancelModal(false)}
-          height={startDateFromNow?.startsWith("오늘") ? 300 : 500}
-        >
-          {startDateFromNow?.startsWith("오늘") ? (
-            <ModalWrapper>
-              <ModalHeading>모임 당일에는 취소가 불가능합니다</ModalHeading>
-              <ModalInstruction>
-                다른 크루분들을 위해 모임 당일 취소를 불가하는 방침을 가지고
-                있습니다.{"\n"}불가피한 상황일 경우에만 (ex.코로나) 운영진께
-                문의 부탁드립니다.
-              </ModalInstruction>
-              <ModalCloseButton onPress={() => setCancelModal(false)}>
-                <ModalCloseButtonText>닫기</ModalCloseButtonText>
-              </ModalCloseButton>
-            </ModalWrapper>
-          ) : (
-            <ModalWrapper>
-              <ModalHeading>{name}</ModalHeading>
-              <CancelReservationContainer showsVerticalScrollIndicator={false}>
-                <CancelSubHeading>사유</CancelSubHeading>
-                <STextArea
-                  placeholder="친구들과 함께 놀러갈 곳 이름을 적어줘!"
-                  autoCapitalize="none"
-                  multiline={true}
-                  autoCorrect={false}
-                  defaultValue={""}
-                  onChange={(event) => {
-                    const { eventCount, target, text } = event.nativeEvent;
-                    setCancelReason(text);
-                  }}
-                />
-              </CancelReservationContainer>
-              <ModalCloseButton onPress={CancelReservation}>
-                <ModalCloseButtonText>취소하기</ModalCloseButtonText>
-              </ModalCloseButton>
-            </ModalWrapper>
-          )}
-        </MyBottomModal>}
-        
+        {purpose === Purpose.mypage && (
+          <MyBottomModal
+            onClose={() => {}}
+            visible={cancelModal}
+            setModal={() => setCancelModal(false)}
+            height={startDateFromNow?.startsWith("오늘") ? 300 : 500}
+          >
+            {startDateFromNow?.startsWith("오늘") ? (
+              <ModalWrapper>
+                <ModalHeading>모임 당일에는 취소가 불가능합니다</ModalHeading>
+                <ModalInstruction>
+                  다른 크루분들을 위해 모임 당일 취소를 불가하는 방침을 가지고
+                  있습니다.{"\n"}불가피한 상황일 경우에만 (ex.코로나) 운영진께
+                  문의 부탁드립니다.
+                </ModalInstruction>
+                <ModalCloseButton onPress={() => setCancelModal(false)}>
+                  <ModalCloseButtonText>닫기</ModalCloseButtonText>
+                </ModalCloseButton>
+              </ModalWrapper>
+            ) : (
+              <ModalWrapper>
+                <ModalHeading>{name}</ModalHeading>
+                <CancelReservationContainer
+                  showsVerticalScrollIndicator={false}
+                >
+                  <CancelSubHeading>사유</CancelSubHeading>
+                  <STextArea
+                    placeholder="친구들과 함께 놀러갈 곳 이름을 적어줘!"
+                    autoCapitalize="none"
+                    multiline={true}
+                    autoCorrect={false}
+                    defaultValue={""}
+                    onChange={(event) => {
+                      const { eventCount, target, text } = event.nativeEvent;
+                      setCancelReason(text);
+                    }}
+                  />
+                </CancelReservationContainer>
+                <ModalCloseButton onPress={CancelReservation}>
+                  <ModalCloseButtonText>취소하기</ModalCloseButtonText>
+                </ModalCloseButton>
+              </ModalWrapper>
+            )}
+          </MyBottomModal>
+        )}
+
         <LeftContainer>
           <CoverImage
             source={{
