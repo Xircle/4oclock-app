@@ -10,7 +10,7 @@ import {
   SubHeading,
   TextArea,
 } from "../../styles/styles";
-import { ScrollView, View, Dimensions } from "react-native";
+import { ScrollView, View, Dimensions, TouchableOpacity } from "react-native";
 import ExpandableV from "../UI/ExpandableV";
 import DatePicker from "react-native-date-picker";
 import {
@@ -32,6 +32,7 @@ import { teams } from "../../lib/SelectData";
 import { getTeams } from "../../lib/api/getTeams";
 import { useQuery } from "react-query";
 import { TeamData } from "../../lib/api/types";
+import { openLink } from "../shared/Links";
 
 interface Props {
   state: ActivityState;
@@ -47,6 +48,7 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
   const [dateError, setDateError] = useState(undefined);
   const [addressError, setAddressError] = useState(undefined);
   const [feeError, setFeeError] = useState(undefined);
+  const [openKakaoLinkError, setOpenKakaoLinkError] = useState(undefined);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [searchResult, setSearchResult] = useState<kakaoLocalData[]>(undefined);
@@ -80,10 +82,18 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
         descriptionError === false &&
         dateError === false &&
         addressError === false &&
+        openKakaoLinkError === false &&
         !feeError,
       dispatch
     );
-  }, [nameError, descriptionError, dateError, addressError, feeError]);
+  }, [
+    nameError,
+    descriptionError,
+    dateError,
+    addressError,
+    feeError,
+    openKakaoLinkError,
+  ]);
 
   useEffect(() => {
     if (state.isFinished) {
@@ -95,6 +105,7 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
       setAddressError(undefined);
       setFeeError(undefined);
       setSearchResult(undefined);
+      setOpenKakaoLinkError(undefined);
       setPlaceName("");
     }
   }, [state.isFinished]);
@@ -159,7 +170,6 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
             <ExpandableV
               title="어떤 팀에 열려있는 모임이야? (팀)"
               height={120}
-              error={nameError}
               refreshCount={refreshCount}
             >
               <InnerContainer>
@@ -216,12 +226,12 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
           <ExpandableV
             title="오픈 카카오톡 채팅방 링크"
             height={120}
-            error={descriptionError}
+            error={openKakaoLinkError}
             refreshCount={refreshCount}
           >
             <InnerContainer style={[{ paddingTop: 15 }, { paddingBottom: 15 }]}>
               <SBigTextInput
-                placeholder="ex: https://open.kakao.com/o/srFhbIBd "
+                placeholder="ex: https://open.kakao.com/o/grFhbIBd "
                 autoCapitalize="none"
                 blurOnSubmit={true}
                 returnKeyType="next"
@@ -231,13 +241,18 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
                 onChange={(event) => {
                   const { eventCount, target, text } = event.nativeEvent;
                   activityDispatcher.dispatchKakaoLink(text, dispatch);
+                  setOpenKakaoLinkError(
+                    !text.startsWith("https://open.kakao.com/o/g")
+                  );
                   // setNameError(!activityValidation.validateName(text));
                 }}
-                error={nameError}
               />
-              {descriptionError ? (
-                <SErrorMessage>{createPlaceErrorMessage[2]}</SErrorMessage>
+              {openKakaoLinkError ? (
+                <SErrorMessage>{createPlaceErrorMessage[7]}</SErrorMessage>
               ) : null}
+              <TouchableOpacity onPress={openLink.LOpenKakaoChatGUide}>
+                <OKInfoText>오카방 만드는 방법</OKInfoText>
+              </TouchableOpacity>
             </InnerContainer>
           </ExpandableV>
           <ExpandableV
@@ -483,4 +498,11 @@ const SearchListContainer = styled.ScrollView`
   width: 100%;
   padding-top: 5px;
   padding-bottom: 5px;
+`;
+
+const OKInfoText = styled(GeneralText)`
+  font-size: 11px;
+  margin-top: 11px;
+  color: ${colors.midGrey};
+  text-decoration-line: underline;
 `;

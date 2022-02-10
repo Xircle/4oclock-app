@@ -124,7 +124,7 @@ export default function CreatePlaceStage2({
           놀러가는 곳에 관한 장소 사진을 올려줘!
         </SubHeading>
 
-        <SBlackLabel>관련 사진 올리기 (3개 이상)</SBlackLabel>
+        <SBlackLabel>관련 사진 올리기</SBlackLabel>
         <AddPhotoContiner onPress={ImageHandle}>
           <AddPhotoWrapper>
             <Ionicons name="camera-outline" size={42} color="#A7B0C0" />
