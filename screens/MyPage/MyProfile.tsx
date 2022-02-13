@@ -115,12 +115,12 @@ export default function MyProfile(props: Props) {
       {}
     );
     const editedProfileData: ProfileData = diff(userData, trimedProfileData);
-    if (_.isEqual(editedProfileData, {})) {
-      setLoading(false);
-      return Alert.alert("프로필을 수정해주세요");
-    }
+    // if (_.isEqual(editedProfileData, {})) {
+    //   setLoading(false);
+    //   return Alert.alert("프로필을 수정해주세요");
+    // }
     const { data } = await mutateUserProfile({
-      ...editedProfileData,
+      ...trimedProfileData,
     });
     setLoading(false);
     if (!data.ok) return Alert.alert(data.error);

@@ -58,7 +58,6 @@ export default function MySelect({
         }}
         defaultButtonText={defaultButtonText}
         dropdownIconPosition={"right"}
-        disabled={disabled}
         renderDropdownIcon={() => {
           return (
             <Ionicons name="chevron-down" color={colors.bareGrey} size={18} />
@@ -101,7 +100,6 @@ export default function MySelect({
         }}
         defaultButtonText={defaultButtonText}
         dropdownIconPosition={"right"}
-        disabled={disabled}
         renderDropdownIcon={() => {
           return (
             <Ionicons name="chevron-down" color={colors.bareGrey} size={18} />
@@ -143,7 +141,6 @@ export default function MySelect({
         }}
         defaultButtonText={defaultButtonText}
         dropdownIconPosition={"right"}
-        disabled
         renderDropdownIcon={() => {
           return (
             <Ionicons name="chevron-down" color={colors.bareGrey} size={18} />

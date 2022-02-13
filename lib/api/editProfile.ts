@@ -37,7 +37,6 @@ export const editProfile = async (
     formData.append("personality", editedProfileData.personality);
   (editedProfileData.drinkingStyle || editedProfileData.drinkingStyle === 0) &&
     formData.append("drinkingStyle", editedProfileData.drinkingStyle + "");
-  console.log(editedProfileData.code);
   return axiosclient.put<CreateAccountOutput>(
     editedProfileData.code
       ? `${BASE_URL}/user?code=${editedProfileData.code}`
