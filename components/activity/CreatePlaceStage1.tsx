@@ -236,10 +236,16 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
                 returnKeyType="next"
                 returnKeyLabel="next"
                 autoCorrect={false}
+                value={state.kakaoLink}
                 defaultValue={state.kakaoLink ? state.kakaoLink : ""}
                 onChange={(event) => {
                   const { eventCount, target, text } = event.nativeEvent;
-                  activityDispatcher.dispatchKakaoLink(text, dispatch);
+                  activityDispatcher.dispatchKakaoLink(
+                    //text.replace(/[^A-Za-z0-9/.]/g, ""),
+                    text,
+                    dispatch
+                  );
+
                   setOpenKakaoLinkError(
                     !text.startsWith("https://open.kakao.com/o/g")
                   );

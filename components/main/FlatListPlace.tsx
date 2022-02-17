@@ -65,7 +65,6 @@ export default function FlatListPlace({
   const { mutateAsync: mutateCancelReservation } = useMutation(
     cancelReservation
   );
-
   const onPress = () => {
     // @ts-ignore
     navigation.navigate("ActivityStackNav", {

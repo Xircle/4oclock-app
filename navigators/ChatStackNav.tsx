@@ -41,7 +41,7 @@ export default function ChatStackNav(props: Props) {
       <Stack.Screen
         name="ChatRoom"
         component={ChatRoom}
-        options={{ headerTitle: "채팅" }}
+        options={({ route }) => ({ title: route.params.senderName })}
       ></Stack.Screen>
     </Stack.Navigator>
   );

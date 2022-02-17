@@ -45,45 +45,17 @@ export default function Main(props: Props) {
   const queryClient = useQueryClient();
 
   const renderRegular = ({ item, index }) => {
-    if (!item.isClosed) {
-      if (index === 0) {
-        if (item.myTeam) {
-          return (
-            <>
-              <RegularDividorContainer>
-                <RegularDividorHeader>
-                  # 이번주 우리 팀 정기모임🔥
-                </RegularDividorHeader>
-                <RegularDividorMainText>
-                  이번주에 열린 우리 팀 정기모임 2개 중 하나를 선택해서
-                  참여해주세요!{"\n"} 선착순으로 마감되니 빨리 ㄱㄱ
-                </RegularDividorMainText>
-              </RegularDividorContainer>
-              <FlatListPlace
-                leftParticipantsCount={item.leftParticipantsCount}
-                coverImage={item.coverImage}
-                name={item.name}
-                id={item.id}
-                views={item.views}
-                description={item.placeDetail.description}
-                startDateFromNow={item.startDateFromNow}
-                deadline={item.deadline}
-                participants={item.participants}
-                isClosed={item.isClosed}
-              />
-            </>
-          );
-        }
-      } else if (temp[index - 1].myTeam !== temp[index].myTeam) {
+    if (index === 0) {
+      if (item.myTeam) {
         return (
           <>
             <RegularDividorContainer>
               <RegularDividorHeader>
-                # 지금 올라온 정기모임 🎉
+                # 이번주 우리 팀 정기모임🔥
               </RegularDividorHeader>
               <RegularDividorMainText>
-                이번주에 우리 팀 참여가 불가하다고?! 담당 운영진에게 연락을 주고
-                {"\n"}다른 팀 정기모임에 참여해봐!
+                이번주에 열린 우리 팀 정기모임 2개 중 하나를 선택해서
+                참여해주세요!{"\n"} 선착순으로 마감되니 빨리 ㄱㄱ
               </RegularDividorMainText>
             </RegularDividorContainer>
             <FlatListPlace
@@ -101,6 +73,36 @@ export default function Main(props: Props) {
           </>
         );
       }
+    } else if (
+      !item.isClosed &&
+      temp[index - 1].myTeam === true &&
+      temp[index].myTeam === false
+    ) {
+      return (
+        <>
+          <RegularDividorContainer>
+            <RegularDividorHeader>
+              # 지금 올라온 정기모임 🎉
+            </RegularDividorHeader>
+            <RegularDividorMainText>
+              이번주에 우리 팀 참여가 불가하다고?! 담당 운영진에게 연락을 주고
+              {"\n"}다른 팀 정기모임에 참여해봐!
+            </RegularDividorMainText>
+          </RegularDividorContainer>
+          <FlatListPlace
+            leftParticipantsCount={item.leftParticipantsCount}
+            coverImage={item.coverImage}
+            name={item.name}
+            id={item.id}
+            views={item.views}
+            description={item.placeDetail.description}
+            startDateFromNow={item.startDateFromNow}
+            deadline={item.deadline}
+            participants={item.participants}
+            isClosed={item.isClosed}
+          />
+        </>
+      );
     }
     return (
       <FlatListPlace
@@ -219,6 +221,7 @@ export default function Main(props: Props) {
     if (mainRegularData) {
       // @ts-ignore
       setTemp(mainRegularData.pages?.map((page) => page.places).flat());
+      //console.log(mainRegularData.pages?.map((page) => page.places).flat());
     }
   }, [mainRegularData]);
 
@@ -588,6 +591,13 @@ const MiddleTabText = styled(GeneralText)<{ isSelcted: boolean }>`
 `;
 
 const AnimWrapper = styled(Animated.createAnimatedComponent(FlatList))`
+  background-color: ${colors.bgColor};
+  width: 100%;
+  height: 100%;
+  position: absolute;
+`;
+
+const AnimWrapperView = styled(Animated.createAnimatedComponent(FlatList))`
   background-color: ${colors.bgColor};
   width: 100%;
   height: 100%;

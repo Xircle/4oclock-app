@@ -8,6 +8,8 @@ interface Props {
   onPress: () => void;
   disabled?: boolean;
   title: string;
+  left?: number;
+  bottom?: number;
 }
 
 const { width } = Dimensions.get("window");
@@ -16,9 +18,11 @@ export default function MainButtonWBg({
   onPress,
   disabled = false,
   title,
+  left,
+  bottom,
 }: Props) {
   return (
-    <Container>
+    <Container bottom={bottom}>
       <XLButton onPress={onPress} disabled={disabled}>
         <XLButtonText>{title}</XLButtonText>
       </XLButton>
@@ -26,10 +30,11 @@ export default function MainButtonWBg({
   );
 }
 
-const Container = styled.View`
+const Container = styled.View<{ left?: number; bottom?: number }>`
   background-color: ${colors.bgColor};
-  padding: ${width * 0.02 + "px"} ${width * 0.05 + "px"} ${width * 0.06 + "px"} ${width * 0.05 + "px"};
+  padding: ${width * 0.02 + "px"} ${width * 0.05 + "px"} ${width * 0.06 + "px"}
+    ${width * 0.05 + "px"};
   position: absolute;
-  left: 0;
-  bottom: 0;
+  left: ${(props) => (props.left ? props.left + "px" : 0)};
+  bottom: ${(props) => (props.bottom ? props.bottom + "px" : 0)};
 `;

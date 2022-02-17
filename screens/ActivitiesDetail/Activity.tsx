@@ -18,6 +18,7 @@ import AvatarUri from "../../components/UI/AvatarUri";
 import FastImage from "react-native-fast-image";
 import storage from "../../lib/helpers/myAsyncStorage";
 import { getUser } from "../../lib/api/getUser";
+import moment from "moment";
 
 interface Props {
   id: string;
@@ -36,9 +37,22 @@ export default function Activity({
   setModal,
   participants,
 }: Props) {
+  const weekDay = [
+    "일요일",
+    "월요일",
+    "화요일",
+    "수요일",
+    "목요일",
+    "금요일",
+    "토요일",
+  ];
   const navigation = useNavigation();
   const [Images, setImages] = useState([]);
-
+  const [isAdmin, setIsAdmin] = useState(false);
+  const setAccountType = async () => {
+    const accountType = await storage.getItem("accountType");
+    if (accountType === "Admin") setIsAdmin(true);
+  };
   // api
   const { data: activityData, isLoading } = useQuery<PlaceData | undefined>(
     ["place-detail", id],
@@ -99,8 +113,14 @@ export default function Activity({
       setImages(
         Array(activityData?.coverImage).concat(activityData?.subImages)
       );
+      console.log(activityData?.startDateAt);
+      console.log(moment(activityData?.startDateAt).format("YYYY년 MM월 DD일"));
     }
   }, [activityData]);
+
+  useEffect(() => {
+    setAccountType();
+  }, []);
   return (
     <Container>
       <MyBottomModal
@@ -109,9 +129,19 @@ export default function Activity({
         setModal={setModal}
         height={280}
       >
-        <ModalReportButton onPress={reportCTA}>
-          <ModalButtonText>작성자 차단하기</ModalButtonText>
-        </ModalReportButton>
+        {isAdmin ? (
+          <ModalBlueButton
+            onPress={() =>
+              openLink.LOpenLink(activityData.placeDetail.kakaoLink)
+            }
+          >
+            <ModalButtonText>운영진 - 오픈 채팅방 넘어가기</ModalButtonText>
+          </ModalBlueButton>
+        ) : (
+          <ModalReportButton onPress={reportCTA}>
+            <ModalButtonText>작성자 차단하기</ModalButtonText>
+          </ModalReportButton>
+        )}
         <ModalReportButton onPress={reportCTA}>
           <ModalButtonText>작성자 신고하기</ModalButtonText>
         </ModalReportButton>
@@ -212,6 +242,16 @@ export default function Activity({
               : "0"}{" "}
             명
           </InnerHeadingBlue>
+          {activityData?.participantsData?.maleCount !== undefined &&
+          activityData?.participantsData?.femaleCount !== undefined ? (
+            <GenderText>
+              남:{"  "}
+              {activityData?.participantsData?.maleCount}
+              {"    "}여:{"  "}
+              {activityData?.participantsData?.femaleCount}
+            </GenderText>
+          ) : null}
+
           <UsernameContainer>
             {participants?.map((item, index) => {
               if (item.profileImgUrl) {
@@ -245,8 +285,13 @@ export default function Activity({
             <InfoWrapper>
               <Ionicons name="alarm-outline" size={32} color={colors.midGrey} />
               <InnerSubText>
-                {activityData?.startDateFromNow
-                  ? getStartDateFromNow(activityData.startDateFromNow)
+                {activityData?.startDateAt
+                  ? moment(activityData?.startDateAt).month() +
+                    1 +
+                    "월 " +
+                    moment(activityData?.startDateAt).date() +
+                    "일 " +
+                    weekDay[moment(activityData?.startDateAt).day()]
                   : ""}
               </InnerSubText>
             </InfoWrapper>
@@ -332,6 +377,10 @@ const ModalReportButton = styled(ModalButton)`
   height: 50px;
 `;
 
+const ModalBlueButton = styled(ModalReportButton)`
+  background-color: ${colors.mainBlue};
+`;
+
 const Container = styled.View`
   flex: 1;
   position: relative;
@@ -399,6 +448,12 @@ const InnerSubText = styled(GeneralText)`
   color: ${colors.midGrey};
   font-family: ${fontFamilies.medium};
   margin-left: 22px;
+`;
+
+const GenderText = styled(InnerSubText)`
+  margin-left: 0;
+  margin-top: 15px;
+  font-size: 18px;
 `;
 
 const InfoContainer = styled.View`

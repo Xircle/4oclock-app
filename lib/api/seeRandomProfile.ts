@@ -14,6 +14,7 @@ export const seeRandomProfile = async (
       }
     );
     if (!data.ok) {
+      console.log(data);
       throw new Error(data.error);
     }
     return data.randomProfile;

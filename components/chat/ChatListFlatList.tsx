@@ -7,6 +7,7 @@ import AvatarUri from "../UI/AvatarUri";
 import { ConvertSentTimeForList } from "../../lib/utils";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
 
 interface Props {
   lastMessage: IMessageRoom;
@@ -24,23 +25,33 @@ export default function ChatListFlatList({
   const navigation = useNavigation();
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() =>
-        // @ts-ignore
-        navigation.navigate("ChatStackNav", {
-          screen: "ChatRoom",
-          params: {
-            senderName: receiver.username,
-            senderId: receiver.id,
-            roomId: roomId,
-          },
-        })
-      }
-    >
-      <Container>
+    <Container>
+      <TouchableOpacity
+        onPress={() =>
+          //@ts-ignore
+          navigation.navigate("FriendProfile", {
+            id: receiver.id,
+          })
+        }
+      >
         <LeftContainer>
           <AvatarUri size={60} source={receiver.profileImageUrl} isSmall />
         </LeftContainer>
+      </TouchableOpacity>
+      <TouchableWithoutFeedback
+        onPress={() =>
+          // @ts-ignore
+          navigation.navigate("ChatStackNav", {
+            screen: "ChatRoom",
+            params: {
+              senderName: receiver.username,
+              senderId: receiver.id,
+              roomId: roomId,
+            },
+          })
+        }
+        style={{ flex: 1 }}
+      >
         <RightContainer>
           <TopRightContainer>
             <NameContainer>
@@ -55,8 +66,8 @@ export default function ChatListFlatList({
               : "새로운 메세지가 도착했습니다"}
           </MessageText>
         </RightContainer>
-      </Container>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </Container>
   );
 }
 

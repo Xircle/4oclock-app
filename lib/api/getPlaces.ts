@@ -33,6 +33,8 @@ export const getPlacesRegular = async ({
   const axiosclient = await AxiosClient();
   const token = await storage.getItem("token");
   const team = await storage.getItem("team");
+  console.log(team);
+
   if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
     team
@@ -47,6 +49,7 @@ export const getPlacesRegular = async ({
   if (!data.ok) {
     throw new Error(data.error);
   }
+  //console.log(data);
   return data;
 };
 
@@ -67,6 +70,7 @@ export const getPlacesAll = async ({
   if (!data.ok) {
     throw new Error(data.error);
   }
+
   return data;
 };
 
@@ -107,6 +111,7 @@ export const getPlacesLightning = async ({
   if (!data.ok) {
     throw new Error(data.error);
   }
+
   return data;
 };
 

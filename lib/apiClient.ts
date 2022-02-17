@@ -7,11 +7,8 @@ const host =
     ? process.env.REACT_APP_PRODUCTION_API_SERVER
     : process.env.REACT_APP_PRODUCTION_API_SERVER;
 
-
-
 const giveApiClient = async () => {
   const token = await storage.getItem("token");
-
   const targetApiClient = axios.create({
     withCredentials: true,
     headers: {

@@ -17,6 +17,7 @@ export default function AvatarUri({ size, source, isSmall }: Props) {
           uri: optimizeImage(source, { width: size, height: size }, isSmall),
         }}
         size={size}
+        defaultSource={require("../../statics/images/anonymous_user.png")}
       />
     );
   } else {
