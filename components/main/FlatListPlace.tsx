@@ -5,6 +5,7 @@ import {
   colors,
   fontFamilies,
   GeneralText,
+  BigTextInput,
 } from "../../styles/styles";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -105,42 +106,29 @@ export default function FlatListPlace({
             setModal={() => setCancelModal(false)}
             height={startDateFromNow?.startsWith("오늘") ? 300 : 500}
           >
-            {startDateFromNow?.startsWith("오늘") ? (
-              <ModalWrapper>
-                <ModalHeading>모임 당일에는 취소가 불가능합니다</ModalHeading>
-                <ModalInstruction>
-                  다른 크루분들을 위해 모임 당일 취소를 불가하는 방침을 가지고
-                  있습니다.{"\n"}불가피한 상황일 경우에만 (ex.코로나) 운영진께
-                  문의 부탁드립니다.
-                </ModalInstruction>
-                <ModalCloseButton onPress={() => setCancelModal(false)}>
-                  <ModalCloseButtonText>닫기</ModalCloseButtonText>
-                </ModalCloseButton>
-              </ModalWrapper>
-            ) : (
-              <ModalWrapper>
-                <ModalHeading>{name}</ModalHeading>
-                <CancelReservationContainer
-                  showsVerticalScrollIndicator={false}
-                >
-                  <CancelSubHeading>사유</CancelSubHeading>
-                  <STextArea
-                    placeholder="친구들과 함께 놀러갈 곳 이름을 적어줘!"
-                    autoCapitalize="none"
-                    multiline={true}
-                    autoCorrect={false}
-                    defaultValue={""}
-                    onChange={(event) => {
-                      const { eventCount, target, text } = event.nativeEvent;
-                      setCancelReason(text);
-                    }}
-                  />
-                </CancelReservationContainer>
-                <ModalCloseButton onPress={CancelReservation}>
-                  <ModalCloseButtonText>취소하기</ModalCloseButtonText>
-                </ModalCloseButton>
-              </ModalWrapper>
-            )}
+            <ModalWrapper>
+              <ModalHeading>{name}</ModalHeading>
+              <CancelReservationContainer showsVerticalScrollIndicator={false}>
+                <CancelSubHeading>사유</CancelSubHeading>
+                <SBigTextInput
+                  placeholder="[당일 취소 2번이상은 영구탈퇴입니다]
+                  취소를 잘 생각하고 해주세요
+                  모임 취소는 함께 모임에 놀러가는 친구들에게 좋은 매너가 아닙니다.
+                  자신의 모임에 대해서 다른 친구들을 위해서라도 책임감을 느껴주세요"
+                  autoCapitalize="none"
+                  multiline={true}
+                  autoCorrect={false}
+                  defaultValue={""}
+                  onChange={(event) => {
+                    const { eventCount, target, text } = event.nativeEvent;
+                    setCancelReason(text);
+                  }}
+                />
+              </CancelReservationContainer>
+              <ModalCloseButton onPress={CancelReservation}>
+                <ModalCloseButtonText>취소하기</ModalCloseButtonText>
+              </ModalCloseButton>
+            </ModalWrapper>
           </MyBottomModal>
         )}
 
@@ -236,8 +224,9 @@ const ModalButton = styled.TouchableOpacity`
   justify-content: center;
 `;
 
-const STextArea = styled(TextArea)`
+const SBigTextInput = styled(BigTextInput)`
   margin-top: 20px;
+  max-width: 100%;
   height: 150px;
 `;
 

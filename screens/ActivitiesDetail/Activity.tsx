@@ -113,8 +113,6 @@ export default function Activity({
       setImages(
         Array(activityData?.coverImage).concat(activityData?.subImages)
       );
-      console.log(activityData?.startDateAt);
-      console.log(moment(activityData?.startDateAt).format("YYYY년 MM월 DD일"));
     }
   }, [activityData]);
 
