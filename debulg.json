@@ -1,70 +1,90 @@
 {
-  "coverImage": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-fb5fc0b3-f936-44ed-a75a-8f2f90c3763a-1642336732019-rn_image_picker_lib_temp_3f717948-a74e-428f-8e20-a5b4b3ff5fec.jpg",
-  "createdAt": "2022-01-16T03:38:52.120Z",
-  "id": "2d23dd3f-7260-4836-86d9-49a62ed5d235",
+  "coverImage": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-3d6440f2-41d3-49ad-b4bc-fd0505130fb4-1644845409829-BE608481-F8A0-4AC3-9C04-0759E52BA976.png",
+  "createdAt": "2022-02-14T04:30:09.973Z",
+  "id": "a23a562d-520d-4449-8c7b-f457b43a6929",
   "isClosed": true,
   "isParticipating": false,
-  "kakaoPlaceId": "26902347",
+  "kakaoPlaceId": "21160531",
   "location": "전체",
-  "name": "춘자ㄱㄱ",
+  "name": "화요일 신촌에서 맛있는거 드실분!",
   "oneLineIntroText": "",
   "participants": [
     {
-      "age": 21,
+      "age": 22,
       "gender": "Male",
       "isYkClub": true,
-      "job": "댕댕이 집사",
-      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-fb5fc0b3-f936-44ed-a75a-8f2f90c3763a-1633782796317-1633782659188.jpg",
-      "shortBio": "강아지🐶나 고양이🐱 사진 보여주면 경계심 완전 풀어요. 세상에 나쁜 집사는 없다",
-      "userId": "fb5fc0b3-f936-44ed-a75a-8f2f90c3763a"
+      "job": "19학번 새내기",
+      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-4b54be2e-218a-4a28-a6c8-36a75803e6c1-1644841820848-343824E7-EC70-4E1C-BB6C-122E02B734BD.jpg",
+      "shortBio": "다양한 사람 많이 만나보고 싶습니다.",
+      "userId": "4b54be2e-218a-4a28-a6c8-36a75803e6c1"
+    },
+    {
+      "age": 20,
+      "gender": "Male",
+      "isYkClub": true,
+      "job": "공대 새내기!!",
+      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-0-1644829498666-B5B8325E-5B5D-43D6-972F-C8D3BD5F29F9.jpg",
+      "shortBio": "저는 패션에 관심이 많아서 옷도 좋아하고 사진 찍으러 다니는 걸 좋아합니다!",
+      "userId": "d0145239-c386-4db1-9f5e-2c15b9727c44"
     },
     {
       "age": 24,
       "gender": "Male",
       "isYkClub": true,
-      "job": "대학생",
-      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-5c0ce336-55ab-4d78-806a-fbfec0d4b390-1642172397154-rn_image_picker_lib_temp_3269524a-a9ba-46c2-aac7-76308d545d7b.jpg",
-      "shortBio": "맛집 탐방에 진심인 사람입니다~~! 술도 즐기고 사람만나는거 좋아해요 같이 즐겁게 대화해요!!",
-      "userId": "5c0ce336-55ab-4d78-806a-fbfec0d4b390"
+      "job": "생공 18화석",
+      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-0-1644835902968-84D64242-7458-41A9-A7F0-385EF3D3C8F3.jpg",
+      "shortBio": "안녕하세요~ 연세대학교 18학번 입니다! 앞으로 즐거운 자리 통해서 많이 친해졌으면 좋겠어요!",
+      "userId": "bc4377b0-ae85-4eb4-97ac-58cd35da12f4"
     },
     {
-      "age": 23,
+      "age": 22,
       "gender": "Female",
       "isYkClub": true,
-      "job": "노는게제일좋아",
-      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-0-1641808548179-19215BCC-3019-49CA-A1E9-1E8CC4DAB243.jpg",
-      "shortBio": "미개봉중고",
-      "userId": "7ff8720b-626b-40be-af3a-661a97e3661f"
+      "job": "보건계열 20학번",
+      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-0-1644826584192-E85048F0-F17E-4453-8530-FAB6DF4CE8CE.jpg",
+      "shortBio": "안녕하세용 맛있는 거 좋아합니다 잘 부탁드려용 ♡",
+      "userId": "d25ab13b-d59a-47a2-9d55-d65ec2ef2356"
     },
     {
-      "age": 23,
-      "gender": "Female",
+      "age": 25,
+      "gender": "Male",
       "isYkClub": true,
-      "job": ".",
-      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-0-1642335070840-BD8AE1BE-04D5-41B4-AE2D-C6E94BB095D8.jpg",
-      "shortBio": "안녕하세요 !",
-      "userId": "444e0c87-e4cd-4977-a7d7-d0dc6b18d1e4"
+      "job": "공대생",
+      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-0-1644827027110-F2DC10B5-302D-4937-963A-2568DC1D6529.jpg",
+      "shortBio": "안녕하세요! 재밌게 대화하면서 친구하고 싶어요🤗",
+      "userId": "57376671-b8b2-45ba-bf35-1619d6fc258f"
+    },
+    {
+      "age": 20,
+      "gender": "Male",
+      "isYkClub": true,
+      "job": "노는게 제일 좋은 새내기입니다!",
+      "profileImgUrl": "https://xircle-profile-upload.s3.ap-northeast-2.amazonaws.com/uploads/-2120250190-1644846502916-rn_image_picker_lib_temp_08400b41-f342-47ff-8454-5e7e8f97747d.jpg",
+      "shortBio": "누구보다 대학생활을 즐기고픈 새내기입니다!!ㅎㅎㅎ",
+      "userId": "af2850db-a0de-4813-9f6d-9c98d7a355a0"
     }
   ],
-  "participantsData": { "leftParticipantsCount": 3, "participantsCount": 4 },
+  "participantsData": { "leftParticipantsCount": 0, "participantsCount": 6 },
   "placeDetail": {
     "categories": null,
-    "createdAt": "2022-01-16T03:38:52.120Z",
-    "description": "적셔적셔~먹고죽어~",
-    "detailAddress": "서울 성북구 안암동5가 104-127",
+    "createdAt": "2022-02-14T04:30:09.973Z",
+    "description": "화욜 (내일) 신촌에서 맛있는 안주와 술 먹을 사람 구합니다! ",
+    "detailAddress": "서울 마포구 노고산동 31-11",
     "detailLink": "",
-    "id": "f5625abb-81fa-4929-a6c3-8a8bb14a28e1",
-    "maxParticipantsNumber": 7,
+    "id": "de5337ef-3f43-48bd-a150-5fd6e1d0e905",
+    "kakaoLink": "https://open.kakao.com/o/gutW02Zd",
+    "maxParticipantsNumber": 6,
     "participationFee": 0,
-    "place_id": "2d23dd3f-7260-4836-86d9-49a62ed5d235",
+    "place_id": "a23a562d-520d-4449-8c7b-f457b43a6929",
     "title": null,
-    "updatedAt": "2022-01-16T03:38:52.120Z"
+    "updatedAt": "2022-02-14T04:30:09.973Z"
   },
   "placeType": "Lightning",
-  "recommendation": null,
-  "startDateAt": "2022-01-23T08:00:00.000Z",
-  "startDateFromNow": "이번주 일요일 17",
+  "recommendation": "모든",
+  "startDateAt": "2022-02-15T08:30:57.000Z",
+  "startDateFromNow": "마감",
   "subImages": [],
-  "updatedAt": "2022-01-16T21:21:32.897Z",
-  "views": 163
+  "team": null,
+  "updatedAt": "2022-02-16T20:22:07.428Z",
+  "views": 621
 }
