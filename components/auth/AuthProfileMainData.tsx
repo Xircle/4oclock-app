@@ -54,7 +54,7 @@ export default function AuthProfileMainData({
         간단한 프로필 만들기 🕺
       </MainHeading>
       <SBigTextInput
-        placeholder="이름을 적어줘!"
+        placeholder="본명을 적어줘!"
         autoCapitalize="none"
         blurOnSubmit={true}
         returnKeyType="next"

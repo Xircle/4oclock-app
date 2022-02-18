@@ -10,7 +10,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { Alert, TouchableWithoutFeedback } from "react-native";
-import { getStartDateFromNow } from "../../lib/utils";
 import ReviewButton from "../profile/ReviewButton";
 import { openLink } from "../shared/Links";
 import optimizeImage from "../../lib/helpers/optimizeImage";
@@ -104,7 +103,7 @@ export default function FlatListPlace({
             onClose={() => {}}
             visible={cancelModal}
             setModal={() => setCancelModal(false)}
-            height={startDateFromNow?.startsWith("오늘") ? 300 : 500}
+            height={500}
           >
             <ModalWrapper>
               <ModalHeading>{name}</ModalHeading>
@@ -155,7 +154,7 @@ export default function FlatListPlace({
         </LeftContainer>
         <RightContiner>
           <SpaceBetweenContainer>
-            <TimeText>{getStartDateFromNow(startDateFromNow)}</TimeText>
+            <TimeText>{startDateFromNow}</TimeText>
             {views ? (
               <ViewContainer>
                 <ViewText>
