@@ -33,7 +33,6 @@ export const getPlacesRegular = async ({
   const axiosclient = await AxiosClient();
   const token = await storage.getItem("token");
   const team = await storage.getItem("team");
-  console.log(team);
 
   if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(

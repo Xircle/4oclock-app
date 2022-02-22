@@ -5,7 +5,7 @@ import React from "react";
 import { getMyPlaces } from "../../lib/api/getMyPlaces";
 import { colors } from "../../styles/styles";
 import { ScrollView } from "react-native-gesture-handler";
-import FlatListPlace, { Purpose } from "../../components/main/FlatListPlace";
+import MyPageFlatlistPlace from "../../components/profile/MyPageFlatlistPlace";
 
 interface Props {}
 
@@ -22,14 +22,13 @@ export default function MyActivities(props: Props) {
         <ScrollView showsVerticalScrollIndicator={false}>
           {myPlacesData?.map((item, index) => {
             return (
-              <FlatListPlace
+              <MyPageFlatlistPlace
                 key={index}
                 coverImage={item.coverImage}
                 name={item.name}
                 id={item.id}
                 startDateFromNow={item.startDateFromNow}
                 description={item.description}
-                purpose={Purpose.mypage}
                 refetch={refetch}
                 isRefetch={true}
                 kakaoPlaceId={item.kakaoPlaceId}
