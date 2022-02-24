@@ -1,5 +1,9 @@
 import styled from "styled-components/native";
+<<<<<<< HEAD
 import React, { useState } from "react";
+=======
+import React, { memo, useEffect, useState } from "react";
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
 import {
   TextArea,
   colors,
@@ -49,11 +53,20 @@ function MainFlatListPlace({
   views,
   description,
   startDateFromNow,
+<<<<<<< HEAD
+=======
+  deadline,
+  leftParticipantsCount,
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
   purpose = Purpose.mypage,
   refetch,
   isRefetch,
   participants,
   kakaoPlaceId,
+<<<<<<< HEAD
+=======
+  isClosed,
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
 }: Props) {
   const navigation = useNavigation();
   const [cancelModal, setCancelModal] = useState(false);
@@ -88,6 +101,11 @@ function MainFlatListPlace({
     }
   };
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
   const writeReview = async (kid: string) => {
     await openLink.LWriteReview(kid);
   };
@@ -131,11 +149,15 @@ function MainFlatListPlace({
         <LeftContainer>
           <CoverImage
             source={{
+<<<<<<< HEAD
               uri: optimizeImage(coverImage, {
                 width: 130,
                 height: 130,
                 quality: 10,
               }),
+=======
+              uri: optimizeImage(coverImage, { width: 130, height: 130 }),
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
               priority: FastImage.priority.high,
             }}
           />
@@ -165,12 +187,16 @@ function MainFlatListPlace({
               if (index < 4) {
                 return (
                   <AvartarWrapper key={item.userId}>
+<<<<<<< HEAD
                     <AvatarUri
                       source={item.profileImgUrl}
                       size={38}
                       quality={10}
                       isSmall
                     />
+=======
+                    <AvatarUri source={item.profileImgUrl} size={38} isSmall />
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
                   </AvartarWrapper>
                 );
               }
@@ -248,6 +274,11 @@ const ModalHeading = styled(GeneralText)`
   font-size: 24px;
 `;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
 const CancelButton = styled.TouchableOpacity`
   align-items: center;
 `;
@@ -256,6 +287,10 @@ const CancelText = styled(GeneralText)`
   color: ${colors.warningRed};
 `;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
 const AvatarNumText = styled(GeneralText)`
   color: ${colors.lightBlack};
   margin-left: 10px;
@@ -271,12 +306,23 @@ const AvartarWrapper = styled.View`
   margin-left: -5px;
 `;
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
 const BottomRightFixedContainer = styled.View`
   position: absolute;
   bottom: 0;
   right: 0;
 `;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
 const ViewContainer = styled.View`
   flex-direction: row;
   align-items: center;

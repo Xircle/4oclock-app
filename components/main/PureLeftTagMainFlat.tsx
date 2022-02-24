@@ -12,7 +12,6 @@ export default class PureLeftTagMainFlat extends PureComponent<Props> {
     super(props);
   }
 
-  componentDidMount() {}
 
   render() {
     if (this.props.isClosed) {

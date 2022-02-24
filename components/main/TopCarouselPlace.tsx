@@ -113,7 +113,6 @@ const TextContainer = styled.View`
   bottom: 20px;
 `;
 
-const TextWrapper = styled.View``;
 
 const NameText = styled(GeneralText)`
   color: ${colors.bgColor};

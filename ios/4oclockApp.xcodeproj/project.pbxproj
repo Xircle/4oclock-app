@@ -309,7 +309,11 @@
 				CODE_SIGN_ENTITLEMENTS = 4oclockApp/4oclockApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+<<<<<<< HEAD
 				CURRENT_PROJECT_VERSION = 13;
+=======
+				CURRENT_PROJECT_VERSION = 1;
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
 				DEVELOPMENT_TEAM = 7XHHV6M63Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -326,7 +330,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+<<<<<<< HEAD
 				MARKETING_VERSION = 1.31;
+=======
+				MARKETING_VERSION = 1.30;
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -352,7 +360,11 @@
 				CODE_SIGN_ENTITLEMENTS = 4oclockApp/4oclockAppRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+<<<<<<< HEAD
 				CURRENT_PROJECT_VERSION = 13;
+=======
+				CURRENT_PROJECT_VERSION = 1;
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
 				DEVELOPMENT_TEAM = 7XHHV6M63Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -364,7 +376,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+<<<<<<< HEAD
 				MARKETING_VERSION = 1.31;
+=======
+				MARKETING_VERSION = 1.30;
+>>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

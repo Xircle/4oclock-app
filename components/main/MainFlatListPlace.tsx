@@ -81,6 +81,8 @@ function MainFlatListPlace({
 
 export default MainFlatListPlace;
 
+
+
 const BottomRightFixedContainer = styled.View`
   position: absolute;
   bottom: 0;
