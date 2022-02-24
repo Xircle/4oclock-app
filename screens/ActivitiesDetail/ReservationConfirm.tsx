@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   colors,
   fontFamilies,
@@ -11,7 +11,6 @@ import {
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { ActivityStackParamList } from "../../navigators/ActivityStackNav";
 import { Ionicons } from "@expo/vector-icons";
-import { getStartDateFromNow, TimeNumberToString } from "../../lib/utils";
 import { openLink } from "../../components/shared/Links";
 import { SafeAreaView } from "react-native";
 
@@ -26,6 +25,10 @@ export default function ReservationConfirm({ route }: Props) {
     // @ts-ignore
     navigation.navigate("MainT");
   };
+
+  useEffect(() => {
+    openLink.LOpenLink(route.params?.kakaoLink);
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bgColor }}>
@@ -50,7 +53,7 @@ export default function ReservationConfirm({ route }: Props) {
               <Ionicons name="alarm-outline" size={32} color={colors.midGrey} />
               <InnerSubText>
                 {route.params?.startDateFromNow
-                  ? getStartDateFromNow(route.params.startDateFromNow)
+                  ? route.params.startDateFromNow
                   : ""}
               </InnerSubText>
             </DetailWrapper>
@@ -71,6 +74,10 @@ export default function ReservationConfirm({ route }: Props) {
           </DetailContainer>
         </Wrapper>
         <BottomButtonContainer>
+          <XLButton onPress={goMain} disabled={false} bgColor={colors.bareGrey}>
+            <XLButtonText>홈으로 돌아가기</XLButtonText>
+          </XLButton>
+          <SpaceForBottom />
           {route.params?.kakaoLink && (
             <XLButton
               onPress={() => openLink.LOpenLink(route.params?.kakaoLink)}
@@ -79,11 +86,6 @@ export default function ReservationConfirm({ route }: Props) {
               <XLButtonText>오픈 채팅 입장하기</XLButtonText>
             </XLButton>
           )}
-
-          <SpaceForBottom />
-          <XLButton onPress={goMain} disabled={false} bgColor={colors.bareGrey}>
-            <XLButtonText>홈으로 돌아가기</XLButtonText>
-          </XLButton>
         </BottomButtonContainer>
       </Container>
     </SafeAreaView>

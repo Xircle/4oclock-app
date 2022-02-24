@@ -84,6 +84,16 @@ export default function MyPage(props: Props) {
               </TouchableOpacity>
             )}
             <ProfileInnerContainer>
+              {userData?.isYkClub && (
+                <RoleTag>
+                  {userData?.accountType === "Admin"
+                    ? "운영진"
+                    : userData?.accountType === "Owner"
+                    ? "리더"
+                    : "크루"}
+                </RoleTag>
+              )}
+
               <GeneralText style={{ fontWeight: "600", lineHeight: 28 }}>
                 {userData?.username || ""}
               </GeneralText>
@@ -159,6 +169,10 @@ export default function MyPage(props: Props) {
     </Wrapper>
   );
 }
+
+const RoleTag = styled(GeneralText)`
+  color: #9400d1;
+`;
 
 const Container = styled.View`
   flex: 1;

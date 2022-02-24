@@ -6,17 +6,18 @@ interface options {
   quality?: number;
 }
 export default function optimizeImage(
-  url: string,
+  url: string | undefined,
   resizeOptions?: options,
   isSmallAvatar?: boolean
 ): string {
+  if (!url) return "";
   if (url.startsWith("http:")) {
     if (isSmallAvatar && url.endsWith("640.jpg")) {
       return "https:" + url.slice(5, -11) + "110x110.jpg";
     }
     return "https:" + url.slice(5);
   }
-  if (!url) return "";
+
   if (!url.startsWith(IMAGE_ORIGIN!)) return url;
   if (url.endsWith(".svg")) return url;
 

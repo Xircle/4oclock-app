@@ -14,6 +14,16 @@ const StartDays = [
   "일요일",
 ];
 
+const weekDay = [
+  "일요일",
+  "월요일",
+  "화요일",
+  "수요일",
+  "목요일",
+  "금요일",
+  "토요일",
+];
+
 export function AgeNumberToString(age: number): string {
   if (age === 0) {
     return "미정";
@@ -175,19 +185,6 @@ export const ModifyStringToStringArray = (
 
 // }
 
-export const getStartDateFromNow = (startDateFromNow: string) => {
-  if (startDateFromNow === "마감") return startDateFromNow;
-  const words = startDateFromNow.split(" ");
-  const point = startDateFromNow.lastIndexOf(" ");
-
-  const hourBase24Num = Number(words[words.length - 1]);
-  const hourBse12String =
-    hourBase24Num < 12
-      ? "오전 " + hourBase24Num
-      : "오후 " + (hourBase24Num - 12);
-  return startDateFromNow.substr(0, point).concat(" ", hourBse12String) + " 시";
-};
-
 export const convertTimeCA = (date: Date) => {
   if (date.getMinutes() % 30 !== 0) return "";
   const hours =
@@ -204,4 +201,19 @@ export const convertTimeCA = (date: Date) => {
     date.getMinutes() +
     "분"
   );
+};
+
+
+
+export const displayMeetingTime = (timeString : string) => {
+  const noonDefined = moment(timeString).hour() > 11 ? '오후 ' : '오전 '
+  const hour = moment(timeString).hour() > 12 ? moment(timeString).hour() - 12 : moment(timeString).hour();
+  // moment(activityData?.startDateAt).month() +
+  //                 1 +
+  //                 "월 " +
+  //                 moment(activityData?.startDateAt).date() +
+  //                 "일 " +
+  //                 weekDay[moment(activityData?.startDateAt).day()]
+  //               : ""
+  return moment(timeString).month() + 1 + "월 " + moment(timeString).date() + "일 " + weekDay[moment(timeString).day()] + " " + noonDefined + hour + "시"
 };

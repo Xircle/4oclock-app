@@ -11,15 +11,8 @@ export const getPlacesForCarousel = async (
   limit: number = 10
 ): Promise<GetPlacesByLocationOutput | undefined> => {
   const axiosclient = await AxiosClient();
-  const token = await storage.getItem("token");
-  if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
-    `${BASE_URL}/place?location=${selectedLocation}&page=${page}&limit=${limit}&placeType=All`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    `${BASE_URL}/place?location=${selectedLocation}&page=${page}&limit=${limit}&placeType=All`
   );
   if (!data.ok) {
     throw new Error(data.error);
@@ -31,20 +24,12 @@ export const getPlacesRegular = async ({
   pageParam,
 }): Promise<GetPlacesByLocationOutput | undefined> => {
   const axiosclient = await AxiosClient();
-  const token = await storage.getItem("token");
   const team = await storage.getItem("team");
-  console.log(team);
 
-  if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
     team
       ? `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Regular-meeting&team=${team}`
-      : `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Regular-meeting`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+      : `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Regular-meeting`
   );
   if (!data.ok) {
     throw new Error(data.error);
@@ -57,15 +42,8 @@ export const getPlacesAll = async ({
   pageParam,
 }): Promise<GetPlacesByLocationOutput | undefined> => {
   const axiosclient = await AxiosClient();
-  const token = await storage.getItem("token");
-  if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
-    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=All`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=All`
   );
   if (!data.ok) {
     throw new Error(data.error);
@@ -78,15 +56,8 @@ export const getPlacesEvent = async ({
   pageParam,
 }): Promise<GetPlacesByLocationOutput | undefined> => {
   const axiosclient = await AxiosClient();
-  const token = await storage.getItem("token");
-  if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
-    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Event`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Event`
   );
   if (!data.ok) {
     throw new Error(data.error);
@@ -98,15 +69,8 @@ export const getPlacesLightning = async ({
   pageParam,
 }): Promise<GetPlacesByLocationOutput | undefined> => {
   const axiosclient = await AxiosClient();
-  const token = await storage.getItem("token");
-  if (!token) return;
   const { data } = await axiosclient.get<GetPlacesByLocationOutput>(
-    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Lightning`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    `${BASE_URL}/place?location=전체&page=${pageParam}&limit=5&placeType=Lightning`
   );
   if (!data.ok) {
     throw new Error(data.error);

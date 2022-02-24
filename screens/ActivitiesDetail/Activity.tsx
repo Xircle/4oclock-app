@@ -11,7 +11,6 @@ import { getPlaceById } from "../../lib/api/getPlaceById";
 import MainButtonWBg from "../../components/UI/MainButtonWBg";
 import Swiper from "react-native-swiper";
 import { LinearGradient } from "expo-linear-gradient";
-import { getStartDateFromNow } from "../../lib/utils";
 import MyBottomModal from "../../components/UI/MyBottomModal";
 import { openLink } from "../../components/shared/Links";
 import AvatarUri from "../../components/UI/AvatarUri";
@@ -19,6 +18,7 @@ import FastImage from "react-native-fast-image";
 import storage from "../../lib/helpers/myAsyncStorage";
 import { getUser } from "../../lib/api/getUser";
 import moment from "moment";
+import { displayMeetingTime } from "../../lib/utils";
 
 interface Props {
   id: string;
@@ -37,15 +37,6 @@ export default function Activity({
   setModal,
   participants,
 }: Props) {
-  const weekDay = [
-    "일요일",
-    "월요일",
-    "화요일",
-    "수요일",
-    "목요일",
-    "금요일",
-    "토요일",
-  ];
   const navigation = useNavigation();
   const [Images, setImages] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -73,6 +64,13 @@ export default function Activity({
       retry: 1,
     }
   );
+
+  useEffect(() => {
+    if (activityData) {
+      console.log(moment(activityData.startDateAt).hour());
+      console.log(activityData.startDateAt);
+    }
+  }, [activityData]);
 
   const onPressMain = async (): Promise<void> => {
     if (activityData?.placeType === "Regular-meeting") {
@@ -266,6 +264,7 @@ export default function Activity({
                       <AvatarUri
                         source={item.profileImgUrl}
                         size={45}
+                        quality={10}
                         isSmall
                       />
                     </TouchableOpacity>
@@ -284,12 +283,7 @@ export default function Activity({
               <Ionicons name="alarm-outline" size={32} color={colors.midGrey} />
               <InnerSubText>
                 {activityData?.startDateAt
-                  ? moment(activityData?.startDateAt).month() +
-                    1 +
-                    "월 " +
-                    moment(activityData?.startDateAt).date() +
-                    "일 " +
-                    weekDay[moment(activityData?.startDateAt).day()]
+                  ? displayMeetingTime(activityData?.startDateAt)
                   : ""}
               </InnerSubText>
             </InfoWrapper>
@@ -325,11 +319,11 @@ export default function Activity({
       </ScrollView>
       <MainButtonWBg
         title={
-          activityData?.isClosed ||
-          activityData?.participantsData?.leftParticipantsCount === 0
-            ? "마감된 모임입니다"
-            : activityData?.isParticipating
+          activityData?.isParticipating
             ? "오픈 채팅방 넘어가기"
+            : activityData?.isClosed ||
+              activityData?.participantsData?.leftParticipantsCount === 0
+            ? "마감된 모임입니다"
             : "나도 놀러갈래! 😚"
         }
         onPress={
@@ -338,8 +332,9 @@ export default function Activity({
             : onPressMain
         }
         disabled={
-          activityData?.isClosed ||
-          activityData?.participantsData?.leftParticipantsCount === 0
+          !activityData?.isParticipating &&
+          (activityData?.isClosed ||
+            activityData?.participantsData?.leftParticipantsCount === 0)
         }
       />
     </Container>

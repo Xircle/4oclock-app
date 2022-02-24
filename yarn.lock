@@ -5094,6 +5094,13 @@
   "resolved" "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-4.3.0.tgz"
   "version" "4.3.0"
 
+"react-native-optimized-flatlist@^1.0.4":
+  "integrity" "sha512-PMoZRJAHKzd/ahYKUzt43AJ+kVhHpOSTvBhJdQqooZXw312xADWpR7iDvBAbBiRGkmk0yM4GJacd9TMft6q/Gg=="
+  "resolved" "https://registry.npmjs.org/react-native-optimized-flatlist/-/react-native-optimized-flatlist-1.0.4.tgz"
+  "version" "1.0.4"
+  dependencies:
+    "prop-types" "^15.6.0"
+
 "react-native-permissions@^3.1.0":
   "integrity" "sha512-Y/kAU8cUTNhX5CLxfAG96ItEjjmwvyqnVBie38Gj8HoomXQcKM+ToFmq/rPt+DOziCq7YFKinn9AIlnLBiV3AQ=="
   "resolved" "https://registry.npmjs.org/react-native-permissions/-/react-native-permissions-3.1.0.tgz"

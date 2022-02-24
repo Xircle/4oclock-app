@@ -35,7 +35,12 @@ export default function ChatListFlatList({
         }
       >
         <LeftContainer>
-          <AvatarUri size={60} source={receiver.profileImageUrl} isSmall />
+          <AvatarUri
+            size={60}
+            source={receiver.profileImageUrl}
+            quality={10}
+            isSmall
+          />
         </LeftContainer>
       </TouchableOpacity>
       <TouchableWithoutFeedback

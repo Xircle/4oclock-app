@@ -1,33 +1,29 @@
 import styled from "styled-components/native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Dimensions, Animated, FlatList, SafeAreaView } from "react-native";
-import { colors, fontFamilies, GeneralText, Text } from "../styles/styles";
-import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
+import { colors, fontFamilies, GeneralText } from "../styles/styles";
+import { useInfiniteQuery, useQueryClient } from "react-query";
 import { GetPlacesByLocationOutput, PlaceFeedData } from "../lib/api/types";
 import {
   getPlacesEvent,
-  getPlacesForCarousel,
   getPlacesLightning,
   getPlacesRegular,
 } from "../lib/api/getPlaces";
 import Loader from "../components/UI/Loader";
-import FlatListPlace from "../components/main/FlatListPlace";
-import Swiper from "react-native-swiper";
-import { LinearGradient } from "expo-linear-gradient";
-import { openLink } from "../components/shared/Links";
-import { TouchableWithoutFeedback } from "react-native";
+import MainFlatListPlace from "../components/main/MainFlatListPlace";
+import MainTopCarousel from "../components/UI/MainTopCarousel";
+import { OptimizedFlatList } from "react-native-optimized-flatlist";
 
 interface Props {}
 
 const { width, height } = Dimensions.get("window");
 
 const renderItem = ({ item }) => (
-  <FlatListPlace
+  <MainFlatListPlace
     leftParticipantsCount={item.leftParticipantsCount}
     coverImage={item.coverImage}
     name={item.name}
     id={item.id}
-    views={item.views}
     description={item.placeDetail.description}
     startDateFromNow={item.startDateFromNow}
     deadline={item.deadline}
@@ -44,40 +40,36 @@ export default function Main(props: Props) {
   const [temp, setTemp] = useState([]);
   const queryClient = useQueryClient();
 
+  const placeFlatlistKeyExtractor = (item: PlaceFeedData, index) =>
+    item.id + "" + index;
+
   const renderRegular = ({ item, index }) => {
-    if (index === 0) {
-      if (item.myTeam) {
-        return (
-          <>
-            <RegularDividorContainer>
-              <RegularDividorHeader>
-                # 이번주 우리 팀 정기모임🔥
-              </RegularDividorHeader>
-              <RegularDividorMainText>
-                이번주에 열린 우리 팀 정기모임 2개 중 하나를 선택해서
-                참여해주세요!{"\n"} 선착순으로 마감되니 빨리 ㄱㄱ
-              </RegularDividorMainText>
-            </RegularDividorContainer>
-            <FlatListPlace
-              leftParticipantsCount={item.leftParticipantsCount}
-              coverImage={item.coverImage}
-              name={item.name}
-              id={item.id}
-              views={item.views}
-              description={item.placeDetail.description}
-              startDateFromNow={item.startDateFromNow}
-              deadline={item.deadline}
-              participants={item.participants}
-              isClosed={item.isClosed}
-            />
-          </>
-        );
-      }
-    } else if (
-      !item.isClosed &&
-      temp[index - 1].myTeam === true &&
-      temp[index].myTeam === false
-    ) {
+    if (item.seperatorMyTeam) {
+      return (
+        <>
+          <RegularDividorContainer>
+            <RegularDividorHeader>
+              # 이번주 우리 팀 정기모임🔥
+            </RegularDividorHeader>
+            <RegularDividorMainText>
+              이번주에 열린 우리 팀 정기모임 2개 중 하나를 선택해서
+              참여해주세요!{"\n"} 선착순으로 마감되니 빨리 ㄱㄱ
+            </RegularDividorMainText>
+          </RegularDividorContainer>
+          <MainFlatListPlace
+            leftParticipantsCount={item.leftParticipantsCount}
+            coverImage={item.coverImage}
+            name={item.name}
+            id={item.id}
+            description={item.placeDetail.description}
+            startDateFromNow={item.startDateFromNow}
+            deadline={item.deadline}
+            participants={item.participants}
+            isClosed={item.isClosed}
+          />
+        </>
+      );
+    } else if (item.seperatorNotMyTeam) {
       return (
         <>
           <RegularDividorContainer>
@@ -89,12 +81,11 @@ export default function Main(props: Props) {
               {"\n"}다른 팀 정기모임에 참여해봐!
             </RegularDividorMainText>
           </RegularDividorContainer>
-          <FlatListPlace
+          <MainFlatListPlace
             leftParticipantsCount={item.leftParticipantsCount}
             coverImage={item.coverImage}
             name={item.name}
             id={item.id}
-            views={item.views}
             description={item.placeDetail.description}
             startDateFromNow={item.startDateFromNow}
             deadline={item.deadline}
@@ -104,13 +95,13 @@ export default function Main(props: Props) {
         </>
       );
     }
+
     return (
-      <FlatListPlace
+      <MainFlatListPlace
         leftParticipantsCount={item.leftParticipantsCount}
         coverImage={item.coverImage}
         name={item.name}
         id={item.id}
-        views={item.views}
         description={item.placeDetail.description}
         startDateFromNow={item.startDateFromNow}
         deadline={item.deadline}
@@ -120,13 +111,9 @@ export default function Main(props: Props) {
     );
   };
 
-  // api call
-  const { data: topCarouselData, isLoading: topCarouselLoading } = useQuery<
-    GetPlacesByLocationOutput | undefined
-  >(["places", "전체", "top"], () => getPlacesForCarousel("전체", 1), {
-    retry: 1,
-    refetchOnWindowFocus: false,
-  });
+  useEffect(() => {
+    console.log("main rendered");
+  }, []);
 
   // main
   const {
@@ -186,6 +173,10 @@ export default function Main(props: Props) {
     setRefreshing(false);
   };
 
+  const onRefreshEvent = () => onRefresh("Event");
+  const onRefreshRegular = () => onRefresh("Regular-meeting");
+  const onRefreshLightning = () => onRefresh("Lightning");
+
   const loadMoreRegular = () => {
     if (hasNextPageRegular) {
       fetchNextPageRegular();
@@ -203,13 +194,20 @@ export default function Main(props: Props) {
     }
   };
 
+  const memoizedValueRegular = useMemo(() => renderRegular, [
+    mainRegularData?.pages?.map((page) => page.places).flat(),
+  ]);
+  const memoizedValueEvent = useMemo(() => renderItem, [
+    mainLightningData?.pages.map((page) => page.places).flat(),
+  ]);
+  const memoizedValueLightning = useMemo(() => renderItem, [
+    mainLightningData?.pages.map((page) => page.places).flat(),
+  ]);
+
   // values
   const position = useRef(new Animated.Value(0)).current;
   const loading =
-    mainRegularDataLoading ||
-    topCarouselLoading ||
-    mainEventDataLoading ||
-    mainLightningDataLoading;
+    mainRegularDataLoading || mainEventDataLoading || mainLightningDataLoading;
   //animations
   const middleTabAnim = (middleTab: number, position: Animated.Value) =>
     Animated.timing(position, {
@@ -217,130 +215,11 @@ export default function Main(props: Props) {
       useNativeDriver: true,
     });
 
-  useEffect(() => {
-    if (mainRegularData) {
-      // @ts-ignore
-      setTemp(mainRegularData.pages?.map((page) => page.places).flat());
-      //console.log(mainRegularData.pages?.map((page) => page.places).flat());
-    }
-  }, [mainRegularData]);
-
   if (loading) return <Loader />;
   return (
     <SafeAreaView style={{ backgroundColor: colors.bgColor, flex: 1 }}>
       <Container>
-        <TopCarouselContainer>
-          <Swiper
-            loop
-            horizontal
-            autoplay
-            autoplayTimeout={3.5}
-            containerStyle={{ width: "100%", height: "100%" }}
-            showsButtons={false}
-            showsPagination={false}
-          >
-            <TouchableWithoutFeedback
-              onPress={() =>
-                openLink.LOpenLink(
-                  "https://longhaired-gym-a5e.notion.site/250885c37ef3433690f141e4bcae2d30"
-                )
-              }
-            >
-              <RegularMainListHeaderContainer>
-                <RegularMainListHeaderImage
-                  source={require("../statics/images/calendar.jpeg")}
-                />
-                <LinearGradient
-                  // Background Linear Gradient
-                  colors={["transparent", colors.black]}
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    opacity: 0.7,
-                  }}
-                />
-                <RMLTextWrapper>
-                  <RegularMainListHeaderSubHeading>
-                    2/14~3/13에 어떤 활동들이 열릴까?
-                  </RegularMainListHeaderSubHeading>
-                  <RegularMainListHeaderHeading>
-                    연고이팅 2기 달력 {">"}
-                  </RegularMainListHeaderHeading>
-                </RMLTextWrapper>
-              </RegularMainListHeaderContainer>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-              onPress={() =>
-                openLink.LOpenLink(
-                  "https://longhaired-gym-a5e.notion.site/54081710685b456aa31ec0665c21267f"
-                )
-              }
-            >
-              <RegularMainListHeaderContainer>
-                <RegularMainListHeaderImage
-                  source={require("../statics/images/RegularHeader.jpeg")}
-                />
-                <LinearGradient
-                  // Background Linear Gradient
-                  colors={["transparent", colors.black]}
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    opacity: 0.7,
-                  }}
-                />
-                <RMLTextWrapper>
-                  <RegularMainListHeaderSubHeading>
-                    연고이팅 처음 가입했다면 필독!
-                  </RegularMainListHeaderSubHeading>
-                  <RegularMainListHeaderHeading>
-                    연고이팅 정기모임 가이드 {">"}
-                  </RegularMainListHeaderHeading>
-                </RMLTextWrapper>
-              </RegularMainListHeaderContainer>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-              onPress={() =>
-                openLink.LOpenLink(
-                  "https://longhaired-gym-a5e.notion.site/823262fe528e4d3d9ceca8800764dcfe"
-                )
-              }
-            >
-              <RegularMainListHeaderContainer>
-                <RegularMainListHeaderImage
-                  source={require("../statics/images/LightningHeader.jpeg")}
-                />
-                <LinearGradient
-                  // Background Linear Gradient
-                  colors={["transparent", colors.black]}
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    opacity: 0.7,
-                  }}
-                />
-                <RMLTextWrapper>
-                  <RegularMainListHeaderSubHeading>
-                    연고이팅 번개는 누구나 열고 참여가능하다구 {"><"}
-                  </RegularMainListHeaderSubHeading>
-                  <RegularMainListHeaderHeading>
-                    연고이팅 번개모임 가이드 {">"}
-                  </RegularMainListHeaderHeading>
-                </RMLTextWrapper>
-              </RegularMainListHeaderContainer>
-            </TouchableWithoutFeedback>
-          </Swiper>
-        </TopCarouselContainer>
-
+        <MainTopCarousel />
         <MiddleTabContainer>
           <MiddleTab
             onPress={() => {
@@ -383,42 +262,47 @@ export default function Main(props: Props) {
         </MiddleTabContainer>
 
         <AnimationContainer>
-          <AnimWrapper
-            style={{
-              transform: [{ translateX: position }],
-              padding: 20,
-            }}
-            showsVerticalScrollIndicator={false}
-            onEndReached={loadMoreLightning}
-            onEndReachedThreshold={0.2}
-            onRefresh={() => onRefresh("Lightning")}
-            refreshing={refreshing}
-            keyExtractor={(item: PlaceFeedData) => item.id + ""}
-            // @ts-ignore
-            data={mainLightningData.pages.map((page) => page.places).flat()}
-            renderItem={renderItem}
-            ListHeaderComponent={
-              <LightningInfoContainer>
-                <LightningInfoText style={{ fontSize: 14, lineHeight: 22 }}>
-                  크루원 누구나 자유롭게 번개를 올리고 참여할 수 있어요!항상
-                  올라오는 꿀잼 번개! 심심하면 놀러오라구{"><"}
-                </LightningInfoText>
-              </LightningInfoContainer>
-            }
-          />
-          {secondTap && (
+          {mainLightningData && (
+            <AnimWrapper
+              style={{
+                transform: [{ translateX: position }],
+                padding: 20,
+              }}
+              disableVirtualization={false}
+              showsVerticalScrollIndicator={false}
+              onEndReached={loadMoreLightning}
+              onEndReachedThreshold={0.2}
+              onRefresh={onRefreshLightning}
+              refreshing={refreshing}
+              keyExtractor={placeFlatlistKeyExtractor}
+              // @ts-ignore
+              data={mainLightningData.pages.map((page) => page.places).flat()}
+              renderItem={memoizedValueLightning}
+              ListHeaderComponent={
+                <LightningInfoContainer>
+                  <LightningInfoText style={{ fontSize: 14, lineHeight: 22 }}>
+                    크루원 누구나 자유롭게 번개를 올리고 참여할 수 있어요!항상
+                    올라오는 꿀잼 번개! 심심하면 놀러오라구{"><"}
+                  </LightningInfoText>
+                </LightningInfoContainer>
+              }
+            />
+          )}
+
+          {secondTap && mainRegularData && (
             <AnimWrapper
               style={{
                 left: width,
                 transform: [{ translateX: position }],
                 padding: 20,
               }}
+              disableVirtualization={false}
               showsVerticalScrollIndicator={false}
               onEndReached={loadMoreRegular}
               onEndReachedThreshold={0.2}
-              onRefresh={() => onRefresh("Regular-meeting")}
+              onRefresh={onRefreshRegular}
               refreshing={refreshing}
-              keyExtractor={(item: PlaceFeedData) => item.id + ""}
+              keyExtractor={placeFlatlistKeyExtractor}
               ListHeaderComponent={
                 <LightningInfoContainer>
                   <LightningInfoText style={{ fontSize: 14, lineHeight: 22 }}>
@@ -428,12 +312,13 @@ export default function Main(props: Props) {
                 </LightningInfoContainer>
               }
               // @ts-ignore
-              data={temp}
-              renderItem={renderRegular}
+              data={mainRegularData.pages?.map((page) => page.places).flat()}
+              renderItem={memoizedValueRegular}
             />
           )}
-          {thirdTap && (
+          {thirdTap && mainEventData && (
             <AnimWrapper
+              disableVirtualization={false}
               style={{
                 left: width * 2,
                 transform: [{ translateX: position }],
@@ -450,12 +335,12 @@ export default function Main(props: Props) {
               showsVerticalScrollIndicator={false}
               onEndReached={loadMoreEvent}
               onEndReachedThreshold={0.2}
-              onRefresh={() => onRefresh("Event")}
+              onRefresh={onRefreshEvent}
               refreshing={refreshing}
-              keyExtractor={(item: PlaceFeedData) => item.id + ""}
+              keyExtractor={placeFlatlistKeyExtractor}
               // @ts-ignore
               data={mainEventData.pages?.map((page) => page.places).flat()}
-              renderItem={renderItem}
+              renderItem={memoizedValueEvent}
             />
           )}
         </AnimationContainer>
@@ -463,36 +348,6 @@ export default function Main(props: Props) {
     </SafeAreaView>
   );
 }
-
-const RegularMainListHeaderContainer = styled.View`
-  width: 100%;
-  height: 100%;
-  background-color: ${colors.black};
-  justify-content: flex-end;
-`;
-
-const RMLTextWrapper = styled.View`
-  padding: 11px;
-  padding-left: 13px;
-`;
-
-const RegularMainListHeaderImage = styled.Image`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-`;
-
-const RegularMainListHeaderHeading = styled(GeneralText)`
-  color: ${colors.bgColor};
-  font-size: 20px;
-  font-family: ${fontFamilies.bold};
-`;
-
-const RegularMainListHeaderSubHeading = styled(RegularMainListHeaderHeading)`
-  font-size: 12px;
-  font-family: ${fontFamilies.regular};
-  padding-bottom: 2px;
-`;
 
 const ListHeaderContainer = styled.View`
   width: 100%;
@@ -527,27 +382,9 @@ const ListSubText = styled(GeneralText)`
   font-size: 14px;
 `;
 
-const LightningSubText = styled(ListSubText)`
-  margin-top: 5px;
-`;
-
-const LightningMainText = styled(GeneralText)`
-  color: ${colors.lightBlack};
-  font-family: ${fontFamilies.bold};
-`;
-
-const TopCarousel = styled.ScrollView``;
-
 const Container = styled.View`
   flex: 1;
   background-color: ${colors.bgColor};
-`;
-
-const TopCarouselContainer = styled.View`
-  width: ${width + "px"};
-  height: 150px;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
 `;
 
 const MiddleTabContainer = styled.View`
@@ -570,34 +407,13 @@ const MiddleTabTextWrapper = styled.View<{ isSelcted: boolean }>`
   position: relative;
 `;
 
-const TagContiner = styled.View`
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background-color: #e7ecf3;
-  padding: 1px;
-  border-radius: 2px;
-`;
-
-const TagText = styled(GeneralText)`
-  font-size: 13px;
-  color: ${colors.bareGrey};
-`;
-
 const MiddleTabText = styled(GeneralText)<{ isSelcted: boolean }>`
   font-size: 20px;
   padding: 12px;
   color: ${(props) => (props.isSelected ? colors.black : colors.bareGrey)};
 `;
 
-const AnimWrapper = styled(Animated.createAnimatedComponent(FlatList))`
-  background-color: ${colors.bgColor};
-  width: 100%;
-  height: 100%;
-  position: absolute;
-`;
-
-const AnimWrapperView = styled(Animated.createAnimatedComponent(FlatList))`
+const AnimWrapper = styled(Animated.createAnimatedComponent(OptimizedFlatList))`
   background-color: ${colors.bgColor};
   width: 100%;
   height: 100%;
@@ -606,10 +422,6 @@ const AnimWrapperView = styled(Animated.createAnimatedComponent(FlatList))`
 
 const AnimationContainer = styled.View`
   flex: 1;
-`;
-
-const HSeperator = styled.View`
-  height: 20px;
 `;
 
 const LightningInfoContainer = styled.View``;

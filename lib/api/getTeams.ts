@@ -6,9 +6,6 @@ import { TeamData } from "./types.d";
 
 export const getTeams = async (): Promise<TeamData[] | undefined> => {
   const axiosClient = await AxiosClient();
-  const token = await storage.getItem("token");
-
-  if (!token) return;
 
   const { data } = await axiosClient.get<GetTeamsOutput>(
     `${BASE_URL}/team/all`

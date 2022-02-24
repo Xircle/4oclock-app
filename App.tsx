@@ -9,7 +9,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Image, LogBox } from "react-native";
 import { Asset } from "expo-asset";
 
-LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
+//LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 const Stack = createStackNavigator();
 const queryClient = new QueryClient();
 

@@ -1,34 +1,49 @@
 import styled from "styled-components/native";
-import React from "react";
+import React, { memo, useEffect, useState, PureComponent } from "react";
 import optimizeImage from "../../lib/helpers/optimizeImage";
 import FastImage from "react-native-fast-image";
 
 interface Props {
   source?: string;
   size: number;
+  quality?: number;
   isSmall?: boolean;
 }
 
-export default function AvatarUri({ size, source, isSmall }: Props) {
-  if (source) {
-    return (
-      <AvatarImage
-        source={{
-          uri: optimizeImage(source, { width: size, height: size }, isSmall),
-        }}
-        size={size}
-        defaultSource={require("../../statics/images/anonymous_user.png")}
-      />
-    );
-  } else {
-    return (
-      <AvatarImage
-        source={require("../../statics/images/anonymous_user.png")}
-        size={size}
-      />
-    );
+class AvatarUri extends PureComponent<Props> {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    if (this.props.source) {
+      return (
+        <AvatarImage
+          source={{
+            uri: optimizeImage(
+              this.props.source,
+              {
+                width: this.props.size,
+                height: this.props.size,
+                quality: this.props.quality,
+              },
+              this.props.isSmall
+            ),
+          }}
+          size={this.props.size}
+        />
+      );
+    } else {
+      return (
+        <AvatarImage
+          source={require("../../statics/images/anonymous_user.png")}
+          size={this.props.size}
+        />
+      );
+    }
   }
 }
+
+export default AvatarUri;
 
 const AvatarImage = styled(FastImage)<{ size: number }>`
   width: ${(props) => props.size + "px"};
