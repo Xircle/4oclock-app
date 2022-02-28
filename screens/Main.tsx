@@ -12,10 +12,7 @@ import {
 import Loader from "../components/UI/Loader";
 import MainFlatListPlace from "../components/main/MainFlatListPlace";
 import MainTopCarousel from "../components/UI/MainTopCarousel";
-<<<<<<< HEAD
 import { OptimizedFlatList } from "react-native-optimized-flatlist";
-=======
->>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
 
 interface Props {}
 
@@ -47,7 +44,6 @@ export default function Main(props: Props) {
     item.id + "" + index;
 
   const renderRegular = ({ item, index }) => {
-<<<<<<< HEAD
     if (item.seperatorMyTeam) {
       return (
         <>
@@ -74,41 +70,6 @@ export default function Main(props: Props) {
         </>
       );
     } else if (item.seperatorNotMyTeam) {
-=======
-    if (index === 0) {
-      if (item.myTeam) {
-        return (
-          <>
-            <RegularDividorContainer>
-              <RegularDividorHeader>
-                # 이번주 우리 팀 정기모임🔥
-              </RegularDividorHeader>
-              <RegularDividorMainText>
-                이번주에 열린 우리 팀 정기모임 2개 중 하나를 선택해서
-                참여해주세요!{"\n"} 선착순으로 마감되니 빨리 ㄱㄱ
-              </RegularDividorMainText>
-            </RegularDividorContainer>
-            <MainFlatListPlace
-              leftParticipantsCount={item.leftParticipantsCount}
-              coverImage={item.coverImage}
-              name={item.name}
-              id={item.id}
-              views={item.views}
-              description={item.placeDetail.description}
-              startDateFromNow={item.startDateFromNow}
-              deadline={item.deadline}
-              participants={item.participants}
-              isClosed={item.isClosed}
-            />
-          </>
-        );
-      }
-    } else if (
-      !item.isClosed &&
-      temp[index - 1].myTeam === true &&
-      temp[index].myTeam === false
-    ) {
->>>>>>> 58502ecb90e6d37b06a0c9363348f481c978725b
       return (
         <>
           <RegularDividorContainer>
@@ -237,11 +198,16 @@ export default function Main(props: Props) {
     mainRegularData?.pages?.map((page) => page.places).flat(),
   ]);
   const memoizedValueEvent = useMemo(() => renderItem, [
-    mainLightningData?.pages.map((page) => page.places).flat(),
+    mainEventData?.pages.map((page) => page.places).flat(),
   ]);
   const memoizedValueLightning = useMemo(() => renderItem, [
     mainLightningData?.pages.map((page) => page.places).flat(),
   ]);
+
+  useEffect(() => {
+    if (mainRegularData)
+      console.log(mainRegularData?.pages?.map((page) => page.places).flat());
+  }, [mainRegularData]);
 
   // values
   const position = useRef(new Animated.Value(0)).current;
