@@ -203,7 +203,11 @@ export default function Main(props: Props) {
 
   useEffect(() => {
     if (mainRegularData)
+<<<<<<< HEAD
       console.log(mainRegularData);
+=======
+      console.log(mainRegularData?.pages?.map((page) => page.places).flat());
+>>>>>>> b92627b03b9f20567ca9eb922d5124d7ad4f30c3
   }, [mainRegularData]);
 
   // values
