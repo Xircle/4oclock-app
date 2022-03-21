@@ -14,24 +14,27 @@ export default class PureInfoMainFlat extends PureComponent<Props> {
   }
 
   render() {
+    const name = this.props.name?.length > 10
+    ? this.props.name.slice(0, 10) + "..."
+    : this.props.name;
+
+    const recommendation = this.props.recommendation && this.props.recommendation.length > 15
+    ? this.props.recommendation.slice(0, 15) + "..."
+    : this.props.recommendation;
+
+    const description = this.props.description && this.props.description.length > 15
+    ? this.props.description.slice(0, 15) + "..."
+    : this.props.description
     return (
       <>
         <Heading>
-          {this.props.name?.length > 10
-            ? this.props.name.slice(0, 10) + "..."
-            : this.props.name}
+          {name}
         </Heading>
-        {this.props.recommendation !== null && 
         <RecommendationText>
-          {this.props.recommendation && this.props.recommendation.length > 15
-            ? this.props.recommendation.slice(0, 15) + "..."
-            : this.props.recommendation}
-        </RecommendationText>}
-
+          {recommendation}
+        </RecommendationText>
         <DescriptionText>
-          {this.props.description && this.props.description.length > 15
-            ? this.props.description.slice(0, 15) + "..."
-            : this.props.description}
+          {description}
         </DescriptionText>
         
       </>

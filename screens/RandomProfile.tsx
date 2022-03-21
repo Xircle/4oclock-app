@@ -5,7 +5,7 @@ import { UserProfile } from "../lib/api/types";
 import { colors } from "../styles/styles";
 import Loader from "../components/UI/Loader";
 import ProfileV from "../components/profile/ProfileV";
-import {  useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import storage from "../lib/helpers/myAsyncStorage";
 import { seeRandomProfile } from "../lib/api/seeRandomProfile";
 import { Alert, SafeAreaView } from "react-native";
@@ -17,19 +17,25 @@ export default function RnadomProfile(props: Props) {
   const navigation = useNavigation();
   const [showPN, setShowPN] = useState<boolean>(false);
 
-  const { data: profileData, refetch, isLoading, isFetching } = useQuery<
-    UserProfile | undefined
-  >(["randomProfile"], () => seeRandomProfile(false), {
-    retry: 1,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const {
+    data: profileData,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useQuery<UserProfile | undefined>(
+    ["randomProfile"],
+    () => seeRandomProfile(false),
+    {
+      retry: 1,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const { mutateAsync: mutateChatRoomData } = useMutation(getMyRooms);
 
   const getAccountType = async () => {
     const accountType = await storage.getItem("accountType");
-    console.log(accountType);
     if (accountType === "Admin") setShowPN(true);
   };
 

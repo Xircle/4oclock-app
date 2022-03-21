@@ -65,29 +65,22 @@ export default function Activity({
     }
   );
 
-  useEffect(() => {
-    if (activityData) {
-      console.log(moment(activityData.startDateAt).hour());
-      console.log(activityData.startDateAt);
-    }
-  }, [activityData]);
 
-  const onPressMain = async (): Promise<void> => {
-    if (activityData?.placeType === "Regular-meeting") {
-      if (!userData?.isYkClub) {
-        Alert.alert("활동 코드를 입력해주세요", "", [
-          {
-            text: "활동코드 입력하기",
-            //@ts-ignore
-            onPress: () => navigation.navigate("MyProfile"),
-          },
-          {
-            text: "닫기",
-            onPress: () => {},
-          },
-        ]);
-        return;
-      }
+
+  const onPress = async (): Promise<void> => {
+    if (!userData?.isYkClub) {
+      Alert.alert("활동 코드를 입력해주세요", "", [
+        {
+          text: "활동코드 입력하기",
+          //@ts-ignore
+          onPress: () => navigation.navigate("MyProfile"),
+        },
+        {
+          text: "닫기",
+          onPress: () => {},
+        },
+      ]);
+      return;
     }
 
     // @ts-ignore
@@ -227,6 +220,7 @@ export default function Activity({
         </CarouselContainer>
 
         <InnerWrapper>
+          {activityData?.recommendation && <RecommendationText>{activityData?.recommendation}</RecommendationText>}
           <InnerHeading>{name}</InnerHeading>
           <Description>{activityData?.placeDetail?.description}</Description>
         </InnerWrapper>
@@ -329,7 +323,7 @@ export default function Activity({
         onPress={
           activityData?.isParticipating
             ? () => openLink.LOpenLink(activityData.placeDetail.kakaoLink)
-            : onPressMain
+            : onPress
         }
         disabled={
           !activityData?.isParticipating &&
@@ -340,6 +334,13 @@ export default function Activity({
     </Container>
   );
 }
+
+const RecommendationText = styled(GeneralText)`
+  font-size: 12px;
+  font-family: ${fontFamilies.bold};
+  color: ${colors.mainBlue}
+`;
+
 
 const AvatarWrapper = styled.View`
   margin-right: 4px;

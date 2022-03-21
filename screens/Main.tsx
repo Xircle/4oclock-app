@@ -35,8 +35,6 @@ const renderItem = ({ item }) => (
 export default function Main(props: Props) {
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
-  const [secondTap, setSecondTap] = useState(false);
-  const [thirdTap, setThirdTap] = useState(false);
   const [temp, setTemp] = useState([]);
   const queryClient = useQueryClient();
 
@@ -110,7 +108,6 @@ export default function Main(props: Props) {
       />
     );
   };
-
 
   // main
   const {
@@ -191,24 +188,18 @@ export default function Main(props: Props) {
     }
   };
 
-  const memoizedValueRegular = useMemo(() => renderRegular, [
-    mainRegularData?.pages?.map((page) => page.places).flat(),
-  ]);
-  const memoizedValueEvent = useMemo(() => renderItem, [
-    mainEventData?.pages.map((page) => page.places).flat(),
-  ]);
-  const memoizedValueLightning = useMemo(() => renderItem, [
-    mainLightningData?.pages.map((page) => page.places).flat(),
-  ]);
-
-  useEffect(() => {
-    if (mainRegularData)
-<<<<<<< HEAD
-      console.log(mainRegularData);
-=======
-      console.log(mainRegularData?.pages?.map((page) => page.places).flat());
->>>>>>> b92627b03b9f20567ca9eb922d5124d7ad4f30c3
-  }, [mainRegularData]);
+  const memoizedValueRegular = useMemo(
+    () => renderRegular,
+    [mainRegularData?.pages?.map((page) => page.places).flat()]
+  );
+  const memoizedValueEvent = useMemo(
+    () => renderItem,
+    [mainEventData?.pages.map((page) => page.places).flat()]
+  );
+  const memoizedValueLightning = useMemo(
+    () => renderItem,
+    [mainLightningData?.pages.map((page) => page.places).flat()]
+  );
 
   // values
   const position = useRef(new Animated.Value(0)).current;
@@ -219,6 +210,7 @@ export default function Main(props: Props) {
     Animated.timing(position, {
       toValue: middleTab * width * -1,
       useNativeDriver: true,
+      duration: 200,
     });
 
   if (loading) return <Loader />;
@@ -241,7 +233,6 @@ export default function Main(props: Props) {
           </MiddleTab>
           <MiddleTab
             onPress={() => {
-              setSecondTap(true);
               setMiddleTabIndex(1);
               middleTabAnim(1, position).start();
             }}
@@ -254,7 +245,6 @@ export default function Main(props: Props) {
           </MiddleTab>
           <MiddleTab
             onPress={() => {
-              setThirdTap(true);
               setMiddleTabIndex(2);
               middleTabAnim(2, position).start();
             }}
@@ -295,7 +285,7 @@ export default function Main(props: Props) {
             />
           )}
 
-          {secondTap && mainRegularData && (
+          {mainRegularData && (
             <AnimWrapper
               style={{
                 left: width,
@@ -322,7 +312,7 @@ export default function Main(props: Props) {
               renderItem={memoizedValueRegular}
             />
           )}
-          {thirdTap && mainEventData && (
+          {mainEventData && (
             <AnimWrapper
               disableVirtualization={false}
               style={{
