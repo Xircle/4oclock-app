@@ -26,6 +26,9 @@ export const createPlace = async (
   if (placeData.maxParticipantsNumber) {
     formData.append("maxParticipantsNumber", placeData.maxParticipantsNumber);
   }
+  // BEGIN:for testing
+  
+  // END
   formData.append("detailAddress", placeData.detailAddress);
   formData.append("description", placeData.description);
   formData.append("startDateAt", placeData.startDateAt + "");

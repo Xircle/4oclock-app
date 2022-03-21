@@ -47,6 +47,7 @@ export interface PlaceFeedData {
   startDateFromNow: string;
   isParticipating: boolean;
   deadline: string;
+  recommendation?: string | null;
   views: number;
   placeDetail: {
     description: string;
@@ -95,7 +96,7 @@ interface ParticipantsData {
 export interface PlaceData {
   name: string; //
   oneLineIntroText: string; //
-  recommendation: string;
+  recommendation?: string;
   startDateFromNow: string;
   startTime: number;
   deadline: string;
@@ -196,6 +197,7 @@ export interface MyPlaceData {
   isClosed: boolean;
   description: string;
   kakaoPlaceId?: string;
+  recommendatinon?: string;
 }
 
 export interface GetMyPlaceOutput extends CoreOutput {
