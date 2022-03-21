@@ -21,10 +21,10 @@ interface Props {
   views?: number;
   description?: string;
   startDateFromNow?: string;
-  deadline?: string;
   leftParticipantsCount?: number;
   participants?: Participants[];
   isClosed?: boolean;
+  recommendation?: string;
 }
 
 function MainFlatListPlace({
@@ -33,10 +33,10 @@ function MainFlatListPlace({
   id,
   description,
   startDateFromNow,
-  deadline,
   leftParticipantsCount,
   participants,
   isClosed,
+  recommendation,
 }: Props) {
   const navigation = useNavigation();
 
@@ -60,19 +60,12 @@ function MainFlatListPlace({
           />
         </LeftContainer>
         <RightContiner>
-          <SpaceBetweenContainer>
-            <TimeText>{startDateFromNow || " "}</TimeText>
-          </SpaceBetweenContainer>
-          <PureInfoMainFlat name={name} description={description} />
+          <TimeText>{startDateFromNow || " "}</TimeText>
+          <PureInfoMainFlat name={name} description={description} recommendation={recommendation}/>
           <PureAvatarsFlat
             participants={participants}
             length={participants?.length}
           />
-          {!isClosed && leftParticipantsCount > 0 && deadline && (
-            <BottomRightFixedContainer>
-              <DeadLineText>{deadline}</DeadLineText>
-            </BottomRightFixedContainer>
-          )}
         </RightContiner>
       </Container>
     </TouchableWithoutFeedback>
@@ -82,16 +75,6 @@ function MainFlatListPlace({
 export default MainFlatListPlace;
 
 
-
-const BottomRightFixedContainer = styled.View`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-`;
-
-const DeadLineText = styled(GeneralText)`
-  font-size: 12px;
-`;
 
 const TimeText = styled(GeneralText)`
   font-size: 12px;
@@ -107,6 +90,7 @@ const SpaceBetweenContainer = styled.View`
 
 const LeftContainer = styled.View`
   width: 130px;
+  height: 130px;
   position: relative;
 `;
 
@@ -118,7 +102,7 @@ const RightContiner = styled.View`
 
 const Container = styled.View`
   width: 100%;
-  height: 170px;
+  min-height: 170px;
   position: relative;
   flex-direction: row;
   padding-top: 20px;

@@ -5,6 +5,7 @@ import { fontFamilies, GeneralText, colors } from "../../styles/styles";
 interface Props {
   name: string | undefined;
   description: string | undefined;
+  recommendation?: string | undefined;
 }
 
 export default class PureInfoMainFlat extends PureComponent<Props> {
@@ -16,15 +17,23 @@ export default class PureInfoMainFlat extends PureComponent<Props> {
     return (
       <>
         <Heading>
-          {this.props.name?.length > 11
-            ? this.props.name.slice(0, 11) + "..."
+          {this.props.name?.length > 10
+            ? this.props.name.slice(0, 10) + "..."
             : this.props.name}
         </Heading>
+        {this.props.recommendation !== null && 
+        <RecommendationText>
+          {this.props.recommendation && this.props.recommendation.length > 15
+            ? this.props.recommendation.slice(0, 15) + "..."
+            : this.props.recommendation}
+        </RecommendationText>}
+
         <DescriptionText>
-          {this.props.description && this.props.description.length > 18
-            ? this.props.description.slice(0, 18) + "..."
+          {this.props.description && this.props.description.length > 15
+            ? this.props.description.slice(0, 15) + "..."
             : this.props.description}
         </DescriptionText>
+        
       </>
     );
   }
@@ -41,4 +50,10 @@ const DescriptionText = styled(GeneralText)`
   font-size: 12px;
   font-family: ${fontFamilies.regular};
   color: ${colors.bareGrey};
+`;
+
+const RecommendationText = styled(GeneralText)`
+  font-size: 12px;
+  font-family: ${fontFamilies.bold};
+  color: ${colors.mainBlue}
 `;
