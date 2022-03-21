@@ -21,12 +21,23 @@ import { useAssets } from "expo-asset";
 import { openLink } from "../components/shared/Links";
 import MyLogin from "../components/loginForm/MyLogin";
 import jwt_decode from "jwt-decode";
+import { GetVersionOutput } from "../lib/api/types";
+import { useQuery } from "react-query";
+import { getVersion } from "../lib/api/getVersion";
 
 interface Props {}
 
 const { width } = Dimensions.get("window");
+const currentVersion = Platform.OS === "ios" ? 1 : 1;
 
 export default function Welcome(props: Props) {
+  const { data: versionData } = useQuery<GetVersionOutput | undefined>(
+    ["teams"],
+    () => getVersion(),
+    {
+      retry: 1,
+    }
+  );
   const [assets] = useAssets([
     require("../statics/images/landingPageImage.png"),
   ]);
@@ -40,6 +51,21 @@ export default function Welcome(props: Props) {
   const [pwdInput, setPwdInput] = useState("");
 
   const redirectWithExistingToken = async () => {
+    const minimumVersion =
+      Platform.OS === "ios"
+        ? versionData.iOSMinimumVersion
+        : versionData.androidMinimumVersion;
+    console.log(minimumVersion);
+    if (currentVersion < minimumVersion) {
+      Alert.alert("업데이트가 필요합니다", "", [
+        {
+          text: "업데이트하기",
+          //@ts-ignore
+          onPress: () => openLink.LOpenLink("http://onelink.to/tqctmc"),
+        },
+      ]);
+      return;
+    }
     const tokenFromStorage = await storage.getItem("token");
 
     /* @ts-ignore */
@@ -47,6 +73,22 @@ export default function Welcome(props: Props) {
   };
 
   const redirectWithNewToken = async () => {
+    const minimumVersion =
+      Platform.OS === "ios"
+        ? versionData.iOSMinimumVersion
+        : versionData.androidMinimumVersion;
+    console.log(minimumVersion);
+    if (currentVersion < minimumVersion) {
+      Alert.alert("업데이트가 필요합니다", "", [
+        {
+          text: "업데이트하기",
+          //@ts-ignore
+          onPress: () => openLink.LOpenLink("http://onelink.to/tqctmc"),
+        },
+      ]);
+      return;
+    }
+
     await storage.setItem("token", token);
     const tokenFromStorage = await storage.getItem("token");
 
@@ -165,8 +207,8 @@ export default function Welcome(props: Props) {
     }
   }, [email, token]);
   useEffect(() => {
-    redirectWithExistingToken();
-  }, []);
+    if (versionData) redirectWithExistingToken();
+  }, [versionData]);
 
   const LoginFormSubmit = async () => {
     if (emailInput === "dja12356@gmail.com" && pwdInput === "Dja!2356") {
