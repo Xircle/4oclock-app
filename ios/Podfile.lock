@@ -624,7 +624,7 @@ SPEC CHECKSUMS:
   EXUpdates: 061b67c33f0e7f8fd335bbb48697c4a4fc8a5157
   EXUpdatesInterface: e1c01b4f5ec76bd1d6cc714938f9edf5ef6379b9
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: d9cd1693c2621ff19dbcc4c42e08cb09a6f6ce02
+  FBReactNativeSpec: e128b51e6525092c2fde22a3c0dcf505865fc6e5
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   kakao-login: c3a28605d3d2576625781c7643d5e3350e02e719
   KakaoSDK: 1e80d6877c0eac6a310f93c73fb15ca56c05f2bd
