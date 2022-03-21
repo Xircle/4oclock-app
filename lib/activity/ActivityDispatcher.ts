@@ -41,6 +41,18 @@ export const activityDispatcher = {
       payload: team,
     });
   },
+  dispatchRecommendation: (recommendation: string, dispatch: React.Dispatch<ActivityAction>) => {
+    dispatch({
+      type: 'setRecommendation',
+      payload: recommendation,
+    })
+  },
+  dispatchParticipating: (participating: boolean, dispatch: React.Dispatch<ActivityAction>) => {
+    dispatch({
+      type: 'setParticipating',
+      payload: participating,
+    })
+  },
   dispatchDetailAddress: (
     placeName: string,
     placeId: string,
@@ -171,5 +183,13 @@ export const activityDispatcher = {
       type: "setKakaoLink",
       payload: activityInitialState.kakaoLink,
     });
+    dispatch({
+      type: "setRecommendation",
+      payload: activityInitialState.recommendation,
+    });
+    dispatch({
+      type: "setParticipating",
+      payload: activityInitialState.participating,
+    })
   },
 };

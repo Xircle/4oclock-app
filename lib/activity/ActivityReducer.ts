@@ -16,7 +16,9 @@ export type ActivityAction =
   | { type: "setPlaceId"; payload: string }
   | { type: "setActivityType"; payload: string }
   | { type: "setKakaoLink"; payload: string }
-  | { type: "setTeam"; payload: string };
+  | { type: "setTeam"; payload: string }
+  | { type: 'setRecommendation'; payload: string}
+  | { type: 'setParticipating'; payload: boolean};
 
 export interface ActivityState extends CreateActivityOutput {
   stage1Valid: Boolean;
@@ -39,6 +41,8 @@ export const activityInitialState: ActivityState = {
   activityType: "번개",
   kakaoLink: "",
   team: "",
+  recommendation: "",
+  participating: true,
 };
 
 export function reducer(
@@ -116,6 +120,16 @@ export function reducer(
         ...state,
         team: action.payload,
       };
+    case 'setRecommendation':
+      return {
+        ...state,
+        recommendation: action.payload,
+      };
+    case 'setParticipating':
+      return {
+        ...state,
+        participating: action.payload,
+      }
     default:
       throw new Error();
   }

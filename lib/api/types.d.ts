@@ -143,6 +143,15 @@ export interface CreateActivityData {
   placeId?: string;
   kakaoLink?: string;
   team?: string;
+  recommendation?: string;
+  participating?: boolean;
+}
+
+export interface GetVersionOutput {
+  androidRecommendedVersion: number;
+  androidMinimumVersion: number;
+  iOSRecommendedVersion: number;
+  iOSMinimumVersion: number;
 }
 
 // need to change CreatePlaceOutput

@@ -119,10 +119,19 @@ export default function CreatePlaceStage2({
       <ScrollView showsVerticalScrollIndicator={false}>
         <MainHeading>모임을 열어볼까?</MainHeading>
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
-          재밌는 모임을 열어볼까? 열고 친구들과 꿀잼 모임😊{"\n"}
-          {"\n"}
-          놀러가는 곳에 관한 장소 사진을 올려줘!
+          재밌는 모임을 열어볼까? 열고 친구들과 꿀잼 모임😊
         </SubHeading>
+        <ParticipatingContainer onPress={()=>activityDispatcher.dispatchParticipating(!state.participating, dispatch)}>
+          <ParticipatingWrapper>
+            <Ionicons
+              name="checkmark-circle-outline"
+              size={22}
+              color={state.participating ? colors.mainBlue : colors.bareGrey}
+            />
+            <SBlackLabel style={{marginLeft: 10}}>저도 참여해요</SBlackLabel>
+          </ParticipatingWrapper>
+        </ParticipatingContainer>
+
 
         <SBlackLabel>관련 사진 올리기</SBlackLabel>
         <AddPhotoContiner onPress={ImageHandle}>
@@ -170,6 +179,17 @@ export default function CreatePlaceStage2({
   );
 }
 
+const ParticipatingContainer = styled.TouchableWithoutFeedback`
+
+`;
+
+const ParticipatingWrapper = styled.View`
+  flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+`;
+
 const PhotoButton = styled.TouchableOpacity`
   position: relative;
 `;
@@ -192,7 +212,8 @@ const Container = styled.View`
   padding: 0px 30px;
 `;
 
-const SBlackLabel = styled(BlackLabel)``;
+const SBlackLabel = styled(BlackLabel)`
+`;
 
 const AddPhotoContiner = styled.TouchableOpacity`
   margin-top: 22px;

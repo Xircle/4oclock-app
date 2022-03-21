@@ -68,7 +68,7 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
   );
 
   useEffect(() => {
-    if (teamsData && localTeamNames.length === 0) {
+    if (teamsData && teamsData.length > 0 && localTeamNames.length === 0) {
       teamsData.forEach((team, index) => {
         setLocalTeamNames((prev) => [...prev, team.name]);
       });
@@ -175,7 +175,6 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
                 <MySelect
                   data={localTeamNames}
                   onSelect={(selectedItem, index) => {
-                    console.log(selectedItem);
                     // setLocalProfileData((prev) => ({
                     //   ...prev,
                     //   team: selectedItem,
@@ -192,7 +191,27 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
               </InnerContainer>
             </ExpandableV>
           )}
-
+          <ExpandableV
+            title="누구를 위한 모임이야? (선택)"
+            height={120}
+            refreshCount={refreshCount}
+          >
+            <InnerContainer>
+              <SBigTextInput
+                placeholder="ex. 새내기 모여라, 1분당 한 병씩 ㄱㄱ"
+                autoCapitalize="none"
+                blurOnSubmit={true}
+                returnKeyType="next"
+                returnKeyLabel="next"
+                autoCorrect={false}
+                defaultValue={state.recommendation ? state.recommendation : ""}
+                onChange={(event) => {
+                  const { eventCount, target, text } = event.nativeEvent;
+                  activityDispatcher.dispatchRecommendation(text, dispatch);
+                }}
+              />
+            </InnerContainer>
+          </ExpandableV>
           <ExpandableV
             title="어떤 활동을 하는 모임이야?(설명)"
             height={150}
@@ -230,7 +249,7 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
           >
             <InnerContainer style={[{ paddingTop: 15 }, { paddingBottom: 15 }]}>
               <SBigTextInput
-                placeholder="ex: https://open.kakao.com/o/grFhbIBd "
+                placeholder="ex: https://open.kakao.com/o/grFhbIBd"
                 autoCapitalize="none"
                 blurOnSubmit={true}
                 returnKeyType="next"
