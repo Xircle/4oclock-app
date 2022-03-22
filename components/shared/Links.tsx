@@ -2,6 +2,7 @@ import { Linking } from "react-native";
 
 export const openLink = {
   LOpenLink: async (url: string) => {
+    if (!url) return;
     await Linking.openURL(url);
   },
   LWriteReview: async (id: string) => {
