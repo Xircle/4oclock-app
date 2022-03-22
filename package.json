@@ -7,6 +7,7 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@expo/ngrok": "^2.5.0",
     "@invertase/react-native-apple-authentication": "^2.1.5",
     "@react-native-async-storage/async-storage": "^1.15.11",
     "@react-native-seoul/kakao-login": "^3.4.2",
