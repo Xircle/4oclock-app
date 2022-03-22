@@ -14,29 +14,25 @@ export default class PureInfoMainFlat extends PureComponent<Props> {
   }
 
   render() {
-    const name = this.props.name?.length > 10
-    ? this.props.name.slice(0, 10) + "..."
-    : this.props.name;
+    const name =
+      this.props.name?.length > 10
+        ? this.props.name.slice(0, 10) + "..."
+        : this.props.name;
 
-    const recommendation = this.props.recommendation && this.props.recommendation.length > 15
-    ? this.props.recommendation.slice(0, 15) + "..."
-    : this.props.recommendation;
+    const recommendation =
+      this.props.recommendation && this.props.recommendation.length > 15
+        ? this.props.recommendation.slice(0, 15) + "..."
+        : this.props.recommendation;
 
-    const description = this.props.description && this.props.description.length > 15
-    ? this.props.description.slice(0, 15) + "..."
-    : this.props.description
+    const description =
+      this.props.description && this.props.description.length > 15
+        ? this.props.description.slice(0, 15) + "..."
+        : this.props.description;
     return (
       <>
-        <Heading>
-          {name}
-        </Heading>
-        <RecommendationText>
-          {recommendation}
-        </RecommendationText>
-        <DescriptionText>
-          {description}
-        </DescriptionText>
-        
+        <Heading>{name}</Heading>
+        <RecommendationText>{recommendation}</RecommendationText>
+        <DescriptionText>{description}</DescriptionText>
       </>
     );
   }
@@ -58,5 +54,5 @@ const DescriptionText = styled(GeneralText)`
 const RecommendationText = styled(GeneralText)`
   font-size: 12px;
   font-family: ${fontFamilies.bold};
-  color: ${colors.mainBlue}
+  color: ${colors.mainBlue};
 `;
