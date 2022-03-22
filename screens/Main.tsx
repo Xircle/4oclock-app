@@ -2,8 +2,13 @@ import styled from "styled-components/native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Dimensions, Animated, FlatList, SafeAreaView } from "react-native";
 import { colors, fontFamilies, GeneralText } from "../styles/styles";
-import { useInfiniteQuery, useQueryClient } from "react-query";
-import { GetPlacesByLocationOutput, PlaceFeedData } from "../lib/api/types";
+import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
+import {
+  EventBanner,
+  GetEventBannersOutput,
+  GetPlacesByLocationOutput,
+  PlaceFeedData,
+} from "../lib/api/types";
 import {
   getPlacesEvent,
   getPlacesLightning,
@@ -13,6 +18,7 @@ import Loader from "../components/UI/Loader";
 import MainFlatListPlace from "../components/main/MainFlatListPlace";
 import MainTopCarousel from "../components/UI/MainTopCarousel";
 import { OptimizedFlatList } from "react-native-optimized-flatlist";
+import { getEventBanners } from "../lib/api/getEventBanners";
 
 interface Props {}
 
@@ -35,7 +41,6 @@ const renderItem = ({ item }) => (
 export default function Main(props: Props) {
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
-  const [temp, setTemp] = useState([]);
   const queryClient = useQueryClient();
 
   const placeFlatlistKeyExtractor = (item: PlaceFeedData, index) =>
@@ -161,6 +166,12 @@ export default function Main(props: Props) {
     }
   );
 
+  const { data: eventBannerData } = useQuery<GetEventBannersOutput>(
+    ["eventBanner"],
+    () => getEventBanners(),
+    { retry: 1 }
+  );
+
   const onRefresh = async (type: string) => {
     setRefreshing(true);
     await queryClient.refetchQueries(["places", type]);
@@ -217,7 +228,7 @@ export default function Main(props: Props) {
   return (
     <SafeAreaView style={{ backgroundColor: colors.bgColor, flex: 1 }}>
       <Container>
-        <MainTopCarousel />
+        <MainTopCarousel eventBanners={eventBannerData.eventBanners} />
         <MiddleTabContainer>
           <MiddleTab
             onPress={() => {
