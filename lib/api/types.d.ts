@@ -339,3 +339,14 @@ export interface GetReviewsOutput extends CoreOutput {
 }
 
 export interface ParticipantsInfo {}
+
+export interface EventBanner {
+  mainHeading?: string;
+  subHeading?: string;
+  eventImageUrl: string;
+  linkUrl?: string;
+}
+
+export interface GetEventBannersOutput extends CoreOutput {
+  eventBanners: EventBanner[];
+}
