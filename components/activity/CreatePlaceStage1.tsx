@@ -192,13 +192,13 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
             </ExpandableV>
           )}
           <ExpandableV
-            title="누구를 위한 모임이야? (선택)"
+            title="모임 조건을 적어주세요! (선택)"
             height={120}
             refreshCount={refreshCount}
           >
             <InnerContainer>
-              <SBigTextInput
-                placeholder="ex. 새내기 모여라, 1분당 한 병씩 ㄱㄱ"
+              <ReqBigTextInput
+                placeholder="ex. I들의 모임, 보드게임 초보만, 새내기 모여라, 무알콜"
                 autoCapitalize="none"
                 blurOnSubmit={true}
                 returnKeyType="next"
@@ -494,6 +494,10 @@ const SBigTextInput = styled(BigTextInput)<{ error?: Boolean }>`
     props.error
       ? `0.5px solid ${colors.warningRed}`
       : `0.5px solid ${colors.midGrey}`};
+`;
+
+const ReqBigTextInput = styled(SBigTextInput)`
+  font-size: 12px;
 `;
 
 const InnerContainer = styled.View`
