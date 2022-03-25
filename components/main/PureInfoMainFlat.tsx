@@ -53,6 +53,6 @@ const DescriptionText = styled(GeneralText)`
 
 const RecommendationText = styled(GeneralText)`
   font-size: 12px;
-  font-family: ${fontFamilies.bold};
-  color: ${colors.mainBlue};
+  font-family: ${fontFamilies.medium};
+  color: #1c43b7;
 `;
