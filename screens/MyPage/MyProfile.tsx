@@ -83,15 +83,17 @@ export default function MyProfile(props: Props) {
       retry: 1,
     }
   );
-  const { data: userData, isFetching, isSuccess, refetch } = useQuery<
-    UserData | undefined
-  >(["userProfile"], () => getUser(), {
+  const {
+    data: userData,
+    isFetching,
+    isSuccess,
+    refetch,
+  } = useQuery<UserData | undefined>(["userProfile"], () => getUser(), {
     retry: 2,
   });
 
-  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } = useMutation(
-    editProfile
-  );
+  const { mutateAsync: mutateUserProfile, isLoading: isUpdating } =
+    useMutation(editProfile);
 
   const Refetch = async () => {
     await refetch();
@@ -285,8 +287,8 @@ export default function MyProfile(props: Props) {
   }, [isSuccess]);
 
   useEffect(() => {
-    if (teamsData && localTeamNames.length === 0) {
-      teamsData.forEach((team, index) => {
+    if (teamsData.length > 0 && localTeamNames.length === 0) {
+      teamsData?.forEach((team, index) => {
         setLocalTeamNames((prev) => [...prev, team.name]);
         if (index === teamsData.length - 1) {
           setLocalMyTeam(userData?.team);
