@@ -1,6 +1,12 @@
 import styled from "styled-components/native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Dimensions, Animated, FlatList, SafeAreaView } from "react-native";
+import {
+  Dimensions,
+  Animated,
+  FlatList,
+  SafeAreaView,
+  View,
+} from "react-native";
 import { colors, fontFamilies, GeneralText } from "../styles/styles";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import {
@@ -19,6 +25,7 @@ import MainFlatListPlace from "../components/main/MainFlatListPlace";
 import MainTopCarousel from "../components/UI/MainTopCarousel";
 import { OptimizedFlatList } from "react-native-optimized-flatlist";
 import { getEventBanners } from "../lib/api/getEventBanners";
+import MainFeed from "../components/main/MainFeed";
 
 interface Props {}
 
@@ -273,27 +280,26 @@ export default function Main(props: Props) {
             <AnimWrapper
               style={{
                 transform: [{ translateX: position }],
-                padding: 20,
               }}
-              disableVirtualization={false}
-              showsVerticalScrollIndicator={false}
-              onEndReached={loadMoreLightning}
-              onEndReachedThreshold={0.2}
-              onRefresh={onRefreshLightning}
-              refreshing={refreshing}
-              keyExtractor={placeFlatlistKeyExtractor}
-              // @ts-ignore
-              data={mainLightningData.pages.map((page) => page.places).flat()}
-              renderItem={memoizedValueLightning}
-              ListHeaderComponent={
-                <LightningInfoContainer>
-                  <LightningInfoText style={{ fontSize: 14, lineHeight: 22 }}>
-                    크루원 누구나 자유롭게 번개를 올리고 참여할 수 있어요!항상
-                    올라오는 꿀잼 번개! 심심하면 놀러오라구{"><"}
-                  </LightningInfoText>
-                </LightningInfoContainer>
-              }
-            />
+            >
+              <MainFeed
+                loadMore={loadMoreLightning}
+                onRefresh={onRefreshLightning}
+                refreshing={refreshing}
+                renderItem={memoizedValueLightning}
+                places={mainLightningData.pages
+                  ?.map((page) => page.places)
+                  .flat()}
+                listHeaderCompoent={
+                  <LightningInfoContainer>
+                    <LightningInfoText>
+                      🚨(중요)모임 못 나가시면 오카방에서 상황 설명 후 앱에서 꼭
+                      바로 취소 부탁드리겠습니다.🚨
+                    </LightningInfoText>
+                  </LightningInfoContainer>
+                }
+              />
+            </AnimWrapper>
           )}
 
           {mainRegularData && (
@@ -301,27 +307,26 @@ export default function Main(props: Props) {
               style={{
                 left: width,
                 transform: [{ translateX: position }],
-                padding: 20,
               }}
-              disableVirtualization={false}
-              showsVerticalScrollIndicator={false}
-              onEndReached={loadMoreRegular}
-              onEndReachedThreshold={0.2}
-              onRefresh={onRefreshRegular}
-              refreshing={refreshing}
-              keyExtractor={placeFlatlistKeyExtractor}
-              ListHeaderComponent={
-                <LightningInfoContainer>
-                  <LightningInfoText style={{ fontSize: 14, lineHeight: 22 }}>
-                    (매우중요) 정기모임 참여는 마이페이지 {">"} 프로필
-                    수정하기에서 팀과 활동코드를 입력해 주셔야지만 가능해요!
-                  </LightningInfoText>
-                </LightningInfoContainer>
-              }
-              // @ts-ignore
-              data={mainRegularData.pages?.map((page) => page.places).flat()}
-              renderItem={memoizedValueRegular}
-            />
+            >
+              <MainFeed
+                loadMore={loadMoreRegular}
+                onRefresh={onRefreshRegular}
+                refreshing={refreshing}
+                renderItem={memoizedValueRegular}
+                places={mainRegularData.pages
+                  ?.map((page) => page.places)
+                  .flat()}
+                listHeaderCompoent={
+                  <LightningInfoContainer>
+                    <LightningInfoText>
+                      (매우중요) 정기모임 참여는 마이페이지 {">"} 프로필
+                      수정하기에서 팀과 활동코드를 입력해 주셔야지만 가능해요!
+                    </LightningInfoText>
+                  </LightningInfoContainer>
+                }
+              />
+            </AnimWrapper>
           )}
           {mainEventData && (
             <AnimWrapper
@@ -329,26 +334,24 @@ export default function Main(props: Props) {
               style={{
                 left: width * 2,
                 transform: [{ translateX: position }],
-                padding: 20,
               }}
-              ListHeaderComponent={
-                <ListHeaderContainer>
-                  <ListMainText>설레이는{"\n"}깜짝 이벤트 💖</ListMainText>
-                  <ListSubText>
-                    운영진들이 야심차게 준비한 이벤트 {"><"}
-                  </ListSubText>
-                </ListHeaderContainer>
-              }
-              showsVerticalScrollIndicator={false}
-              onEndReached={loadMoreEvent}
-              onEndReachedThreshold={0.2}
-              onRefresh={onRefreshEvent}
-              refreshing={refreshing}
-              keyExtractor={placeFlatlistKeyExtractor}
-              // @ts-ignore
-              data={mainEventData.pages?.map((page) => page.places).flat()}
-              renderItem={memoizedValueEvent}
-            />
+            >
+              <MainFeed
+                loadMore={loadMoreEvent}
+                onRefresh={onRefreshEvent}
+                refreshing={refreshing}
+                renderItem={memoizedValueEvent}
+                places={mainEventData.pages?.map((page) => page.places).flat()}
+                listHeaderCompoent={
+                  <ListHeaderContainer>
+                    <ListMainText>설레이는{"\n"}깜짝 이벤트 💖</ListMainText>
+                    <ListSubText>
+                      운영진들이 야심차게 준비한 이벤트 {"><"}
+                    </ListSubText>
+                  </ListHeaderContainer>
+                }
+              />
+            </AnimWrapper>
           )}
         </AnimationContainer>
       </Container>
@@ -393,7 +396,6 @@ const Container = styled.View`
   flex: 1;
   background-color: ${colors.bgColor};
 `;
-
 const MiddleTabContainer = styled.View`
   width: ${width + "px"};
   height: ${height * 0.1 + "px"};
@@ -420,13 +422,12 @@ const MiddleTabText = styled(GeneralText)<{ isSelcted: boolean }>`
   color: ${(props) => (props.isSelected ? colors.black : colors.bareGrey)};
 `;
 
-const AnimWrapper = styled(Animated.createAnimatedComponent(OptimizedFlatList))`
+const AnimWrapper = styled(Animated.createAnimatedComponent(View))`
   background-color: ${colors.bgColor};
   width: 100%;
   height: 100%;
   position: absolute;
 `;
-
 const AnimationContainer = styled.View`
   flex: 1;
 `;
@@ -438,4 +439,6 @@ const LightningInfoText = styled(GeneralText)`
   color: ${colors.midGrey};
   padding-left: 10px;
   padding-right: 10px;
+  font-size: 14px;
+  line-height: 22px;
 `;
