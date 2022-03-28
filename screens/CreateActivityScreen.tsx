@@ -32,7 +32,6 @@ export default function CreateActivityScreen(props: Props) {
 
   const setAccountType = async () => {
     const accountType = await storage.getItem("accountType");
-    console.log(accountType);
     if (accountType === "Admin" || accountType === "Owner") setIsAuthorized(true);
   };
 

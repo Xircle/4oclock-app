@@ -38,18 +38,6 @@ function MainTopCarousel({ eventBanners }: Props) {
               <RegularMainListHeaderImage
                 source={require("../../statics/images/RegularHeader.jpeg")}
               />
-              {/* <LinearGradient
-                // Background Linear Gradient
-                colors={["transparent", colors.black]}
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  opacity: 0.7,
-                }}
-              /> */}
               <RMLTextWrapper>
                 <RegularMainListHeaderSubHeading>
                   연고이팅 처음 가입했다면 필독!
@@ -71,18 +59,6 @@ function MainTopCarousel({ eventBanners }: Props) {
               <RegularMainListHeaderImage
                 source={require("../../statics/images/LightningHeader.jpeg")}
               />
-              {/* <LinearGradient
-                // Background Linear Gradient
-                colors={["transparent", colors.black]}
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  opacity: 0.7,
-                }}
-              /> */}
               <RMLTextWrapper>
                 <RegularMainListHeaderSubHeading>
                   연고이팅 번개는 누구나 열고 참여가능하다구 {"><"}
@@ -123,18 +99,6 @@ function MainTopCarousel({ eventBanners }: Props) {
                       }),
                     }}
                   />
-                  {/* <LinearGradient
-                    // Background Linear Gradient
-                    colors={["transparent", colors.black]}
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      bottom: 0,
-                      opacity: 0.7,
-                    }}
-                  /> */}
                   <RMLTextWrapper>
                     <RegularMainListHeaderSubHeading>
                       {item.subHeading}

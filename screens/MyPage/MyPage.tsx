@@ -46,7 +46,6 @@ export default function MyPage(props: Props) {
     }
     if (userData?.team) {
       saveToLocalStorage("team", userData?.team);
-      console.log(userData?.team);
     }
     if (userData?.isYkClub) {
       saveToLocalStorage("isYkClub", "true");

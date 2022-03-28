@@ -136,7 +136,6 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
               />
             </InnerContainer>
           )}
-
           <ExpandableV
             title="만들고 싶은 모임 주제를 적어봐! (제목)"
             height={120}
@@ -159,7 +158,6 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
                 }}
                 error={nameError}
               />
-
               {nameError ? (
                 <SErrorMessage>{createPlaceErrorMessage[0]}</SErrorMessage>
               ) : null}
@@ -321,7 +319,6 @@ export default function CreatePlaceStage1({ state, dispatch, admin }: Props) {
               {addressError ? (
                 <SErrorMessage>{createPlaceErrorMessage[3]}</SErrorMessage>
               ) : null}
-
               <SBigTextInput
                 style={{ marginTop: 5 }}
                 placeholder="만남 장소를 입력해주세요"
