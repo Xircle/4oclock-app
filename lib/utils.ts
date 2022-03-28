@@ -27,18 +27,14 @@ const weekDay = [
 export function AgeNumberToString(age: number): string {
   if (age === 0) {
     return "미정";
-  } else if (age >= 19 && age <= 24) {
-    return "20초반";
-  } else if (age >= 24 && age <= 27) {
+  } else if (age >= 19 && age < 23) {
+    return age + "살";
+  } else if (age >= 23 && age < 27) {
     return "20중반";
-  } else if (age >= 28 && age <= 29) {
+  } else if (age >= 27 && age < 30) {
     return "20후반";
-  } else if (age >= 30 && age <= 33) {
-    return "30초반";
-  } else if (age >= 34 && age <= 37) {
-    return "30중반";
-  } else if (age >= 38 && age <= 39) {
-    return "30후반";
+  } else if (age >= 30 && age < 40) {
+    return "30대";
   } else {
     return "비밀~^^";
   }
@@ -203,11 +199,12 @@ export const convertTimeCA = (date: Date) => {
   );
 };
 
-
-
-export const displayMeetingTime = (timeString : string) => {
-  const noonDefined = moment(timeString).hour() > 11 ? '오후 ' : '오전 '
-  const hour = moment(timeString).hour() > 12 ? moment(timeString).hour() - 12 : moment(timeString).hour();
+export const displayMeetingTime = (timeString: string) => {
+  const noonDefined = moment(timeString).hour() > 11 ? "오후 " : "오전 ";
+  const hour =
+    moment(timeString).hour() > 12
+      ? moment(timeString).hour() - 12
+      : moment(timeString).hour();
   // moment(activityData?.startDateAt).month() +
   //                 1 +
   //                 "월 " +
@@ -215,5 +212,16 @@ export const displayMeetingTime = (timeString : string) => {
   //                 "일 " +
   //                 weekDay[moment(activityData?.startDateAt).day()]
   //               : ""
-  return moment(timeString).month() + 1 + "월 " + moment(timeString).date() + "일 " + weekDay[moment(timeString).day()] + " " + noonDefined + hour + "시"
+  return (
+    moment(timeString).month() +
+    1 +
+    "월 " +
+    moment(timeString).date() +
+    "일 " +
+    weekDay[moment(timeString).day()] +
+    " " +
+    noonDefined +
+    hour +
+    "시"
+  );
 };
