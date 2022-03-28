@@ -28,7 +28,7 @@ import { getVersion } from "../lib/api/getVersion";
 interface Props {}
 
 const { width } = Dimensions.get("window");
-const currentVersion = Platform.OS === "ios" ? 1 : 1;
+const currentVersion = Platform.OS === "ios" ? 2 : 2;
 
 export default function Welcome(props: Props) {
   const { data: versionData } = useQuery<GetVersionOutput | undefined>(
