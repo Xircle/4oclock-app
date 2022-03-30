@@ -28,13 +28,13 @@ const { width, height } = Dimensions.get("window");
 export default function MyPage(props: Props) {
   const navigation = useNavigation();
 
-  const { data: userData, isLoading, refetch } = useQuery<UserData | undefined>(
-    ["userProfile"],
-    () => getUser(),
-    {
-      retry: 1,
-    }
-  );
+  const {
+    data: userData,
+    isLoading,
+    refetch,
+  } = useQuery<UserData | undefined>(["userProfile"], () => getUser(), {
+    retry: 1,
+  });
 
   const saveToLocalStorage = async (variable: string, value: string) => {
     await storage.setItem(variable, value);
@@ -113,7 +113,8 @@ export default function MyPage(props: Props) {
                 onPress={() => navigation.navigate("MyActivities")}
               >
                 <ListText style={{ fontFamily: fontFamilies.bold }}>
-                  신청한 모임 {userData?.reservation_count}
+                  현재 기수 모임 {userData?.this_season_reservation_count} /
+                  전체 모임 {userData?.reservation_count}
                 </ListText>
                 <Ionicons
                   name="chevron-forward-sharp"

@@ -168,6 +168,7 @@ export interface UserData {
   university: string;
   age: number;
   reservation_count: number;
+  this_season_reservation_count: number;
   job: string;
   gender: string;
   shortBio: string;
