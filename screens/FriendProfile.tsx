@@ -11,7 +11,7 @@ import { RouteProp, useNavigation } from "@react-navigation/native";
 import { LoggedInStackParamList } from "../navigators/LoggedInNav";
 import storage from "../lib/helpers/myAsyncStorage";
 import { getMyRooms } from "../lib/api/getMyRooms";
-import { Alert } from 'react-native';
+import { Alert } from "react-native";
 
 interface Props {
   route: RouteProp<LoggedInStackParamList, "FriendProfile">;
@@ -20,13 +20,19 @@ interface Props {
 export default function FriendProfile({ route }: Props) {
   const navigation = useNavigation();
   const [showPN, setShowPN] = useState<boolean>(false);
-  const { data: profileData, isLoading, isFetching } = useQuery<
-    UserProfile | undefined
-  >(["friendProfile", route.params.id], () => seeUserById(route.params.id), {
-    retry: 1,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const {
+    data: profileData,
+    isLoading,
+    isFetching,
+  } = useQuery<UserProfile | undefined>(
+    ["friendProfile", route.params.id],
+    () => seeUserById(route.params.id),
+    {
+      retry: 1,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
   const { mutateAsync: mutateChatRoomData } = useMutation(getMyRooms);
   const getAccountType = async () => {
     const accountType = await storage.getItem("accountType");
@@ -42,7 +48,6 @@ export default function FriendProfile({ route }: Props) {
     try {
       const { myRooms } = await mutateChatRoomData();
       if (myRooms.find((room) => room.receiver.id === profileData.fk_user_id)) {
-        console.log("found");
         // @ts-ignore
         navigation.navigate("ChatStackNav", {
           screen: "ChatRoom",
@@ -66,7 +71,7 @@ export default function FriendProfile({ route }: Props) {
         });
       }
     } catch (e) {
-      Alert.alert('일시적 에러가 발생했습니다. 앱 종료 후 다시 시작해주세요')
+      Alert.alert("일시적 에러가 발생했습니다. 앱 종료 후 다시 시작해주세요");
     }
   };
   return (
