@@ -22,7 +22,6 @@ export default function ChatList(props: Props) {
   });
 
   useEffect(() => {
-    console.log(chatRoomData);
     navigation.addListener("focus", (e) => {
       refetch();
     });

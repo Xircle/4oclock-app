@@ -101,7 +101,6 @@ export default function ChatRoom({ route }: Props) {
       socket.on("leave_room", () => setIsReceiverJoining(false));
       socket.on("is_entering", isEnteringCallBack);
       socket.on("receive_message", receivedMsgFromSocket);
-      console.log(userData.fk_user_id);
     } else {
       console.log("bad connection");
     }

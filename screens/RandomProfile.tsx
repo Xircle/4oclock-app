@@ -43,7 +43,6 @@ export default function RnadomProfile(props: Props) {
     try {
       const { myRooms } = await mutateChatRoomData();
       if (myRooms.find((room) => room.receiver.id === profileData.fk_user_id)) {
-        console.log("found");
         // @ts-ignore
         navigation.navigate("ChatStackNav", {
           screen: "ChatRoom",
