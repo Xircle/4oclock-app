@@ -3,7 +3,7 @@ import AxiosClient from "../apiClient";
 import { AuthState } from "../../components/auth/types";
 import { BASE_URL } from "../utils";
 
-export const createAccount = async (state: AuthState): Promise<CoreOutput> => {
+export const deleteAccount = async (): Promise<CoreOutput> => {
   const formData = new FormData();
   const axiosclient = await AxiosClient();
 
