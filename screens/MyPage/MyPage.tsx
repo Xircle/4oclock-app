@@ -12,7 +12,7 @@ import {
 import AvatarUri from "../../components/UI/AvatarUri";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { UserData } from "../../lib/api/types";
 import { getUser } from "../../lib/api/getUser";
 import { AgeNumberToString } from "../../lib/utils";
@@ -20,6 +20,7 @@ import { useNavigation } from "@react-navigation/native";
 import { openLink } from "../../components/shared/Links";
 import { Account } from "../../lib/helpers/Account";
 import storage from "../../lib/helpers/myAsyncStorage";
+import { deleteAccount } from "../../lib/api/deleteAccount";
 
 interface Props {}
 
@@ -35,6 +36,16 @@ export default function MyPage(props: Props) {
   } = useQuery<UserData | undefined>(["userProfile"], () => getUser(), {
     retry: 1,
   });
+
+  const { mutateAsync: mutateDeleteAccount } = useMutation(deleteAccount);
+
+  const deleteAccountPressed = async () => {
+    await mutateDeleteAccount();
+
+    await Account.logout();
+    // @ts-ignore
+    navigation.navigate("Welcome");
+  };
 
   const saveToLocalStorage = async (variable: string, value: string) => {
     await storage.setItem(variable, value);
@@ -141,7 +152,7 @@ export default function MyPage(props: Props) {
             >
               <ListText>로그아웃</ListText>
             </ListButton>
-            <ListButton onPress={openLink.LOpenKakaoChat}>
+            <ListButton onPress={deleteAccountPressed}>
               <ListText>탈퇴하기</ListText>
             </ListButton>
           </ListContainer>
