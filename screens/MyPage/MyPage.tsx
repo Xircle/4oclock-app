@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
-import { Dimensions, TouchableOpacity } from "react-native";
+import { Alert, Dimensions, TouchableOpacity } from "react-native";
 import {
   colors,
   fontFamilies,
@@ -39,7 +39,25 @@ export default function MyPage(props: Props) {
 
   const { mutateAsync: mutateDeleteAccount } = useMutation(deleteAccount);
 
-  const deleteAccountPressed = async () => {
+  const deleteAccountPressed = () => {
+    Alert.alert(
+      "정말 탈퇴하시겠습니까?",
+      "탈퇴하시면 사용자의 모든 정보가 삭제되며, 복원할 수 없습니다",
+      [
+        {
+          text: "탈퇴하기",
+          //@ts-ignore
+          onPress: deleteAccountActivated,
+        },
+        {
+          text: "닫기",
+          onPress: () => {},
+        },
+      ]
+    );
+  };
+
+  const deleteAccountActivated = async () => {
     await mutateDeleteAccount();
 
     await Account.logout();
