@@ -26,6 +26,8 @@ import MainTopCarousel from "../components/UI/MainTopCarousel";
 import { OptimizedFlatList } from "react-native-optimized-flatlist";
 import { getEventBanners } from "../lib/api/getEventBanners";
 import MainFeed from "../components/main/MainFeed";
+import HeaderPureComponent from "../components/shared/HeaderPureComponent";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {}
 
@@ -49,6 +51,7 @@ export default function Main(props: Props) {
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const queryClient = useQueryClient();
+  const navigation = useNavigation();
 
   const placeFlatlistKeyExtractor = (item: PlaceFeedData, index) =>
     item.id + "" + index;
@@ -235,6 +238,7 @@ export default function Main(props: Props) {
   return (
     <SafeAreaView style={{ backgroundColor: colors.bgColor, flex: 1 }}>
       <Container>
+        <HeaderPureComponent onPress={() => {}} />
         <MainTopCarousel eventBanners={eventBannerData.eventBanners} />
         <MiddleTabContainer>
           <MiddleTab

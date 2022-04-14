@@ -8,6 +8,7 @@ import ReservationConfirm from "../screens/ActivitiesDetail/ReservationConfirm";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fontFamilies } from "../styles/styles";
 import { TouchableOpacity } from "react-native";
+import SearchScreen from "../screens/ActivitiesDetail/SearchScreen";
 
 interface Props {
   route: RouteProp<LoggedInStackParamList, "ActivityStackNav">;
@@ -33,6 +34,7 @@ export type ActivityStackParamList = {
     placeType: string;
     kakaoLink?: string;
   };
+  SearchScreen: undefined;
 };
 
 const Stack = createStackNavigator<ActivityStackParamList>();
@@ -103,6 +105,7 @@ export default function ActivityStackNav({ route }: Props) {
         options={{ headerShown: false, gestureEnabled: false }}
         component={ReservationConfirm}
       />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
     </Stack.Navigator>
   );
 }
