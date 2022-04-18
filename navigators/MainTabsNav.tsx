@@ -3,14 +3,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Main from "../screens/Main";
 import MyPage from "../screens/MyPage/MyPage";
 import TabIcon from "../components/nav/TabIcon";
-import { colors } from "../styles/styles";
-import CreateActivityScreen from "../screens/CreateActivityScreen";
+import { colors, fontFamilies } from "../styles/styles";
 import TabSide from "../components/nav/TabSide";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ChatList from "../screens/Chat/ChatList";
 import RnadomProfile from "../screens/RandomProfile";
+import ActivityTopTabNav from "./ActivityTopTabNav";
 
 interface Props {}
 
@@ -21,7 +21,6 @@ export default function MainTabsNav(props: Props) {
     <Tabs.Navigator
       screenOptions={{
         tabBarShowLabel: false,
-
         headerStyle: {
           backgroundColor: colors.bgColor,
           borderColor: colors.bgColor,
@@ -79,9 +78,23 @@ export default function MainTabsNav(props: Props) {
       />
       <Tabs.Screen
         name="CreatePlaceT"
-        component={CreateActivityScreen}
+        component={ActivityTopTabNav}
         options={{
           title: "생성하기",
+          headerTitle: "모임 관리",
+          headerShown: true,
+          headerTitleStyle: {
+            fontFamily: fontFamilies.regular,
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ marginRight: 8 }}
+              // @ts-ignore
+              onPress={() => navigation.navigate("CreateActivityStackNav")}
+            >
+              <Ionicons name="add" size={30} color={colors.lightBlack} />
+            </TouchableOpacity>
+          ),
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon
               iconName={"add-circle"}
@@ -92,15 +105,6 @@ export default function MainTabsNav(props: Props) {
           ),
         }}
       />
-      {/* <Tabs.Screen
-        name="RandomProfileT"
-        component={RandomProfile}
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName={"people"} color={color} focused={focused} />
-          ),
-        }}
-      /> */}
       <Tabs.Screen
         name="RandomProfileT"
         options={{
