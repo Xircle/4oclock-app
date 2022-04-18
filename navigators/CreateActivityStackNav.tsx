@@ -7,8 +7,18 @@ import CreateActivitiyStack2 from "../components/activity/activitySeperate/Creat
 import CreateActivitiyStack3 from "../components/activity/activitySeperate/CreateActivitiyStack3";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
+import CreateActivityFinish from "../components/activity/activitySeperate/CreateActivityFinish";
+import { ActivityAction, ActivityState } from "../lib/activity/ActivityReducer";
 
 interface Props {}
+
+export type CreateActivityStackParamList = {
+  CAS1: {
+    loadedState: ActivityState | undefined;
+    loadedDispatch: React.Dispatch<ActivityAction> | undefined;
+    role: string | undefined;
+  };
+};
 
 const Stack = createStackNavigator();
 
@@ -18,6 +28,7 @@ export default function CreateActivityStackNav(props: Props) {
     <Stack.Navigator
       screenOptions={{
         headerBackTitleVisible: false,
+        headerTitle: "장소 생성",
         headerBackImage: () => {
           return (
             <Ionicons
@@ -63,6 +74,11 @@ export default function CreateActivityStackNav(props: Props) {
         name="CAS3"
         options={{}}
         component={CreateActivitiyStack3}
+      />
+      <Stack.Screen
+        name="CreateActivityFinish"
+        options={{}}
+        component={CreateActivityFinish}
       />
     </Stack.Navigator>
   );
