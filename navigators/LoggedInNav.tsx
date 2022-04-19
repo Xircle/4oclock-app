@@ -9,6 +9,7 @@ import { colors, fontFamilies } from "../styles/styles";
 import { Participants } from "../lib/api/types";
 import FriendProfile from "../screens/FriendProfile";
 import ChatStackNav from "./ChatStackNav";
+import CreateActivityStackNav from "./CreateActivityStackNav";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -23,6 +24,7 @@ export type LoggedInStackParamList = {
   };
   FriendProfile: { id?: string };
   ChatStackNav: undefined;
+  CreateActivityStackNav: undefined;
 };
 
 const Stack = createStackNavigator<LoggedInStackParamList>();
@@ -89,6 +91,11 @@ export default function LoggedInNav() {
         options={{
           headerShown: false,
         }}
+      />
+      <Stack.Screen
+        name="CreateActivityStackNav"
+        component={CreateActivityStackNav}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
