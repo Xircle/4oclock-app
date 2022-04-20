@@ -24,39 +24,35 @@ import CreatePlaceTypeSelector from "../CreatePlaceTypeSelector";
 import { activityDispatcher } from "../../../lib/activity/ActivityDispatcher";
 import { activityValidation } from "../../../lib/activity/CreateActivityValidation";
 import { createPlaceErrorMessage } from "../../../lib/errorMessages";
+import { CreateActivityStackParamList } from "../../../navigators/CreateActivityStackNav";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { RootState } from "../../../lib/reducers";
 
-interface Props {
-  state?: ActivityState;
-  dispatch?: React.Dispatch<ActivityAction>;
-  role?: string;
-  modify?: boolean;
-}
+type Props = CreateActivityStackParamList["CAS1"];
 
-export default function CreateActivitiyStack1({
-  state,
-  dispatch,
-  role,
-  modify,
-}: Props) {
+export default function CreateActivitiyStack1(props: Props) {
+  const { name, modify, activityType, stage1Valid } = useSelector(
+    (state: RootState) => state.activityReducer
+  );
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [nameError, setNameError] = useState(undefined);
-  const [disabled, setDisabled] = useState(true);
-  const [newState, newDispatch] = useReducer(
-    activityReducer,
-    activityInitialState
-  );
 
   useEffect(() => {
     if (modify) {
     }
   }, []);
 
-  const nextHandler = () => {};
+  const nextHandler = () => {
+    // @ts-ignore
+    navigation.navigate("CAS2", {});
+  };
 
   const activitySelectorEnabled = storage.getItem("accountType");
 
   const setActivityType = (type: string) => {
-    activityDispatcher.dispatchActivityType(type, newDispatch);
+    activityDispatcher.dispatchActivityType(type, dispatch);
   };
 
   return (
@@ -70,7 +66,7 @@ export default function CreateActivitiyStack1({
           <InnerContainer style={{ paddingBottom: 5 }}>
             <CreatePlaceTypeSelector
               onPress={setActivityType}
-              selectedType={newState.activityType}
+              selectedType={activityType}
             />
           </InnerContainer>
         )}
@@ -83,11 +79,12 @@ export default function CreateActivitiyStack1({
             returnKeyType="next"
             returnKeyLabel="next"
             autoCorrect={false}
-            defaultValue={newState.name ? newState.name : ""}
+            defaultValue={name ? name : ""}
             onChange={(event) => {
               const { eventCount, target, text } = event.nativeEvent;
-              activityDispatcher.dispatchName(text, newDispatch);
+              activityDispatcher.dispatchName(text, dispatch);
               setNameError(!activityValidation.validateName(text));
+              activityDispatcher.dispatchStage1Valid(text.length > 2, dispatch);
             }}
             error={nameError}
           />
@@ -101,8 +98,7 @@ export default function CreateActivitiyStack1({
       <TouchableOpacity onPress={() => navigation.navigate("CAS2")}>
         <MainButtonWBg
           onPress={nextHandler}
-          // onPress={() => setModal((prev) => !prev)}
-          disabled={disabled}
+          disabled={!stage1Valid}
           title={"다음"}
         ></MainButtonWBg>
       </TouchableOpacity>
