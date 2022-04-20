@@ -8,6 +8,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Image, LogBox } from "react-native";
 import { Asset } from "expo-asset";
+import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "./lib/reducers";
+import { Provider } from "react-redux";
 
 //LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 const Stack = createStackNavigator();
@@ -21,6 +24,8 @@ const loadImages = (images) =>
       return Asset.loadAsync(image);
     }
   });
+
+const store = configureStore({ reducer: rootReducer });
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -46,15 +51,17 @@ export default function App() {
       />
     );
   return (
-    <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{ headerShown: false, gestureEnabled: false }}
-        >
-          <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
-          <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{ headerShown: false, gestureEnabled: false }}
+          >
+            <Stack.Screen name="LoggedOutNav" component={LoggedOutNav} />
+            <Stack.Screen name="LoggedInNav" component={LoggedInNav} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </QueryClientProvider>
+    </Provider>
   );
 }
