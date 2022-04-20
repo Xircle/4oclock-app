@@ -16,6 +16,10 @@ export const activityDispatcher = {
       type: "setName",
       payload: text,
     });
+    dispatch({
+      type: "setStage1Valid",
+      payload: text.length > 2,
+    });
   },
   dispatchKakaoLink: (
     link: string,
@@ -41,17 +45,23 @@ export const activityDispatcher = {
       payload: team,
     });
   },
-  dispatchRecommendation: (recommendation: string, dispatch: React.Dispatch<ActivityAction>) => {
+  dispatchRecommendation: (
+    recommendation: string,
+    dispatch: React.Dispatch<ActivityAction>
+  ) => {
     dispatch({
-      type: 'setRecommendation',
+      type: "setRecommendation",
       payload: recommendation,
-    })
+    });
   },
-  dispatchParticipating: (participating: boolean, dispatch: React.Dispatch<ActivityAction>) => {
+  dispatchParticipating: (
+    participating: boolean,
+    dispatch: React.Dispatch<ActivityAction>
+  ) => {
     dispatch({
-      type: 'setParticipating',
+      type: "setParticipating",
       payload: participating,
-    })
+    });
   },
   dispatchDetailAddress: (
     placeName: string,
@@ -190,6 +200,6 @@ export const activityDispatcher = {
     dispatch({
       type: "setParticipating",
       payload: activityInitialState.participating,
-    })
+    });
   },
 };

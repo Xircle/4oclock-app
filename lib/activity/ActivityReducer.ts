@@ -4,26 +4,28 @@ export type ActivityAction =
   | { type: "setName"; payload: string }
   | { type: "setMaxParticipantsNumber"; payload: number }
   | { type: "setParticipationFee"; payload: string }
-  | { type: "setStartDateAt"; payload: Date }
+  | { type: "setStartDateAt"; payload: string }
   | { type: "setDescription"; payload: string }
   | { type: "setDetailAddress"; payload: string }
   // @ts-ignore
   | { type: "setCoverImageFile"; payload: File }
   // @ts-ignore
   | { type: "setSubImagesFile"; payload: File[] }
-  | { type: "setStage1Valid"; payload: Boolean }
+  | { type: "setStage1Valid"; payload: boolean }
   | { type: "setIsFinished"; payload: Boolean }
   | { type: "setPlaceId"; payload: string }
   | { type: "setActivityType"; payload: string }
   | { type: "setKakaoLink"; payload: string }
   | { type: "setTeam"; payload: string }
-  | { type: 'setRecommendation'; payload: string}
-  | { type: 'setParticipating'; payload: boolean};
+  | { type: "setRecommendation"; payload: string }
+  | { type: "setParticipating"; payload: boolean }
+  | { type: "setModify"; payload: boolean };
 
 export interface ActivityState extends CreateActivityOutput {
   stage1Valid: Boolean;
   isFinished: Boolean;
   activityType: string;
+  modify: boolean;
 }
 
 export const activityInitialState: ActivityState = {
@@ -34,7 +36,7 @@ export const activityInitialState: ActivityState = {
   coverImage: undefined,
   subImages: [],
   participationFee: "0",
-  startDateAt: new Date(),
+  startDateAt: "",
   stage1Valid: false,
   isFinished: false,
   placeId: "0",
@@ -43,10 +45,11 @@ export const activityInitialState: ActivityState = {
   team: "",
   recommendation: "",
   participating: true,
+  modify: false,
 };
 
-export function reducer(
-  state: ActivityState,
+export function activityReducer(
+  state: ActivityState = activityInitialState,
   action: ActivityAction
 ): ActivityState {
   switch (action.type) {
@@ -120,17 +123,22 @@ export function reducer(
         ...state,
         team: action.payload,
       };
-    case 'setRecommendation':
+    case "setRecommendation":
       return {
         ...state,
         recommendation: action.payload,
       };
-    case 'setParticipating':
+    case "setParticipating":
       return {
         ...state,
         participating: action.payload,
-      }
+      };
+    case "setModify":
+      return {
+        ...state,
+        participating: action.payload,
+      };
     default:
-      throw new Error();
+      return state;
   }
 }
