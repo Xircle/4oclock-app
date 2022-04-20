@@ -135,7 +135,7 @@ export interface CreateActivityData {
   name: string;
   maxParticipantsNumber?: number;
   participationFee: string;
-  startDateAt: Date;
+  startDateAt: string;
   description: string;
   detailAddress: string;
   coverImage?: File;
