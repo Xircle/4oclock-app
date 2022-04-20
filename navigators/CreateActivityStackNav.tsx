@@ -6,17 +6,47 @@ import CreateActivitiyStack1 from "../components/activity/activitySeperate/Creat
 import CreateActivitiyStack2 from "../components/activity/activitySeperate/CreateActivitiyStack2";
 import CreateActivitiyStack3 from "../components/activity/activitySeperate/CreateActivitiyStack3";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native";
+import { ButtonProps, TouchableOpacity } from "react-native";
 import CreateActivityFinish from "../components/activity/activitySeperate/CreateActivityFinish";
-import { ActivityAction, ActivityState } from "../lib/activity/ActivityReducer";
 
 interface Props {}
 
 export type CreateActivityStackParamList = {
   CAS1: {
-    loadedState: ActivityState | undefined;
-    loadedDispatch: React.Dispatch<ActivityAction> | undefined;
-    role: string | undefined;
+    name?: string;
+    maxParticipantsNumber?: number;
+    startDateAt?: Date;
+    description?: string;
+    detailAddress?: string;
+    coverImageFile?: any;
+    subImagesFile?: any[];
+    team?: string;
+    placeId?: string;
+    activityType?: string;
+    kakaoLink?: string;
+    recommendation?: string;
+    participating?: string;
+    role?: string;
+    modify?: boolean;
+    stage1Valid?: boolean;
+  };
+  CAS2: {
+    name?: string;
+    maxParticipantsNumber?: number;
+    startDateAt?: Date;
+    description?: string;
+    detailAddress?: string;
+    coverImageFile?: any;
+    subImagesFile?: any[];
+    team?: string;
+    placeId?: string;
+    activityType?: string;
+    kakaoLink?: string;
+    recommendation?: string;
+    participating?: string;
+    role?: string;
+    modify?: boolean;
+    stage1Valid?: boolean;
   };
 };
 
