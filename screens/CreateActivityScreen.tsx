@@ -3,7 +3,10 @@ import React, { useState, useReducer, useRef, useEffect } from "react";
 import { colors } from "../styles/styles";
 import { Alert, Animated, Dimensions, View } from "react-native";
 import MainButtonWBg from "../components/UI/MainButtonWBg";
-import { activityInitialState, reducer } from "../lib/activity/ActivityReducer";
+import {
+  activityInitialState,
+  activityReducer,
+} from "../lib/activity/ActivityReducer";
 import CreatePlaceStage1 from "../components/activity/CreatePlaceStage1";
 import CreatePlaceStage2 from "../components/activity/CreatePlaceStage2";
 import CreatePlaceStage3 from "../components/activity/CreatePlaceStage3";
@@ -26,13 +29,14 @@ export default function CreateActivityScreen(props: Props) {
   const [loading, setLoading] = useState(false);
 
   const totalStage = 3;
-  const [state, dispatch] = useReducer(reducer, activityInitialState);
+  const [state, dispatch] = useReducer(activityReducer, activityInitialState);
   // values
   const position = useRef(new Animated.Value(0)).current;
 
   const setAccountType = async () => {
     const accountType = await storage.getItem("accountType");
-    if (accountType === "Admin" || accountType === "Owner") setIsAuthorized(true);
+    if (accountType === "Admin" || accountType === "Owner")
+      setIsAuthorized(true);
   };
 
   useEffect(() => {
