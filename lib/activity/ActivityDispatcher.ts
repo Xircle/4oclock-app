@@ -87,7 +87,7 @@ export const activityDispatcher = {
     date: Date,
     dispatch: React.Dispatch<ActivityAction>
   ) => {
-    dispatch({ type: "setStartDateAt", payload: date });
+    dispatch({ type: "setStartDateAt", payload: date.toString() });
   },
   dispatchActivityType: (
     type: string,
