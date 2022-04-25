@@ -17,12 +17,16 @@ import {
   MainHeading,
   SubHeading,
 } from "../../styles/styles";
-import { ActivityAction, ActivityState } from "../../lib/activity/ActivityReducer";
+import {
+  ActivityAction,
+  ActivityState,
+} from "../../lib/activity/ActivityReducer";
 import * as ImagePicker from "react-native-image-picker";
 import { activityDispatcher } from "../../lib/activity/ActivityDispatcher";
 import { Permission } from "../../lib/helpers/permission";
 import { RESULTS } from "react-native-permissions";
 import FullScreenLoader from "../UI/FullScreenLoader";
+import FastImage from "react-native-fast-image";
 
 interface Props {
   onBackPressed: () => void;
@@ -121,17 +125,23 @@ export default function CreatePlaceStage2({
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
           재밌는 모임을 열어볼까? 열고 친구들과 꿀잼 모임😊
         </SubHeading>
-        <ParticipatingContainer onPress={()=>activityDispatcher.dispatchParticipating(!state.participating, dispatch)}>
+        <ParticipatingContainer
+          onPress={() =>
+            activityDispatcher.dispatchParticipating(
+              !state.participating,
+              dispatch
+            )
+          }
+        >
           <ParticipatingWrapper>
             <Ionicons
               name="checkmark-circle-outline"
               size={22}
               color={state.participating ? colors.mainBlue : colors.bareGrey}
             />
-            <SBlackLabel style={{marginLeft: 10}}>저도 참여해요</SBlackLabel>
+            <SBlackLabel style={{ marginLeft: 10 }}>저도 참여해요</SBlackLabel>
           </ParticipatingWrapper>
         </ParticipatingContainer>
-
 
         <SBlackLabel>관련 사진 올리기</SBlackLabel>
         <AddPhotoContiner onPress={ImageHandle}>
@@ -179,9 +189,7 @@ export default function CreatePlaceStage2({
   );
 }
 
-const ParticipatingContainer = styled.TouchableWithoutFeedback`
-
-`;
+const ParticipatingContainer = styled.TouchableWithoutFeedback``;
 
 const ParticipatingWrapper = styled.View`
   flex-direction: row;
@@ -201,7 +209,7 @@ const PhotoContainer = styled.View<{ space: number }>`
   flex-wrap: wrap;
 `;
 
-const Photo = styled.Image<{ space: boolean }>`
+const Photo = styled(FastImage)<{ space: boolean }>`
   width: ${(props) => (width - props.space * 2 - 60) / 3 + "px"};
   height: ${(props) => (width - props.space * 2 - 60) / 3 + "px"};
   margin-bottom: ${(props) => props.space + "px"};
@@ -212,8 +220,7 @@ const Container = styled.View`
   padding: 0px 30px;
 `;
 
-const SBlackLabel = styled(BlackLabel)`
-`;
+const SBlackLabel = styled(BlackLabel)``;
 
 const AddPhotoContiner = styled.TouchableOpacity`
   margin-top: 22px;

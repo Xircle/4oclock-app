@@ -24,6 +24,7 @@ import jwt_decode from "jwt-decode";
 import { GetVersionOutput } from "../lib/api/types";
 import { useQuery } from "react-query";
 import { getVersion } from "../lib/api/getVersion";
+import FastImage from "react-native-fast-image";
 
 interface Props {}
 
@@ -318,13 +319,6 @@ export default function Welcome(props: Props) {
 const Heading = styled(GeneralText)`
   font-family: ${fontFamilies.bold};
   font-size: 25px;
-`;
-
-const MainImg = styled.Image`
-  width: 220px;
-  position: absolute;
-  top: 0px;
-  left: 0;
 `;
 
 const AgreeContainer = styled.View`

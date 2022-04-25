@@ -6,6 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableWithoutFeedback } from "react-native";
 import optimizeImage from "../../lib/helpers/optimizeImage";
+import FastImage from "react-native-fast-image";
 
 interface Props {
   coverImageUrl: string;
@@ -113,7 +114,6 @@ const TextContainer = styled.View`
   bottom: 20px;
 `;
 
-
 const NameText = styled(GeneralText)`
   color: ${colors.bgColor};
   font-family: ${fontFamilies.bold};
@@ -126,7 +126,7 @@ const Container = styled.View`
   position: relative;
 `;
 
-const CoverImage = styled.Image<{ width: number; height: number }>`
+const CoverImage = styled(FastImage)<{ width: number; height: number }>`
   width: ${(props) => props.width + "px"};
   height: ${(props) => props.height + "px"};
   border-bottom-left-radius: 15px;
