@@ -181,7 +181,8 @@ export const ModifyStringToStringArray = (
 
 // }
 
-export const convertTimeCA = (date: Date) => {
+export const convertTimeCA = (dateString: string) => {
+  const date = new Date(dateString);
   if (date.getMinutes() % 30 !== 0) return "";
   const hours =
     date.getHours() >= 12
