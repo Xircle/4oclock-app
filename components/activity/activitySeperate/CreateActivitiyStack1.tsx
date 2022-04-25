@@ -29,6 +29,9 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "../../../lib/reducers";
 import MySelect from "../../UI/MySelect";
+import { useQuery } from "react-query";
+import { TeamData } from "../../../lib/api/types";
+import { getTeams } from "../../../lib/api/getTeams";
 
 type Props = CreateActivityStackParamList["CAS1"];
 
@@ -51,6 +54,22 @@ export default function CreateActivitiyStack1(props: Props) {
     // @ts-ignore
     navigation.navigate("CAS2", {});
   };
+
+  const { data: teamsData } = useQuery<TeamData[] | undefined>(
+    ["teams"],
+    () => getTeams(),
+    {
+      retry: 1,
+    }
+  );
+
+  useEffect(() => {
+    if (teamsData && teamsData.length > 0 && localTeamNames.length === 0) {
+      teamsData.forEach((team, index) => {
+        setLocalTeamNames((prev) => [...prev, team.name]);
+      });
+    }
+  }, [teamsData]);
 
   const activitySelectorEnabled = storage.getItem("accountType");
 
