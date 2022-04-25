@@ -113,9 +113,9 @@ export default function CreateActivityStack2({}: Props) {
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <MainHeading>모임을 열어볼까?</MainHeading>
+        <MainHeading>사진을 올려줘~</MainHeading>
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
-          재밌는 모임을 열어볼까? 열고 친구들과 꿀잼 모임😊
+          모임의 성향, 테마, 장소 등에 대한 사진
         </SubHeading>
         <ParticipatingContainer
           onPress={() =>
