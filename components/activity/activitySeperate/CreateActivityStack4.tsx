@@ -32,12 +32,24 @@ export default function CreateActivityStack4(props: Props) {
   const navigation = useNavigation();
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-
+  const [addressError, setAddressError] = useState(undefined);
+  const [feeError, setFeeError] = useState(undefined);
+  const [placeName, setPlaceName] = useState("");
+  const [placeAddress, setPlaceAddress] = useState("");
   const [dateError, setDateError] = useState(undefined);
+  const [placeSearch, setPlaceSearch] = useState("");
 
   const nextHandler = () => {
     // @ts-ignore
     navigation.navigate("CAS5", {});
+  };
+
+  const CTAPlace = (addressName: string, placeName: string, id: string) => {
+    setPlaceName(placeName);
+    setPlaceAddress(addressName);
+    activityDispatcher.dispatchDetailAddress(addressName, id, dispatch);
+    setPlaceSearch("");
+    setAddressError(false);
   };
 
   return (
