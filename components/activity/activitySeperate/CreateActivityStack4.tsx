@@ -33,7 +33,16 @@ export default function CreateActivityStack4(props: Props) {
         <MainHeading>모임 디테일</MainHeading>
 
         <InnerContainer>
-          <BlackLabel>오픈 카카오톡 채팅방 링크</BlackLabel>
+          <BlackLabel>만남 날짜/시간</BlackLabel>
+        </InnerContainer>
+        <InnerContainer>
+          <BlackLabel>만남위치</BlackLabel>
+        </InnerContainer>
+        <InnerContainer>
+          <BlackLabel>최대 참가인원</BlackLabel>
+        </InnerContainer>
+        <InnerContainer>
+          <BlackLabel>참가비</BlackLabel>
         </InnerContainer>
       </Container>
       <MainButtonWBg onPress={nextHandler} disabled={false} title={"다음"} />
