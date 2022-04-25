@@ -34,21 +34,12 @@ export const SubHeading = styled.Text`
   font-family: ${fontFamilies.regular};
 `;
 
-export const XLButton = styled.TouchableOpacity<{
-  disabled?: boolean;
-  bgColor?: string;
-}>`
-  background-color: ${(props) =>
-    props.disabled
-      ? colors.bareGrey
-      : props.bgColor
-      ? props.bgColor
-      : colors.mainBlue};
-  border-radius: ${width / 25 + "px"};
-  width: ${width * 0.9 + "px"};
-  height: ${width * 0.14 + "px"};
-  justify-content: center;
-  align-items: center;
+export const CASContainer = styled.View`
+  flex: 1;
+  background-color: ${colors.bgColor};
+  padding-top: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
 `;
 
 export const XLButtonText = styled.Text`
@@ -124,4 +115,21 @@ export const ErrorMessage = styled(Text)`
 
 export const TextArea = styled(BigTextInput)`
   text-align-vertical: top;
+`;
+
+export const XLButton = styled.TouchableOpacity<{
+  disabled?: boolean;
+  bgColor?: string;
+}>`
+  background-color: ${(props) =>
+    props.disabled
+      ? colors.bareGrey
+      : props.bgColor
+      ? props.bgColor
+      : colors.mainBlue};
+  border-radius: ${width / 25 + "px"};
+  width: ${width * 0.9 + "px"};
+  height: ${width * 0.14 + "px"};
+  justify-content: center;
+  align-items: center;
 `;
