@@ -1,10 +1,9 @@
 import styled from "styled-components/native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  BigTextInput,
   BlackLabel,
+  CASContainer,
   colors,
-  ErrorMessage,
   GeneralText,
   MainHeading,
   SubHeading,
@@ -12,7 +11,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/reducers";
-import MyKeyboardAvoidingView from "../../UI/MyKeyboardAvoidingView";
 import MainButtonWBg from "../../UI/MainButtonWBg";
 import { activityDispatcher } from "../../../lib/activity/ActivityDispatcher";
 import { useDispatch } from "react-redux";
@@ -111,7 +109,7 @@ export default function CreateActivityStack2({}: Props) {
   };
 
   return (
-    <Container>
+    <CASContainer>
       <ScrollView showsVerticalScrollIndicator={false}>
         <MainHeading>사진을 올려줘~</MainHeading>
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
@@ -178,23 +176,10 @@ export default function CreateActivityStack2({}: Props) {
         onPress={nextHandler}
         disabled={!coverImage}
         title={"다음"}
-      ></MainButtonWBg>
-    </Container>
+      />
+    </CASContainer>
   );
 }
-
-const Container = styled.View`
-  flex: 1;
-  padding-top: 20px;
-  padding-left: 15px;
-  padding-right: 15px;
-  background-color: ${colors.bgColor};
-`;
-
-const CAPartWrapper = styled.View`
-  margin-top: 20px;
-  margin-bottom: 20px;
-`;
 
 const ParticipatingContainer = styled.TouchableWithoutFeedback``;
 
