@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 import React, { useState } from "react";
 import {
+  BigTextInput,
   BlackLabel,
   colors,
   ErrorMessage,
@@ -17,6 +18,9 @@ import { convertTimeCA } from "../../../lib/utils";
 import { activityDispatcher } from "../../../lib/activity/ActivityDispatcher";
 import DatePicker from "react-native-date-picker";
 import { activityValidation } from "../../../lib/activity/CreateActivityValidation";
+import SelectedLocation from "../locationV/SelectedLocation";
+import LocationVRow from "../locationV/LocationVRow";
+import { kakaoLocal, kakaoLocalData } from "../../../lib/api/kakaoLocalApis";
 
 interface Props {}
 
@@ -38,6 +42,7 @@ export default function CreateActivityStack4(props: Props) {
   const [placeAddress, setPlaceAddress] = useState("");
   const [dateError, setDateError] = useState(undefined);
   const [placeSearch, setPlaceSearch] = useState("");
+  const [searchResult, setSearchResult] = useState<kakaoLocalData[]>(undefined);
 
   const nextHandler = () => {
     // @ts-ignore
@@ -85,6 +90,47 @@ export default function CreateActivityStack4(props: Props) {
         </InnerContainer>
         <InnerContainer>
           <BlackLabel>만남위치</BlackLabel>
+          <InnerContainer style={{ justifyContent: "flex-start" }}>
+            {addressError ? (
+              <SErrorMessage>{createPlaceErrorMessage[3]}</SErrorMessage>
+            ) : null}
+            <SBigTextInput
+              style={{ marginTop: 5 }}
+              placeholder="만남 장소를 입력해주세요"
+              autoCapitalize="none"
+              blurOnSubmit={true}
+              returnKeyType="next"
+              returnKeyLabel="next"
+              autoCorrect={false}
+              defaultValue={placeSearch}
+              onChange={async (event) => {
+                const { eventCount, target, text } = event.nativeEvent;
+                const temp = await kakaoLocal.searchByNameAndKeyword(text);
+                setSearchResult(temp.documents);
+                setPlaceSearch(text);
+              }}
+              error={addressError}
+            />
+            {placeName ? (
+              <SelectedLocation placeName={placeName} address={placeAddress} />
+            ) : null}
+            <SearchListContainer showsVerticalScrollIndicator={false}>
+              {searchResult?.map((item, index) => {
+                return (
+                  <LocationVRow
+                    key={index}
+                    placeId={item.id}
+                    placeName={item.place_name}
+                    addressName={item.address_name}
+                    categoryGroupName={item.category_group_name}
+                    onPress={() =>
+                      CTAPlace(item.address_name, item.place_name, item.id)
+                    }
+                  />
+                );
+              })}
+            </SearchListContainer>
+          </InnerContainer>
         </InnerContainer>
         <InnerContainer>
           <BlackLabel>최대 참가인원</BlackLabel>
@@ -128,4 +174,17 @@ const WhiteText = styled(BlackLabel)`
 
 const SErrorMessage = styled(ErrorMessage)`
   color: ${colors.warningRed};
+`;
+
+const SearchListContainer = styled.ScrollView`
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+`;
+
+const SBigTextInput = styled(BigTextInput)<{ error?: Boolean }>`
+  border: ${(props) =>
+    props.error
+      ? `0.5px solid ${colors.warningRed}`
+      : `0.5px solid ${colors.midGrey}`};
 `;
