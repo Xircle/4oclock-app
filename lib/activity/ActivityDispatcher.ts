@@ -121,13 +121,13 @@ export const activityDispatcher = {
   ) => {
     const toRomoveIndex = oldFiles.indexOf(fileToRemove);
     if (toRomoveIndex !== -1) {
-      oldFiles.splice(toRomoveIndex, 1);
+      const temp = [...oldFiles];
+      temp.splice(toRomoveIndex, 1);
       dispatch({
         type: "setSubImagesFile",
-        payload: oldFiles,
+        payload: temp,
       });
     }
-    return toRomoveIndex;
   },
   removeSubImagesByIndex: (
     // @ts-ignore
@@ -137,16 +137,17 @@ export const activityDispatcher = {
     dispatch: React.Dispatch<ActivityAction>
   ) => {
     if (toRomoveIndex !== -1) {
-      oldFiles.splice(toRomoveIndex, 1);
+      const temp = [...oldFiles];
+      temp.splice(toRomoveIndex, 1);
       dispatch({
         type: "setSubImagesFile",
-        payload: oldFiles,
+        payload: temp,
       });
     }
   },
   dispatchStage1Valid: (
     // @ts-ignore
-    bool: Boolean,
+    bool: boolean,
     dispatch: React.Dispatch<ActivityAction>
   ) => {
     dispatch({ type: "setStage1Valid", payload: bool });
