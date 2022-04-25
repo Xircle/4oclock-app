@@ -9,7 +9,7 @@ import {
   MainHeading,
   SubHeading,
 } from "../../../styles/styles";
-import { TouchableOpacity } from "react-native";
+import { Dimensions, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MyKeyboardAvoidingView from "../../UI/MyKeyboardAvoidingView";
 import {
@@ -28,16 +28,19 @@ import { CreateActivityStackParamList } from "../../../navigators/CreateActivity
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "../../../lib/reducers";
+import MySelect from "../../UI/MySelect";
 
 type Props = CreateActivityStackParamList["CAS1"];
 
+const { width } = Dimensions.get("window");
+
 export default function CreateActivitiyStack1(props: Props) {
-  const { name, modify, activityType, stage1Valid } = useSelector(
-    (state: RootState) => state.activityReducer
-  );
+  const { name, modify, activityType, stage1Valid, recommendation } =
+    useSelector((state: RootState) => state.activityReducer);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [nameError, setNameError] = useState(undefined);
+  const [localTeamNames, setLocalTeamNames] = useState<string[]>([]);
 
   useEffect(() => {
     if (modify) {
@@ -56,7 +59,7 @@ export default function CreateActivitiyStack1(props: Props) {
   };
 
   return (
-    <MyKeyboardAvoidingView keyboardVerticalOffset={100}>
+    <MyKeyboardAvoidingView keyboardVerticalOffset={50}>
       <Container>
         <MainHeading>모임을 열어볼까?</MainHeading>
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
@@ -92,6 +95,44 @@ export default function CreateActivitiyStack1(props: Props) {
             <SErrorMessage>{createPlaceErrorMessage[0]}</SErrorMessage>
           ) : null}
         </CAPartWrapper>
+
+        <CAPartWrapper>
+          <BlackLabel>만들고 싶은 모임 주제를 적어봐!(제목)</BlackLabel>
+          <SBigTextInput
+            placeholder="ex. I들의 모임, 보드게임 초보만, 새내기 모여라, 무알콜"
+            autoCapitalize="none"
+            blurOnSubmit={true}
+            returnKeyType="next"
+            returnKeyLabel="next"
+            autoCorrect={false}
+            defaultValue={recommendation ? recommendation : ""}
+            onChange={(event) => {
+              const { eventCount, target, text } = event.nativeEvent;
+              activityDispatcher.dispatchRecommendation(text, dispatch);
+            }}
+          />
+        </CAPartWrapper>
+        {activityType === "정기" && (
+          <CAPartWrapper>
+            <BlackLabel>어떤 팀에 열려있는 모임이야? (팀)</BlackLabel>
+            <MySelect
+              data={localTeamNames}
+              onSelect={(selectedItem, index) => {
+                // setLocalProfileData((prev) => ({
+                //   ...prev,
+                //   team: selectedItem,
+                // }));
+                if (index !== 0) {
+                  activityDispatcher.dispatchTeam(selectedItem, dispatch);
+                } else {
+                  activityDispatcher.dispatchTeam("", dispatch);
+                }
+              }}
+              width={width * 0.81}
+              defaultButtonText="팀을 선택해주세요"
+            />
+          </CAPartWrapper>
+        )}
       </Container>
 
       {/* @ts-ignore */}
@@ -109,11 +150,6 @@ export default function CreateActivitiyStack1(props: Props) {
 const CAPartWrapper = styled.View`
   margin-top: 20px;
   margin-bottom: 20px;
-`;
-
-const SHeader = styled(MainHeading)`
-  font-family: ${fontFamilies.medium};
-  font-size: 22px;
 `;
 
 const Container = styled.ScrollView`
