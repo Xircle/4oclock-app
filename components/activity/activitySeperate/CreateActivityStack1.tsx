@@ -37,7 +37,7 @@ type Props = CreateActivityStackParamList["CAS1"];
 
 const { width } = Dimensions.get("window");
 
-export default function CreateActivitiyStack1(props: Props) {
+export default function CreateActivityStack1(props: Props) {
   const { name, modify, activityType, stage1Valid, recommendation } =
     useSelector((state: RootState) => state.activityReducer);
   const dispatch = useDispatch();

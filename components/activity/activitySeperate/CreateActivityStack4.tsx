@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native";
 
 interface Props {}
 
-export default function CreateActivitiyStack3(props: Props) {
+export default function CreateActivityStack4(props: Props) {
   return (
     <Container>
       <TouchableOpacity>

@@ -2,12 +2,15 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { colors, fontFamilies } from "../styles/styles";
 import { Ionicons } from "@expo/vector-icons";
-import CreateActivitiyStack1 from "../components/activity/activitySeperate/CreateActivitiyStack1";
-import CreateActivitiyStack2 from "../components/activity/activitySeperate/CreateActivitiyStack2";
-import CreateActivitiyStack3 from "../components/activity/activitySeperate/CreateActivitiyStack3";
+import CreateActivityStack1 from "../components/activity/activitySeperate/CreateActivityStack1";
+import CreateActivityStack2 from "../components/activity/activitySeperate/CreateActivityStack2";
+import CreateActivityStack3 from "../components/activity/activitySeperate/CreateActivityStack3";
 import { useNavigation } from "@react-navigation/native";
 import { ButtonProps, TouchableOpacity } from "react-native";
 import CreateActivityFinish from "../components/activity/activitySeperate/CreateActivityFinish";
+import CreateActivityStack4 from "../components/activity/activitySeperate/CreateActivityStack4";
+import CreateActivityStack5 from "../components/activity/activitySeperate/CreateActivityStack5";
+import CreateActivityStack6 from "../components/activity/activitySeperate/CreateActivityStack6";
 
 interface Props {}
 
@@ -90,21 +93,12 @@ export default function CreateActivityStackNav(props: Props) {
         },
       }}
     >
-      <Stack.Screen
-        name="CAS1"
-        options={{}}
-        component={CreateActivitiyStack1}
-      />
-      <Stack.Screen
-        name="CAS2"
-        options={{}}
-        component={CreateActivitiyStack2}
-      />
-      <Stack.Screen
-        name="CAS3"
-        options={{}}
-        component={CreateActivitiyStack3}
-      />
+      <Stack.Screen name="CAS1" options={{}} component={CreateActivityStack1} />
+      <Stack.Screen name="CAS2" options={{}} component={CreateActivityStack2} />
+      <Stack.Screen name="CAS3" options={{}} component={CreateActivityStack3} />
+      <Stack.Screen name="CAS4" options={{}} component={CreateActivityStack4} />
+      <Stack.Screen name="CAS5" options={{}} component={CreateActivityStack5} />
+      <Stack.Screen name="CAS6" options={{}} component={CreateActivityStack6} />
       <Stack.Screen
         name="CreateActivityFinish"
         options={{}}

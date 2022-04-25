@@ -31,7 +31,7 @@ interface Props {
 
 const { width } = Dimensions.get("window");
 
-export default function CreateActivitiyStack2({}: Props) {
+export default function CreateActivityStack2({}: Props) {
   const { coverImage, subImages, participating } = useSelector(
     (state: RootState) => state.activityReducer
   );
