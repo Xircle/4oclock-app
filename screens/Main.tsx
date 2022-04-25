@@ -1,16 +1,9 @@
 import styled from "styled-components/native";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-  Dimensions,
-  Animated,
-  FlatList,
-  SafeAreaView,
-  View,
-} from "react-native";
+import React, { useMemo, useRef, useState } from "react";
+import { Dimensions, Animated, SafeAreaView, View } from "react-native";
 import { colors, fontFamilies, GeneralText } from "../styles/styles";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import {
-  EventBanner,
   GetEventBannersOutput,
   GetPlacesByLocationOutput,
   PlaceFeedData,
@@ -23,7 +16,6 @@ import {
 import Loader from "../components/UI/Loader";
 import MainFlatListPlace from "../components/main/MainFlatListPlace";
 import MainTopCarousel from "../components/UI/MainTopCarousel";
-import { OptimizedFlatList } from "react-native-optimized-flatlist";
 import { getEventBanners } from "../lib/api/getEventBanners";
 import MainFeed from "../components/main/MainFeed";
 import HeaderPureComponent from "../components/shared/HeaderPureComponent";
