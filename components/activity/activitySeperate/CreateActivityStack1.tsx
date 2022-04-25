@@ -1,23 +1,16 @@
 import styled from "styled-components/native";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BigTextInput,
   BlackLabel,
   colors,
   ErrorMessage,
-  fontFamilies,
   MainHeading,
   SubHeading,
 } from "../../../styles/styles";
-import { Dimensions, TouchableOpacity } from "react-native";
+import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MyKeyboardAvoidingView from "../../UI/MyKeyboardAvoidingView";
-import {
-  ActivityAction,
-  activityInitialState,
-  ActivityState,
-  activityReducer,
-} from "../../../lib/activity/ActivityReducer";
 import MainButtonWBg from "../../UI/MainButtonWBg";
 import storage from "../../../lib/helpers/myAsyncStorage";
 import CreatePlaceTypeSelector from "../CreatePlaceTypeSelector";
@@ -159,7 +152,7 @@ export default function CreateActivityStack1(props: Props) {
         onPress={nextHandler}
         disabled={!stage1Valid}
         title={"다음"}
-      ></MainButtonWBg>
+      />
     </MyKeyboardAvoidingView>
   );
 }
