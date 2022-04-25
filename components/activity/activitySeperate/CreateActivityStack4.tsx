@@ -1,12 +1,22 @@
 import styled from "styled-components/native";
 import React, { useState } from "react";
-import { BlackLabel, colors, MainHeading } from "../../../styles/styles";
+import {
+  BlackLabel,
+  colors,
+  ErrorMessage,
+  MainHeading,
+} from "../../../styles/styles";
 import MyKeyboardAvoidingView from "../../UI/MyKeyboardAvoidingView";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/reducers";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import MainButtonWBg from "../../UI/MainButtonWBg";
+import { createPlaceErrorMessage } from "../../../lib/errorMessages";
+import { convertTimeCA } from "../../../lib/utils";
+import { activityDispatcher } from "../../../lib/activity/ActivityDispatcher";
+import DatePicker from "react-native-date-picker";
+import { activityValidation } from "../../../lib/activity/CreateActivityValidation";
 
 interface Props {}
 
@@ -20,7 +30,10 @@ export default function CreateActivityStack4(props: Props) {
   } = useSelector((state: RootState) => state.activityReducer);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [openKakaoLinkError, setOpenKakaoLinkError] = useState(undefined);
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+
+  const [dateError, setDateError] = useState(undefined);
 
   const nextHandler = () => {
     // @ts-ignore
@@ -34,6 +47,29 @@ export default function CreateActivityStack4(props: Props) {
 
         <InnerContainer>
           <BlackLabel>만남 날짜/시간</BlackLabel>
+          <PickerContainer onPress={() => setOpen(true)}>
+            <WhiteText>시간 선택하기</WhiteText>
+          </PickerContainer>
+          <DatePicker
+            modal
+            open={open}
+            date={date}
+            minuteInterval={30}
+            onConfirm={(date) => {
+              setOpen(false);
+              setDate(date);
+              activityDispatcher.dispatchStartDateAt(date, dispatch);
+              setDateError(!activityValidation.validateTime(date));
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
+          {dateError ? (
+            <SErrorMessage>{createPlaceErrorMessage[2]}</SErrorMessage>
+          ) : (
+            <TimeText>{convertTimeCA(startDateAt)}</TimeText>
+          )}
         </InnerContainer>
         <InnerContainer>
           <BlackLabel>만남위치</BlackLabel>
@@ -50,6 +86,11 @@ export default function CreateActivityStack4(props: Props) {
   );
 }
 
+const TimeText = styled(ErrorMessage)`
+  margin-left: auto;
+  margin-right: auto;
+`;
+
 const Container = styled.ScrollView`
   flex: 1;
   background-color: ${colors.bgColor};
@@ -60,4 +101,19 @@ const Container = styled.ScrollView`
 
 const InnerContainer = styled.View`
   margin-top: 22px;
+`;
+
+const PickerContainer = styled.TouchableOpacity`
+  background-color: ${colors.mainBlue};
+  border-radius: 3px;
+  padding: 5px;
+`;
+
+const WhiteText = styled(BlackLabel)`
+  color: ${colors.bgColor};
+  font-size: 20px;
+`;
+
+const SErrorMessage = styled(ErrorMessage)`
+  color: ${colors.warningRed};
 `;
