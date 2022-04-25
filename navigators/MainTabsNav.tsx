@@ -11,12 +11,21 @@ import { useNavigation } from "@react-navigation/native";
 import ChatList from "../screens/Chat/ChatList";
 import RnadomProfile from "../screens/RandomProfile";
 import ActivityTopTabNav from "./ActivityTopTabNav";
+import { activityDispatcher } from "../lib/activity/ActivityDispatcher";
+import { useDispatch } from "react-redux";
 
 interface Props {}
 
 const Tabs = createBottomTabNavigator();
 export default function MainTabsNav(props: Props) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const cleanUp = () => {
+    activityDispatcher.dispatchInitialState(dispatch);
+    activityDispatcher.dispatchStage1Valid(false, dispatch);
+  };
+
   return (
     <Tabs.Navigator
       screenOptions={{
@@ -89,8 +98,11 @@ export default function MainTabsNav(props: Props) {
           headerRight: () => (
             <TouchableOpacity
               style={{ marginRight: 8 }}
-              // @ts-ignore
-              onPress={() => navigation.navigate("CreateActivityStackNav")}
+              onPress={() => {
+                cleanUp();
+                // @ts-ignore
+                navigation.navigate("CreateActivityStackNav");
+              }}
             >
               <Ionicons name="add" size={30} color={colors.lightBlack} />
             </TouchableOpacity>
