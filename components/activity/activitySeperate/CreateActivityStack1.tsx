@@ -155,13 +155,11 @@ export default function CreateActivityStack1(props: Props) {
       </Container>
 
       {/* @ts-ignore */}
-      <TouchableOpacity onPress={() => navigation.navigate("CAS2")}>
-        <MainButtonWBg
-          onPress={nextHandler}
-          disabled={!stage1Valid}
-          title={"다음"}
-        ></MainButtonWBg>
-      </TouchableOpacity>
+      <MainButtonWBg
+        onPress={nextHandler}
+        disabled={!stage1Valid}
+        title={"다음"}
+      ></MainButtonWBg>
     </MyKeyboardAvoidingView>
   );
 }
