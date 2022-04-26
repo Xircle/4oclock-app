@@ -20,11 +20,12 @@ import { Alert } from "react-native";
 import MainButtonWBg from "../../UI/MainButtonWBg";
 import FullScreenLoader from "../../UI/FullScreenLoader";
 import { createPlace } from "../../../lib/api/createPlace";
+import { editPlace } from "../../../lib/api/editPlace";
 
 interface Props {}
 
 export default function CreateActivityStack5(props: Props) {
-  const { kakaoLink } = useSelector(
+  const { kakaoLink, modify, modifyPlaceId } = useSelector(
     (state: RootState) => state.activityReducer
   );
 
@@ -37,7 +38,11 @@ export default function CreateActivityStack5(props: Props) {
   const nextHandler = async () => {
     setLoading(true);
     try {
-      await createPlace(state);
+      if (!modify) {
+        await createPlace(state);
+      } else if (modifyPlaceId) {
+        await editPlace(state, modifyPlaceId);
+      }
     } catch (e) {
       setLoading(false);
       Alert.alert("일시적 오류가 발생했습니다");
