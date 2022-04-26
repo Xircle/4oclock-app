@@ -201,7 +201,9 @@ const Container = styled.ScrollView`
 const MaxParticipantsContainer = styled.View`
   width: 280px;
   flex-direction: row;
-
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
   height: 100%;
   max-height: 60px;
   align-items: center;
