@@ -5,6 +5,7 @@ import {
   BlackLabel,
   colors,
   ErrorMessage,
+  GeneralText,
   MainHeading,
 } from "../../../styles/styles";
 import MyKeyboardAvoidingView from "../../UI/MyKeyboardAvoidingView";
@@ -21,6 +22,7 @@ import { activityValidation } from "../../../lib/activity/CreateActivityValidati
 import SelectedLocation from "../locationV/SelectedLocation";
 import LocationVRow from "../locationV/LocationVRow";
 import { kakaoLocal, kakaoLocalData } from "../../../lib/api/kakaoLocalApis";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {}
 
@@ -55,6 +57,7 @@ export default function CreateActivityStack4(props: Props) {
     activityDispatcher.dispatchDetailAddress(addressName, id, dispatch);
     setPlaceSearch("");
     setAddressError(false);
+    setSearchResult(undefined);
   };
 
   return (
@@ -134,15 +137,53 @@ export default function CreateActivityStack4(props: Props) {
         </InnerContainer>
         <InnerContainer>
           <BlackLabel>최대 참가인원</BlackLabel>
+
+          <MaxParticipantsContainer>
+            <MaxPrticipantsButton
+              left={true}
+              onPress={() => {
+                activityDispatcher.dispatchMaxParticipants(
+                  maxParticipantsNumber - 1,
+                  dispatch
+                );
+              }}
+            >
+              <Ionicons
+                name="remove-outline"
+                size={35}
+                color={colors.bgColor}
+              />
+            </MaxPrticipantsButton>
+            <MaxParticipantsNumber>
+              {maxParticipantsNumber}
+            </MaxParticipantsNumber>
+            <MaxPrticipantsButton
+              left={false}
+              onPress={() => {
+                activityDispatcher.dispatchMaxParticipants(
+                  maxParticipantsNumber + 1,
+                  dispatch
+                );
+              }}
+            >
+              <Ionicons name="add" size={35} color={colors.bgColor} />
+            </MaxPrticipantsButton>
+          </MaxParticipantsContainer>
         </InnerContainer>
         <InnerContainer>
           <BlackLabel>참가비</BlackLabel>
         </InnerContainer>
+        <BottomWhiteSpace />
       </Container>
       <MainButtonWBg onPress={nextHandler} disabled={false} title={"다음"} />
     </MyKeyboardAvoidingView>
   );
 }
+
+const BottomWhiteSpace = styled.View`
+  width: 100%;
+  height: 200px;
+`;
 
 const TimeText = styled(ErrorMessage)`
   margin-left: auto;
@@ -155,6 +196,37 @@ const Container = styled.ScrollView`
   padding-top: 20px;
   padding-left: 15px;
   padding-right: 15px;
+`;
+
+const MaxParticipantsContainer = styled.View`
+  width: 280px;
+  flex-direction: row;
+
+  height: 100%;
+  max-height: 60px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  border: 1px solid ${colors.bareGrey};
+`;
+
+const MaxPrticipantsButton = styled.TouchableOpacity<{ left?: boolean }>`
+  width: 60px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props) =>
+    props.left ? colors.warningRed : colors.mainBlue};
+  height: 100%;
+  border-bottom-left-radius: ${(props) => (props.left ? "30px" : "0px")};
+  border-top-left-radius: ${(props) => (props.left ? "30px" : "0px")};
+  border-bottom-right-radius: ${(props) => (!props.left ? "30px" : "0px")};
+  border-top-right-radius: ${(props) => (!props.left ? "30px" : "0px")};
+`;
+
+const MaxParticipantsNumber = styled(GeneralText)`
+  flex: 1;
+  background-color: ${colors.bgColor};
+  text-align: center;
 `;
 
 const InnerContainer = styled.View`
