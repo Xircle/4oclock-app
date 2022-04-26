@@ -21,7 +21,8 @@ export type ActivityAction =
   | { type: "setParticipating"; payload: boolean }
   | { type: "setModify"; payload: boolean }
   | { type: "setModifyPlaceId"; payload: string }
-  | { type: "setModifySubImageUrls"; payload: string[] };
+  | { type: "setModifySubImageUrls"; payload: string[] }
+  | { type: "setModifyCoverImageUrl"; payload: string };
 
 export interface ActivityState extends CreateActivityOutput {
   stage1Valid: Boolean;
@@ -30,6 +31,7 @@ export interface ActivityState extends CreateActivityOutput {
   modify?: boolean;
   modifyPlaceId?: string;
   modifySubImageUrls?: string[];
+  modifyCoverImageUrl?: string;
 }
 
 export const activityInitialState: ActivityState = {
@@ -52,6 +54,7 @@ export const activityInitialState: ActivityState = {
   modify: false,
   modifyPlaceId: "",
   modifySubImageUrls: [],
+  modifyCoverImageUrl: "",
 };
 
 export function activityReducer(
@@ -153,6 +156,11 @@ export function activityReducer(
       return {
         ...state,
         modifySubImageUrls: action.payload,
+      };
+    case "setModifyCoverImageUrl":
+      return {
+        ...state,
+        modifyCoverImageUrl: action.payload,
       };
     default:
       return state;
