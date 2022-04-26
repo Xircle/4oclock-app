@@ -109,7 +109,7 @@ export default function CreateActivityStack1(props: Props) {
         </CAPartWrapper>
 
         <CAPartWrapper>
-          <BlackLabel>만들고 싶은 모임 주제를 적어봐!(제목)</BlackLabel>
+          <BlackLabel>모임 조건을 적어주세요!(선택)</BlackLabel>
           <SBigTextInput
             placeholder="ex. I들의 모임, 보드게임 초보만, 새내기 모여라, 무알콜"
             autoCapitalize="none"
