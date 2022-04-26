@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useQuery } from "react-query";
 import styled from "styled-components/native";
 import { MyCreatedPlaceData } from "../../lib/api/types";
-import MyPageFlatlistPlace from "../../components/profile/MyPlacesFlatList";
 import { colors } from "../../styles/styles";
 import { useFocusEffect } from "@react-navigation/native";
 import { getMyPlacesCreated } from "../../lib/api/getMyPlacesCreated";
+import MyCreatedPlacesFlatList from "../../components/profile/MyCreatedPlacesFlatList";
 
 type Props = {};
 
 const CreatedActivityScreen = (props: Props) => {
   const {
-    data: myPlacesData,
+    data: myCreatedPlacesData,
     isLoading,
     refetch,
   } = useQuery<MyCreatedPlaceData[]>("myPlaces", () => getMyPlacesCreated(), {
@@ -26,9 +26,9 @@ const CreatedActivityScreen = (props: Props) => {
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {myPlacesData?.map((item, index) => {
+        {myCreatedPlacesData?.map((item, index) => {
           return (
-            <MyPageFlatlistPlace
+            <MyCreatedPlacesFlatList
               key={index}
               coverImage={item.coverImage}
               name={item.name}
