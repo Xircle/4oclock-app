@@ -210,6 +210,8 @@ export interface MyPlaceData {
   recommendatinon?: string;
 }
 
+export interface MyCreatedPlaceData extends MyPlaceData {}
+
 export interface GetMyPlaceOutput extends CoreOutput {
   places: MyPlaceData[];
 }
