@@ -20,14 +20,16 @@ export type ActivityAction =
   | { type: "setRecommendation"; payload: string }
   | { type: "setParticipating"; payload: boolean }
   | { type: "setModify"; payload: boolean }
-  | { type: "setModifyPlaceId"; payload: string };
+  | { type: "setModifyPlaceId"; payload: string }
+  | { type: "setModifySubImageUrls"; payload: string[] };
 
 export interface ActivityState extends CreateActivityOutput {
   stage1Valid: Boolean;
   isFinished: Boolean;
   activityType: string;
-  modify: boolean;
-  modifyPlaceId: string;
+  modify?: boolean;
+  modifyPlaceId?: string;
+  modifySubImageUrls?: string[];
 }
 
 export const activityInitialState: ActivityState = {
@@ -49,6 +51,7 @@ export const activityInitialState: ActivityState = {
   participating: true,
   modify: false,
   modifyPlaceId: "",
+  modifySubImageUrls: [],
 };
 
 export function activityReducer(
@@ -145,6 +148,11 @@ export function activityReducer(
       return {
         ...state,
         modifyPlaceId: action.payload,
+      };
+    case "setModifySubImageUrls":
+      return {
+        ...state,
+        modifySubImageUrls: action.payload,
       };
     default:
       return state;
