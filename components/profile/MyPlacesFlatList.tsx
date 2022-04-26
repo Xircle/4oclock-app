@@ -9,7 +9,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { Alert, TouchableWithoutFeedback } from "react-native";
-import ReviewButton from "../profile/ReviewButton";
+import ReviewButton from "./ReviewButton";
 import { openLink } from "../shared/Links";
 import optimizeImage from "../../lib/helpers/optimizeImage";
 import { Participants } from "../../lib/api/types";
@@ -41,7 +41,7 @@ interface Props {
   isClosed?: boolean;
 }
 
-function MainFlatListPlace({
+function MyPlacesFlatList({
   coverImage,
   name,
   id,
@@ -58,9 +58,8 @@ function MainFlatListPlace({
   const [cancelModal, setCancelModal] = useState(false);
   const [cancelReason, setCancelReason] = useState("");
 
-  const { mutateAsync: mutateCancelReservation } = useMutation(
-    cancelReservation
-  );
+  const { mutateAsync: mutateCancelReservation } =
+    useMutation(cancelReservation);
   const onPress = () => {
     // @ts-ignore
     navigation.navigate("ActivityStackNav", {
@@ -197,7 +196,7 @@ function MainFlatListPlace({
   );
 }
 
-export default MainFlatListPlace;
+export default MyPlacesFlatList;
 
 const ModalButton = styled.TouchableOpacity`
   width: 280px;
