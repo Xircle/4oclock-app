@@ -4,7 +4,7 @@ import AxiosClient from "../apiClient";
 import { BASE_URL } from "../utils";
 import { typeKoToEn } from "./createPlace";
 
-export const createPlace = async (
+export const editPlace = async (
   placeData: ActivityState,
   placeId: string
 ): Promise<CreateActivityOutput> => {
