@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useQuery } from "react-query";
 import styled from "styled-components/native";
 import { getMyPlaces } from "../../lib/api/getMyPlaces";
 import { MyPlaceData } from "../../lib/api/types";
-import MyPageFlatlistPlace from "../../components/profile/MyPageFlatlistPlace";
+import MyPageFlatlistPlace from "../../components/profile/MyPlacesFlatList";
 import { colors } from "../../styles/styles";
 import { useFocusEffect } from "@react-navigation/native";
 
