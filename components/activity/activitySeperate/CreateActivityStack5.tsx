@@ -16,8 +16,10 @@ import { useNavigation } from "@react-navigation/native";
 import { activityDispatcher } from "../../../lib/activity/ActivityDispatcher";
 import { createPlaceErrorMessage } from "../../../lib/errorMessages";
 import { openLink } from "../../shared/Links";
-import { TouchableOpacity } from "react-native";
+import { Alert } from "react-native";
 import MainButtonWBg from "../../UI/MainButtonWBg";
+import FullScreenLoader from "../../UI/FullScreenLoader";
+import { createPlace } from "../../../lib/api/createPlace";
 
 interface Props {}
 
@@ -25,11 +27,23 @@ export default function CreateActivityStack5(props: Props) {
   const { kakaoLink } = useSelector(
     (state: RootState) => state.activityReducer
   );
+
+  const state = useSelector((state: RootState) => state.activityReducer);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [openKakaoLinkError, setOpenKakaoLinkError] = useState(undefined);
+  const [loading, setLoading] = useState(false);
 
-  const nextHandler = () => {
+  const nextHandler = async () => {
+    setLoading(true);
+    try {
+      await createPlace(state);
+    } catch (e) {
+      setLoading(false);
+      Alert.alert("일시적 오류가 발생했습니다");
+      console.log(e);
+    }
+    setLoading(false);
     // @ts-ignore
     navigation.navigate("CAS6", {});
   };
@@ -76,6 +90,7 @@ export default function CreateActivityStack5(props: Props) {
         disabled={!kakaoLink}
         title={"다음"}
       />
+      {loading && <FullScreenLoader />}
     </MyKeyboardAvoidingView>
   );
 }
