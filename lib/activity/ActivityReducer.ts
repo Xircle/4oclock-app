@@ -19,13 +19,15 @@ export type ActivityAction =
   | { type: "setTeam"; payload: string }
   | { type: "setRecommendation"; payload: string }
   | { type: "setParticipating"; payload: boolean }
-  | { type: "setModify"; payload: boolean };
+  | { type: "setModify"; payload: boolean }
+  | { type: "setModifyPlaceId"; payload: string };
 
 export interface ActivityState extends CreateActivityOutput {
   stage1Valid: Boolean;
   isFinished: Boolean;
   activityType: string;
   modify: boolean;
+  modifyPlaceId: string;
 }
 
 export const activityInitialState: ActivityState = {
@@ -46,6 +48,7 @@ export const activityInitialState: ActivityState = {
   recommendation: "",
   participating: true,
   modify: false,
+  modifyPlaceId: "",
 };
 
 export function activityReducer(
@@ -137,6 +140,11 @@ export function activityReducer(
       return {
         ...state,
         participating: action.payload,
+      };
+    case "setModifyPlaceId":
+      return {
+        ...state,
+        modifyPlaceId: action.payload,
       };
     default:
       return state;
