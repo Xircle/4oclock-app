@@ -44,8 +44,13 @@ export default function CreateActivityStack1(props: Props) {
   }, []);
 
   const nextHandler = () => {
-    // @ts-ignore
-    navigation.navigate("CAS2", {});
+    if (modify) {
+      // @ts-ignore
+      navigation.navigate("CAS21", {});
+    } else {
+      // @ts-ignore
+      navigation.navigate("CAS2", {});
+    }
   };
 
   const { data: teamsData } = useQuery<TeamData[] | undefined>(
