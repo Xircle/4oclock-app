@@ -5,16 +5,19 @@ import React from "react";
 import { getMyPlaces } from "../../lib/api/getMyPlaces";
 import { colors } from "../../styles/styles";
 import { ScrollView } from "react-native-gesture-handler";
-import MyPageFlatlistPlace from "../../components/profile/MyPageFlatlistPlace";
+import MyPageFlatlistPlace from "../../components/profile/MyPlacesFlatList";
 
 interface Props {}
 
 export default function MyActivities(props: Props) {
-  const { data: myPlacesData, isLoading, refetch } = useQuery<MyPlaceData[]>(
-    "myPlaces",
-    () => getMyPlaces(),
-    { retry: 1, refetchOnWindowFocus: false }
-  );
+  const {
+    data: myPlacesData,
+    isLoading,
+    refetch,
+  } = useQuery<MyPlaceData[]>("myPlaces", () => getMyPlaces(), {
+    retry: 1,
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <Container>
