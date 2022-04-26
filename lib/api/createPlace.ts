@@ -3,7 +3,7 @@ import AxiosClient from "../apiClient";
 import { BASE_URL } from "../utils";
 import { ActivityState } from "../activity/ActivityReducer";
 
-const typeKoToEn = {
+export const typeKoToEn = {
   정기: "Regular-meeting",
   이벤트: "Event",
   번개: "Lightning",
