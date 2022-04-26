@@ -11,6 +11,7 @@ import CreateActivityFinish from "../components/activity/activitySeperate/Create
 import CreateActivityStack4 from "../components/activity/activitySeperate/CreateActivityStack4";
 import CreateActivityStack5 from "../components/activity/activitySeperate/CreateActivityStack5";
 import CreateActivityStack6 from "../components/activity/activitySeperate/CreateActivityStack6";
+import CreateActivityStack21 from "../components/activity/activitySeperate/CreateActivityStack21";
 
 interface Props {}
 
@@ -103,6 +104,11 @@ export default function CreateActivityStackNav(props: Props) {
         name="CreateActivityFinish"
         options={{}}
         component={CreateActivityFinish}
+      />
+      <Stack.Screen
+        name="CAS21"
+        options={{}}
+        component={CreateActivityStack21}
       />
     </Stack.Navigator>
   );
