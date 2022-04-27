@@ -104,7 +104,6 @@ export default function CreateActivityStack2({}: Props) {
 
   // @ts-ignore
   const deleteSingleSubImage = (toRemove: File) => {
-    console.log("delete single subimage");
     activityDispatcher.removeSubImagesByFile(subImages, toRemove, dispatch);
   };
 
