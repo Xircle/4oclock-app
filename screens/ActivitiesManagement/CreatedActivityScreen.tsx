@@ -8,7 +8,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getMyPlacesCreated } from "../../lib/api/getMyPlacesCreated";
 import MyCreatedPlacesFlatList from "../../components/profile/MyCreatedPlacesFlatList";
 import { typeEnToKo } from "../../lib/api/createPlace";
-
 type Props = {};
 
 const CreatedActivityScreen = (props: Props) => {
@@ -16,10 +15,14 @@ const CreatedActivityScreen = (props: Props) => {
     data: myCreatedPlacesData,
     isLoading,
     refetch,
-  } = useQuery<MyCreatedPlaceData[]>("myPlaces", () => getMyPlacesCreated(), {
-    retry: 1,
-    refetchOnWindowFocus: false,
-  });
+  } = useQuery<MyCreatedPlaceData[]>(
+    "myPlacesCreated",
+    () => getMyPlacesCreated(),
+    {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
   useFocusEffect(() => {
     refetch();
   });
@@ -31,31 +34,32 @@ const CreatedActivityScreen = (props: Props) => {
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {myCreatedPlacesData?.map((item, index) => {
-          return (
-            <MyCreatedPlacesFlatList
-              key={index}
-              coverImage={item.coverImage}
-              name={item.name}
-              id={item.id}
-              startDateFromNow={item.startDateFromNow}
-              description={item.placeDetail.description}
-              refetch={refetch}
-              isRefetch={true}
-              kakaoPlaceId={item.kakaoPlaceId}
-              isClosed={item.isClosed}
-              subImages={item.subImages}
-              activityType={typeEnToKo[item.placeType]}
-              maxParticipantsNumber={item.placeDetail.maxParticipantsNumber}
-              detailAddress={item.placeDetail.detailAddress}
-              participationFee={item.placeDetail.participationFee + ""}
-              startDateAt={item.startDateAt}
-              kakaoLink={item.placeDetail.kakaoLink}
-              team={item.team}
-              recommendation={item.recommendatinon}
-            />
-          );
-        })}
+        {myCreatedPlacesData &&
+          myCreatedPlacesData?.map((item, index) => {
+            return (
+              <MyCreatedPlacesFlatList
+                key={index}
+                coverImage={item.coverImage}
+                name={item.name}
+                id={item.id}
+                startDateFromNow={item.startDateFromNow}
+                description={item.placeDetail.description}
+                refetch={refetch}
+                isRefetch={true}
+                kakaoPlaceId={item.kakaoPlaceId}
+                isClosed={item.isClosed}
+                subImages={item.subImages}
+                activityType={typeEnToKo[item.placeType]}
+                maxParticipantsNumber={item.placeDetail.maxParticipantsNumber}
+                detailAddress={item.placeDetail.detailAddress}
+                participationFee={item.placeDetail.participationFee + ""}
+                startDateAt={item.startDateAt}
+                kakaoLink={item.placeDetail.kakaoLink}
+                team={item.team}
+                recommendation={item.recommendatinon}
+              />
+            );
+          })}
       </ScrollView>
     </Container>
   );
