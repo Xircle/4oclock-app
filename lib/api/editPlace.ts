@@ -40,7 +40,7 @@ export const editPlace = async (
   formData.append("isCoverImageDeleted", false);
   formData.append("oldSubImageUrls", placeData.modifySubImageUrls);
 
-  const { data } = await axiosclient.post<CreateActivityOutput>(
+  const { data } = await axiosclient.patch<CreateActivityOutput>(
     `${BASE_URL}/place/${placeId}`,
     formData
   );
