@@ -175,7 +175,11 @@ export default function CreateActivityStack4(props: Props) {
         </InnerContainer>
         <BottomWhiteSpace />
       </Container>
-      <MainButtonWBg onPress={nextHandler} disabled={false} title={"다음"} />
+      <MainButtonWBg
+        onPress={nextHandler}
+        disabled={!(startDateAt && placeAddress)}
+        title={"다음"}
+      />
     </MyKeyboardAvoidingView>
   );
 }
