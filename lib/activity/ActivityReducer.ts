@@ -145,7 +145,7 @@ export function activityReducer(
     case "setModify":
       return {
         ...state,
-        participating: action.payload,
+        modify: action.payload,
       };
     case "setModifyPlaceId":
       return {
