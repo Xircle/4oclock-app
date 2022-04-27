@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BlackLabel,
   CASContainer,
@@ -30,7 +30,7 @@ interface Props {
 const { width } = Dimensions.get("window");
 
 export default function CreateActivityStack21({}: Props) {
-  const { coverImage, subImages, participating } = useSelector(
+  const { subImages, modifyCoverImageUrl, modifySubImageUrls } = useSelector(
     (state: RootState) => state.activityReducer
   );
   const navigation = useNavigation();
@@ -40,6 +40,10 @@ export default function CreateActivityStack21({}: Props) {
     // @ts-ignore
     navigation.navigate("CAS3", {});
   };
+
+  useEffect(() => {
+    console.log(21);
+  }, []);
 
   const [loading, setLoading] = useState(false);
   const ImageHandle = async () => {
@@ -60,25 +64,14 @@ export default function CreateActivityStack21({}: Props) {
       if (result.errorMessage) {
         Alert.alert(result.errorMessage);
       } else if (!result.didCancel && result?.assets) {
-        let coverImageFile;
         let subImgeFiles = [];
         result.assets.map((item, index) => {
-          if (!coverImage && index === 0) {
-            coverImageFile = {
-              type: "image/jpeg",
-              uri: item.uri,
-              name: item.fileName,
-            };
-          } else {
-            subImgeFiles.push({
-              type: "image/jpeg",
-              uri: item.uri,
-              name: item.fileName,
-            });
-          }
+          subImgeFiles.push({
+            type: "image/jpeg",
+            uri: item.uri,
+            name: item.fileName,
+          });
         });
-        if (!coverImage)
-          activityDispatcher.dispatchCoverImage(coverImageFile, dispatch);
         activityDispatcher.dispatchSubImages(subImages, subImgeFiles, dispatch);
       }
     } else {
@@ -93,18 +86,21 @@ export default function CreateActivityStack21({}: Props) {
     setLoading(false);
   };
 
-  const deleteCoverImage = () => {
-    if (subImages) {
-      activityDispatcher.dispatchCoverImage(subImages[0], dispatch);
-      activityDispatcher.removeSubImagesByIndex(subImages, 0, dispatch);
-    } else {
-      activityDispatcher.dispatchCoverImage(undefined, dispatch);
-    }
+  const deleteExistingCoverImage = () => {
+    activityDispatcher.deleteExistingCoverImage(dispatch);
   };
 
   // @ts-ignore
   const deleteSingleSubImage = (toRemove: File) => {
     activityDispatcher.removeSubImagesByFile(subImages, toRemove, dispatch);
+  };
+
+  const deleteSingleExistingSubImage = (toRemoveIndex: number) => {
+    activityDispatcher.removeExistingSubImage(
+      modifySubImageUrls,
+      toRemoveIndex,
+      dispatch
+    );
   };
 
   return (
@@ -114,21 +110,6 @@ export default function CreateActivityStack21({}: Props) {
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
           모임의 성향, 테마, 장소 등에 대한 사진
         </SubHeading>
-        <ParticipatingContainer
-          onPress={() =>
-            activityDispatcher.dispatchParticipating(!participating, dispatch)
-          }
-        >
-          <ParticipatingWrapper>
-            <Ionicons
-              name="checkmark-circle-outline"
-              size={22}
-              color={participating ? colors.mainBlue : colors.bareGrey}
-            />
-            <BlackLabel style={{ marginLeft: 10 }}>저도 참여해요</BlackLabel>
-          </ParticipatingWrapper>
-        </ParticipatingContainer>
-
         <BlackLabel>관련 사진 올리기</BlackLabel>
         <AddPhotoContiner onPress={ImageHandle}>
           <AddPhotoWrapper>
@@ -137,9 +118,9 @@ export default function CreateActivityStack21({}: Props) {
           </AddPhotoWrapper>
         </AddPhotoContiner>
         <PhotoContainer space={3}>
-          {coverImage && (
-            <PhotoButton onPress={deleteCoverImage}>
-              <Photo source={{ uri: coverImage?.uri }} space={3} />
+          {modifyCoverImageUrl && (
+            <PhotoButton onPress={deleteExistingCoverImage}>
+              <Photo source={{ uri: modifyCoverImageUrl }} space={3} />
               <Ionicons
                 name="close-circle"
                 color={colors.bgColor}
@@ -148,6 +129,25 @@ export default function CreateActivityStack21({}: Props) {
               />
             </PhotoButton>
           )}
+          {modifySubImageUrls?.length > 0 &&
+            modifySubImageUrls.map((item, index) => {
+              return (
+                <PhotoButton
+                  onPress={() => {
+                    deleteSingleExistingSubImage(index);
+                  }}
+                  key={index}
+                >
+                  <Photo source={{ uri: item }} space={3} />
+                  <Ionicons
+                    name="close-circle"
+                    color={colors.bgColor}
+                    style={{ position: "absolute", right: 0, top: 0 }}
+                    size={22}
+                  />
+                </PhotoButton>
+              );
+            })}
           {subImages?.length > 0 &&
             subImages.map((item, index) => {
               return (
@@ -173,21 +173,16 @@ export default function CreateActivityStack21({}: Props) {
       {loading && <FullScreenLoader />}
       <MainButtonWBg
         onPress={nextHandler}
-        disabled={!coverImage}
+        disabled={
+          subImages.length === 0 &&
+          modifyCoverImageUrl === undefined &&
+          modifySubImageUrls?.length === 0
+        }
         title={"다음"}
       />
     </CASContainer>
   );
 }
-
-const ParticipatingContainer = styled.TouchableWithoutFeedback``;
-
-const ParticipatingWrapper = styled.View`
-  flex-direction: row;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  align-items: center;
-`;
 
 const PhotoButton = styled.TouchableOpacity`
   position: relative;
