@@ -8,6 +8,11 @@ export const typeKoToEn = {
   이벤트: "Event",
   번개: "Lightning",
 };
+export const typeEnToKo = {
+  "Regular-meeting": "정기",
+  Event: "이벤트",
+  Lightning: "번개",
+};
 
 export const createPlace = async (
   placeData: ActivityState
