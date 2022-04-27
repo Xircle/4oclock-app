@@ -1,3 +1,5 @@
+import { existingPlace } from "./../../components/profile/MyCreatedPlacesFlatList";
+
 import { ActivityAction, activityInitialState } from "./ActivityReducer";
 
 export const activityDispatcher = {
@@ -202,5 +204,83 @@ export const activityDispatcher = {
       type: "setParticipating",
       payload: activityInitialState.participating,
     });
+    dispatch({
+      type: "setModify",
+      payload: false,
+    });
+    dispatch({ type: "setStage1Valid", payload: false });
+    dispatch({ type: "setIsFinished", payload: false });
+  },
+  dispatchExistingState: (
+    loadedData: existingPlace,
+    dispatch: React.Dispatch<ActivityAction>
+  ) => {
+    dispatch({
+      type: "setName",
+      payload: loadedData.name || activityInitialState.name,
+    });
+    dispatch({
+      type: "setMaxParticipantsNumber",
+      payload:
+        loadedData.maxParticipantsNumber ||
+        activityInitialState.maxParticipantsNumber,
+    });
+    dispatch({
+      type: "setParticipationFee",
+      payload:
+        loadedData.participationFee || activityInitialState.participationFee,
+    });
+    dispatch({
+      type: "setStartDateAt",
+      payload: loadedData.startDateAt || activityInitialState.startDateAt,
+    });
+    dispatch({
+      type: "setDescription",
+      payload: loadedData.description || activityInitialState.description,
+    });
+    dispatch({
+      type: "setDetailAddress",
+      payload: loadedData.detailAddress || activityInitialState.detailAddress,
+    });
+    dispatch({
+      type: "setCoverImageFile",
+      payload: activityInitialState.coverImage,
+    });
+    dispatch({
+      type: "setSubImagesFile",
+      payload: activityInitialState.subImages,
+    });
+    dispatch({
+      type: "setActivityType",
+      payload: loadedData.activityType || activityInitialState.activityType,
+    });
+    dispatch({
+      type: "setTeam",
+      payload: loadedData.team || activityInitialState.team,
+    });
+    dispatch({
+      type: "setKakaoLink",
+      payload: loadedData.kakaoLink || activityInitialState.kakaoLink,
+    });
+    dispatch({
+      type: "setRecommendation",
+      payload: loadedData.recommendation || activityInitialState.recommendation,
+    });
+    dispatch({ type: "setPlaceId", payload: loadedData.kakaoPlaceId });
+    dispatch({
+      type: "setModifyPlaceId",
+      payload: loadedData.id,
+    });
+    dispatch({
+      type: "setModify",
+      payload: true,
+    });
+    dispatch({ type: "setModifySubImageUrls", payload: loadedData.subImages });
+    dispatch({
+      type: "setModifyCoverImageUrl",
+      payload: loadedData.coverImage,
+    });
+    dispatch({ type: "setStage1Valid", payload: true });
+    dispatch({ type: "setIsFinished", payload: false });
   },
 };
