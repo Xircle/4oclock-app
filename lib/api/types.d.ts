@@ -210,23 +210,36 @@ export interface MyPlaceData {
   recommendatinon?: string;
 }
 
-export interface MyCreatedPlaceData extends MyPlaceData {
-  placeDetail?: {
-    description?: string;
-    detailAddress?: string;
-    kakaoLink?: string;
-    maxParticipantsNumber?: number;
-    participationFee?: number;
-  };
-  placeType?: string;
+interface MyCreatedPlaceDetail {
+  description: string;
+  detailAddress: string;
+  kakaoLink: string;
+  maxParticipantsNumber: number;
+  participationFee: number;
+  title: null;
+}
+
+export interface MyCreatedPlaceData {
+  isClosed: boolean;
+  id: string;
+  coverImage: string;
+  name: string;
+  startDateFromNow: string;
   kakaoPlaceId?: string;
-  startDateAt?: string;
+  recommendatinon?: string;
   subImages?: string[];
-  team?: string;
+  team?: string | null;
+  placeType: string;
+  placeDetail: MyCreatedPlaceDetail;
+  startDateAt: string;
 }
 
 export interface GetMyPlaceOutput extends CoreOutput {
   places: MyPlaceData[];
+}
+
+export interface GetMyCreatedPlaceOutput extends CoreOutput {
+  places: MyCreatedPlaceData[];
 }
 
 // See Random Profile
