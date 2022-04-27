@@ -39,8 +39,7 @@ export default function CreateActivityStack1(props: Props) {
   const [localTeamNames, setLocalTeamNames] = useState<string[]>([]);
 
   useEffect(() => {
-    if (modify) {
-    }
+    console.log(modify);
   }, []);
 
   const nextHandler = () => {
