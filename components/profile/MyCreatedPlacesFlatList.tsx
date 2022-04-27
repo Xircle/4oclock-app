@@ -11,27 +11,19 @@ import MyBottomModal from "../UI/MyBottomModal";
 import { useMutation } from "react-query";
 import { deletePlace } from "../../lib/api/deletePlace";
 import FullScreenLoader from "../UI/FullScreenLoader";
+import { activityDispatcher } from "../../lib/activity/ActivityDispatcher";
+import { useDispatch } from "react-redux";
 
 export const enum Purpose {
   main = "main",
   mypage = "mypage",
 }
 
-interface Props {
-  purpose?: Purpose;
+export interface existingPlace {
   coverImage?: string;
   name?: string;
   id: string;
-  views?: number;
-  description?: string;
-  startDateFromNow?: string;
-  deadline?: string;
-  leftParticipantsCount?: number;
-  participants?: Participants[];
-  refetch?: () => {};
-  isRefetch?: boolean;
   kakaoPlaceId?: string;
-  isClosed?: boolean;
   maxParticipantsNumber?: number;
   detailAddress?: string;
   participationFee?: string;
@@ -41,6 +33,19 @@ interface Props {
   subImages?: string[];
   team?: string;
   recommendation?: string;
+  description?: string;
+}
+
+interface Props extends existingPlace {
+  purpose?: Purpose;
+  views?: number;
+  startDateFromNow?: string;
+  deadline?: string;
+  leftParticipantsCount?: number;
+  participants?: Participants[];
+  refetch?: () => {};
+  isRefetch?: boolean;
+  isClosed?: boolean;
 }
 
 function MyCreatedPlacesFlatList({
@@ -55,11 +60,20 @@ function MyCreatedPlacesFlatList({
   isRefetch,
   participants,
   kakaoPlaceId,
+  maxParticipantsNumber,
+  detailAddress,
+  participationFee,
+  startDateAt,
+  activityType,
+  kakaoLink,
+  subImages,
+  team,
+  recommendation,
 }: Props) {
   const navigation = useNavigation();
   const [deleteModal, setDeleteModal] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const dispatch = useDispatch();
   const { mutateAsync: mutateDeletePlace } = useMutation(deletePlace);
   const onPress = () => {
     // @ts-ignore
@@ -69,16 +83,37 @@ function MyCreatedPlacesFlatList({
       participants: participants,
     });
   };
-
   const EditPlace = async () => {
     setLoading(true);
     try {
+      activityDispatcher.dispatchExistingState(
+        {
+          coverImage,
+          name,
+          id,
+          kakaoPlaceId,
+          maxParticipantsNumber,
+          detailAddress,
+          participationFee,
+          startDateAt,
+          activityType,
+          kakaoLink,
+          subImages,
+          team,
+          recommendation,
+          description,
+        },
+        dispatch
+      );
+      //@ts-ignore
+      navigation.navigate("CreateActivityStackNav");
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       Alert.alert("일시적 에러가 발생했습니다");
     }
-    // setLoading(false);
+    setLoading(false);
   };
-
   const DeletePlace = async () => {
     if (!id) return;
     const data = await mutateDeletePlace(id);
