@@ -11,11 +11,9 @@ export const editPlace = async (
   const formData = new FormData();
   const axiosclient = await AxiosClient();
 
-  formData.append("coverImage", placeData.coverImage!);
-
   if (placeData.subImages) {
     for (let i = 0; i < placeData.subImages.length; i++) {
-      formData.append("subImages", placeData.subImages[i]!);
+      formData.append("images", placeData.subImages[i]!);
     }
   }
   formData.append("name", placeData.name);
@@ -38,6 +36,9 @@ export const editPlace = async (
   if (typeKoToEn[placeData.activityType] === "Regular-meeting") {
     formData.append("team", placeData.team);
   }
+  //formData.append("isCoverImageDeleted", placeData.modifyCoverImageUrl.length === 0);
+  formData.append("isCoverImageDeleted", false);
+  formData.append("oldSubImageUrls", placeData.modifySubImageUrls);
 
   const { data } = await axiosclient.post<CreateActivityOutput>(
     `${BASE_URL}/place/${placeId}`,
