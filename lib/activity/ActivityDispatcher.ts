@@ -104,7 +104,9 @@ export const activityDispatcher = {
   ) => {
     dispatch({ type: "setCoverImageFile", payload: file });
   },
-
+  deleteExistingCoverImage: (dispatch: React.Dispatch<ActivityAction>) => {
+    dispatch({ type: "setModifyCoverImageUrl", payload: undefined });
+  },
   dispatchSubImages: (
     // @ts-ignore
     oldFiles: File[],
@@ -113,6 +115,20 @@ export const activityDispatcher = {
     dispatch: React.Dispatch<ActivityAction>
   ) => {
     dispatch({ type: "setSubImagesFile", payload: oldFiles.concat(newFiles) });
+  },
+  removeExistingSubImage: (
+    oldFiles: string[],
+    toRomoveIndex: number,
+    dispatch: React.Dispatch<ActivityAction>
+  ) => {
+    if (toRomoveIndex !== -1) {
+      const temp = [...oldFiles];
+      temp.splice(toRomoveIndex, 1);
+      dispatch({
+        type: "setModifySubImageUrls",
+        payload: temp,
+      });
+    }
   },
   removeSubImagesByFile: (
     // @ts-ignore
