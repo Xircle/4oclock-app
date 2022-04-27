@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BigTextInput,
   BlackLabel,
@@ -59,6 +59,10 @@ export default function CreateActivityStack4(props: Props) {
     setAddressError(false);
     setSearchResult(undefined);
   };
+
+  useEffect(() => {
+    setPlaceName(detailAddress);
+  }, []);
 
   return (
     <MyKeyboardAvoidingView keyboardVerticalOffset={50}>
@@ -177,7 +181,7 @@ export default function CreateActivityStack4(props: Props) {
       </Container>
       <MainButtonWBg
         onPress={nextHandler}
-        disabled={!(startDateAt && placeAddress)}
+        disabled={!(startDateAt && detailAddress)}
         title={"다음"}
       />
     </MyKeyboardAvoidingView>
