@@ -210,7 +210,20 @@ export interface MyPlaceData {
   recommendatinon?: string;
 }
 
-export interface MyCreatedPlaceData extends MyPlaceData {}
+export interface MyCreatedPlaceData extends MyPlaceData {
+  placeDetail?: {
+    description?: string;
+    detailAddress?: string;
+    kakaoLink?: string;
+    maxParticipantsNumber?: number;
+    participationFee?: number;
+  };
+  placeType?: string;
+  kakaoPlaceId?: string;
+  startDateAt?: string;
+  subImages?: string[];
+  team?: string;
+}
 
 export interface GetMyPlaceOutput extends CoreOutput {
   places: MyPlaceData[];
