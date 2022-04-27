@@ -10,6 +10,7 @@ import FastImage from "react-native-fast-image";
 import MyBottomModal from "../UI/MyBottomModal";
 import { useMutation } from "react-query";
 import { deletePlace } from "../../lib/api/deletePlace";
+import FullScreenLoader from "../UI/FullScreenLoader";
 
 export const enum Purpose {
   main = "main",
@@ -31,6 +32,15 @@ interface Props {
   isRefetch?: boolean;
   kakaoPlaceId?: string;
   isClosed?: boolean;
+  maxParticipantsNumber?: number;
+  detailAddress?: string;
+  participationFee?: string;
+  startDateAt?: string;
+  activityType?: string;
+  kakaoLink?: string;
+  subImages?: string[];
+  team?: string;
+  recommendation?: string;
 }
 
 function MyCreatedPlacesFlatList({
@@ -48,6 +58,7 @@ function MyCreatedPlacesFlatList({
 }: Props) {
   const navigation = useNavigation();
   const [deleteModal, setDeleteModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { mutateAsync: mutateDeletePlace } = useMutation(deletePlace);
   const onPress = () => {
@@ -57,6 +68,15 @@ function MyCreatedPlacesFlatList({
       name: name,
       participants: participants,
     });
+  };
+
+  const EditPlace = async () => {
+    setLoading(true);
+    try {
+    } catch (error) {
+      Alert.alert("일시적 에러가 발생했습니다");
+    }
+    // setLoading(false);
   };
 
   const DeletePlace = async () => {
@@ -75,6 +95,7 @@ function MyCreatedPlacesFlatList({
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <Container>
+        {loading && <FullScreenLoader />}
         <MyBottomModal
           onClose={() => {}}
           visible={deleteModal}
@@ -115,7 +136,7 @@ function MyCreatedPlacesFlatList({
           <BottomRightFixedContainer>
             {startDateFromNow !== "마감" && (
               <CTAButtonContainer>
-                <ActivityCTAButton onPress={() => setDeleteModal(true)}>
+                <ActivityCTAButton onPress={EditPlace}>
                   <ModifyText>
                     <Ionicons name="brush" size={14} color={colors.mainBlue} />
                     모임 수정하기
