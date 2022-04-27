@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useQuery } from "react-query";
 import styled from "styled-components/native";
@@ -7,6 +7,7 @@ import { colors } from "../../styles/styles";
 import { useFocusEffect } from "@react-navigation/native";
 import { getMyPlacesCreated } from "../../lib/api/getMyPlacesCreated";
 import MyCreatedPlacesFlatList from "../../components/profile/MyCreatedPlacesFlatList";
+import { typeEnToKo } from "../../lib/api/createPlace";
 
 type Props = {};
 
@@ -23,6 +24,10 @@ const CreatedActivityScreen = (props: Props) => {
     refetch();
   });
 
+  useEffect(() => {
+    if (myCreatedPlacesData) console.log(myCreatedPlacesData);
+  }, [myCreatedPlacesData]);
+
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -34,11 +39,20 @@ const CreatedActivityScreen = (props: Props) => {
               name={item.name}
               id={item.id}
               startDateFromNow={item.startDateFromNow}
-              description={item.description}
+              description={item.placeDetail.description}
               refetch={refetch}
               isRefetch={true}
               kakaoPlaceId={item.kakaoPlaceId}
               isClosed={item.isClosed}
+              subImages={item.subImages}
+              activityType={typeEnToKo[item.placeType]}
+              maxParticipantsNumber={item.placeDetail.maxParticipantsNumber}
+              detailAddress={item.placeDetail.detailAddress}
+              participationFee={item.placeDetail.participationFee + ""}
+              startDateAt={item.startDateAt}
+              kakaoLink={item.placeDetail.kakaoLink}
+              team={item.team}
+              recommendation={item.recommendatinon}
             />
           );
         })}
