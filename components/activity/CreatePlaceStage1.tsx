@@ -515,10 +515,6 @@ const SErrorMessage = styled(ErrorMessage)`
   color: ${colors.warningRed};
 `;
 
-const InstructionText = styled(ErrorMessage)`
-  color: ${colors.lightBlack};
-`;
-
 const SearchListContainer = styled.ScrollView`
   width: 100%;
   padding-top: 5px;
