@@ -106,6 +106,7 @@ export const activityDispatcher = {
   },
   deleteExistingCoverImage: (dispatch: React.Dispatch<ActivityAction>) => {
     dispatch({ type: "setModifyCoverImageUrl", payload: undefined });
+    dispatch({ type: "setIsCoverImageDeleted", payload: true });
   },
   dispatchSubImages: (
     // @ts-ignore
@@ -298,5 +299,6 @@ export const activityDispatcher = {
     });
     dispatch({ type: "setStage1Valid", payload: true });
     dispatch({ type: "setIsFinished", payload: false });
+    dispatch({ type: "setIsCoverImageDeleted", payload: false });
   },
 };
