@@ -37,8 +37,9 @@ export const editPlace = async (
     formData.append("team", placeData.team);
   }
   //formData.append("isCoverImageDeleted", placeData.modifyCoverImageUrl.length === 0);
-  formData.append("isCoverImageDeleted", false);
+  formData.append("isCoverImageDeleted", placeData.isCoverImageDeleted);
   formData.append("oldSubImageUrls", placeData.modifySubImageUrls);
+  formData.append("oldCoverImageUrl", placeData.modifyCoverImageUrl);
 
   const { data } = await axiosclient.patch<CreateActivityOutput>(
     `${BASE_URL}/place/${placeId}`,
