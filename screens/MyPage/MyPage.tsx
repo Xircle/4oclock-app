@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Alert, Dimensions, TouchableOpacity } from "react-native";
 import {
   colors,
