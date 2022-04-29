@@ -39,7 +39,6 @@ export default function CreateActivityStack4(props: Props) {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [addressError, setAddressError] = useState(undefined);
-  const [feeError, setFeeError] = useState(undefined);
   const [placeName, setPlaceName] = useState("");
   const [placeAddress, setPlaceAddress] = useState("");
   const [dateError, setDateError] = useState(undefined);
@@ -114,7 +113,6 @@ export default function CreateActivityStack4(props: Props) {
                 const { eventCount, target, text } = event.nativeEvent;
                 const temp = await kakaoLocal.searchByNameAndKeyword(text);
                 setSearchResult(temp.documents);
-                setPlaceSearch(text);
               }}
               error={addressError}
             />
@@ -174,9 +172,7 @@ export default function CreateActivityStack4(props: Props) {
             </MaxPrticipantsButton>
           </MaxParticipantsContainer>
         </InnerContainer>
-        <InnerContainer>
-          <BlackLabel>참가비</BlackLabel>
-        </InnerContainer>
+
         <BottomWhiteSpace />
       </Container>
       <MainButtonWBg
@@ -190,7 +186,7 @@ export default function CreateActivityStack4(props: Props) {
 
 const BottomWhiteSpace = styled.View`
   width: 100%;
-  height: 200px;
+  height: 250px;
 `;
 
 const TimeText = styled(ErrorMessage)`
