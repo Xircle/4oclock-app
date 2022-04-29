@@ -83,6 +83,7 @@ function MyCreatedPlacesFlatList({
       participants: participants,
     });
   };
+
   const EditPlace = async () => {
     setLoading(true);
     try {
