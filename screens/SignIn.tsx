@@ -1,16 +1,21 @@
 import styled from "styled-components/native";
 import React, { useEffect, useReducer, useRef, useState } from "react";
-import { colors, Text } from "../styles/styles";
+import { colors } from "../styles/styles";
 import { RouteProp } from "@react-navigation/native";
 import { LoggedOutStackParamList } from "../navigators/LoggedOutNav";
-import AvatarUri from "../components/UI/AvatarUri";
 import { initialState, reducer } from "../lib/auth/AuthReducer";
 import MyBackButton from "../components/UI/MyBackButton";
 import MainButtonWBg from "../components/UI/MainButtonWBg";
 import AuthPhoneNumber from "../components/auth/AuthPhoneNumber";
 import AuthProfileMainData from "../components/auth/AuthProfileMainData";
 import { authDispatcher } from "../lib/auth/AuthDispatcher";
-import { Animated, Dimensions, SafeAreaView, TouchableOpacity, View } from "react-native";
+import {
+  Animated,
+  Dimensions,
+  SafeAreaView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import AuthProfileSubData from "../components/auth/AuthProfileSubData";
 import AuthProfileImage from "../components/auth/AuthProfileImage";
 import AuthAgree from "../components/auth/AuthAgree";
