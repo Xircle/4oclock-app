@@ -6,7 +6,6 @@ import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import {
   GetEventBannersOutput,
   GetPlacesByLocationOutput,
-  PlaceFeedData,
 } from "../lib/api/types";
 import {
   getPlacesEvent,
@@ -225,7 +224,7 @@ export default function Main(props: Props) {
   return (
     <SafeAreaView style={{ backgroundColor: colors.bgColor, flex: 1 }}>
       <Container>
-        <HeaderPureComponent onPress={() => {}} />
+        {/* <HeaderPureComponent onPress={() => {}} /> */}
         <MainTopCarousel eventBanners={eventBannerData.eventBanners} />
         <MiddleTabContainer>
           <MiddleTab
