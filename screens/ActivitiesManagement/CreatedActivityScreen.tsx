@@ -26,11 +26,6 @@ const CreatedActivityScreen = (props: Props) => {
   useFocusEffect(() => {
     refetch();
   });
-
-  useEffect(() => {
-    if (myCreatedPlacesData) console.log(myCreatedPlacesData);
-  }, [myCreatedPlacesData]);
-
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -56,7 +51,7 @@ const CreatedActivityScreen = (props: Props) => {
                 startDateAt={item.startDateAt}
                 kakaoLink={item.placeDetail.kakaoLink}
                 team={item.team}
-                recommendation={item.recommendatinon}
+                recommendation={item.recommendation}
               />
             );
           })}
