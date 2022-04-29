@@ -17,9 +17,7 @@ export const editPlace = async (
     }
   }
   formData.append("name", placeData.name);
-  if (placeData.maxParticipantsNumber) {
-    formData.append("maxParticipantsNumber", placeData.maxParticipantsNumber);
-  }
+  formData.append("maxParticipantsNumber", placeData.maxParticipantsNumber);
   // BEGIN:for testing
   if (placeData.recommendation) {
     formData.append("recommendation", placeData.recommendation);
@@ -36,10 +34,16 @@ export const editPlace = async (
   if (typeKoToEn[placeData.activityType] === "Regular-meeting") {
     formData.append("team", placeData.team);
   }
-  //formData.append("isCoverImageDeleted", placeData.modifyCoverImageUrl.length === 0);
   formData.append("isCoverImageDeleted", placeData.isCoverImageDeleted);
-  formData.append("oldSubImageUrls", placeData.modifySubImageUrls);
-  formData.append("oldCoverImageUrl", placeData.modifyCoverImageUrl);
+  if (placeData.modifySubImageUrls) {
+    for (let i = 0; i < placeData.modifySubImageUrls.length; i++) {
+      formData.append("oldSubImageUrls", placeData.modifySubImageUrls[i]!);
+    }
+  }
+  formData.append(
+    "oldCoverImageUrl",
+    placeData.modifyCoverImageUrl ? placeData.modifyCoverImageUrl : ""
+  );
 
   const { data } = await axiosclient.patch<CreateActivityOutput>(
     `${BASE_URL}/place/${placeId}`,
