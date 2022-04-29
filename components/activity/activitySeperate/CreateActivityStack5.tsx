@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BigTextInput,
   BlackLabel,
@@ -53,6 +53,10 @@ export default function CreateActivityStack5(props: Props) {
     navigation.navigate("CAS6", {});
   };
 
+  useEffect(() => {
+    setOpenKakaoLinkError(!kakaoLink.startsWith("https://open.kakao.com/o/g"));
+  }, []);
+
   return (
     <MyKeyboardAvoidingView keyboardVerticalOffset={50}>
       <Container showsVerticalScrollIndicator={false}>
@@ -73,7 +77,7 @@ export default function CreateActivityStack5(props: Props) {
               const { eventCount, target, text } = event.nativeEvent;
               activityDispatcher.dispatchKakaoLink(
                 //text.replace(/[^A-Za-z0-9/.]/g, ""),
-                text,
+                text.replace(/[^A-Za-z0-9/.:]/g, ""),
                 dispatch
               );
 
@@ -92,7 +96,7 @@ export default function CreateActivityStack5(props: Props) {
       </Container>
       <MainButtonWBg
         onPress={nextHandler}
-        disabled={!kakaoLink}
+        disabled={openKakaoLinkError}
         title={"다음"}
       />
       {loading && <FullScreenLoader />}
