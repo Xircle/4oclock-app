@@ -17,7 +17,6 @@ import AvatarUri from "../../components/UI/AvatarUri";
 import FastImage from "react-native-fast-image";
 import storage from "../../lib/helpers/myAsyncStorage";
 import { getUser } from "../../lib/api/getUser";
-import moment from "moment";
 import { displayMeetingTime } from "../../lib/utils";
 
 interface Props {
@@ -64,8 +63,6 @@ export default function Activity({
       retry: 1,
     }
   );
-
-
 
   const onPress = async (): Promise<void> => {
     if (!userData?.isYkClub) {
@@ -220,7 +217,11 @@ export default function Activity({
         </CarouselContainer>
 
         <InnerWrapper>
-          {activityData?.recommendation && <RecommendationText>{activityData?.recommendation}</RecommendationText>}
+          {activityData?.recommendation && (
+            <RecommendationText>
+              {activityData?.recommendation}
+            </RecommendationText>
+          )}
           <InnerHeading>{name}</InnerHeading>
           <Description>{activityData?.placeDetail?.description}</Description>
         </InnerWrapper>
@@ -338,9 +339,8 @@ export default function Activity({
 const RecommendationText = styled(GeneralText)`
   font-size: 12px;
   font-family: ${fontFamilies.bold};
-  color: ${colors.mainBlue}
+  color: ${colors.mainBlue};
 `;
-
 
 const AvatarWrapper = styled.View`
   margin-right: 4px;
