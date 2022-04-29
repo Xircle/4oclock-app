@@ -226,7 +226,7 @@ export interface MyCreatedPlaceData {
   name: string;
   startDateFromNow: string;
   kakaoPlaceId?: string;
-  recommendatinon?: string;
+  recommendation?: string;
   subImages?: string[];
   team?: string | null;
   placeType: string;
