@@ -444,12 +444,6 @@ export default function MyProfile(props: Props) {
   );
 }
 
-const YKButton = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
-  margin-top: 20px;
-`;
-
 const SLabel = styled(GreyLabel)`
   margin-top: 20px;
 `;
@@ -495,7 +489,6 @@ const ChangeProfilePicText = styled.Text`
 const DetailContainer = styled.View`
   width: 90%;
 `;
-const InfoContainer = styled.View``;
 const InfoText = styled.Text`
   line-height: 14px;
   font-size: 12px;
