@@ -41,10 +41,6 @@ export default function CreateActivityStack21({}: Props) {
     navigation.navigate("CAS3", {});
   };
 
-  useEffect(() => {
-    console.log(21);
-  }, []);
-
   const [loading, setLoading] = useState(false);
   const ImageHandle = async () => {
     setLoading(true);
