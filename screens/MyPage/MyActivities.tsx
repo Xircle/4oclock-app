@@ -54,9 +54,3 @@ const InnerContainer = styled.View`
   flex: 1;
   padding: 15px;
 `;
-
-const BottomSpace = styled.View`
-  width: 100%;
-  height: 100px;
-  background-color: #f0f0f0;
-`;
