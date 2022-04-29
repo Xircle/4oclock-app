@@ -136,8 +136,8 @@ android {
         applicationId "com.ykring.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 35
-        versionName "35.0"
+        versionCode 37
+        versionName "37.0"
 
     }
     splits {
