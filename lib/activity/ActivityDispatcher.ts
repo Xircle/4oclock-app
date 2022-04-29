@@ -7,7 +7,7 @@ export const activityDispatcher = {
     newNum: number,
     dispatch: React.Dispatch<ActivityAction>
   ) => {
-    if (newNum >= 1 && newNum <= 8)
+    if (newNum >= 1 && newNum <= 12)
       dispatch({
         type: "setMaxParticipantsNumber",
         payload: newNum,
