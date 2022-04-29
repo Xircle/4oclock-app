@@ -38,10 +38,6 @@ export default function CreateActivityStack1(props: Props) {
   const [nameError, setNameError] = useState(undefined);
   const [localTeamNames, setLocalTeamNames] = useState<string[]>([]);
 
-  useEffect(() => {
-    console.log(modify);
-  }, []);
-
   const nextHandler = () => {
     if (modify) {
       // @ts-ignore
