@@ -29,7 +29,7 @@ import FastImage from "react-native-fast-image";
 interface Props {}
 
 const { width } = Dimensions.get("window");
-const currentVersion = Platform.OS === "ios" ? 4 : 4;
+const currentVersion = Platform.OS === "ios" ? 5 : 5;
 
 export default function Welcome(props: Props) {
   const { data: versionData } = useQuery<GetVersionOutput | undefined>(
@@ -56,7 +56,6 @@ export default function Welcome(props: Props) {
       Platform.OS === "ios"
         ? versionData.iOSMinimumVersion
         : versionData.androidMinimumVersion;
-    console.log(minimumVersion);
     if (currentVersion < minimumVersion) {
       Alert.alert("업데이트가 필요합니다", "", [
         {
@@ -78,7 +77,6 @@ export default function Welcome(props: Props) {
       Platform.OS === "ios"
         ? versionData.iOSMinimumVersion
         : versionData.androidMinimumVersion;
-    console.log(minimumVersion);
     if (currentVersion < minimumVersion) {
       Alert.alert("업데이트가 필요합니다", "", [
         {
