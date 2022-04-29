@@ -2,7 +2,6 @@ import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { UserProfile } from "../lib/api/types";
-import { AgeNumberToString } from "../lib/utils";
 import { colors } from "../styles/styles";
 import Loader from "../components/UI/Loader";
 import ProfileV from "../components/profile/ProfileV";
