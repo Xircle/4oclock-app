@@ -99,7 +99,11 @@ export default function CreateActivityStackNav(props: Props) {
       <Stack.Screen name="CAS3" options={{}} component={CreateActivityStack3} />
       <Stack.Screen name="CAS4" options={{}} component={CreateActivityStack4} />
       <Stack.Screen name="CAS5" options={{}} component={CreateActivityStack5} />
-      <Stack.Screen name="CAS6" options={{}} component={CreateActivityStack6} />
+      <Stack.Screen
+        name="CAS6"
+        options={{ headerShown: false, gestureEnabled: false }}
+        component={CreateActivityStack6}
+      />
       <Stack.Screen
         name="CreateActivityFinish"
         options={{}}
