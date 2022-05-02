@@ -10,7 +10,6 @@ import {
   fontFamilies,
   GeneralText,
   ModalBlueButton,
-  ModalButton,
   ModalButtonText,
   ModalCloseButton,
   ModalReportButton,
