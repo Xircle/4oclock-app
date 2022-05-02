@@ -41,7 +41,6 @@ export default function ParticipantsList({ route }: Props) {
                 profileImgUrl={item.profileImgUrl}
                 shortBio={item.shortBio}
                 job={item.job}
-                onPress={() => participantsCTA(item.userId)}
               />
             </TouchableOpacity>
           );
