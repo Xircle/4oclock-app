@@ -250,10 +250,15 @@ export default function Activity({
                   <AvatarWrapper key={item.userId}>
                     <TouchableOpacity
                       onPress={() =>
-                        //@ts-ignore
-                        navigation.navigate("FriendProfile", {
-                          id: item.userId,
-                        })
+                        navigation.navigate(
+                          //@ts-ignore
+                          "ParticipantsList",
+                          {
+                            placeName: activityData.name,
+                            participantsData: activityData.participantsData,
+                            participants: activityData.participants,
+                          }
+                        )
                       }
                     >
                       <AvatarUri
