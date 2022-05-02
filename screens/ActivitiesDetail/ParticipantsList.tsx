@@ -1,11 +1,11 @@
 import React from "react";
 import { View } from "react-native";
 import styled from "styled-components/native";
-import { ParticipantsListData } from "../../lib/api/types";
+import { ParticipantsData } from "../../lib/api/types";
 import { MainHeading } from "../../styles/styles";
 
 type Props = {
-  participants: ParticipantsListData;
+  participants: ParticipantsData[];
 };
 
 export default function ParticipantsList({}: Props) {
