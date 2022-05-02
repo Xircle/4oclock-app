@@ -7,7 +7,6 @@ interface Props {
   profileImgUrl: string;
   job: string;
   shortBio: string;
-  onPress: () => void;
 }
 
 export default class ParticipantsPC extends PureComponent<Props> {
