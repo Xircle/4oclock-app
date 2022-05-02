@@ -257,6 +257,8 @@ export default function Activity({
                             placeName: activityData.name,
                             participantsData: activityData.participantsData,
                             participants: activityData.participants,
+                            isCreator:
+                              activityData.creator_id === userData.fk_user_id,
                           }
                         )
                       }
