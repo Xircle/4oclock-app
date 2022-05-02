@@ -35,6 +35,7 @@ export type LoggedInStackParamList = {
     participantsData: ParticipantsData;
     participants: PlaceDataParticipantsProfile[];
     isCreator: boolean;
+    placeId: string;
   };
 };
 
