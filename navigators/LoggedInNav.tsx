@@ -26,7 +26,7 @@ export type LoggedInStackParamList = {
   FriendProfile: { id?: string };
   ChatStackNav: undefined;
   CreateActivityStackNav: undefined;
-  ParticipantsList: PlaceDataParticipantsProfile[];
+  ParticipantsList: { participants: PlaceDataParticipantsProfile[] };
 };
 
 const Stack = createStackNavigator<LoggedInStackParamList>();
