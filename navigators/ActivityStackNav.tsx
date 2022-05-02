@@ -9,7 +9,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { colors, fontFamilies } from "../styles/styles";
 import { TouchableOpacity } from "react-native";
 import SearchScreen from "../screens/ActivitiesDetail/SearchScreen";
-import ParticipantsList from "../screens/ActivitiesDetail/ParticipantsList";
 
 interface Props {
   route: RouteProp<LoggedInStackParamList, "ActivityStackNav">;
@@ -36,7 +35,6 @@ export type ActivityStackParamList = {
     kakaoLink?: string;
   };
   SearchScreen: undefined;
-  ParticipantsList: undefined;
 };
 
 const Stack = createStackNavigator<ActivityStackParamList>();
@@ -108,7 +106,6 @@ export default function ActivityStackNav({ route }: Props) {
         component={ReservationConfirm}
       />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
-      <Stack.Screen name="ParticipantsList" component={ParticipantsList} />
     </Stack.Navigator>
   );
 }

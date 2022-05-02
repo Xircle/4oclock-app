@@ -10,6 +10,7 @@ import { Participants } from "../lib/api/types";
 import FriendProfile from "../screens/FriendProfile";
 import ChatStackNav from "./ChatStackNav";
 import CreateActivityStackNav from "./CreateActivityStackNav";
+import ParticipantsList from "../screens/ActivitiesDetail/ParticipantsList";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -25,6 +26,7 @@ export type LoggedInStackParamList = {
   FriendProfile: { id?: string };
   ChatStackNav: undefined;
   CreateActivityStackNav: undefined;
+  ParticipantsList: undefined;
 };
 
 const Stack = createStackNavigator<LoggedInStackParamList>();
@@ -97,6 +99,8 @@ export default function LoggedInNav() {
         component={CreateActivityStackNav}
         options={{ headerShown: false }}
       />
+
+      <Stack.Screen name="ParticipantsList" component={ParticipantsList} />
     </Stack.Navigator>
   );
 }
