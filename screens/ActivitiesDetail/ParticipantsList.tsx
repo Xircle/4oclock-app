@@ -1,10 +1,20 @@
 import { RouteProp, useNavigation } from "@react-navigation/native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 import ParticipantsPC from "../../components/activity/ParticipantsPC";
+import MyBottomModal from "../../components/UI/MyBottomModal";
 import { LoggedInStackParamList } from "../../navigators/LoggedInNav";
-import { colors, fontFamilies, GeneralText } from "../../styles/styles";
+import {
+  colors,
+  fontFamilies,
+  GeneralText,
+  ModalBlueButton,
+  ModalButton,
+  ModalButtonText,
+  ModalCloseButton,
+  ModalReportButton,
+} from "../../styles/styles";
 
 interface Props {
   route: RouteProp<LoggedInStackParamList, "ParticipantsList">;
@@ -12,19 +22,42 @@ interface Props {
 
 export default function ParticipantsList({ route }: Props) {
   const navigation = useNavigation();
+  const [modal, setModal] = useState(false);
   useEffect(() => {
     console.log(route.params.participants);
   }, []);
 
   const participantsCTA = (id: string) => {
-    //@ts-ignore
-    navigation.navigate("FriendProfile", {
-      id: id,
-    });
+    if (route?.params?.isCreator) {
+      setModal(true);
+    } else {
+      //@ts-ignore
+      navigation.navigate("FriendProfile", {
+        id: id,
+      });
+    }
   };
 
   return (
     <Container showsVerticalScrollIndicator={false}>
+      {route?.params?.isCreator && (
+        <MyBottomModal
+          onClose={() => {}}
+          visible={modal}
+          setModal={() => setModal(false)}
+          height={200}
+        >
+          <ModalBlueButton onPress={() => {}}>
+            <ModalButtonText>작성자 신고하기</ModalButtonText>
+          </ModalBlueButton>
+          <ModalReportButton onPress={() => {}}>
+            <ModalButtonText>게시글 신고하기</ModalButtonText>
+          </ModalReportButton>
+          <ModalCloseButton onPress={() => setModal(false)}>
+            <ModalButtonText>닫기</ModalButtonText>
+          </ModalCloseButton>
+        </MyBottomModal>
+      )}
       <Heading>{route.params.placeName}</Heading>
       <AgeContainer>
         <AgeText>남 {route.params.participantsData.maleCount}</AgeText>
