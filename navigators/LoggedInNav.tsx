@@ -6,7 +6,7 @@ import MyActivities from "../screens/MyPage/MyActivities";
 import ActivityStackNav from "./ActivityStackNav";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fontFamilies } from "../styles/styles";
-import { Participants } from "../lib/api/types";
+import { Participants, ParticipantsData } from "../lib/api/types";
 import FriendProfile from "../screens/FriendProfile";
 import ChatStackNav from "./ChatStackNav";
 import CreateActivityStackNav from "./CreateActivityStackNav";
@@ -26,7 +26,7 @@ export type LoggedInStackParamList = {
   FriendProfile: { id?: string };
   ChatStackNav: undefined;
   CreateActivityStackNav: undefined;
-  ParticipantsList: undefined;
+  ParticipantsList: ParticipantsData[];
 };
 
 const Stack = createStackNavigator<LoggedInStackParamList>();
