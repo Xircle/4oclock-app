@@ -1,6 +1,14 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
-import { colors, fontFamilies, GeneralText } from "../../styles/styles";
+import {
+  colors,
+  fontFamilies,
+  GeneralText,
+  ModalBlueButton,
+  ModalButtonText,
+  ModalCloseButton,
+  ModalReportButton,
+} from "../../styles/styles";
 import { Alert, Dimensions, TouchableOpacity, View } from "react-native";
 import optimizeImage from "../../lib/helpers/optimizeImage";
 import { useNavigation } from "@react-navigation/native";
@@ -354,34 +362,6 @@ const AvatarWrapper = styled.View`
   margin-bottom: 4px;
 `;
 
-const ModalButton = styled.TouchableOpacity`
-  width: 90%;
-  height: 70px;
-  border-radius: 10px;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ModalButtonText = styled(GeneralText)`
-  font-size: 22px;
-  color: ${colors.bgColor};
-  font-family: ${fontFamilies.bold};
-`;
-
-const ModalCloseButton = styled(ModalButton)`
-  background-color: ${colors.bareGrey};
-  height: 50px;
-`;
-
-const ModalReportButton = styled(ModalButton)`
-  background-color: ${colors.warningRed};
-  height: 50px;
-`;
-
-const ModalBlueButton = styled(ModalReportButton)`
-  background-color: ${colors.mainBlue};
-`;
-
 const Container = styled.View`
   flex: 1;
   position: relative;
@@ -421,13 +401,6 @@ const InnerHeading = styled(GeneralText)`
 
 const InnerHeadingBlue = styled(InnerHeading)`
   color: ${colors.mainBlue};
-`;
-
-const Title = styled(GeneralText)`
-  margin-top: 15px;
-  font-size: 14px;
-  font-family: ${fontFamilies.regular};
-  color: ${colors.midGrey};
 `;
 
 const Description = styled(GeneralText)`
