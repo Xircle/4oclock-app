@@ -200,7 +200,7 @@ const PhotoContainer = styled.View<{ space: number }>`
   flex-wrap: wrap;
 `;
 
-const Photo = styled(FastImage)<{ space: boolean }>`
+const Photo = styled(FastImage)<{ space: number }>`
   width: ${(props) => (width - props.space * 2 - 60) / 3 + "px"};
   height: ${(props) => (width - props.space * 2 - 60) / 3 + "px"};
   margin-bottom: ${(props) => props.space + "px"};
