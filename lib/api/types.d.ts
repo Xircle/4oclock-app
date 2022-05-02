@@ -292,6 +292,10 @@ export interface CancelReservationInput {
   detailReason: string;
 }
 
+export interface CancelReservationByCreatorInput {
+  placeId: string;
+  participantId: string;
+}
 export interface CancelReservationOutput extends CoreOutput {}
 
 export interface EditPlaceInput {
