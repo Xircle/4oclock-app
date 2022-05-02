@@ -22,19 +22,30 @@ interface Props {
 
 export default function ParticipantsList({ route }: Props) {
   const navigation = useNavigation();
+  const [userId, setUserId] = useState("");
   const [modal, setModal] = useState(false);
   useEffect(() => {
     console.log(route.params.participants);
   }, []);
 
+  const navigateToFriendProfile = (id: string) => {
+    //@ts-ignore
+    navigation.navigate("FriendProfile", { id: id });
+  };
+
   const participantsCTA = (id: string) => {
     if (route?.params?.isCreator) {
+      setUserId(id);
       setModal(true);
     } else {
-      //@ts-ignore
-      navigation.navigate("FriendProfile", {
-        id: id,
-      });
+      navigateToFriendProfile(id);
+    }
+  };
+
+  const modalNavigateToFriendProfile = () => {
+    if (userId) {
+      setModal(false);
+      navigateToFriendProfile(userId);
     }
   };
 
@@ -47,11 +58,11 @@ export default function ParticipantsList({ route }: Props) {
           setModal={() => setModal(false)}
           height={200}
         >
-          <ModalBlueButton onPress={() => {}}>
-            <ModalButtonText>작성자 신고하기</ModalButtonText>
+          <ModalBlueButton onPress={modalNavigateToFriendProfile}>
+            <ModalButtonText>프로필 보러가기</ModalButtonText>
           </ModalBlueButton>
           <ModalReportButton onPress={() => {}}>
-            <ModalButtonText>게시글 신고하기</ModalButtonText>
+            <ModalButtonText>참가자 강퇴하기</ModalButtonText>
           </ModalReportButton>
           <ModalCloseButton onPress={() => setModal(false)}>
             <ModalButtonText>닫기</ModalButtonText>
