@@ -1,6 +1,7 @@
 import { RouteProp } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import styled from "styled-components/native";
+import ParticipantsPC from "../../components/activity/ParticipantsPC";
 import { LoggedInStackParamList } from "../../navigators/LoggedInNav";
 import { colors, fontFamilies, GeneralText } from "../../styles/styles";
 
@@ -20,6 +21,18 @@ export default function ParticipantsList({ route }: Props) {
         <AgeText>남 {route.params.participantsData.maleCount}</AgeText>
         <AgeText>여 {route.params.participantsData.femaleCount}</AgeText>
       </AgeContainer>
+      <ParticipantsContainer>
+        {route?.params?.participants.map((item, index) => {
+          return (
+            <ParticipantsPC
+              key={item.userId}
+              profileImgUrl={item.profileImgUrl}
+              shortBio={item.shortBio}
+              job={item.job}
+            />
+          );
+        })}
+      </ParticipantsContainer>
     </Container>
   );
 }
@@ -46,3 +59,5 @@ const AgeText = styled(GeneralText)`
   font-family: ${fontFamilies.medium};
   color: ${colors.midGrey};
 `;
+
+const ParticipantsContainer = styled.View``;
