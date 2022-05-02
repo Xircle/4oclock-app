@@ -1,5 +1,6 @@
-import { RouteProp } from "@react-navigation/native";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 import ParticipantsPC from "../../components/activity/ParticipantsPC";
 import { LoggedInStackParamList } from "../../navigators/LoggedInNav";
@@ -10,9 +11,17 @@ interface Props {
 }
 
 export default function ParticipantsList({ route }: Props) {
+  const navigation = useNavigation();
   useEffect(() => {
     console.log(route.params.participants);
   }, []);
+
+  const participantsCTA = (id: string) => {
+    //@ts-ignore
+    navigation.navigate("FriendProfile", {
+      id: id,
+    });
+  };
 
   return (
     <Container showsVerticalScrollIndicator={false}>
@@ -24,12 +33,17 @@ export default function ParticipantsList({ route }: Props) {
       <ParticipantsContainer>
         {route?.params?.participants.map((item, index) => {
           return (
-            <ParticipantsPC
+            <TouchableOpacity
               key={item.userId}
-              profileImgUrl={item.profileImgUrl}
-              shortBio={item.shortBio}
-              job={item.job}
-            />
+              onPress={() => participantsCTA(item.userId)}
+            >
+              <ParticipantsPC
+                profileImgUrl={item.profileImgUrl}
+                shortBio={item.shortBio}
+                job={item.job}
+                onPress={() => participantsCTA(item.userId)}
+              />
+            </TouchableOpacity>
           );
         })}
       </ParticipantsContainer>
