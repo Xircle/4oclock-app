@@ -79,7 +79,6 @@ export default function RnadomProfile(props: Props) {
       // Do something
       if (!isLoading) refetch();
     });
-    console.log(isLoading);
     return unsubscribe;
   }, []);
 
