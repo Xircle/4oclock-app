@@ -311,20 +311,6 @@ export interface GetReservationParticipantNumberOutput extends CoreOutput {
   participantsNumber?: number;
 }
 
-// Get ParticipantList
-export interface PlaceParticipantListData {
-  participantListProfiles: MainFeedPlaceParticipantsProfile[];
-  participantsInfo: {
-    total_count: number;
-    male_count: number;
-    average_age: number;
-  };
-}
-
-export interface GetPlaceParticipantListOutput extends CoreOutput {
-  participants?: PlaceParticipantListData;
-}
-
 export interface IMessageRoom {
   isMe: boolean;
   isRead: boolean;
