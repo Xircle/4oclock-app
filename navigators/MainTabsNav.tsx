@@ -95,6 +95,9 @@ export default function MainTabsNav(props: Props) {
           headerTitleStyle: {
             fontFamily: fontFamilies.regular,
           },
+          headerStyle: {
+            shadowColor: "transparent",
+          },
           headerRight: () => (
             <TouchableOpacity
               style={{ marginRight: 8 }}

@@ -62,6 +62,7 @@ export default function ActivityStackNav({ route }: Props) {
         },
         headerStyle: {
           backgroundColor: colors.bgColor,
+          shadowColor: "transparent",
         },
       }}
     >

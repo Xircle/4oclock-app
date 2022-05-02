@@ -91,6 +91,7 @@ export default function CreateActivityStackNav(props: Props) {
         },
         headerStyle: {
           backgroundColor: colors.bgColor,
+          shadowColor: "transparent",
         },
       }}
     >
