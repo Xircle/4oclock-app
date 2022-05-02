@@ -267,6 +267,7 @@ export default function Activity({
                             participants: activityData.participants,
                             isCreator:
                               activityData.creator_id === userData.fk_user_id,
+                            placeId: id,
                           }
                         )
                       }
