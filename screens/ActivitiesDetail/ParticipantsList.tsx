@@ -1,9 +1,12 @@
 import { RouteProp, useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useMutation } from "react-query";
 import styled from "styled-components/native";
 import ParticipantsPC from "../../components/activity/ParticipantsPC";
 import MyBottomModal from "../../components/UI/MyBottomModal";
+import { cancelReservationByCreator } from "../../lib/api/cancelReservationByCreator";
 import { LoggedInStackParamList } from "../../navigators/LoggedInNav";
 import {
   colors,
@@ -23,9 +26,22 @@ export default function ParticipantsList({ route }: Props) {
   const navigation = useNavigation();
   const [userId, setUserId] = useState("");
   const [modal, setModal] = useState(false);
-  useEffect(() => {
-    console.log(route.params.participants);
-  }, []);
+
+  const { mutateAsync: mutateCancelReservationByCreator } = useMutation(
+    cancelReservationByCreator
+  );
+
+  const CancelReservation = async () => {
+    const { data } = await mutateCancelReservationByCreator({
+      placeId: route.params.placeId,
+      participantId: userId,
+    });
+    if (!data.ok) {
+      throw new Error(data.error);
+    }
+    Alert.alert("예약이 취소되었습니다");
+    setModal(false);
+  };
 
   const navigateToFriendProfile = (id: string) => {
     //@ts-ignore
@@ -60,7 +76,7 @@ export default function ParticipantsList({ route }: Props) {
           <ModalBlueButton onPress={modalNavigateToFriendProfile}>
             <ModalButtonText>프로필 보러가기</ModalButtonText>
           </ModalBlueButton>
-          <ModalReportButton onPress={() => {}}>
+          <ModalReportButton onPress={CancelReservation}>
             <ModalButtonText>참가자 강퇴하기</ModalButtonText>
           </ModalReportButton>
           <ModalCloseButton onPress={() => setModal(false)}>
