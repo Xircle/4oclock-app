@@ -15,7 +15,6 @@ import FriendProfile from "../screens/FriendProfile";
 import ChatStackNav from "./ChatStackNav";
 import CreateActivityStackNav from "./CreateActivityStackNav";
 import ParticipantsList from "../screens/ActivitiesDetail/ParticipantsList";
-import { TabRouter } from "@react-navigation/native";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
