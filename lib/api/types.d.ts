@@ -59,13 +59,7 @@ export interface PlaceFeedData {
   myTeam?: boolean;
 }
 
-export interface ParticipantsData extends Participants {
-  age: number;
-  gender: Gender;
-  isYkClub: boolean;
-  job: string;
-  shortBio: string;
-}
+export interface ParticipantsData extends Participants {}
 
 interface Meta {
   page: number;
