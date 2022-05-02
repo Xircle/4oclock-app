@@ -72,7 +72,7 @@ export default function CreateActivityStack3(props: Props) {
   );
 }
 
-const STextArea = styled(TextArea)`
+const STextArea = styled(TextArea)<{ error?: boolean }>`
   margin-top: 50px;
   width: 100%;
   height: 180px;
