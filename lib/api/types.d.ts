@@ -78,7 +78,13 @@ export interface GetPlacesByLocationOutput extends CoreOutput {
 }
 
 // Get Place By Id
-interface PlaceDataParticipantsProfile extends Participants {}
+export interface PlaceDataParticipantsProfile extends Participants {
+  age?: number;
+  gender?: string;
+  isYkClub?: boolean;
+  job?: string;
+  shortBio?: string;
+}
 
 export interface Review {
   id: string;
