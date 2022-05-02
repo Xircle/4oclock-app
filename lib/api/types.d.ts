@@ -119,6 +119,7 @@ export interface PlaceData {
   isLightning?: boolean;
   placeType?: string;
   participantsUsername?: string[];
+  creator_id?: string;
   participantsInfo: {
     total_count: number;
     male_count: number;
