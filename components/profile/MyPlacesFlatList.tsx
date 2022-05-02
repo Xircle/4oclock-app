@@ -60,14 +60,6 @@ function MyPlacesFlatList({
 
   const { mutateAsync: mutateCancelReservation } =
     useMutation(cancelReservation);
-  const onPress = () => {
-    // @ts-ignore
-    navigation.navigate("ActivityStackNav", {
-      id: id,
-      name: name,
-      participants: participants,
-    });
-  };
 
   const CancelReservation = async () => {
     if (!id) return;
@@ -84,6 +76,15 @@ function MyPlacesFlatList({
     if (isRefetch) {
       refetch();
     }
+  };
+
+  const onPress = () => {
+    // @ts-ignore
+    navigation.navigate("ActivityStackNav", {
+      id: id,
+      name: name,
+      participants: participants,
+    });
   };
 
   const writeReview = async (kid: string) => {
