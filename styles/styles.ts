@@ -117,6 +117,34 @@ export const TextArea = styled(BigTextInput)`
   text-align-vertical: top;
 `;
 
+export const ModalButton = styled.TouchableOpacity`
+  width: 90%;
+  height: 70px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ModalButtonText = styled(GeneralText)`
+  font-size: 22px;
+  color: ${colors.bgColor};
+  font-family: ${fontFamilies.bold};
+`;
+
+export const ModalCloseButton = styled(ModalButton)`
+  background-color: ${colors.bareGrey};
+  height: 50px;
+`;
+
+export const ModalReportButton = styled(ModalButton)`
+  background-color: ${colors.warningRed};
+  height: 50px;
+`;
+
+export const ModalBlueButton = styled(ModalReportButton)`
+  background-color: ${colors.mainBlue};
+`;
+
 export const XLButton = styled.TouchableOpacity<{
   disabled?: boolean;
   bgColor?: string;
