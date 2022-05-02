@@ -15,6 +15,7 @@ import FriendProfile from "../screens/FriendProfile";
 import ChatStackNav from "./ChatStackNav";
 import CreateActivityStackNav from "./CreateActivityStackNav";
 import ParticipantsList from "../screens/ActivitiesDetail/ParticipantsList";
+import { TabRouter } from "@react-navigation/native";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -109,7 +110,11 @@ export default function LoggedInNav() {
         options={{ headerShown: false }}
       />
 
-      <Stack.Screen name="ParticipantsList" component={ParticipantsList} />
+      <Stack.Screen
+        name="ParticipantsList"
+        component={ParticipantsList}
+        options={{ title: "참가자 보기" }}
+      />
     </Stack.Navigator>
   );
 }
