@@ -11,7 +11,7 @@ import {
 } from "../../styles/styles";
 import { Alert, Dimensions, TouchableOpacity, View } from "react-native";
 import optimizeImage from "../../lib/helpers/optimizeImage";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "react-query";
 import { Participants, PlaceData, UserData } from "../../lib/api/types.d";
@@ -52,7 +52,11 @@ export default function Activity({
     if (accountType === "Admin") setIsAdmin(true);
   };
   // api
-  const { data: activityData, isLoading } = useQuery<PlaceData | undefined>(
+  const {
+    data: activityData,
+    isLoading,
+    refetch,
+  } = useQuery<PlaceData | undefined>(
     ["place-detail", id],
     () => getPlaceById(id),
     {
@@ -111,6 +115,10 @@ export default function Activity({
       );
     }
   }, [activityData]);
+
+  useFocusEffect(() => {
+    refetch();
+  });
 
   useEffect(() => {
     setAccountType();
@@ -252,7 +260,7 @@ export default function Activity({
           ) : null}
 
           <UsernameContainer>
-            {participants?.map((item, index) => {
+            {activityData?.participants?.map((item, index) => {
               if (item.profileImgUrl) {
                 return (
                   <AvatarWrapper key={item.userId}>
