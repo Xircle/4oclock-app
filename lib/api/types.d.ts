@@ -376,3 +376,16 @@ export interface EventBanner {
 export interface GetEventBannersOutput extends CoreOutput {
   eventBanners: EventBanner[];
 }
+
+export class PlaceParticipantListData {
+  participantListProfiles: PlaceDataParticipantsProfile[];
+  participantsInfo: {
+    total_count: number;
+    male_count: number;
+    average_age: number;
+  };
+}
+
+export class GetPlaceParticipantListOutput extends CoreOutput {
+  participants?: PlaceParticipantListData;
+}
