@@ -36,6 +36,7 @@ export type LoggedInStackParamList = {
     participants: PlaceDataParticipantsProfile[];
     isCreator: boolean;
     placeId: string;
+    refetch: () => void;
   };
 };
 
