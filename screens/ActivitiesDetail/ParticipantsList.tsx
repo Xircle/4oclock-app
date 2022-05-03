@@ -2,11 +2,13 @@ import { RouteProp, useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import styled from "styled-components/native";
 import ParticipantsPC from "../../components/activity/ParticipantsPC";
 import MyBottomModal from "../../components/UI/MyBottomModal";
 import { cancelReservationByCreator } from "../../lib/api/cancelReservationByCreator";
+import { getPlaceParticipantList } from "../../lib/api/getPlaceParticipantList";
+import { PlaceParticipantListData } from "../../lib/api/types";
 import { LoggedInStackParamList } from "../../navigators/LoggedInNav";
 import {
   colors,
@@ -27,6 +29,23 @@ export default function ParticipantsList({ route }: Props) {
   const [userId, setUserId] = useState("");
   const [modal, setModal] = useState(false);
 
+  const {
+    data: participantsData,
+    isLoading,
+    refetch,
+  } = useQuery<PlaceParticipantListData | undefined>(
+    ["place-participant", route.params.placeId],
+    () => getPlaceParticipantList(route.params.placeId),
+    {
+      onError: (err: any) => {
+        Alert.alert(err);
+        return;
+      },
+      retry: 1,
+      refetchOnWindowFocus: false,
+    }
+  );
+
   const { mutateAsync: mutateCancelReservationByCreator } = useMutation(
     cancelReservationByCreator
   );
@@ -39,6 +58,7 @@ export default function ParticipantsList({ route }: Props) {
     if (!data.ok) {
       throw new Error(data.error);
     }
+    refetch();
     Alert.alert("예약이 취소되었습니다");
     setModal(false);
   };
@@ -86,11 +106,15 @@ export default function ParticipantsList({ route }: Props) {
       )}
       <Heading>{route.params.placeName}</Heading>
       <AgeContainer>
-        <AgeText>남 {route.params.participantsData.maleCount}</AgeText>
-        <AgeText>여 {route.params.participantsData.femaleCount}</AgeText>
+        <AgeText>남 {participantsData?.participantsInfo?.male_count}</AgeText>
+        <AgeText>
+          여{" "}
+          {participantsData?.participantsInfo?.total_count -
+            participantsData?.participantsInfo?.male_count}
+        </AgeText>
       </AgeContainer>
       <ParticipantsContainer>
-        {route?.params?.participants.map((item, index) => {
+        {participantsData?.participantListProfiles.map((item, index) => {
           return (
             <TouchableOpacity
               key={item.userId}
