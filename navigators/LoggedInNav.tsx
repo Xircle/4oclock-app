@@ -32,11 +32,8 @@ export type LoggedInStackParamList = {
   CreateActivityStackNav: undefined;
   ParticipantsList: {
     placeName: string;
-    participantsData: ParticipantsData;
-    participants: PlaceDataParticipantsProfile[];
     isCreator: boolean;
     placeId: string;
-    refetch: () => void;
   };
 };
 
