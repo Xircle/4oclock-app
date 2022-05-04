@@ -209,15 +209,12 @@ export default function Main(props: Props) {
 
   const memoizedValueRegular = useMemo(
     () => renderRegular,
-    [mainRegularData?.pages?.map((page) => page.places).flat()]
+    [mainRegularDataLoading]
   );
-  const memoizedValueEvent = useMemo(
-    () => renderItem,
-    [mainEventData?.pages.map((page) => page.places).flat()]
-  );
+  const memoizedValueEvent = useMemo(() => renderItem, [mainEventDataLoading]);
   const memoizedValueLightning = useMemo(
     () => renderItem,
-    [mainLightningData?.pages.map((page) => page.places).flat()]
+    [mainLightningDataLoading]
   );
 
   useEffect(() => {
@@ -341,7 +338,6 @@ export default function Main(props: Props) {
           )}
           {mainEventData && (
             <AnimWrapper
-              disableVirtualization={false}
               style={{
                 left: width * 2,
                 transform: [{ translateX: position }],
