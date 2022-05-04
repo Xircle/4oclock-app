@@ -25,7 +25,6 @@ import { useNavigation } from "@react-navigation/native";
 interface Props {}
 
 const { width, height } = Dimensions.get("window");
-
 const renderItem = ({ item }) => (
   <MainFlatListPlace
     leftParticipantsCount={item.leftParticipantsCount}
@@ -39,7 +38,6 @@ const renderItem = ({ item }) => (
     recommendation={item.recommendation}
   />
 );
-
 export default function Main(props: Props) {
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
@@ -209,12 +207,15 @@ export default function Main(props: Props) {
 
   const memoizedValueRegular = useMemo(
     () => renderRegular,
-    [mainRegularDataLoading]
+    [mainRegularData?.pages?.map((page) => page.places).flat()]
   );
-  const memoizedValueEvent = useMemo(() => renderItem, [mainEventDataLoading]);
+  const memoizedValueEvent = useMemo(
+    () => renderItem,
+    [mainEventData?.pages?.map((page) => page.places).flat()]
+  );
   const memoizedValueLightning = useMemo(
     () => renderItem,
-    [mainLightningDataLoading]
+    [mainLightningData?.pages?.map((page) => page.places).flat()]
   );
 
   useEffect(() => {
