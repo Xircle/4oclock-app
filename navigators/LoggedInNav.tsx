@@ -15,6 +15,7 @@ import FriendProfile from "../screens/FriendProfile";
 import ChatStackNav from "./ChatStackNav";
 import CreateActivityStackNav from "./CreateActivityStackNav";
 import ParticipantsList from "../screens/ActivitiesDetail/ParticipantsList";
+import BannedScreen from "../screens/BannedScreen";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -35,6 +36,7 @@ export type LoggedInStackParamList = {
     isCreator: boolean;
     placeId: string;
   };
+  BannedScreen: undefined;
 };
 
 const Stack = createStackNavigator<LoggedInStackParamList>();
@@ -113,6 +115,11 @@ export default function LoggedInNav() {
         name="ParticipantsList"
         component={ParticipantsList}
         options={{ title: "참가자 보기" }}
+      />
+      <Stack.Screen
+        name="BannedScreen"
+        component={BannedScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
