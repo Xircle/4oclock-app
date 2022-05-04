@@ -1,11 +1,12 @@
 import styled from "styled-components/native";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Dimensions, Animated, SafeAreaView, View } from "react-native";
 import { colors, fontFamilies, GeneralText } from "../styles/styles";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import {
   GetEventBannersOutput,
   GetPlacesByLocationOutput,
+  UserData,
 } from "../lib/api/types";
 import {
   getPlacesEvent,
@@ -18,6 +19,8 @@ import MainTopCarousel from "../components/UI/MainTopCarousel";
 import { getEventBanners } from "../lib/api/getEventBanners";
 import MainFeed from "../components/main/MainFeed";
 import HeaderPureComponent from "../components/shared/HeaderPureComponent";
+import { getUser } from "../lib/api/getUser";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {}
 
@@ -41,6 +44,7 @@ export default function Main(props: Props) {
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const queryClient = useQueryClient();
+  const navigation = useNavigation();
 
   const renderRegular = ({ item, index }) => {
     if (item.seperatorMyTeam) {
@@ -109,6 +113,14 @@ export default function Main(props: Props) {
       />
     );
   };
+
+  const { data: userData } = useQuery<UserData | undefined>(
+    ["userProfile"],
+    () => getUser(),
+    {
+      retry: 1,
+    }
+  );
 
   // main
   const {
@@ -207,6 +219,15 @@ export default function Main(props: Props) {
     () => renderItem,
     [mainLightningData?.pages.map((page) => page.places).flat()]
   );
+
+  useEffect(() => {
+    if (userData?.accountType === "Banned") {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "BannedScreen" }],
+      });
+    }
+  }, [userData]);
 
   // values
   const position = useRef(new Animated.Value(0)).current;
@@ -400,13 +421,13 @@ const MiddleTab = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const MiddleTabTextWrapper = styled.View<{ isSelcted: boolean }>`
+const MiddleTabTextWrapper = styled.View<{ isSelected: boolean }>`
   border-bottom-width: ${(props) => (props.isSelected ? "1px" : 0)};
   border-color: ${colors.black};
   position: relative;
 `;
 
-const MiddleTabText = styled(GeneralText)<{ isSelcted: boolean }>`
+const MiddleTabText = styled(GeneralText)<{ isSelected: boolean }>`
   font-size: 20px;
   padding: 12px;
   color: ${(props) => (props.isSelected ? colors.black : colors.bareGrey)};
