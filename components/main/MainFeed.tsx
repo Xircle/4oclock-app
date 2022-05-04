@@ -24,7 +24,7 @@ function MainFeed({
   const placeFlatlistKeyExtractor = (item: PlaceFeedData, index) =>
     item.id + "" + index;
   return (
-    <AnimWrapper
+    <Container
       disableVirtualization={false}
       showsVerticalScrollIndicator={false}
       onEndReached={loadMore}
@@ -42,7 +42,7 @@ function MainFeed({
 
 export default React.memo(MainFeed);
 
-const AnimWrapper = styled(OptimizedFlatList)`
+const Container = styled(OptimizedFlatList)`
   background-color: ${colors.bgColor};
   width: 100%;
   height: 100%;
