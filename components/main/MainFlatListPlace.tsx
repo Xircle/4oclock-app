@@ -18,7 +18,6 @@ interface Props {
   coverImage?: string;
   name?: string;
   id: string;
-  views?: number;
   description?: string;
   startDateFromNow?: string;
   leftParticipantsCount?: number;
@@ -48,7 +47,6 @@ function MainFlatListPlace({
       participants: participants,
     });
   };
-
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <Container>
@@ -61,7 +59,11 @@ function MainFlatListPlace({
         </LeftContainer>
         <RightContiner>
           <TimeText>{startDateFromNow || " "}</TimeText>
-          <PureInfoMainFlat name={name} description={description} recommendation={recommendation}/>
+          <PureInfoMainFlat
+            name={name}
+            description={description}
+            recommendation={recommendation}
+          />
           <PureAvatarsFlat
             participants={participants}
             length={participants?.length}
@@ -72,9 +74,7 @@ function MainFlatListPlace({
   );
 }
 
-export default MainFlatListPlace;
-
-
+export default React.memo(MainFlatListPlace);
 
 const TimeText = styled(GeneralText)`
   font-size: 12px;
