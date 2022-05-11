@@ -6,11 +6,7 @@ import MyActivities from "../screens/MyPage/MyActivities";
 import ActivityStackNav from "./ActivityStackNav";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fontFamilies } from "../styles/styles";
-import {
-  Participants,
-  ParticipantsData,
-  PlaceDataParticipantsProfile,
-} from "../lib/api/types";
+import { Participants } from "../lib/api/types";
 import FriendProfile from "../screens/FriendProfile";
 import ChatStackNav from "./ChatStackNav";
 import CreateActivityStackNav from "./CreateActivityStackNav";
