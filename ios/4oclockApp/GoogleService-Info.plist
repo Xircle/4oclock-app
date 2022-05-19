@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>785586764531-sef51j4lqm1eruvif20e1h7fvk6n4rsn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.785586764531-sef51j4lqm1eruvif20e1h7fvk6n4rsn</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAQ2RWLjejaK_p0lQaxS4NoIMS_ILaeV3g</string>
+	<key>GCM_SENDER_ID</key>
+	<string>785586764531</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ykring.app</string>
+	<key>PROJECT_ID</key>
+	<string>ufo-crew</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ufo-crew.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:785586764531:ios:11522394e61233c4299586</string>
+</dict>
+</plist>

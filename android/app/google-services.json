@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "785586764531",
+    "project_id": "ufo-crew",
+    "storage_bucket": "ufo-crew.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785586764531:android:2f032d8a52db1555299586",
+        "android_client_info": {
+          "package_name": "com.ykring.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "785586764531-otk60ejb04q348r8ecoglvn7k1lekf46.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR_hq8S-3H2H0dFCDWpi3uj25IrzKrDE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "785586764531-otk60ejb04q348r8ecoglvn7k1lekf46.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
