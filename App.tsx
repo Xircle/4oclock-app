@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import "react-native-gesture-handler";
 import AppLoading from "expo-app-loading";
@@ -38,7 +38,7 @@ export default function App() {
     ]);
     await Promise.all([...images]);
   };
-  const onFinish = () => {
+  const onFinish = async () => {
     setReady(true);
   };
 
