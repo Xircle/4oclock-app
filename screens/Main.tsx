@@ -21,6 +21,7 @@ import MainFeed from "../components/main/MainFeed";
 import HeaderPureComponent from "../components/shared/HeaderPureComponent";
 import { getUser } from "../lib/api/getUser";
 import { useNavigation } from "@react-navigation/native";
+import messaging from "@react-native-firebase/messaging";
 
 interface Props {}
 
@@ -226,6 +227,14 @@ export default function Main(props: Props) {
       });
     }
   }, [userData]);
+
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then((token) => {
+        console.log("FCM TOKEN:: " + token);
+      });
+  }, []);
 
   // values
   const position = useRef(new Animated.Value(0)).current;
