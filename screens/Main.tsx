@@ -1,8 +1,13 @@
 import styled from "styled-components/native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Dimensions, Animated, SafeAreaView, View } from "react-native";
+import { Dimensions, Animated, SafeAreaView, View, Alert } from "react-native";
 import { colors, fontFamilies, GeneralText } from "../styles/styles";
-import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import {
   GetEventBannersOutput,
   GetPlacesByLocationOutput,
@@ -22,6 +27,7 @@ import HeaderPureComponent from "../components/shared/HeaderPureComponent";
 import { getUser } from "../lib/api/getUser";
 import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
+import { updateFirebaseToken } from "../lib/api/updateFirebaseToken";
 
 interface Props {}
 
@@ -44,6 +50,9 @@ export default function Main(props: Props) {
   const [refreshing, setRefreshing] = useState(false);
   const queryClient = useQueryClient();
   const navigation = useNavigation();
+
+  const { mutateAsync: mutateUpdateFirebaseToken } =
+    useMutation(updateFirebaseToken);
 
   const renderRegular = ({ item, index }) => {
     if (item.seperatorMyTeam) {
@@ -232,7 +241,7 @@ export default function Main(props: Props) {
     messaging()
       .getToken()
       .then((token) => {
-        console.log("FCM TOKEN:: " + token);
+        mutateUpdateFirebaseToken(token);
       });
   }, []);
 
