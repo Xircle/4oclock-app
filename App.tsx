@@ -6,11 +6,12 @@ import LoggedOutNav from "./navigators/LoggedOutNav";
 import LoggedInNav from "./navigators/LoggedInNav";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Image, LogBox } from "react-native";
+import { Alert, Image, LogBox } from "react-native";
 import { Asset } from "expo-asset";
 import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./lib/reducers";
 import { Provider } from "react-redux";
+import messaging from "@react-native-firebase/messaging";
 
 //LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 const Stack = createStackNavigator();
@@ -41,6 +42,14 @@ export default function App() {
   const onFinish = async () => {
     setReady(true);
   };
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      Alert.alert("A new FCM message arrived!", JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
+  }, []);
 
   if (!ready)
     return (
