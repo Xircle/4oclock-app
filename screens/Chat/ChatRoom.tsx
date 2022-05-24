@@ -12,6 +12,7 @@ import MyKeyboardAvoidingView from "../../components/UI/MyKeyboardAvoidingView";
 import ChatMessage from "../../components/chat/ChatMessage";
 import { getUser } from "../../lib/api/getUser";
 import { sendMessage } from "../../lib/api/sendMessage";
+import messaging from "@react-native-firebase/messaging";
 
 interface Props {
   route: RouteProp<ChatStackParamList, "ChatRoom">;
@@ -23,16 +24,12 @@ export default function ChatRoom({ route }: Props) {
   const [roomId, setRoomId] = useState(route.params.roomId);
   const [messageInput, SetMessageInput] = useState("");
 
-  useEffect(() => {
-    if (route.params.roomId) console.log(route.params.roomId);
-  }, []);
-
   // api
   const { data: fetchedMessagesData, isFetching } = useQuery<
     GetRoomMessagesOutput | undefined
   >(
-    ["room-chat", route.params.roomId, page],
-    () => getRoomMessages(route.params.roomId, route.params.senderId, page, 40),
+    ["room-chat", roomId, page],
+    () => getRoomMessages(roomId, route.params.senderId, page, 40),
     {
       onError: (err: any) => {
         Alert.alert(err);
@@ -58,53 +55,62 @@ export default function ChatRoom({ route }: Props) {
     if (page === 1) {
       setMessages(fetchedMessagesData?.messages);
     } else if (page > 1 && !isFetching) {
-      // pagination 시에 이전 데이터와 함께 보여주기 위해서 prev 사용
       setMessages((prev) => [...prev, ...fetchedMessagesData?.messages]);
     }
   }, [page, fetchedMessagesData, isFetching]);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      if (
+        remoteMessage.data?.type === "message" &&
+        remoteMessage.data?.receiverId === userData?.fk_user_id &&
+        remoteMessage.data?.senderId === route.params.senderId
+      ) {
+        setMessages((prev) => {
+          const messages = [
+            {
+              content: remoteMessage.data?.content,
+              isMe: false,
+              sentAt: new Date(remoteMessage.data?.sentAt),
+            },
+            ...prev,
+          ];
+          return messages;
+        });
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 
   const { mutateAsync: mutateMessage } = useMutation(sendMessage);
 
   const onSubmitHandler = useCallback(async () => {
     if (messageInput.trim().length === 0 || !userData?.fk_user_id) return;
-    SetMessageInput("");
-    // 로컬 message state 에 동기화
-    setMessages((prev) => {
-      const messages = [
-        {
-          content: messageInput,
-          isMe: true,
-          sentAt: new Date(),
-          // isRead: isReceiverJoining ? true : false,
-        },
-        ...prev,
-      ];
-      return messages;
-    });
-    //console.log(route.params.senderId);
-    console.log(roomId);
-    //console.log(route.params.senderName);
-    // POST 비동기로 요청
     mutateMessage({
       content: messageInput,
       receiverId: route.params.senderId,
       roomId: roomId,
-      // isRead: isReceiverJoining,
     }).then((res) => {
-      console.log(res.data);
       if (!res.data.ok) {
         Alert.alert("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
-        // 전송에 실패했으므로, 로컬의 message의 말풍선에 X 추가한다.
         return;
       }
+      setMessages((prev) => {
+        const messages = [
+          {
+            content: messageInput,
+            isMe: true,
+            sentAt: new Date(),
+            // isRead: isReceiverJoining ? true : false,
+          },
+          ...prev,
+        ];
+        return messages;
+      });
       SetMessageInput("");
       if (roomId === "0" && res.data.createdRoomId) {
         setRoomId(res.data.createdRoomId);
-        // 만약 unmount되었을 때 이 promise는 실행이 될까?
-        // storage.setItem(
-        //   `chat-${route.params.senderId}`,
-        //   res.data.createdRoomId
-        // );
       }
     });
   }, [messageInput, route.params.senderId, roomId, mutateMessage]);
@@ -148,10 +154,6 @@ export default function ChatRoom({ route }: Props) {
 const Container = styled.SafeAreaView`
   flex: 1;
   background-color: ${colors.bgColor};
-`;
-
-const MessageWrapper = styled.View`
-  width: 100%;
 `;
 
 const SendButton = styled.TouchableOpacity`
