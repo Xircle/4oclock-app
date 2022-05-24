@@ -21,8 +21,6 @@ export default function ChatRoom({ route }: Props) {
   const [page, setPage] = useState(1);
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [roomId, setRoomId] = useState(route.params.roomId);
-  const [isEntering, setIsEntering] = useState(false);
-  const [isReceiverJoining, setIsReceiverJoining] = useState(false);
   const [messageInput, SetMessageInput] = useState("");
 
   useEffect(() => {
@@ -52,19 +50,6 @@ export default function ChatRoom({ route }: Props) {
     {
       retry: 1,
     }
-  );
-
-  // 소켓으로부터 받은 메세지 콜백
-  const receivedMsgFromSocket = useCallback(
-    ({ content, sentAt }) => {
-      //if (!scrollbarRef?.current) return;
-      //showNewMessageAlertHandler(scrollbarRef.current.getValues().top);
-      setMessages((prev) => {
-        // isRead: true
-        return [{ content, isMe: false, sentAt }, ...prev];
-      });
-    },
-    [messages]
   );
 
   useEffect(() => {
