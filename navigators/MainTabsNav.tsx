@@ -13,6 +13,7 @@ import RnadomProfile from "../screens/RandomProfile";
 import ActivityTopTabNav from "./ActivityTopTabNav";
 import { activityDispatcher } from "../lib/activity/ActivityDispatcher";
 import { useDispatch } from "react-redux";
+import MessageBottomNavItem from "../components/nav/MessageBottomNavItem";
 
 interface Props {}
 
@@ -76,12 +77,7 @@ export default function MainTabsNav(props: Props) {
         options={{
           title: "메세지",
           tabBarIcon: ({ focused, color, size }) => (
-            <TabSide
-              focused={focused}
-              color={color}
-              size={size}
-              title={"메세지"}
-            />
+            <MessageBottomNavItem focused={focused} color={color} size={size} />
           ),
         }}
       />
