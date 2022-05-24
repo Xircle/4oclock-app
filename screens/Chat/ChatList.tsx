@@ -6,15 +6,18 @@ import { getMyRooms } from "../../lib/api/getMyRooms";
 import { GetMyRooms, IRoom } from "../../lib/api/types.d";
 import ChatListFlatList from "../../components/chat/ChatListFlatList";
 import { useNavigation } from "@react-navigation/native";
+import messaging from "@react-native-firebase/messaging";
 
 interface Props {}
 
 export default function ChatList(props: Props) {
   const navigation = useNavigation();
   const [showSubText, setShowSubText] = useState(false);
-  const { data: chatRoomData, isLoading, refetch } = useQuery<
-    GetMyRooms | undefined
-  >(["room"], () => getMyRooms(), {
+  const {
+    data: chatRoomData,
+    isLoading,
+    refetch,
+  } = useQuery<GetMyRooms | undefined>(["room"], () => getMyRooms(), {
     retry: 1,
     refetchOnWindowFocus: true,
     refetchOnMount: true,
@@ -25,6 +28,16 @@ export default function ChatList(props: Props) {
     navigation.addListener("focus", (e) => {
       refetch();
     });
+
+    useEffect(() => {
+      const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+        if (remoteMessage.data?.type === "message") {
+          refetch();
+        }
+      });
+
+      return unsubscribe;
+    }, []);
   }, []);
 
   useEffect(() => {
