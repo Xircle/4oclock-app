@@ -1,7 +1,6 @@
 import styled from "styled-components/native";
-import { ChatInput, colors, GeneralText } from "../../styles/styles";
+import { ChatInput, colors } from "../../styles/styles";
 import React, { useCallback, useEffect, useState } from "react";
-import { useSocket } from "../../lib/hooks/useSocket";
 import { RouteProp } from "@react-navigation/native";
 import { ChatStackParamList } from "../../navigators/ChatStackNav";
 import { useMutation, useQuery } from "react-query";
@@ -11,9 +10,7 @@ import { Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import MyKeyboardAvoidingView from "../../components/UI/MyKeyboardAvoidingView";
 import ChatMessage from "../../components/chat/ChatMessage";
-import storage from "../../lib/helpers/myAsyncStorage";
 import { getUser } from "../../lib/api/getUser";
-import { Socket } from "socket.io-client";
 import { sendMessage } from "../../lib/api/sendMessage";
 
 interface Props {
@@ -27,18 +24,8 @@ export default function ChatRoom({ route }: Props) {
   const [isEntering, setIsEntering] = useState(false);
   const [isReceiverJoining, setIsReceiverJoining] = useState(false);
   const [messageInput, SetMessageInput] = useState("");
-  const [socket, setSocket] = useState<Socket>();
-  const [disconnect, setDisconnect] = useState<() => void>();
 
-  const SetUpSocket = async () => {
-    const [socketT, disconnectT] = await useSocket(route.params.roomId);
-    setSocket(socketT);
-    setDisconnect(disconnectT);
-  };
   useEffect(() => {
-    if (!socket) {
-      SetUpSocket();
-    }
     if (route.params.roomId) console.log(route.params.roomId);
   }, []);
 
@@ -94,40 +81,6 @@ export default function ChatRoom({ route }: Props) {
   const isEnteringCallBack = ({ flag }) => {
     setIsEntering(flag);
   };
-  const setUpSocket = () => {
-    if (userData?.fk_user_id && roomId && route.params.senderId && socket) {
-      socket.emit("join_room", { roomId, anonymouseId: userData.fk_user_id });
-      // socket.on("join_room", receiverJoinRoomHandler);
-      socket.on("leave_room", () => setIsReceiverJoining(false));
-      socket.on("is_entering", isEnteringCallBack);
-      socket.on("receive_message", receivedMsgFromSocket);
-    } else {
-      console.log("bad connection");
-    }
-  };
-
-  const cleanUpSocket = () => {
-    if (socket && disconnect) {
-      console.log(socket);
-      socket.off("is_entering", isEnteringCallBack);
-      socket.off("receive_message", receivedMsgFromSocket);
-      // socket.off("join_room", receiverJoinRoomHandler);
-      socket.off("leave_room", () => setIsReceiverJoining(false));
-      socket.emit("leave_room", { roomId });
-      console.log("cleanUpSocket done");
-      disconnect();
-    }
-  };
-
-  useEffect(() => {
-    setUpSocket();
-
-    return () => cleanUpSocket();
-  }, [roomId, route.params.senderId, userData, socket]);
-
-  const LogSocket = () => {
-    console.log(socket);
-  };
 
   const { mutateAsync: mutateMessage } = useMutation(sendMessage);
 
@@ -173,18 +126,7 @@ export default function ChatRoom({ route }: Props) {
         // );
       }
     });
-    // socket emit
-    socket.emit("send_message", {
-      roomId,
-      anonymouseId: userData?.fk_user_id,
-      content: messageInput,
-    });
-    socket.emit("is_entering", {
-      roomId,
-      anonymouseId: userData?.fk_user_id,
-      flag: false,
-    });
-  }, [messageInput, route.params.senderId, roomId, socket, mutateMessage]);
+  }, [messageInput, route.params.senderId, roomId, mutateMessage]);
 
   return (
     <Container edges={["bottom"]}>
