@@ -63,10 +63,6 @@ export default function ChatRoom({ route }: Props) {
     }
   }, [page, fetchedMessagesData, isFetching]);
 
-  const isEnteringCallBack = ({ flag }) => {
-    setIsEntering(flag);
-  };
-
   const { mutateAsync: mutateMessage } = useMutation(sendMessage);
 
   const onSubmitHandler = useCallback(async () => {
