@@ -28,16 +28,11 @@ export default function ChatList(props: Props) {
     navigation.addListener("focus", (e) => {
       refetch();
     });
-
-    useEffect(() => {
-      const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-        if (remoteMessage.data?.type === "message") {
-          refetch();
-        }
-      });
-
-      return unsubscribe;
-    }, []);
+    messaging().onMessage(async (remoteMessage) => {
+      if (remoteMessage.data?.type === "message") {
+        refetch();
+      }
+    });
   }, []);
 
   useEffect(() => {
