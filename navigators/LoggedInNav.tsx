@@ -12,6 +12,8 @@ import ChatStackNav from "./ChatStackNav";
 import CreateActivityStackNav from "./CreateActivityStackNav";
 import ParticipantsList from "../screens/ActivitiesDetail/ParticipantsList";
 import BannedScreen from "../screens/BannedScreen";
+import { useNavigation } from "@react-navigation/native";
+import messaging from "@react-native-firebase/messaging";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -38,6 +40,12 @@ export type LoggedInStackParamList = {
 const Stack = createStackNavigator<LoggedInStackParamList>();
 
 export default function LoggedInNav() {
+  const navigation = useNavigation();
+  messaging().onNotificationOpenedApp(async (remoteMessage) => {
+    if (remoteMessage.data?.type === "message") {
+      navigation.navigate("ChatT", {});
+    }
+  });
   return (
     <Stack.Navigator
       screenOptions={{
