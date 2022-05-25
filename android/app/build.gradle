@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+//apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 
 import com.android.build.OutputFile
@@ -136,8 +137,8 @@ android {
         applicationId "com.ykring.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 38
-        versionName "38.0"
+        versionCode 39
+        versionName "39.0"
 
     }
     splits {
@@ -194,9 +195,11 @@ android {
 }
 
 dependencies {
+//    implementation platform('com.google.firebase:firebase-bom:30.0.0')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.google.firebase:firebase-messaging:20.2.3'
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
@@ -225,7 +228,7 @@ dependencies {
     
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
-      exclude group:'com.facebook.fbjni'
+        exclude group:'com.facebook.fbjni'
     }
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
