@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Dimensions, Animated, SafeAreaView, View, Alert } from "react-native";
+import { Dimensions, Animated, SafeAreaView, View } from "react-native";
 import { colors, fontFamilies, GeneralText } from "../styles/styles";
 import {
   useInfiniteQuery,
