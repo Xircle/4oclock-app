@@ -1,10 +1,13 @@
 import firebase from "@react-native-firebase/app";
 import App from "./App";
-import React, { useEffect } from "react";
-import { requestUserPermission } from "./lib/firebase/messaging";
-import messaging from "@react-native-firebase/messaging";
-import { useMutation } from "react-query";
-import { updateFirebaseToken } from "./lib/api/updateFirebaseToken";
+import React, { useState } from "react";
+import AppLoading from "expo-app-loading";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { Image } from "react-native";
+import { Asset } from "expo-asset";
+import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "./lib/reducers";
+import { Provider } from "react-redux";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCPaFLT9I2OPjvrS-HKvks1nzvFquaeeKw",
@@ -21,16 +24,50 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
+const queryClient = new QueryClient();
+
+const loadImages = (images) =>
+  images.map((image) => {
+    if (typeof image === "string") {
+      return Image.prefetch(image);
+    } else {
+      return Asset.loadAsync(image);
+    }
+  });
+
+const store = configureStore({ reducer: rootReducer });
+
 function Setup() {
-  const { mutateAsync: mutateUpdateFirebaseToken } =
-    useMutation(updateFirebaseToken);
-  useEffect(() => {
-    requestUserPermission();
-    messaging().onTokenRefresh(async (token) => {
-      mutateUpdateFirebaseToken(token);
-    });
-  }, []);
-  return <App />;
+  const [ready, setReady] = useState(false);
+
+  const startLoading = async () => {
+    const images = loadImages([
+      require("./statics/images/anonymous_user.png"),
+      require("./statics/images/landingPageImage.png"),
+      require("./statics/images/RegularHeader.jpeg"),
+    ]);
+    await Promise.all([...images]);
+  };
+  const onFinish = async () => {
+    setReady(true);
+  };
+
+  if (!ready)
+    return (
+      <AppLoading
+        startAsync={startLoading}
+        onFinish={onFinish}
+        onError={console.error}
+      />
+    );
+
+  return (
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </Provider>
+  );
 }
 
 export default Setup;
