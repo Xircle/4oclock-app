@@ -8,7 +8,7 @@ import {
   GreyLabel,
   TextArea,
 } from "../../styles/styles";
-import MainButtonWBg from "../../components/UI/MainButtonWBg";
+import AbsoluteMainButtonWBg from "../../components/UI/AbsoluteMainButtonWBg";
 import { Alert, Dimensions, Platform, ScrollView, View } from "react-native";
 import AvatarUri from "../../components/UI/AvatarUri";
 import { useMutation, useQuery } from "react-query";
@@ -434,11 +434,11 @@ export default function MyProfile(props: Props) {
           </InnerContainer>
         </ScrollView>
       </MyKeyboardAvoidingView>
-      <MainButtonWBg
+      <AbsoluteMainButtonWBg
         onPress={updateProfile}
         disabled={localValidation.includes(false)}
         title={"수정하기"}
-      ></MainButtonWBg>
+      ></AbsoluteMainButtonWBg>
       {(isFetching || loading) && <FullScreenLoader />}
     </Container>
   );
