@@ -16,7 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "react-query";
 import { Participants, PlaceData, UserData } from "../../lib/api/types.d";
 import { getPlaceById } from "../../lib/api/getPlaceById";
-import MainButtonWBg from "../../components/UI/MainButtonWBg";
+import AbsoluteMainButtonWBg from "../../components/UI/AbsoluteMainButtonWBg";
 import Swiper from "react-native-swiper";
 import { LinearGradient } from "expo-linear-gradient";
 import MyBottomModal from "../../components/UI/MyBottomModal";
@@ -336,7 +336,7 @@ export default function Activity({
         </InnerWrapper>
         <View style={{ height: 200 }} />
       </ScrollView>
-      <MainButtonWBg
+      <AbsoluteMainButtonWBg
         title={
           activityData?.isParticipating
             ? "오픈 채팅방 넘어가기"
