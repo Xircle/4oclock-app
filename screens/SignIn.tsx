@@ -5,7 +5,7 @@ import { RouteProp } from "@react-navigation/native";
 import { LoggedOutStackParamList } from "../navigators/LoggedOutNav";
 import { initialState, reducer } from "../lib/auth/AuthReducer";
 import MyBackButton from "../components/UI/MyBackButton";
-import MainButtonWBg from "../components/UI/MainButtonWBg";
+import AbsoluteMainButtonWBg from "../components/UI/AbsoluteMainButtonWBg";
 import AuthPhoneNumber from "../components/auth/AuthPhoneNumber";
 import AuthProfileMainData from "../components/auth/AuthProfileMainData";
 import { authDispatcher } from "../lib/auth/AuthDispatcher";
@@ -189,7 +189,7 @@ export default function SignIn({ route }: Props) {
               />
             </AnimationWrapper>
           </Wrapper>
-          <MainButtonWBg
+          <AbsoluteMainButtonWBg
             onPress={() => {
               nextHandler();
             }}
