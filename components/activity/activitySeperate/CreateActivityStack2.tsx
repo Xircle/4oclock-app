@@ -11,7 +11,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/reducers";
-import MainButtonWBg from "../../UI/MainButtonWBg";
+import AbsoluteMainButtonWBg from "../../UI/AbsoluteMainButtonWBg";
 import { activityDispatcher } from "../../../lib/activity/ActivityDispatcher";
 import { useDispatch } from "react-redux";
 import { Alert, Dimensions, Platform, ScrollView, View } from "react-native";
@@ -171,7 +171,7 @@ export default function CreateActivityStack2({}: Props) {
         <View style={{ height: 150 }} />
       </ScrollView>
       {loading && <FullScreenLoader />}
-      <MainButtonWBg
+      <AbsoluteMainButtonWBg
         onPress={nextHandler}
         disabled={!coverImage}
         title={"다음"}
