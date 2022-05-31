@@ -8,7 +8,7 @@ import {
 } from "../../styles/styles";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { ActivityStackParamList } from "../../navigators/ActivityStackNav";
-import MainButtonWBg from "../../components/UI/MainButtonWBg";
+import AbsoluteMainButtonWBg from "../../components/UI/AbsoluteMainButtonWBg";
 import { Ionicons } from "@expo/vector-icons";
 import { Alert } from "react-native";
 import { useMutation } from "react-query";
@@ -24,9 +24,8 @@ export default function Reservation({ route }: Props) {
   const [isVaccinated, setIsVaccinated] = useState(false);
   const navigation = useNavigation();
 
-  const { mutateAsync: mutateReservation, isLoading } = useMutation(
-    makeReservation
-  );
+  const { mutateAsync: mutateReservation, isLoading } =
+    useMutation(makeReservation);
 
   const CTAHandler = async () => {
     try {
@@ -103,7 +102,7 @@ export default function Reservation({ route }: Props) {
           백신 접종 여부 조사를 위해 체크하는 항목이에요:D
         </VaccineInfoText>
       </SelectContainer>
-      <MainButtonWBg
+      <AbsoluteMainButtonWBg
         title="나도 놀러갈래~"
         onPress={CTAHandler}
         disabled={!agree || !isVaccinated}
