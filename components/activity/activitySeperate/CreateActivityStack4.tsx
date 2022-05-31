@@ -7,13 +7,13 @@ import {
   ErrorMessage,
   GeneralText,
   MainHeading,
+  SpaceBetweenWrapper,
 } from "../../../styles/styles";
 import MyKeyboardAvoidingView from "../../UI/MyKeyboardAvoidingView";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/reducers";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import MainButtonWBg from "../../UI/MainButtonWBg";
 import { createPlaceErrorMessage } from "../../../lib/errorMessages";
 import { convertTimeCA } from "../../../lib/utils";
 import { activityDispatcher } from "../../../lib/activity/ActivityDispatcher";
@@ -23,6 +23,7 @@ import SelectedLocation from "../locationV/SelectedLocation";
 import LocationVRow from "../locationV/LocationVRow";
 import { kakaoLocal, kakaoLocalData } from "../../../lib/api/kakaoLocalApis";
 import { Ionicons } from "@expo/vector-icons";
+import RelativeMainButtonWBg from "../../UI/RelativeMainButtonWBG";
 
 interface Props {}
 
@@ -65,121 +66,127 @@ export default function CreateActivityStack4(props: Props) {
 
   return (
     <MyKeyboardAvoidingView keyboardVerticalOffset={50}>
-      <Container showsVerticalScrollIndicator={false}>
-        <MainHeading>모임 디테일</MainHeading>
+      <SpaceBetweenWrapper>
+        <Container showsVerticalScrollIndicator={false}>
+          <MainHeading>모임 디테일</MainHeading>
 
-        <InnerContainer>
-          <BlackLabel>만남 날짜/시간</BlackLabel>
-          <PickerContainer onPress={() => setOpen(true)}>
-            <WhiteText>시간 선택하기</WhiteText>
-          </PickerContainer>
-          <DatePicker
-            modal
-            open={open}
-            date={date}
-            minuteInterval={30}
-            onConfirm={(date) => {
-              setOpen(false);
-              setDate(date);
-              activityDispatcher.dispatchStartDateAt(date, dispatch);
-              setDateError(!activityValidation.validateTime(date));
-            }}
-            onCancel={() => {
-              setOpen(false);
-            }}
-          />
-          {dateError ? (
-            <SErrorMessage>{createPlaceErrorMessage[2]}</SErrorMessage>
-          ) : (
-            <TimeText>{convertTimeCA(startDateAt)}</TimeText>
-          )}
-        </InnerContainer>
-        <InnerContainer>
-          <BlackLabel>만남위치</BlackLabel>
-          <InnerContainer style={{ justifyContent: "flex-start" }}>
-            {addressError ? (
-              <SErrorMessage>{createPlaceErrorMessage[3]}</SErrorMessage>
-            ) : null}
-            <SBigTextInput
-              style={{ marginTop: 5 }}
-              placeholder="만남 장소를 입력해주세요"
-              autoCapitalize="none"
-              blurOnSubmit={true}
-              returnKeyType="next"
-              returnKeyLabel="next"
-              autoCorrect={false}
-              defaultValue={placeSearch}
-              onChange={async (event) => {
-                const { eventCount, target, text } = event.nativeEvent;
-                const temp = await kakaoLocal.searchByNameAndKeyword(text);
-                setSearchResult(temp.documents);
+          <InnerContainer>
+            <BlackLabel>만남 날짜/시간</BlackLabel>
+            <PickerContainer onPress={() => setOpen(true)}>
+              <WhiteText>시간 선택하기</WhiteText>
+            </PickerContainer>
+            <DatePicker
+              modal
+              open={open}
+              date={date}
+              minuteInterval={30}
+              onConfirm={(date) => {
+                setOpen(false);
+                setDate(date);
+                activityDispatcher.dispatchStartDateAt(date, dispatch);
+                setDateError(!activityValidation.validateTime(date));
               }}
-              error={addressError}
+              onCancel={() => {
+                setOpen(false);
+              }}
             />
-            {placeName ? (
-              <SelectedLocation placeName={placeName} address={placeAddress} />
-            ) : null}
-            <SearchListContainer showsVerticalScrollIndicator={false}>
-              {searchResult?.map((item, index) => {
-                return (
-                  <LocationVRow
-                    key={index}
-                    placeId={item.id}
-                    placeName={item.place_name}
-                    addressName={item.address_name}
-                    categoryGroupName={item.category_group_name}
-                    onPress={() =>
-                      CTAPlace(item.address_name, item.place_name, item.id)
-                    }
-                  />
-                );
-              })}
-            </SearchListContainer>
+            {dateError ? (
+              <SErrorMessage>{createPlaceErrorMessage[2]}</SErrorMessage>
+            ) : (
+              <TimeText>{convertTimeCA(startDateAt)}</TimeText>
+            )}
           </InnerContainer>
-        </InnerContainer>
-        <InnerContainer>
-          <BlackLabel>최대 참가인원</BlackLabel>
-
-          <MaxParticipantsContainer>
-            <MaxPrticipantsButton
-              left={true}
-              onPress={() => {
-                activityDispatcher.dispatchMaxParticipants(
-                  maxParticipantsNumber - 1,
-                  dispatch
-                );
-              }}
-            >
-              <Ionicons
-                name="remove-outline"
-                size={35}
-                color={colors.bgColor}
+          <InnerContainer>
+            <BlackLabel>만남위치</BlackLabel>
+            <InnerContainer style={{ justifyContent: "flex-start" }}>
+              {addressError ? (
+                <SErrorMessage>{createPlaceErrorMessage[3]}</SErrorMessage>
+              ) : null}
+              <SBigTextInput
+                style={{ marginTop: 5 }}
+                placeholder="만남 장소를 입력해주세요"
+                autoCapitalize="none"
+                blurOnSubmit={true}
+                returnKeyType="next"
+                returnKeyLabel="next"
+                autoCorrect={false}
+                defaultValue={placeSearch}
+                onChange={async (event) => {
+                  const { eventCount, target, text } = event.nativeEvent;
+                  const temp = await kakaoLocal.searchByNameAndKeyword(text);
+                  setSearchResult(temp.documents);
+                }}
+                error={addressError}
               />
-            </MaxPrticipantsButton>
-            <MaxParticipantsNumber>
-              {maxParticipantsNumber}
-            </MaxParticipantsNumber>
-            <MaxPrticipantsButton
-              left={false}
-              onPress={() => {
-                activityDispatcher.dispatchMaxParticipants(
-                  maxParticipantsNumber + 1,
-                  dispatch
-                );
-              }}
-            >
-              <Ionicons name="add" size={35} color={colors.bgColor} />
-            </MaxPrticipantsButton>
-          </MaxParticipantsContainer>
-        </InnerContainer>
+              {placeName ? (
+                <SelectedLocation
+                  placeName={placeName}
+                  address={placeAddress}
+                />
+              ) : null}
+              <SearchListContainer showsVerticalScrollIndicator={false}>
+                {searchResult?.map((item, index) => {
+                  return (
+                    <LocationVRow
+                      key={index}
+                      placeId={item.id}
+                      placeName={item.place_name}
+                      addressName={item.address_name}
+                      categoryGroupName={item.category_group_name}
+                      onPress={() =>
+                        CTAPlace(item.address_name, item.place_name, item.id)
+                      }
+                    />
+                  );
+                })}
+              </SearchListContainer>
+            </InnerContainer>
+          </InnerContainer>
+          <InnerContainer>
+            <BlackLabel>최대 참가인원</BlackLabel>
 
-        <BottomWhiteSpace />
-      </Container>
-      <MainButtonWBg
-        onPress={nextHandler}
-        disabled={!(startDateAt && detailAddress)}
-        title={"다음"}
-      />
+            <MaxParticipantsContainer>
+              <MaxPrticipantsButton
+                left={true}
+                onPress={() => {
+                  activityDispatcher.dispatchMaxParticipants(
+                    maxParticipantsNumber - 1,
+                    dispatch
+                  );
+                }}
+              >
+                <Ionicons
+                  name="remove-outline"
+                  size={35}
+                  color={colors.bgColor}
+                />
+              </MaxPrticipantsButton>
+              <MaxParticipantsNumber>
+                {maxParticipantsNumber}
+              </MaxParticipantsNumber>
+              <MaxPrticipantsButton
+                left={false}
+                onPress={() => {
+                  activityDispatcher.dispatchMaxParticipants(
+                    maxParticipantsNumber + 1,
+                    dispatch
+                  );
+                }}
+              >
+                <Ionicons name="add" size={35} color={colors.bgColor} />
+              </MaxPrticipantsButton>
+            </MaxParticipantsContainer>
+          </InnerContainer>
+
+          <BottomWhiteSpace />
+        </Container>
+        <RelativeMainButtonWBg
+          onPress={nextHandler}
+          disabled={!(startDateAt && detailAddress)}
+          title={"다음"}
+          bottom={10}
+        />
+      </SpaceBetweenWrapper>
     </MyKeyboardAvoidingView>
   );
 }
