@@ -7,6 +7,7 @@ import {
   ErrorMessage,
   GeneralText,
   MainHeading,
+  SpaceBetweenWrapper,
 } from "../../../styles/styles";
 import MyKeyboardAvoidingView from "../../UI/MyKeyboardAvoidingView";
 import { useSelector } from "react-redux";
@@ -17,10 +18,10 @@ import { activityDispatcher } from "../../../lib/activity/ActivityDispatcher";
 import { createPlaceErrorMessage } from "../../../lib/errorMessages";
 import { openLink } from "../../shared/Links";
 import { Alert } from "react-native";
-import MainButtonWBg from "../../UI/MainButtonWBg";
 import FullScreenLoader from "../../UI/FullScreenLoader";
 import { createPlace } from "../../../lib/api/createPlace";
 import { editPlace } from "../../../lib/api/editPlace";
+import RelativeMainButtonWBg from "../../UI/RelativeMainButtonWBG";
 
 interface Props {}
 
@@ -59,47 +60,51 @@ export default function CreateActivityStack5(props: Props) {
 
   return (
     <MyKeyboardAvoidingView keyboardVerticalOffset={50}>
-      <Container showsVerticalScrollIndicator={false}>
-        <MainHeading>모임 디테일</MainHeading>
+      <SpaceBetweenWrapper>
+        <Container showsVerticalScrollIndicator={false}>
+          <MainHeading>모임 디테일</MainHeading>
 
-        <InnerContainer>
-          <BlackLabel>오픈 카카오톡 채팅방 링크</BlackLabel>
-          <SBigTextInput
-            placeholder="ex: https://open.kakao.com/o/grFhbIBd"
-            autoCapitalize="none"
-            blurOnSubmit={true}
-            returnKeyType="next"
-            returnKeyLabel="next"
-            autoCorrect={false}
-            value={kakaoLink}
-            defaultValue={kakaoLink ? kakaoLink : ""}
-            onChange={(event) => {
-              const { eventCount, target, text } = event.nativeEvent;
-              activityDispatcher.dispatchKakaoLink(
-                //text.replace(/[^A-Za-z0-9/.]/g, ""),
-                text.replace(/[^A-Za-z0-9/.:]/g, ""),
-                dispatch
-              );
+          <InnerContainer>
+            <BlackLabel>오픈 카카오톡 채팅방 링크</BlackLabel>
+            <SBigTextInput
+              placeholder="ex: https://open.kakao.com/o/grFhbIBd"
+              autoCapitalize="none"
+              blurOnSubmit={true}
+              returnKeyType="next"
+              returnKeyLabel="next"
+              autoCorrect={false}
+              value={kakaoLink}
+              defaultValue={kakaoLink ? kakaoLink : ""}
+              onChange={(event) => {
+                const { eventCount, target, text } = event.nativeEvent;
+                activityDispatcher.dispatchKakaoLink(
+                  //text.replace(/[^A-Za-z0-9/.]/g, ""),
+                  text.replace(/[^A-Za-z0-9/.:]/g, ""),
+                  dispatch
+                );
 
-              setOpenKakaoLinkError(
-                !text.startsWith("https://open.kakao.com/o/g")
-              );
-            }}
-          />
-          {openKakaoLinkError ? (
-            <SErrorMessage>{createPlaceErrorMessage[7]}</SErrorMessage>
-          ) : null}
-          <OKInfoButton onPress={openLink.LOpenKakaoChatGUide}>
-            <OKInfoText>오카방 만드는 방법</OKInfoText>
-          </OKInfoButton>
-        </InnerContainer>
-      </Container>
-      <MainButtonWBg
-        onPress={nextHandler}
-        disabled={openKakaoLinkError}
-        title={"다음"}
-      />
-      {loading && <FullScreenLoader />}
+                setOpenKakaoLinkError(
+                  !text.startsWith("https://open.kakao.com/o/g")
+                );
+              }}
+            />
+            {openKakaoLinkError ? (
+              <SErrorMessage>{createPlaceErrorMessage[7]}</SErrorMessage>
+            ) : null}
+            <OKInfoButton onPress={openLink.LOpenKakaoChatGUide}>
+              <OKInfoText>오카방 만드는 방법</OKInfoText>
+            </OKInfoButton>
+          </InnerContainer>
+        </Container>
+        <RelativeMainButtonWBg
+          onPress={nextHandler}
+          disabled={openKakaoLinkError}
+          title={"다음"}
+          bottom={10}
+        />
+
+        {loading && <FullScreenLoader />}
+      </SpaceBetweenWrapper>
     </MyKeyboardAvoidingView>
   );
 }
