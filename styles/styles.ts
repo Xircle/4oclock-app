@@ -145,6 +145,12 @@ export const ModalBlueButton = styled(ModalReportButton)`
   background-color: ${colors.mainBlue};
 `;
 
+export const SpaceBetweenWrapper = styled.View`
+  flex: 1;
+  justify-content: space-between;
+  width: 100%;
+`;
+
 export const XLButton = styled.TouchableOpacity<{
   disabled?: boolean;
   bgColor?: string;
