@@ -19,7 +19,6 @@ function MessageBottomNavItem({ color, focused, size }: Props) {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       setMsgReceived(true);
     });
-
     return unsubscribe;
   }, []);
 

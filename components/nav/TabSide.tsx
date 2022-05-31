@@ -13,7 +13,6 @@ interface Props {
 const { width } = Dimensions.get("window");
 
 export default function TabSide({ title, color, focused, size }: Props) {
-
   return (
     <Text width={width} color={color}>
       {title}
