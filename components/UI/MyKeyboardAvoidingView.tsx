@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 import React from "react";
 import { KeyboardAvoidingView, Platform } from "react-native";
+import { colors } from "../../styles/styles";
 
 interface Props {
   children: React.ReactNode | React.ReactNode[];
@@ -13,22 +14,28 @@ export default function MyKeyboardAvoidingView({
 }: Props) {
   if (keyboardVerticalOffset) {
     return (
-      <KeyboardAvoidingView
+      <Container
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={keyboardVerticalOffset}
       >
         {children}
-      </KeyboardAvoidingView>
+      </Container>
     );
   } else {
     return (
-      <KeyboardAvoidingView
+      <Container
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         {children}
-      </KeyboardAvoidingView>
+      </Container>
     );
   }
 }
+
+const Container = styled(KeyboardAvoidingView)`
+  width: 100%;
+  flex: 1;
+  background-color: ${colors.bgColor};
+`;
