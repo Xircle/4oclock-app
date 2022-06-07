@@ -87,6 +87,19 @@ export default function ChatRoom({ route }: Props) {
 
   const onSubmitHandler = useCallback(async () => {
     if (messageInput.trim().length === 0 || !userData?.fk_user_id) return;
+    setMessages((prev) => {
+      const messages = [
+        {
+          content: messageInput,
+          isMe: true,
+          sentAt: new Date(),
+          // isRead: isReceiverJoining ? true : false,
+        },
+        ...prev,
+      ];
+      return messages;
+    });
+    SetMessageInput("");
     mutateMessage({
       content: messageInput,
       receiverId: route.params.senderId,
@@ -96,19 +109,6 @@ export default function ChatRoom({ route }: Props) {
         Alert.alert("전송에 실패했습니다. 잠시 후 다시 시도해주세요");
         return;
       }
-      setMessages((prev) => {
-        const messages = [
-          {
-            content: messageInput,
-            isMe: true,
-            sentAt: new Date(),
-            // isRead: isReceiverJoining ? true : false,
-          },
-          ...prev,
-        ];
-        return messages;
-      });
-      SetMessageInput("");
       if (roomId === "0" && res.data.createdRoomId) {
         setRoomId(res.data.createdRoomId);
       }
