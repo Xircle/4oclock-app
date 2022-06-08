@@ -389,3 +389,16 @@ export class PlaceParticipantListData {
 export class GetPlaceParticipantListOutput extends CoreOutput {
   participants?: PlaceParticipantListData;
 }
+
+export class VerificationSendInput {
+  phoneNumber: string;
+}
+
+export class VerificationSendOutput extends CoreOutput {}
+
+export class VerificationConfirmInput {
+  phoneNumber: string;
+  code: string;
+}
+
+export class VerificationConfirmOutput extends CoreOutput {}
