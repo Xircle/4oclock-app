@@ -25,6 +25,9 @@ import storage from "../lib/helpers/myAsyncStorage";
 import { useNavigation } from "@react-navigation/native";
 import MyKeyboardAvoidingView from "../components/UI/MyKeyboardAvoidingView";
 import FullScreenLoader from "../components/UI/FullScreenLoader";
+import { useMutation } from "react-query";
+import { sendVerification } from "../lib/api/sendVerification";
+import { confirmVerification } from "../lib/api/confirmVerification";
 
 interface Props {
   route: RouteProp<LoggedOutStackParamList, "SignIn">;
@@ -53,6 +56,24 @@ export default function SignIn({ route }: Props) {
       authDispatcher.dispatchApple(route.params.email, dispatch);
     }
   }, []);
+
+  const { mutateAsync: mutateSendVerif } = useMutation(sendVerification);
+
+  const { mutateAsync: mutateConfirmVerif } = useMutation(confirmVerification);
+
+  // const CTAHandler = async () => {
+  //   try {
+  //     const { data } = await mutateReservation({
+  //       isVaccinated,
+  //       placeId,
+  //     });
+
+  //   } catch (err) {
+  //     console.log(err);
+  //     Alert.alert(err);
+  //     return;
+  //   }
+  // };
 
   // values
   const position = useRef(new Animated.Value(0)).current;
