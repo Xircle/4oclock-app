@@ -23,6 +23,7 @@ export interface AuthState {
   MBTI: string;
   personality: string;
   drinkingStyle: number;
+  phoneNumberValid: boolean;
 }
 export type AuthAction =
   | { type: "setUid"; payload: number }
@@ -48,4 +49,5 @@ export type AuthAction =
   | { type: "setStage3Valid"; payload: boolean }
   | { type: "setMBTI"; payload: string }
   | { type: "setPersonality"; payload: string }
-  | { type: "setDrinkingStyle"; payload: number };
+  | { type: "setDrinkingStyle"; payload: number }
+  | { type: "setPhoneNumberValid"; payload: boolean };
