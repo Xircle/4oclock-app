@@ -4,8 +4,6 @@ import LoggedOutNav from "./navigators/LoggedOutNav";
 import LoggedInNav from "./navigators/LoggedInNav";
 import { createStackNavigator } from "@react-navigation/stack";
 import { requestUserPermission } from "./lib/firebase/messaging";
-import { useMutation } from "react-query";
-import { updateFirebaseToken } from "./lib/api/updateFirebaseToken";
 
 //LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 
