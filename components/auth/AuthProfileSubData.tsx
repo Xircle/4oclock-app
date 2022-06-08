@@ -20,14 +20,13 @@ import { authValidation } from "../../lib/auth/AuthValidation";
 import MyKeyboardAvoidingView from "../UI/MyKeyboardAvoidingView";
 
 interface Props {
-  onNext: () => void;
   state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
 }
 
 const { width } = Dimensions.get("window");
 
-export default function AuthProfileSubData({ onNext, state, dispatch }: Props) {
+export default function AuthProfileSubData({ state, dispatch }: Props) {
   return (
     <Container showsVerticalScrollIndicator={false}>
       <MainHeading style={{ marginTop: 20 }}>
