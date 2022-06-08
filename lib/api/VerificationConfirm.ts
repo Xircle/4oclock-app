@@ -8,7 +8,7 @@ export const confirmReservation = async (
 ): Promise<AxiosResponse<VerificationConfirmOutput>> => {
   const axiosclient = await AxiosClient();
   return axiosclient.post<VerificationConfirmInput>(
-    `${BASE_URL}/sms/send`,
+    `${BASE_URL}/sms/confirm`,
     confirmVerificationInput
   );
 };
