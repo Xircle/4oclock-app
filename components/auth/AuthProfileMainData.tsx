@@ -22,25 +22,13 @@ import { Ionicons } from "@expo/vector-icons";
 import MyKeyboardAvoidingView from "../UI/MyKeyboardAvoidingView";
 
 interface Props {
-  onNext: () => void;
   state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
 }
 
 const { width } = Dimensions.get("window");
 
-export default function AuthProfileMainData({
-  onNext,
-  state,
-  dispatch,
-}: Props) {
-  const univs: string[] = [
-    "고려대학교",
-    "연세대학교",
-    "이화여자대학교",
-    "성신여자대학교",
-    "다른학교입니다",
-  ];
+export default function AuthProfileMainData({ state, dispatch }: Props) {
   const [nameError, SetNameError] = useState<boolean>(true);
   const [univError, SetUnivError] = useState<boolean>(true);
   const [ageError, SetAgeError] = useState<boolean>(true);
