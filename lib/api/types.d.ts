@@ -390,15 +390,15 @@ export class GetPlaceParticipantListOutput extends CoreOutput {
   participants?: PlaceParticipantListData;
 }
 
-export class VerificationSendInput {
+export interface VerificationSendInput {
   phoneNumber: string;
 }
 
-export class VerificationSendOutput extends CoreOutput {}
+export interface VerificationSendOutput extends CoreOutput {}
 
-export class VerificationConfirmInput {
+export interface VerificationConfirmInput {
   phoneNumber: string;
   code: string;
 }
 
-export class VerificationConfirmOutput extends CoreOutput {}
+export interface VerificationConfirmOutput extends CoreOutput {}
