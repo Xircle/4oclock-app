@@ -18,7 +18,6 @@ export default function AbsoluteMainButtonWBg({
   onPress,
   disabled = false,
   title,
-  left,
   bottom,
 }: Props) {
   return (
@@ -30,11 +29,10 @@ export default function AbsoluteMainButtonWBg({
   );
 }
 
-const Container = styled.View<{ left?: number; bottom?: number }>`
+const Container = styled.View<{ bottom?: number }>`
   background-color: ${colors.bgColor};
   padding: ${width * 0.02 + "px"} ${width * 0.05 + "px"} ${width * 0.06 + "px"}
     ${width * 0.05 + "px"};
   position: absolute;
-  left: ${(props) => (props.left ? props.left + "px" : 0)};
   bottom: ${(props) => (props.bottom ? props.bottom + "px" : 0)};
 `;
