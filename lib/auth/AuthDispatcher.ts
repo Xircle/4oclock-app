@@ -19,6 +19,7 @@ export const authDispatcher = {
   },
   dispatchPhoneNumber: (text: string, dispatch: React.Dispatch<AuthAction>) => {
     dispatch({ type: "setPhoneNumber", payload: text });
+    dispatch({ type: "setStage1Valid", payload: false });
   },
   dispatchName: (text: string, dispatch: React.Dispatch<AuthAction>) => {
     dispatch({ type: "setName", payload: text });
