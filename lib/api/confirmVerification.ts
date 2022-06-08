@@ -1,9 +1,9 @@
-import { VerificationConfirmInput, VerificationConfirmOutput } from "./types.d";
+import { VerificationConfirmInput, VerificationConfirmOutput } from "./types";
 import { AxiosResponse } from "axios";
 import AxiosClient from "../apiClient";
 import { BASE_URL } from "../utils";
 
-export const confirmReservation = async (
+export const confirmVerification = async (
   confirmVerificationInput: VerificationConfirmInput
 ): Promise<AxiosResponse<VerificationConfirmOutput>> => {
   const axiosclient = await AxiosClient();
