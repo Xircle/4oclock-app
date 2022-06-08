@@ -34,6 +34,7 @@ const { width } = Dimensions.get("window");
 
 export default function SignIn({ route }: Props) {
   const navigation = useNavigation();
+  const [verifConfirm, setVerifConfirm] = useState(false);
   const [step, setStep] = useState(0);
   const limit = 5;
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -74,6 +75,9 @@ export default function SignIn({ route }: Props) {
   };
 
   const nextHandler = async () => {
+    if (step === 0) {
+      console.log("hi");
+    }
     if (step < limit - 1) {
       setStep(step + 1);
       animateByStage(step + 1, position).start();
@@ -100,7 +104,7 @@ export default function SignIn({ route }: Props) {
   const isDisable = () => {
     switch (step) {
       case 0:
-        return !state.stage1Valid;
+        return !state.stage1Valid && !state.phoneNumberValid;
       case 1:
         return !state.stage2Valid;
       case 2:
@@ -193,7 +197,15 @@ export default function SignIn({ route }: Props) {
             onPress={() => {
               nextHandler();
             }}
-            title={step === limit - 1 ? "ok 고" : "계속하기"}
+            title={
+              step !== limit - 1
+                ? !state.stage1Valid && !verifConfirm
+                  ? "인증받기"
+                  : !state.stage1Valid && verifConfirm
+                  ? "인증확인"
+                  : "계속하기"
+                : "ok 고"
+            }
             disabled={isDisable()}
           />
         </Container>
