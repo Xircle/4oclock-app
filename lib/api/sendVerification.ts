@@ -1,4 +1,4 @@
-import { VerificationSendInput, VerificationSendOutput } from "./types.d";
+import { VerificationSendInput, VerificationSendOutput } from "./types";
 import { AxiosResponse } from "axios";
 import AxiosClient from "../apiClient";
 import { BASE_URL } from "../utils";
