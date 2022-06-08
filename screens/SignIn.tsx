@@ -10,6 +10,7 @@ import AuthPhoneNumber from "../components/auth/AuthPhoneNumber";
 import AuthProfileMainData from "../components/auth/AuthProfileMainData";
 import { authDispatcher } from "../lib/auth/AuthDispatcher";
 import {
+  Alert,
   Animated,
   Dimensions,
   SafeAreaView,
@@ -37,7 +38,8 @@ const { width } = Dimensions.get("window");
 
 export default function SignIn({ route }: Props) {
   const navigation = useNavigation();
-  const [verifConfirm, setVerifConfirm] = useState(false);
+  const [isVerifSent, setIsVerifSent] = useState(false);
+  const [verifCode, setVerifCode] = useState("");
   const [step, setStep] = useState(0);
   const limit = 5;
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -61,19 +63,40 @@ export default function SignIn({ route }: Props) {
 
   const { mutateAsync: mutateConfirmVerif } = useMutation(confirmVerification);
 
-  // const CTAHandler = async () => {
-  //   try {
-  //     const { data } = await mutateReservation({
-  //       isVaccinated,
-  //       placeId,
-  //     });
+  const verificationHandler = async (command: string) => {
+    try {
+      if (command === "send") {
+        console.log(state.phoneNumber.replace("0", "+82"));
+        const { data } = await mutateSendVerif({
+          phoneNumber: state.phoneNumber.replace("0", "+82"),
+        });
 
-  //   } catch (err) {
-  //     console.log(err);
-  //     Alert.alert(err);
-  //     return;
-  //   }
-  // };
+        if (data.ok) {
+          Alert.alert("문자 메세지로 인증번호를 보냈습니다");
+          setIsVerifSent(true);
+        } else {
+          Alert.alert("다시 시도해주세요");
+        }
+      } else if (command === "confirm") {
+        const { data } = await mutateConfirmVerif({
+          phoneNumber: state.phoneNumber.replace("0", "+82"),
+          code: verifCode,
+        });
+        if (data.ok) {
+          Alert.alert("인증완료되었습니다");
+
+          dispatch({ type: "setStage1Valid", payload: true });
+        } else {
+          setIsVerifSent(false);
+          Alert.alert("다시 시도해주세요");
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      Alert.alert(err);
+      return;
+    }
+  };
 
   // values
   const position = useRef(new Animated.Value(0)).current;
@@ -96,10 +119,14 @@ export default function SignIn({ route }: Props) {
   };
 
   const nextHandler = async () => {
-    if (step === 0) {
-      console.log("hi");
-    }
-    if (step < limit - 1) {
+    if (step === 0 && !isVerifSent) {
+      // 인증 보내기
+      console.log("verif send");
+      verificationHandler("send");
+    } else if (step === 0 && !state.stage1Valid) {
+      // 인증 확인
+      verificationHandler("confirm");
+    } else if (step < limit - 1) {
       setStep(step + 1);
       animateByStage(step + 1, position).start();
     } else {
@@ -160,9 +187,10 @@ export default function SignIn({ route }: Props) {
               }}
             >
               <AuthPhoneNumber
-                onNext={nextHandler}
                 state={state}
                 dispatch={dispatch}
+                setCode={setVerifCode}
+                setIsSent={setIsVerifSent}
               />
             </AnimationWrapper>
             <AnimationWrapper
@@ -171,11 +199,7 @@ export default function SignIn({ route }: Props) {
                 left: width * 1,
               }}
             >
-              <AuthProfileMainData
-                onNext={nextHandler}
-                state={state}
-                dispatch={dispatch}
-              />
+              <AuthProfileMainData state={state} dispatch={dispatch} />
             </AnimationWrapper>
             <AnimationWrapper
               style={{
@@ -183,11 +207,7 @@ export default function SignIn({ route }: Props) {
                 left: width * 2,
               }}
             >
-              <AuthProfileSubData
-                onNext={nextHandler}
-                state={state}
-                dispatch={dispatch}
-              />
+              <AuthProfileSubData state={state} dispatch={dispatch} />
             </AnimationWrapper>
             <AnimationWrapper
               style={{
@@ -195,11 +215,7 @@ export default function SignIn({ route }: Props) {
                 left: width * 3,
               }}
             >
-              <AuthProfileImage
-                onNext={nextHandler}
-                state={state}
-                dispatch={dispatch}
-              />
+              <AuthProfileImage state={state} dispatch={dispatch} />
             </AnimationWrapper>
             <AnimationWrapper
               style={{
@@ -207,11 +223,7 @@ export default function SignIn({ route }: Props) {
                 left: width * 4,
               }}
             >
-              <AuthAgree
-                onNext={nextHandler}
-                state={state}
-                dispatch={dispatch}
-              />
+              <AuthAgree />
             </AnimationWrapper>
           </Wrapper>
           <AbsoluteMainButtonWBg
@@ -220,9 +232,9 @@ export default function SignIn({ route }: Props) {
             }}
             title={
               step !== limit - 1
-                ? !state.stage1Valid && !verifConfirm
+                ? !state.stage1Valid && !isVerifSent
                   ? "인증받기"
-                  : !state.stage1Valid && verifConfirm
+                  : !state.stage1Valid && isVerifSent
                   ? "인증확인"
                   : "계속하기"
                 : "ok 고"
