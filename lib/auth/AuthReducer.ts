@@ -18,6 +18,7 @@ export const initialState = {
   agree3: true,
   agree4: true,
   agreeAll: true,
+  phoneNumberValid: false,
   stage1Valid: false,
   stage2Valid: false,
   stage3Valid: false,
@@ -185,6 +186,11 @@ export function reducer(state: AuthState, action: AuthAction): AuthState {
       return {
         ...state,
         drinkingStyle: action.payload,
+      };
+    case "setPhoneNumberValid":
+      return {
+        ...state,
+        phoneNumberValid: action.payload,
       };
     default:
       throw new Error();
