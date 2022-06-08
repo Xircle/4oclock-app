@@ -7,7 +7,7 @@ export const confirmVerification = async (
   confirmVerificationInput: VerificationConfirmInput
 ): Promise<AxiosResponse<VerificationConfirmOutput>> => {
   const axiosclient = await AxiosClient();
-  return axiosclient.post<VerificationConfirmInput>(
+  return axiosclient.post<VerificationConfirmOutput>(
     `${BASE_URL}/sms/confirm`,
     confirmVerificationInput
   );
