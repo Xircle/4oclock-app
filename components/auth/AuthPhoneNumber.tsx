@@ -27,30 +27,20 @@ export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
       <GreyInfoText style={{ marginTop: 20 }}>
         안심해! 번호는 절대 공개되지 않아!
       </GreyInfoText>
-      <InputWrapper>
-        <SendWrapper>
-          <PhoneNumberInput
-            blurOnSubmit={true}
-            returnKeyType="next"
-            returnKeyLabel="next"
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="number-pad"
-            placeholder="전화번호를 입력해주세요"
-            onChange={(event) => {
-              const { eventCount, target, text } = event.nativeEvent;
-              authDispatcher.dispatchPhoneNumber(text, dispatch);
-              authValidation.validatePhoneNumber(text, dispatch);
-            }}
-          />
-          <VerificationSendButton>
-            <VerificationSendButtonText>
-              인증번호 보내기
-            </VerificationSendButtonText>
-          </VerificationSendButton>
-        </SendWrapper>
-        <ConfirmWrapper></ConfirmWrapper>
-      </InputWrapper>
+      <PhoneNumberInput
+        blurOnSubmit={true}
+        returnKeyType="next"
+        returnKeyLabel="next"
+        autoCapitalize="none"
+        autoCorrect={false}
+        keyboardType="number-pad"
+        placeholder="전화번호를 입력해주세요"
+        onChange={(event) => {
+          const { eventCount, target, text } = event.nativeEvent;
+          authDispatcher.dispatchPhoneNumber(text, dispatch);
+          authValidation.validatePhoneNumber(text, dispatch);
+        }}
+      />
     </Container>
   );
 }
@@ -61,22 +51,6 @@ const VerificationSendButton = styled.TouchableOpacity`
   background-color: ${colors.mainBlue};
   border-radius: 5px;
   align-items: center;
-`;
-
-const VerificationSendButtonText = styled(GeneralText)`
-  color: ${colors.bgColor};
-`;
-
-const InputWrapper = styled.View`
-  width: 100%;
-`;
-
-const SendWrapper = styled.View`
-  width: 100%;
-`;
-
-const ConfirmWrapper = styled.View`
-  width: 100%;
 `;
 
 const Container = styled.View`
@@ -93,7 +67,3 @@ const PhoneNumberInput = styled(BigTextInput)`
   border-bottom-width: 0.5px;
   border-color: ${colors.bareGrey};
 `;
-
-const VerificationInput = styled(PhoneNumberInput)``;
-
-const VerificationConfirmButton = styled.TouchableOpacity``;
