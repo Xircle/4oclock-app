@@ -2,6 +2,7 @@ import styled from "styled-components/native";
 import {
   BigTextInput,
   colors,
+  GeneralText,
   GreyInfoText,
   MainHeading,
 } from "../../styles/styles";
@@ -19,31 +20,64 @@ interface Props {
 
 export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
   return (
-
-      <Container>
-        <MainHeading style={{ marginTop: 40 }}>
-          즐거운 모임 전{"\n"}전화번호를 입력해볼까?
-        </MainHeading>
-        <GreyInfoText style={{ marginTop: 20 }}>
-          안심해! 번호는 절대 공개되지 않아!
-        </GreyInfoText>
-        <PhoneNumberInput
-          blurOnSubmit={true}
-          returnKeyType="next"
-          returnKeyLabel="next"
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="number-pad"
-          placeholder="전화번호를 입력해주세요"
-          onChange={(event) => {
-            const { eventCount, target, text } = event.nativeEvent;
-            authDispatcher.dispatchPhoneNumber(text, dispatch);
-            authValidation.validatePhoneNumber(text, dispatch);
-          }}
-        />
-      </Container>
+    <Container>
+      <MainHeading style={{ marginTop: 40 }}>
+        즐거운 모임 전{"\n"}전화번호를 입력해볼까?
+      </MainHeading>
+      <GreyInfoText style={{ marginTop: 20 }}>
+        안심해! 번호는 절대 공개되지 않아!
+      </GreyInfoText>
+      <InputWrapper>
+        <SendWrapper>
+          <PhoneNumberInput
+            blurOnSubmit={true}
+            returnKeyType="next"
+            returnKeyLabel="next"
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="number-pad"
+            placeholder="전화번호를 입력해주세요"
+            onChange={(event) => {
+              const { eventCount, target, text } = event.nativeEvent;
+              authDispatcher.dispatchPhoneNumber(text, dispatch);
+              authValidation.validatePhoneNumber(text, dispatch);
+            }}
+          />
+          <VerificationSendButton>
+            <VerificationSendButtonText>
+              인증번호 보내기
+            </VerificationSendButtonText>
+          </VerificationSendButton>
+        </SendWrapper>
+        <ConfirmWrapper></ConfirmWrapper>
+      </InputWrapper>
+    </Container>
   );
 }
+
+const VerificationSendButton = styled.TouchableOpacity`
+  margin-top: 10px;
+  padding: 5px;
+  background-color: ${colors.mainBlue};
+  border-radius: 5px;
+  align-items: center;
+`;
+
+const VerificationSendButtonText = styled(GeneralText)`
+  color: ${colors.bgColor};
+`;
+
+const InputWrapper = styled.View`
+  width: 100%;
+`;
+
+const SendWrapper = styled.View`
+  width: 100%;
+`;
+
+const ConfirmWrapper = styled.View`
+  width: 100%;
+`;
 
 const Container = styled.View`
   flex: 1;
@@ -59,3 +93,7 @@ const PhoneNumberInput = styled(BigTextInput)`
   border-bottom-width: 0.5px;
   border-color: ${colors.bareGrey};
 `;
+
+const VerificationInput = styled(PhoneNumberInput)``;
+
+const VerificationConfirmButton = styled.TouchableOpacity``;
