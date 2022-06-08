@@ -9,13 +9,13 @@ const CheckAge = (age: number) => {
 export const authValidation = {
   validatePhoneNumber: (data: string, dispatch: React.Dispatch<AuthAction>) => {
     if (data.length < 10 || data.length > 11) {
-      dispatch({ type: "setStage1Valid", payload: false });
+      dispatch({ type: "setPhoneNumberValid", payload: false });
     } else if (data[0] !== "0" || data[1] !== "1" || data[2] !== "0") {
-      dispatch({ type: "setStage1Valid", payload: false });
+      dispatch({ type: "setPhoneNumberValid", payload: false });
     } else if (isNaN(Number(data)) || Number(data) < 0) {
-      dispatch({ type: "setStage1Valid", payload: false });
+      dispatch({ type: "setPhoneNumberValid", payload: false });
     } else {
-      dispatch({ type: "setStage1Valid", payload: true });
+      dispatch({ type: "setPhoneNumberValid", payload: true });
     }
   },
   validateName: (
@@ -78,6 +78,9 @@ export const authValidation = {
     personality: string,
     dispatch: React.Dispatch<AuthAction>
   ) => {
-    dispatch({ type: "setStage3Valid", payload: MBTI && personality && drinkingStyle >= 0 });
+    dispatch({
+      type: "setStage3Valid",
+      payload: MBTI && personality && drinkingStyle >= 0,
+    });
   },
 };
