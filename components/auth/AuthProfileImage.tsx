@@ -18,12 +18,11 @@ import { RESULTS } from "react-native-permissions";
 import FullScreenLoader from "../UI/FullScreenLoader";
 
 interface Props {
-  onNext: () => void;
   state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
 }
 
-export default function AuthProfileImage({ onNext, state, dispatch }: Props) {
+export default function AuthProfileImage({ state, dispatch }: Props) {
   const [loading, setLoading] = useState(false);
   const fileHandle = async () => {
     setLoading(true);
