@@ -28,23 +28,16 @@ import { getUser } from "../lib/api/getUser";
 import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
 import { updateFirebaseToken } from "../lib/api/updateFirebaseToken";
+import MainTopTabNav from "../navigators/MainTopTabNav";
+import {
+  renderItemLightning,
+  renderRegular,
+} from "../components/main/MainRenderItems";
 
 interface Props {}
 
 const { width, height } = Dimensions.get("window");
-const renderItem = ({ item }) => (
-  <MainFlatListPlace
-    leftParticipantsCount={item.leftParticipantsCount}
-    coverImage={item.coverImage}
-    name={item.name}
-    id={item.id}
-    description={item.placeDetail.description}
-    startDateFromNow={item.startDateFromNow}
-    participants={item.participants}
-    isClosed={item.isClosed}
-    recommendation={item.recommendation}
-  />
-);
+
 export default function Main(props: Props) {
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
@@ -53,74 +46,6 @@ export default function Main(props: Props) {
 
   const { mutateAsync: mutateUpdateFirebaseToken } =
     useMutation(updateFirebaseToken);
-
-  const renderRegular = ({ item, index }) => {
-    if (item.seperatorMyTeam) {
-      return (
-        <>
-          <RegularDividorContainer>
-            <RegularDividorHeader>
-              # 이번주 우리 팀 정기모임🔥
-            </RegularDividorHeader>
-            <RegularDividorMainText>
-              이번주에 열린 우리 팀 정기모임 2개 중 하나를 선택해서
-              참여해주세요!{"\n"} 선착순으로 마감되니 빨리 ㄱㄱ
-            </RegularDividorMainText>
-          </RegularDividorContainer>
-          <MainFlatListPlace
-            leftParticipantsCount={item.leftParticipantsCount}
-            coverImage={item.coverImage}
-            name={item.name}
-            id={item.id}
-            description={item.placeDetail.description}
-            startDateFromNow={item.startDateFromNow}
-            participants={item.participants}
-            isClosed={item.isClosed}
-            recommendation={item.recommendation}
-          />
-        </>
-      );
-    } else if (item.seperatorNotMyTeam) {
-      return (
-        <>
-          <RegularDividorContainer>
-            <RegularDividorHeader>
-              # 지금 올라온 정기모임 🎉
-            </RegularDividorHeader>
-            <RegularDividorMainText>
-              이번주에 우리 팀 참여가 불가하다고?! 담당 운영진에게 연락을 주고
-              {"\n"}다른 팀 정기모임에 참여해봐!
-            </RegularDividorMainText>
-          </RegularDividorContainer>
-          <MainFlatListPlace
-            leftParticipantsCount={item.leftParticipantsCount}
-            coverImage={item.coverImage}
-            name={item.name}
-            id={item.id}
-            description={item.placeDetail.description}
-            startDateFromNow={item.startDateFromNow}
-            participants={item.participants}
-            isClosed={item.isClosed}
-            recommendation={item.recommendation}
-          />
-        </>
-      );
-    }
-
-    return (
-      <MainFlatListPlace
-        leftParticipantsCount={item.leftParticipantsCount}
-        coverImage={item.coverImage}
-        name={item.name}
-        id={item.id}
-        description={item.placeDetail.description}
-        startDateFromNow={item.startDateFromNow}
-        participants={item.participants}
-        isClosed={item.isClosed}
-        recommendation={item.recommendation}
-      />
-    );
-  };
 
   const { data: userData } = useQuery<UserData | undefined>(
     ["userProfile"],
@@ -220,11 +145,11 @@ export default function Main(props: Props) {
     [mainRegularData?.pages?.map((page) => page.places).flat()]
   );
   const memoizedValueEvent = useMemo(
-    () => renderItem,
+    () => renderItemLightning,
     [mainEventData?.pages?.map((page) => page.places).flat()]
   );
   const memoizedValueLightning = useMemo(
-    () => renderItem,
+    () => renderItemLightning,
     [mainLightningData?.pages?.map((page) => page.places).flat()]
   );
 
@@ -263,6 +188,7 @@ export default function Main(props: Props) {
       <Container>
         {/* <HeaderPureComponent onPress={() => {}} /> */}
         <MainTopCarousel eventBanners={eventBannerData.eventBanners} />
+        <MainTopTabNav />
         <MiddleTabContainer>
           <MiddleTab
             onPress={() => {
@@ -388,22 +314,6 @@ export default function Main(props: Props) {
 const ListHeaderContainer = styled.View`
   width: 100%;
   padding: 0px 20px;
-`;
-
-const RegularDividorContainer = styled.View`
-  width: 100%;
-  padding-top: 15px;
-`;
-
-const RegularDividorHeader = styled(GeneralText)`
-  font-family: ${fontFamilies.bold};
-  font-size: 20px;
-`;
-
-const RegularDividorMainText = styled(GeneralText)`
-  font-size: 12px;
-  color: ${colors.midGrey};
-  padding-top: 13px;
 `;
 
 const ListMainText = styled(GeneralText)`
