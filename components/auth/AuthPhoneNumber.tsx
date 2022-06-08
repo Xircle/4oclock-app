@@ -10,15 +10,18 @@ import { AuthAction, AuthState } from "./types";
 import React from "react";
 import { authDispatcher } from "../../lib/auth/AuthDispatcher";
 import { authValidation } from "../../lib/auth/AuthValidation";
-import MyKeyboardAvoidingView from "../UI/MyKeyboardAvoidingView";
 
 interface Props {
-  onNext: () => void;
-  state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
+  setCode: (code: string) => void;
+  setIsSent: (b: boolean) => void;
 }
 
-export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
+export default function AuthPhoneNumber({
+  setCode,
+  dispatch,
+  setIsSent,
+}: Props) {
   return (
     <Container>
       <MainHeading style={{ marginTop: 40 }}>
@@ -39,19 +42,25 @@ export default function AuthPhoneNumber({ onNext, state, dispatch }: Props) {
           const { eventCount, target, text } = event.nativeEvent;
           authDispatcher.dispatchPhoneNumber(text, dispatch);
           authValidation.validatePhoneNumber(text, dispatch);
+          setIsSent(false);
+        }}
+      />
+      <PhoneNumberInput
+        blurOnSubmit={true}
+        returnKeyType="next"
+        returnKeyLabel="next"
+        autoCapitalize="none"
+        autoCorrect={false}
+        keyboardType="number-pad"
+        placeholder="인증코드"
+        onChange={(event) => {
+          const { eventCount, target, text } = event.nativeEvent;
+          setCode(text);
         }}
       />
     </Container>
   );
 }
-
-const VerificationSendButton = styled.TouchableOpacity`
-  margin-top: 10px;
-  padding: 5px;
-  background-color: ${colors.mainBlue};
-  border-radius: 5px;
-  align-items: center;
-`;
 
 const Container = styled.View`
   flex: 1;
