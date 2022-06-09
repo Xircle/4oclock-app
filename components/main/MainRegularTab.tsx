@@ -5,6 +5,7 @@ import { getPlacesRegular } from "../../lib/api/getPlaces";
 import { getUser } from "../../lib/api/getUser";
 import { GetPlacesByLocationOutput, UserData } from "../../lib/api/types";
 import { colors, GeneralText } from "../../styles/styles";
+import MyModal from "../UI/MyModal";
 import MainFeed from "./MainFeed";
 import { renderRegular } from "./MainRenderItems";
 
@@ -13,6 +14,7 @@ interface Props {}
 function MainRegularTab(props: Props) {
   const [refreshing, setRefreshing] = useState(false);
   const queryClient = useQueryClient();
+  const [modalShown, setModalShown] = useState(false);
 
   const { data: userData, refetch: refetchUserData } = useQuery<
     UserData | undefined
@@ -53,8 +55,22 @@ function MainRegularTab(props: Props) {
     [mainRegularData?.pages?.map((page) => page.places).flat()]
   );
 
+  const CloseModal = async () => {
+    await refetchUserData();
+    setModalShown(false);
+  };
+
+  const OpenModal = () => {
+    setModalShown(true);
+  };
+
   return (
     <Container>
+      <MyModal visible={modalShown} onClose={CloseModal}>
+        <RegularInfoContainer>
+          <ActiveCodeText>활동코드를 입력해주세요</ActiveCodeText>
+        </RegularInfoContainer>
+      </MyModal>
       <MainFeed
         loadMore={loadMoreRegular}
         onRefresh={onRefreshRegular}
@@ -70,9 +86,11 @@ function MainRegularTab(props: Props) {
               </RegularInfoText>
             </RegularInfoContainer>
           ) : (
-            <RegularInfoContainer>
-              <RegularInfoText>호롤롤롤</RegularInfoText>
-            </RegularInfoContainer>
+            <ActiveCodeContainer>
+              <ActiveCodeWrapper onPress={OpenModal}>
+                <ActiveCodeText>활동코드 입력하기</ActiveCodeText>
+              </ActiveCodeWrapper>
+            </ActiveCodeContainer>
           )
         }
       />
@@ -81,6 +99,25 @@ function MainRegularTab(props: Props) {
 }
 
 export default React.memo(MainRegularTab);
+
+const ActiveCodeContainer = styled.View`
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ActiveCodeWrapper = styled.TouchableOpacity`
+  margin: 10px;
+  padding: 10px;
+  width: 90%;
+  border-radius: 100px;
+  background-color: ${colors.mainBlue};
+  align-items: center;
+`;
+
+const ActiveCodeText = styled(GeneralText)`
+  color: ${colors.black};
+`;
 
 const Container = styled.View`
   background-color: ${colors.bgColor};
