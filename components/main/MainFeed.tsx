@@ -13,6 +13,10 @@ interface Props {
   listHeaderCompoent: JSX.Element;
 }
 
+function AreEqual(prevProps: Props, nextProps: Props) {
+  return prevProps.places === nextProps.places;
+}
+
 function MainFeed({
   loadMore,
   onRefresh,
@@ -21,6 +25,7 @@ function MainFeed({
   renderItem,
   listHeaderCompoent,
 }: Props) {
+  //console.log("mainFeed Render");
   const placeFlatlistKeyExtractor = (item: PlaceFeedData, index) =>
     item.id + "" + index;
   return (
@@ -40,7 +45,7 @@ function MainFeed({
   );
 }
 
-export default React.memo(MainFeed);
+export default React.memo(MainFeed, AreEqual);
 
 const Container = styled(OptimizedFlatList)`
   background-color: ${colors.bgColor};
