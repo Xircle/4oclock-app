@@ -1,45 +1,25 @@
 import styled from "styled-components/native";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Dimensions, Animated, SafeAreaView, View } from "react-native";
-import { colors, fontFamilies, GeneralText } from "../styles/styles";
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "react-query";
-import {
-  GetEventBannersOutput,
-  GetPlacesByLocationOutput,
-  UserData,
-} from "../lib/api/types";
-import {
-  getPlacesEvent,
-  getPlacesLightning,
-  getPlacesRegular,
-} from "../lib/api/getPlaces";
-import Loader from "../components/UI/Loader";
-import MainFlatListPlace from "../components/main/MainFlatListPlace";
+import React, { useEffect } from "react";
+import { Dimensions, SafeAreaView } from "react-native";
+import { colors } from "../styles/styles";
+import { useMutation, useQuery } from "react-query";
+import { GetEventBannersOutput, UserData } from "../lib/api/types";
 import MainTopCarousel from "../components/UI/MainTopCarousel";
 import { getEventBanners } from "../lib/api/getEventBanners";
-import MainFeed from "../components/main/MainFeed";
 import HeaderPureComponent from "../components/shared/HeaderPureComponent";
 import { getUser } from "../lib/api/getUser";
 import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
 import { updateFirebaseToken } from "../lib/api/updateFirebaseToken";
 import MainTopTabNav from "../navigators/MainTopTabNav";
-import {
-  renderItemLightning,
-  renderRegular,
-} from "../components/main/MainRenderItems";
 
 interface Props {}
 
 const { width, height } = Dimensions.get("window");
 
-export default function Main(props: Props) {
+function Main(props: Props) {
   const navigation = useNavigation();
+  console.log("Main Render");
 
   const { mutateAsync: mutateUpdateFirebaseToken } =
     useMutation(updateFirebaseToken);
@@ -84,6 +64,8 @@ export default function Main(props: Props) {
     </SafeAreaView>
   );
 }
+
+export default Main;
 
 const Container = styled.View`
   flex: 1;
