@@ -15,27 +15,22 @@ import MainTopTabNav from "../navigators/MainTopTabNav";
 
 interface Props {}
 
-const { width, height } = Dimensions.get("window");
-
 function Main(props: Props) {
   const navigation = useNavigation();
-  console.log("Main Render");
-
-  const { mutateAsync: mutateUpdateFirebaseToken } =
-    useMutation(updateFirebaseToken);
+  //console.log("Main Render");
 
   const { data: userData } = useQuery<UserData | undefined>(
     ["userProfile"],
     () => getUser(),
-    {
-      retry: 1,
-    }
+    {}
   );
 
   const { data: eventBannerData, isLoading: evenBannerLoading } =
-    useQuery<GetEventBannersOutput>(["eventBanner"], () => getEventBanners(), {
-      retry: 1,
-    });
+    useQuery<GetEventBannersOutput>(
+      ["eventBanner"],
+      () => getEventBanners(),
+      {}
+    );
 
   useEffect(() => {
     if (userData?.accountType === "Banned") {
@@ -44,15 +39,7 @@ function Main(props: Props) {
         routes: [{ name: "BannedScreen" }],
       });
     }
-  }, [userData]);
-
-  useEffect(() => {
-    messaging()
-      .getToken()
-      .then((token) => {
-        mutateUpdateFirebaseToken(token);
-      });
-  }, []);
+  }, [userData?.accountType]);
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.bgColor, flex: 1 }}>
@@ -65,7 +52,7 @@ function Main(props: Props) {
   );
 }
 
-export default Main;
+export default React.memo(Main);
 
 const Container = styled.View`
   flex: 1;
