@@ -39,6 +39,7 @@ export default function MainTabsNav(props: Props) {
         headerTitle: "",
         headerShadowVisible: false,
         tabBarActiveTintColor: colors.mainBlue,
+        lazy: true,
       }}
     >
       <Tabs.Screen
