@@ -77,7 +77,7 @@ export default function Main(props: Props) {
   return (
     <SafeAreaView style={{ backgroundColor: colors.bgColor, flex: 1 }}>
       <Container>
-        {/* <HeaderPureComponent onPress={() => {}} /> */}
+        {/* <HeaderPureComponent /> */}
         <MainTopCarousel eventBanners={eventBannerData?.eventBanners} />
         <MainTopTabNav />
       </Container>
