@@ -13,6 +13,7 @@ export default function ActivityTopTabNav() {
         tabBarLabelStyle: {
           fontFamily: fontFamilies.regular,
         },
+        lazy: true,
       }}
     >
       <Tab.Screen name="참가" component={ParticipatingActivityScreen} />
