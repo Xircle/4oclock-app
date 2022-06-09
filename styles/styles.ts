@@ -77,6 +77,15 @@ export const BigTextInput = styled.TextInput`
   font-family: ${fontFamilies.regular};
 `;
 
+export const UnderLineInput = styled(BigTextInput)`
+  margin-top: 50px;
+  height: 50px;
+  border-radius: 0px;
+  border: none;
+  border-bottom-width: 0.5px;
+  border-color: ${colors.bareGrey};
+`;
+
 export const ChatInput = styled(BigTextInput)`
   width: 85%;
   padding: 12px 10px;
