@@ -4,28 +4,22 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 import { colors } from "../../styles/styles";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-interface Props {
-  onPress: () => void;
-}
+interface Props {}
 
-export default class HeaderPureComponent extends PureComponent<Props> {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <HeaderContainer>
-        <HeaderImage source={require("../../statics/images/HeaderImage.png")} />
-        <HeaderRightContainer>
-          <TouchableOpacity onPress={this.props.onPress}>
-            <Ionicons name="search" size={30} color={colors.black} />
-          </TouchableOpacity>
-        </HeaderRightContainer>
-      </HeaderContainer>
-    );
-  }
+export default function HeaderPureComponent(props: Props) {
+  const navigation = useNavigation();
+  return (
+    <HeaderContainer>
+      <HeaderImage source={require("../../statics/images/HeaderImage.png")} />
+      <HeaderRightContainer>
+        <TouchableOpacity onPress={() => {}}>
+          <Ionicons name="search" size={30} color={colors.black} />
+        </TouchableOpacity>
+      </HeaderRightContainer>
+    </HeaderContainer>
+  );
 }
 
 const HeaderContainer = styled.View`
