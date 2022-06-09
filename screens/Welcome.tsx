@@ -24,7 +24,6 @@ import jwt_decode from "jwt-decode";
 import { GetVersionOutput } from "../lib/api/types";
 import { useQuery } from "react-query";
 import { getVersion } from "../lib/api/getVersion";
-import FastImage from "react-native-fast-image";
 
 interface Props {}
 
