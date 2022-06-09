@@ -12,7 +12,12 @@ interface Props {
   visible: boolean;
 }
 
-export default function MyModal({ children, onClose, visible }: Props) {
+function MyModalCompare(prevProps: Props, nextProps: Props) {
+  return prevProps.visible === nextProps.visible;
+}
+
+function MyModal({ children, onClose, visible }: Props) {
+  console.log("modal re-render");
   return (
     <Modal
       animationType="slide"
@@ -31,6 +36,8 @@ export default function MyModal({ children, onClose, visible }: Props) {
     </Modal>
   );
 }
+
+export default React.memo(MyModal, MyModalCompare);
 
 const ModalOuterWrapper = styled.View`
   flex: 1;
