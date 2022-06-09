@@ -1,8 +1,8 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import CreatedActivityScreen from "../screens/ActivitiesManagement/CreatedActivityScreen";
-import ParticipatingActivityScreen from "../screens/ActivitiesManagement/ParticipatingActivityScreen";
 import React from "react";
 import { fontFamilies } from "../styles/styles";
+import MainLightningTab from "../components/main/MainLightningTab";
+import MainRegularTab from "../components/main/MainRegularTab";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -13,10 +13,11 @@ export default function MainTopTabNav() {
         tabBarLabelStyle: {
           fontFamily: fontFamilies.regular,
         },
+        lazy: true,
       }}
     >
-      <Tab.Screen name="참가" component={ParticipatingActivityScreen} />
-      <Tab.Screen name="생성" component={CreatedActivityScreen} />
+      <Tab.Screen name="번개" component={MainLightningTab} />
+      <Tab.Screen name="정기" component={MainRegularTab} />
     </Tab.Navigator>
   );
 }
