@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import { getPlacesRegular } from "../../lib/api/getPlaces";
 import { getUser } from "../../lib/api/getUser";
 import { GetPlacesByLocationOutput, UserData } from "../../lib/api/types";
-import { colors, GeneralText } from "../../styles/styles";
+import { colors, GeneralText, UnderLineInput } from "../../styles/styles";
 import MyModal from "../UI/MyModal";
 import MainFeed from "./MainFeed";
 import { renderRegular } from "./MainRenderItems";
@@ -15,7 +15,7 @@ function MainRegularTab(props: Props) {
   const [refreshing, setRefreshing] = useState(false);
   const queryClient = useQueryClient();
   const [modalShown, setModalShown] = useState(false);
-
+  //console.log("MainRegular Tab render");
   const { data: userData, refetch: refetchUserData } = useQuery<
     UserData | undefined
   >(["userProfile"], () => getUser(), {
@@ -69,6 +69,17 @@ function MainRegularTab(props: Props) {
       <MyModal visible={modalShown} onClose={CloseModal}>
         <RegularInfoContainer>
           <ActiveCodeText>활동코드를 입력해주세요</ActiveCodeText>
+          <SUnderLineInput
+            blurOnSubmit={true}
+            returnKeyType="next"
+            returnKeyLabel="next"
+            autoCapitalize="none"
+            autoCorrect={false}
+            placeholder="활동 코드 입력"
+            onChange={(event) => {
+              const { eventCount, target, text } = event.nativeEvent;
+            }}
+          />
         </RegularInfoContainer>
       </MyModal>
       <MainFeed
@@ -78,7 +89,7 @@ function MainRegularTab(props: Props) {
         renderItem={memoizedValueRegular}
         places={mainRegularData?.pages?.map((page) => page.places).flat()}
         listHeaderCompoent={
-          userData.isYkClub ? (
+          userData?.isYkClub ? (
             <RegularInfoContainer>
               <RegularInfoText>
                 (매우중요) 정기모임 참여는 마이페이지 {">"} 프로필 수정하기에서
@@ -88,7 +99,7 @@ function MainRegularTab(props: Props) {
           ) : (
             <ActiveCodeContainer>
               <ActiveCodeWrapper onPress={OpenModal}>
-                <ActiveCodeText>활동코드 입력하기</ActiveCodeText>
+                <ActiveCodeInstruction>활동코드 입력하기</ActiveCodeInstruction>
               </ActiveCodeWrapper>
             </ActiveCodeContainer>
           )
@@ -99,6 +110,11 @@ function MainRegularTab(props: Props) {
 }
 
 export default React.memo(MainRegularTab);
+
+const SUnderLineInput = styled(UnderLineInput)`
+  width: 60%;
+  text-align: center;
+`;
 
 const ActiveCodeContainer = styled.View`
   width: 100%;
@@ -119,12 +135,19 @@ const ActiveCodeText = styled(GeneralText)`
   color: ${colors.black};
 `;
 
+const ActiveCodeInstruction = styled(GeneralText)`
+  color: ${colors.bgColor};
+`;
+
 const Container = styled.View`
   background-color: ${colors.bgColor};
   flex: 1;
 `;
 
-const RegularInfoContainer = styled.View``;
+const RegularInfoContainer = styled.View`
+  align-items: center;
+  width: 100%;
+`;
 
 const RegularInfoText = styled(GeneralText)`
   line-height: 24px;
