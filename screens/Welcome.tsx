@@ -22,8 +22,11 @@ import { openLink } from "../components/shared/Links";
 import MyLogin from "../components/loginForm/MyLogin";
 import jwt_decode from "jwt-decode";
 import { GetVersionOutput } from "../lib/api/types";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getVersion } from "../lib/api/getVersion";
+
+import messaging from "@react-native-firebase/messaging";
+import { updateFirebaseToken } from "../lib/api/updateFirebaseToken";
 
 interface Props {}
 
@@ -49,6 +52,9 @@ export default function Welcome(props: Props) {
 
   const [emailInput, setEmailInput] = useState("");
   const [pwdInput, setPwdInput] = useState("");
+
+  const { mutateAsync: mutateUpdateFirebaseToken } =
+    useMutation(updateFirebaseToken);
 
   const redirectWithExistingToken = async () => {
     const minimumVersion =
@@ -88,6 +94,11 @@ export default function Welcome(props: Props) {
     }
 
     await storage.setItem("token", token);
+    await messaging()
+      .getToken()
+      .then((token) => {
+        mutateUpdateFirebaseToken(token);
+      });
     const tokenFromStorage = await storage.getItem("token");
 
     if (tokenFromStorage) {
