@@ -7,6 +7,7 @@ import { GetPlacesByLocationOutput, UserData } from "../../lib/api/types";
 import { colors, GeneralText, UnderLineInput } from "../../styles/styles";
 import MyModal from "../UI/MyModal";
 import MainFeed from "./MainFeed";
+import MRTeamSubmitBtn from "./MainRegular/MRTeamSubmitBtn";
 import { renderRegular } from "./MainRenderItems";
 
 interface Props {}
@@ -15,6 +16,7 @@ function MainRegularTab(props: Props) {
   const [refreshing, setRefreshing] = useState(false);
   const queryClient = useQueryClient();
   const [modalShown, setModalShown] = useState(false);
+  const [modalText, setModalText] = useState("활동코드를 입력해주세요");
   //console.log("MainRegular Tab render");
   const { data: userData, refetch: refetchUserData } = useQuery<
     UserData | undefined
@@ -61,6 +63,11 @@ function MainRegularTab(props: Props) {
   };
 
   const OpenModal = () => {
+    if (userData?.isYkClub) {
+      setModalText("팀을 선택해주세요");
+    } else {
+      setModalText("활동코드를 입력해주세요");
+    }
     setModalShown(true);
   };
 
@@ -68,7 +75,7 @@ function MainRegularTab(props: Props) {
     <Container>
       <MyModal visible={modalShown} onClose={CloseModal}>
         <RegularInfoContainer>
-          <ActiveCodeText>활동코드를 입력해주세요</ActiveCodeText>
+          <ActiveCodeText>{modalText}</ActiveCodeText>
           <SUnderLineInput
             blurOnSubmit={true}
             returnKeyType="next"
@@ -80,6 +87,7 @@ function MainRegularTab(props: Props) {
               const { eventCount, target, text } = event.nativeEvent;
             }}
           />
+          <MRTeamSubmitBtn onPress={() => {}} title={"제출"} top={15} />
         </RegularInfoContainer>
       </MyModal>
       <MainFeed
@@ -89,19 +97,25 @@ function MainRegularTab(props: Props) {
         renderItem={memoizedValueRegular}
         places={mainRegularData?.pages?.map((page) => page.places).flat()}
         listHeaderCompoent={
-          userData?.isYkClub ? (
+          !userData?.isYkClub ? (
+            <ActiveCodeContainer>
+              <ActiveCodeWrapper onPress={OpenModal}>
+                <ActiveCodeInstruction>활동코드 입력하기</ActiveCodeInstruction>
+              </ActiveCodeWrapper>
+            </ActiveCodeContainer>
+          ) : !userData?.team ? (
+            <ActiveCodeContainer>
+              <ActiveCodeWrapper onPress={OpenModal}>
+                <ActiveCodeInstruction>팀 입력하기</ActiveCodeInstruction>
+              </ActiveCodeWrapper>
+            </ActiveCodeContainer>
+          ) : (
             <RegularInfoContainer>
               <RegularInfoText>
                 (매우중요) 정기모임 참여는 마이페이지 {">"} 프로필 수정하기에서
                 팀과 활동코드를 입력해 주셔야지만 가능해요!
               </RegularInfoText>
             </RegularInfoContainer>
-          ) : (
-            <ActiveCodeContainer>
-              <ActiveCodeWrapper onPress={OpenModal}>
-                <ActiveCodeInstruction>활동코드 입력하기</ActiveCodeInstruction>
-              </ActiveCodeWrapper>
-            </ActiveCodeContainer>
           )
         }
       />
