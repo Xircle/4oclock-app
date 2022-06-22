@@ -13,11 +13,14 @@ interface Props {
 }
 
 function MyModalCompare(prevProps: Props, nextProps: Props) {
-  return prevProps.visible === nextProps.visible;
+  return (
+    prevProps.visible === nextProps.visible &&
+    prevProps.children === nextProps.children
+  );
 }
 
 function MyModal({ children, onClose, visible }: Props) {
-  console.log("modal re-render");
+  //console.log("modal re-render");
   return (
     <Modal
       animationType="slide"
