@@ -17,6 +17,7 @@ function MainRegularTab(props: Props) {
   const queryClient = useQueryClient();
   const [modalShown, setModalShown] = useState(false);
   const [modalText, setModalText] = useState("활동코드를 입력해주세요");
+  const [modalInput, setModalInput] = useState("");
   //console.log("MainRegular Tab render");
   const { data: userData, refetch: refetchUserData } = useQuery<
     UserData | undefined
@@ -71,6 +72,14 @@ function MainRegularTab(props: Props) {
     setModalShown(true);
   };
 
+  const TeamSubmitCTA = () => {
+    if (userData?.isYkClub) {
+      // isYkClub 업데이트
+    } else {
+      // 팀 업데이트
+    }
+  };
+
   return (
     <Container>
       <MyModal visible={modalShown} onClose={CloseModal}>
@@ -85,6 +94,7 @@ function MainRegularTab(props: Props) {
             placeholder="활동 코드 입력"
             onChange={(event) => {
               const { eventCount, target, text } = event.nativeEvent;
+              setModalInput(text);
             }}
           />
           <MRTeamSubmitBtn onPress={() => {}} title={"제출"} top={15} />
