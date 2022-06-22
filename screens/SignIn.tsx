@@ -29,7 +29,8 @@ import FullScreenLoader from "../components/UI/FullScreenLoader";
 import { useMutation } from "react-query";
 import { sendVerification } from "../lib/api/sendVerification";
 import { confirmVerification } from "../lib/api/confirmVerification";
-
+import { updateFirebaseToken } from "../lib/api/updateFirebaseToken";
+import messaging from "@react-native-firebase/messaging";
 interface Props {
   route: RouteProp<LoggedOutStackParamList, "SignIn">;
 }
@@ -62,6 +63,8 @@ export default function SignIn({ route }: Props) {
   const { mutateAsync: mutateSendVerif } = useMutation(sendVerification);
 
   const { mutateAsync: mutateConfirmVerif } = useMutation(confirmVerification);
+  const { mutateAsync: mutateUpdateFirebaseToken } =
+    useMutation(updateFirebaseToken);
 
   const verificationHandler = async (command: string) => {
     try {
@@ -137,6 +140,11 @@ export default function SignIn({ route }: Props) {
           console.log(data.error);
         } else {
           await storage.setItem("token", data.data.token);
+          await messaging()
+            .getToken()
+            .then((token) => {
+              mutateUpdateFirebaseToken(token);
+            });
           /* @ts-ignore */
           navigation.navigate("LoggedInNav");
         }
