@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   useInfiniteQuery,
   useMutation,
@@ -8,6 +8,7 @@ import {
 import styled from "styled-components/native";
 import { getPlacesRegular } from "../../lib/api/getPlaces";
 import { getUser } from "../../lib/api/getUser";
+import { patchTeam } from "../../lib/api/patchTeam";
 import { GetPlacesByLocationOutput, UserData } from "../../lib/api/types";
 import { verifyByCode } from "../../lib/api/verifyByCode";
 import { colors, GeneralText, UnderLineInput } from "../../styles/styles";
@@ -31,6 +32,7 @@ function MainRegularTab(props: Props) {
     retry: 1,
   });
   const { mutateAsync: mutateVerifyByCode } = useMutation(verifyByCode);
+  const { mutateAsync: mutatePatchTeam } = useMutation(patchTeam);
 
   const {
     data: mainRegularData,
@@ -80,12 +82,17 @@ function MainRegularTab(props: Props) {
   };
 
   const TeamSubmitCTA = async () => {
-    if (userData?.isYkClub) {
-      // isYkClub 업데이트
+    console.log("modal input: " + modalInput);
+    if (!userData?.isYkClub) {
+      // isYkClub 업데이트=
       await mutateVerifyByCode(modalInput);
       setModalInput("");
+      await CloseModal();
     } else {
       // 팀 업데이트
+      await mutatePatchTeam(modalInput);
+      setModalInput("");
+      await CloseModal();
     }
   };
 
@@ -100,13 +107,13 @@ function MainRegularTab(props: Props) {
             returnKeyLabel="next"
             autoCapitalize="none"
             autoCorrect={false}
-            placeholder="활동 코드 입력"
+            placeholder="코드 입력"
             onChange={(event) => {
               const { eventCount, target, text } = event.nativeEvent;
               setModalInput(text);
             }}
           />
-          <MRTeamSubmitBtn onPress={() => {}} title={"제출"} top={15} />
+          <MRTeamSubmitBtn onPress={TeamSubmitCTA} title={"제출"} top={15} />
         </RegularInfoContainer>
       </MyModal>
       <MainFeed
