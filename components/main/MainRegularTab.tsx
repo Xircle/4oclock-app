@@ -1,9 +1,15 @@
 import React, { useMemo, useState } from "react";
-import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import styled from "styled-components/native";
 import { getPlacesRegular } from "../../lib/api/getPlaces";
 import { getUser } from "../../lib/api/getUser";
 import { GetPlacesByLocationOutput, UserData } from "../../lib/api/types";
+import { verifyByCode } from "../../lib/api/verifyByCode";
 import { colors, GeneralText, UnderLineInput } from "../../styles/styles";
 import MyModal from "../UI/MyModal";
 import MainFeed from "./MainFeed";
@@ -24,6 +30,7 @@ function MainRegularTab(props: Props) {
   >(["userProfile"], () => getUser(), {
     retry: 1,
   });
+  const { mutateAsync: mutateVerifyByCode } = useMutation(verifyByCode);
 
   const {
     data: mainRegularData,
@@ -72,9 +79,11 @@ function MainRegularTab(props: Props) {
     setModalShown(true);
   };
 
-  const TeamSubmitCTA = () => {
+  const TeamSubmitCTA = async () => {
     if (userData?.isYkClub) {
       // isYkClub 업데이트
+      await mutateVerifyByCode(modalInput);
+      setModalInput("");
     } else {
       // 팀 업데이트
     }
