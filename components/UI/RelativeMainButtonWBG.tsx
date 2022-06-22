@@ -1,7 +1,6 @@
 import styled from "styled-components/native";
 import React from "react";
 import { colors, XLButton, XLButtonText } from "../../styles/styles";
-import { Dimensions } from "react-native";
 
 interface Props {
   color?: string;
@@ -11,13 +10,11 @@ interface Props {
   bottom?: number;
 }
 
-const { width } = Dimensions.get("window");
-
 export default function RelativeMainButtonWBg({
   onPress,
   disabled = false,
   title,
-  bottom,
+  bottom = 0,
 }: Props) {
   return (
     <Container bottom={bottom}>
