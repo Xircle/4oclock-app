@@ -48,6 +48,12 @@ export const createPlace = async (
   if (typeKoToEn[placeData.activityType] === "Regular-meeting") {
     formData.append("team", placeData.team);
   }
+  if (placeData.qAndA?.length) {
+    for (let i = 0; i < placeData.qAndA.length; i++) {
+      formData.append("qAndA", placeData.qAndA[i]!);
+    }
+    formData.append("qAndA", "감사합니다");
+  }
 
   const { data } = await axiosclient.post<CreateActivityOutput>(
     `${BASE_URL}/place`,
