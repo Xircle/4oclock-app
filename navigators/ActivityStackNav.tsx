@@ -30,7 +30,6 @@ export type ActivityStackParamList = {
     detailAddress: string;
     participationFee: number;
     startTime: number;
-    isVaccinated: boolean;
     placeType: string;
     kakaoLink?: string;
   };
