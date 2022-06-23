@@ -26,7 +26,7 @@ import RelativeMainButtonWBg from "../../UI/RelativeMainButtonWBG";
 interface Props {}
 
 export default function CreateActivityStackQA(props: Props) {
-  const { kakaoLink, modify, modifyPlaceId } = useSelector(
+  const { qAndA, modify, modifyPlaceId } = useSelector(
     (state: RootState) => state.activityReducer
   );
 
@@ -54,18 +54,16 @@ export default function CreateActivityStackQA(props: Props) {
     navigation.navigate("CAS6", {});
   };
 
-  useEffect(() => {
-    setOpenKakaoLinkError(!kakaoLink.startsWith("https://open.kakao.com/o/g"));
-  }, []);
-
   return (
     <MyKeyboardAvoidingView keyboardVerticalOffset={50}>
       <SpaceBetweenWrapper>
         <Container showsVerticalScrollIndicator={false}>
-          <MainHeading>모임 디테일</MainHeading>
+          <MainHeading>
+            (선택){`\n`}참여 크루원에게 물어보고 싶은 질문을 해봐!
+          </MainHeading>
 
           <InnerContainer>
-            <BlackLabel>오픈 카카오톡 채팅방 링크</BlackLabel>
+            <BlackLabel>오픈 카카오톡 채팅wcwcwc방 링크</BlackLabel>
             <SBigTextInput
               placeholder="ex: https://open.kakao.com/o/grFhbIBd"
               autoCapitalize="none"
@@ -73,32 +71,21 @@ export default function CreateActivityStackQA(props: Props) {
               returnKeyType="next"
               returnKeyLabel="next"
               autoCorrect={false}
-              value={kakaoLink}
-              defaultValue={kakaoLink ? kakaoLink : ""}
+              value={qAndA?.[0] ? qAndA?.[0] : ""}
+              defaultValue={qAndA?.[0] ? qAndA?.[0] : ""}
               onChange={(event) => {
                 const { eventCount, target, text } = event.nativeEvent;
-                activityDispatcher.dispatchKakaoLink(
+                activityDispatcher.dispatchQAndA(
                   //text.replace(/[^A-Za-z0-9/.]/g, ""),
-                  text.replace(/[^A-Za-z0-9/.:]/g, ""),
+                  [text],
                   dispatch
-                );
-
-                setOpenKakaoLinkError(
-                  !text.startsWith("https://open.kakao.com/o/g")
                 );
               }}
             />
-            {openKakaoLinkError ? (
-              <SErrorMessage>{createPlaceErrorMessage[7]}</SErrorMessage>
-            ) : null}
-            <OKInfoButton onPress={openLink.LOpenKakaoChatGUide}>
-              <OKInfoText>오카방 만드는 방법</OKInfoText>
-            </OKInfoButton>
           </InnerContainer>
         </Container>
         <RelativeMainButtonWBg
           onPress={nextHandler}
-          disabled={openKakaoLinkError}
           title={"다음"}
           bottom={10}
         />
@@ -108,11 +95,6 @@ export default function CreateActivityStackQA(props: Props) {
     </MyKeyboardAvoidingView>
   );
 }
-
-const OKInfoButton = styled.TouchableOpacity`
-  margin-left: auto;
-  margin-right: auto;
-`;
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -132,15 +114,4 @@ const SBigTextInput = styled(BigTextInput)<{ error?: Boolean }>`
       ? `0.5px solid ${colors.warningRed}`
       : `0.5px solid ${colors.midGrey}`};
   margin-top: 20px;
-`;
-
-const OKInfoText = styled(GeneralText)`
-  font-size: 11px;
-  margin-top: 11px;
-  color: ${colors.midGrey};
-  text-decoration-line: underline;
-`;
-
-const SErrorMessage = styled(ErrorMessage)`
-  color: ${colors.warningRed};
 `;
