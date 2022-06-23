@@ -45,7 +45,7 @@ export const openLink = {
       "https://sixth-lace-751.notion.site/91c032eabd624b3a8744f8d699b40787"
     );
   },
-  LOpenKakaoChatGUide: async () => {
+  LOpenKakaoChatGuide: async () => {
     await Linking.openURL(
       "https://longhaired-gym-a5e.notion.site/b8c0db81145043d99ab757cb747e7a42"
     );
