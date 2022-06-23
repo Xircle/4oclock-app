@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Activity from "../screens/ActivitiesDetail/Activity";
 import { LoggedInStackParamList } from "./LoggedInNav";
 import { RouteProp } from "@react-navigation/native";
-import Reservation from "../screens/ActivitiesDetail/Reservation";
+import ReservationInstruction from "../screens/ActivitiesDetail/ReservationInstruction";
 import ReservationConfirm from "../screens/ActivitiesDetail/ReservationConfirm";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fontFamilies } from "../styles/styles";
@@ -16,7 +16,7 @@ interface Props {
 
 export type ActivityStackParamList = {
   Activity: undefined;
-  Reservation: {
+  ReservationInstruction: {
     startDateFromNow: string;
     detailAddress: string;
     participationFee: number;
@@ -24,6 +24,17 @@ export type ActivityStackParamList = {
     placeId: string;
     placeType: string;
     kakaoLink?: string;
+    qAndA?: string[];
+  };
+  ReservationQA: {
+    startDateFromNow: string;
+    detailAddress: string;
+    participationFee: number;
+    startTime: number;
+    placeId: string;
+    placeType: string;
+    kakaoLink?: string;
+    qAndA?: string[];
   };
   ReservationConfirm: {
     startDateFromNow: string;
@@ -94,11 +105,11 @@ export default function ActivityStackNav({ route }: Props) {
         )}
       </Stack.Screen>
       <Stack.Screen
-        name="Reservation"
+        name="ReservationInstruction"
         options={{
           title: route.params.name,
         }}
-        component={Reservation}
+        component={ReservationInstruction}
       />
       <Stack.Screen
         name="ReservationConfirm"
