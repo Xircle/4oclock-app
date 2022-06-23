@@ -152,6 +152,7 @@ export interface CreateActivityData {
   team?: string;
   recommendation?: string;
   participating?: boolean;
+  qAndA?: string[];
 }
 
 export interface GetVersionOutput {
