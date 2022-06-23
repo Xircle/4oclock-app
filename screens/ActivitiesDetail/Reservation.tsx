@@ -21,7 +21,6 @@ interface Props {
 export default function Reservation({ route }: Props) {
   const placeId = route.params.placeId;
   const [agree, setAgree] = useState(false);
-  const [isVaccinated, setIsVaccinated] = useState(false);
   const navigation = useNavigation();
 
   const { mutateAsync: mutateReservation, isLoading } =
@@ -30,7 +29,6 @@ export default function Reservation({ route }: Props) {
   const CTAHandler = async () => {
     try {
       const { data } = await mutateReservation({
-        isVaccinated,
         placeId,
       });
       if (!data.ok) {
@@ -84,28 +82,11 @@ export default function Reservation({ route }: Props) {
             </SelectInnerWrapper>
           </SelectButton>
         </SelectButtonWrapper>
-        <SelectButtonWrapper>
-          <SelectButton onPress={() => setIsVaccinated((prev) => !prev)}>
-            <SelectInnerWrapper>
-              <Ionicons
-                name={
-                  isVaccinated ? "checkmark-circle" : "checkmark-circle-outline"
-                }
-                size={28}
-                color={isVaccinated ? colors.mainBlue : colors.bareGrey}
-              />
-              <SelectText>백신 접종 후 2주가 지났나요?</SelectText>
-            </SelectInnerWrapper>
-          </SelectButton>
-        </SelectButtonWrapper>
-        <VaccineInfoText>
-          백신 접종 여부 조사를 위해 체크하는 항목이에요:D
-        </VaccineInfoText>
       </SelectContainer>
       <AbsoluteMainButtonWBg
         title="나도 놀러갈래~"
         onPress={CTAHandler}
-        disabled={!agree || !isVaccinated}
+        disabled={!agree}
       />
     </Container>
   );
