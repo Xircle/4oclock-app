@@ -281,7 +281,6 @@ export interface SeeUserByIdOutput extends CoreOutput {
 // Make reservation
 export interface MakeReservationInput {
   placeId: string;
-  isVaccinated: boolean;
 }
 
 export interface MakeReservationOutput extends CoreOutput {}
