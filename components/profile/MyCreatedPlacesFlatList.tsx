@@ -34,6 +34,7 @@ export interface existingPlace {
   team?: string;
   recommendation?: string;
   description?: string;
+  qAndA?: string[];
 }
 
 interface Props extends existingPlace {
