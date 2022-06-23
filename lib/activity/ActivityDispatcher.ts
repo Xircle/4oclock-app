@@ -301,4 +301,7 @@ export const activityDispatcher = {
     dispatch({ type: "setIsFinished", payload: false });
     dispatch({ type: "setIsCoverImageDeleted", payload: false });
   },
+  dispatchQAndA(questions: string[], dispatch: React.Dispatch<ActivityAction>) {
+    dispatch({ type: "setQAndA", payload: questions });
+  },
 };
