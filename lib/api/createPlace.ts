@@ -43,7 +43,6 @@ export const createPlace = async (
   formData.append("startDateAt", placeData.startDateAt + "");
   formData.append("participationFee", placeData.participationFee);
   formData.append("placeId", placeData.placeId);
-  formData.append("isVaccinated", true);
   formData.append("placeType", typeKoToEn[placeData.activityType]);
   formData.append("kakaoLink", placeData.kakaoLink);
   if (typeKoToEn[placeData.activityType] === "Regular-meeting") {
