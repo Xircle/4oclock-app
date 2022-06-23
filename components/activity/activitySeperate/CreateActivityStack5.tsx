@@ -37,21 +37,8 @@ export default function CreateActivityStack5(props: Props) {
   const [loading, setLoading] = useState(false);
 
   const nextHandler = async () => {
-    setLoading(true);
-    try {
-      if (!modify) {
-        await createPlace(state);
-      } else if (modifyPlaceId) {
-        await editPlace(state, modifyPlaceId);
-      }
-    } catch (e) {
-      setLoading(false);
-      Alert.alert("일시적 오류가 발생했습니다");
-      console.log(e);
-    }
-    setLoading(false);
     // @ts-ignore
-    navigation.navigate("CAS6", {});
+    navigation.navigate("CASQA", {});
   };
 
   useEffect(() => {
