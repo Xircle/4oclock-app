@@ -17,20 +17,16 @@ import { useNavigation } from "@react-navigation/native";
 import { activityDispatcher } from "../../../lib/activity/ActivityDispatcher";
 import { createPlaceErrorMessage } from "../../../lib/errorMessages";
 import { openLink } from "../../shared/Links";
-import { Alert } from "react-native";
 import FullScreenLoader from "../../UI/FullScreenLoader";
-import { createPlace } from "../../../lib/api/createPlace";
-import { editPlace } from "../../../lib/api/editPlace";
 import RelativeMainButtonWBg from "../../UI/RelativeMainButtonWBG";
 
 interface Props {}
 
 export default function CreateActivityStack5(props: Props) {
-  const { kakaoLink, modify, modifyPlaceId } = useSelector(
+  const { kakaoLink } = useSelector(
     (state: RootState) => state.activityReducer
   );
 
-  const state = useSelector((state: RootState) => state.activityReducer);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [openKakaoLinkError, setOpenKakaoLinkError] = useState(undefined);
@@ -78,7 +74,7 @@ export default function CreateActivityStack5(props: Props) {
             {openKakaoLinkError ? (
               <SErrorMessage>{createPlaceErrorMessage[7]}</SErrorMessage>
             ) : null}
-            <OKInfoButton onPress={openLink.LOpenKakaoChatGUide}>
+            <OKInfoButton onPress={openLink.LOpenKakaoChatGuide}>
               <OKInfoText>오카방 만드는 방법</OKInfoText>
             </OKInfoButton>
           </InnerContainer>
