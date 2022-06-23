@@ -23,7 +23,8 @@ export type ActivityAction =
   | { type: "setModifyPlaceId"; payload: string }
   | { type: "setModifySubImageUrls"; payload: string[] }
   | { type: "setModifyCoverImageUrl"; payload: string }
-  | { type: "setIsCoverImageDeleted"; payload: boolean };
+  | { type: "setIsCoverImageDeleted"; payload: boolean }
+  | { type: "setQAndA"; payload: string[] };
 
 export interface ActivityState extends CreateActivityOutput {
   stage1Valid: Boolean;
@@ -58,6 +59,7 @@ export const activityInitialState: ActivityState = {
   modifySubImageUrls: [],
   modifyCoverImageUrl: "",
   isCoverImageDeleted: false,
+  qAndA: [],
 };
 
 export function activityReducer(
@@ -169,6 +171,11 @@ export function activityReducer(
       return {
         ...state,
         isCoverImageDeleted: action.payload,
+      };
+    case "setQAndA":
+      return {
+        ...state,
+        qAndA: action.payload,
       };
     default:
       return state;
