@@ -227,6 +227,10 @@ export const activityDispatcher = {
     });
     dispatch({ type: "setStage1Valid", payload: false });
     dispatch({ type: "setIsFinished", payload: false });
+    dispatch({
+      type: "setQAndA",
+      payload: activityInitialState.qAndA,
+    });
   },
   dispatchExistingState: (
     loadedData: existingPlace,
@@ -300,6 +304,7 @@ export const activityDispatcher = {
     dispatch({ type: "setStage1Valid", payload: true });
     dispatch({ type: "setIsFinished", payload: false });
     dispatch({ type: "setIsCoverImageDeleted", payload: false });
+    dispatch({ type: "setQAndA", payload: loadedData.qAndA });
   },
   dispatchQAndA(questions: string[], dispatch: React.Dispatch<ActivityAction>) {
     dispatch({ type: "setQAndA", payload: questions });
