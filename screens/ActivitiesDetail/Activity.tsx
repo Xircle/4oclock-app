@@ -93,7 +93,7 @@ export default function Activity({
     }
 
     // @ts-ignore
-    navigation.navigate("Reservation", {
+    navigation.navigate("ReservationInstruction", {
       detailAddress: activityData?.placeDetail.detailAddress,
       participationFee: activityData?.placeDetail.participationFee,
       startDateFromNow: activityData?.startDateFromNow,
@@ -101,6 +101,7 @@ export default function Activity({
       placeId: id,
       placeType: activityData?.placeType,
       kakaoLink: activityData.placeDetail.kakaoLink,
+      qAndA: activityData?.qAndA,
     });
   };
 
@@ -110,18 +111,17 @@ export default function Activity({
 
   useEffect(() => {
     if (activityData) {
+      //console.log(activityData);
       setImages(
         Array(activityData?.coverImage).concat(activityData?.subImages)
       );
     }
   }, [activityData]);
 
-  useFocusEffect(() => {
-    refetch();
-  });
-
   useEffect(() => {
+    refetch();
     setAccountType();
+    console.log("UE Activity");
   }, []);
   return (
     <Container>
