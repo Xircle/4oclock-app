@@ -120,6 +120,7 @@ export interface PlaceData {
   placeType?: string;
   participantsUsername?: string[];
   creator_id?: string;
+  qAndA?: string[];
   participantsInfo: {
     total_count: number;
     male_count: number;
@@ -282,6 +283,7 @@ export interface SeeUserByIdOutput extends CoreOutput {
 // Make reservation
 export interface MakeReservationInput {
   placeId: string;
+  qAndA: string[];
 }
 
 export interface MakeReservationOutput extends CoreOutput {}
