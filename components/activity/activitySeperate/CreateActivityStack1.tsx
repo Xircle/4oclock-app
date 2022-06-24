@@ -152,7 +152,6 @@ export default function CreateActivityStack1(props: Props) {
           )}
         </Container>
 
-        {/* @ts-ignore */}
         <RelativeMainButtonWBg
           onPress={nextHandler}
           disabled={!stage1Valid}
