@@ -7,6 +7,7 @@ interface Props {
   profileImgUrl: string;
   job: string;
   shortBio: string;
+  qAndA: string[];
 }
 
 export default class ParticipantsPC extends PureComponent<Props> {
@@ -27,7 +28,9 @@ export default class ParticipantsPC extends PureComponent<Props> {
         </ParticipantsLeftContainer>
         <ParticipantsRightContainer>
           <JobText numberOfLines={1}>{this.props.job}</JobText>
-          <ShortBioText numberOfLines={2}>{this.props.shortBio}</ShortBioText>
+          <ShortBioText numberOfLines={2}>
+            {this.props.qAndA ? this.props.qAndA[0] : this.props.shortBio}
+          </ShortBioText>
         </ParticipantsRightContainer>
       </ParticipantsWrapper>
     );
