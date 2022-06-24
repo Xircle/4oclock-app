@@ -7,7 +7,10 @@ import {
   MainHeading,
 } from "../../styles/styles";
 import { RouteProp, useNavigation } from "@react-navigation/native";
-import { ActivityStackParamList } from "../../navigators/ActivityStackNav";
+import {
+  ActivityStackParamList,
+  ReservationQAScreenProp,
+} from "../../navigators/ActivityStackNav";
 import AbsoluteMainButtonWBg from "../../components/UI/AbsoluteMainButtonWBg";
 import { Ionicons } from "@expo/vector-icons";
 import { Alert } from "react-native";
@@ -18,35 +21,28 @@ interface Props {
   route: RouteProp<ActivityStackParamList, "ReservationInstruction">;
 }
 
-export default function Reservation({ route }: Props) {
+export default function ReservationInstruction({ route }: Props) {
   const placeId = route.params.placeId;
   const [participantAnswer, setParticipantAnswer] = useState(
     "participate for the second time"
   );
   const [agree, setAgree] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<ReservationQAScreenProp>();
 
   const { mutateAsync: mutateReservation, isLoading } =
     useMutation(makeReservation);
 
   const CTAHandler = async () => {
     try {
-      const { data } = await mutateReservation({
-        placeId,
-        qAndA: [participantAnswer],
-      });
-      if (!data.ok) {
-        Alert.alert(data.error);
-        return;
-      }
-      // @ts-ignore
-      navigation.navigate("ReservationConfirm", {
+      navigation.navigate("ReservationQA", {
         detailAddress: route.params.detailAddress,
         participationFee: route.params.participationFee,
         startDateFromNow: route.params.startDateFromNow,
         startTime: route.params.startTime,
         placeType: route.params.placeType,
         kakaoLink: route.params.kakaoLink,
+        qAndA: route.params.qAndA,
+        placeId: route.params.placeId,
       });
     } catch (err) {
       console.log(err);
