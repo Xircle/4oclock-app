@@ -5,6 +5,7 @@ import {
   fontFamilies,
   GeneralText,
   MainHeading,
+  TextArea,
 } from "../../styles/styles";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import {
@@ -23,10 +24,7 @@ interface Props {
 
 export default function ReservationQA({ route }: Props) {
   const placeId = route.params.placeId;
-  const [participantAnswer, setParticipantAnswer] = useState(
-    "participate for the second time"
-  );
-  const [agree, setAgree] = useState(false);
+  const [answer, setAnswer] = useState("");
   const navigation = useNavigation<ReservationConfirmScreenProp>();
 
   const { mutateAsync: mutateReservation, isLoading } =
@@ -36,7 +34,7 @@ export default function ReservationQA({ route }: Props) {
     try {
       const { data } = await mutateReservation({
         placeId,
-        qAndA: [participantAnswer],
+        qAndA: [answer],
       });
       if (!data.ok) {
         Alert.alert(data.error);
@@ -69,27 +67,21 @@ export default function ReservationQA({ route }: Props) {
         </InnerInfoContainer>
       </InfoContainer>
       <SelectContainer>
-        <SelectButtonWrapper marginBottom={15}>
-          <SelectButton onPress={() => setAgree((prev) => !prev)}>
-            <SelectInnerWrapper>
-              <Ionicons
-                name={agree ? "checkmark-circle" : "checkmark-circle-outline"}
-                size={28}
-                color={agree ? colors.mainBlue : colors.bareGrey}
-              />
-              <SelectText>
-                위 사항을 확인하고 이용 규칙을 지키겠습니다
-              </SelectText>
-              <MandatorySign>*</MandatorySign>
-            </SelectInnerWrapper>
-          </SelectButton>
-        </SelectButtonWrapper>
+        <STextArea
+          placeholder="함께하고 싶은 주제나 내용을 입력해도 좋아"
+          autoCapitalize="none"
+          returnKeyType="next"
+          returnKeyLabel="next"
+          autoCorrect={false}
+          multiline={true}
+          defaultValue={answer}
+          onChange={(event) => {
+            const { eventCount, target, text } = event.nativeEvent;
+            setAnswer(text);
+          }}
+        />
       </SelectContainer>
-      <AbsoluteMainButtonWBg
-        title="나도 놀러갈래~"
-        onPress={CTAHandler}
-        disabled={!agree}
-      />
+      <AbsoluteMainButtonWBg title="나도 놀러갈래~" onPress={CTAHandler} />
     </Container>
   );
 }
@@ -157,4 +149,14 @@ const MandatorySign = styled(GeneralText)`
 const SelectInnerWrapper = styled.View`
   flex-direction: row;
   align-items: center;
+`;
+
+const STextArea = styled(TextArea)`
+  margin-top: 50px;
+  width: 100%;
+  height: 180px;
+  border: ${(props) =>
+    props.error
+      ? `0.5px solid ${colors.warningRed}`
+      : `0.5px solid ${colors.midGrey}`};
 `;
