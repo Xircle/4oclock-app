@@ -155,8 +155,5 @@ const STextArea = styled(TextArea)`
   margin-top: 50px;
   width: 100%;
   height: 180px;
-  border: ${(props) =>
-    props.error
-      ? `0.5px solid ${colors.warningRed}`
-      : `0.5px solid ${colors.midGrey}`};
+  border: 0.5px solid ${colors.midGrey};
 `;
