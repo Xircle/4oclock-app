@@ -4,6 +4,7 @@ import { Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useMutation, useQuery } from "react-query";
 import styled from "styled-components/native";
+import LeaderQ from "../../components/activity/LeaderQ";
 import ParticipantsPC from "../../components/activity/ParticipantsPC";
 import MyBottomModal from "../../components/UI/MyBottomModal";
 import { cancelReservationByCreator } from "../../lib/api/cancelReservationByCreator";
@@ -109,6 +110,7 @@ export default function ParticipantsList({ route }: Props) {
         </MyBottomModal>
       )}
       <Heading>{route.params.placeName}</Heading>
+      {participantsData.qAndA?.length && <LeaderQ qAndA={["hello"]} />}
       <AgeContainer>
         <AgeText>남 {participantsData?.participantsInfo?.male_count}</AgeText>
         <AgeText>
@@ -128,7 +130,7 @@ export default function ParticipantsList({ route }: Props) {
                 profileImgUrl={item.profileImgUrl}
                 shortBio={item.shortBio}
                 job={item.job}
-                qAndA={item.qAndA}
+                qAndA={route?.params?.isCreator ? item.qAndA : []}
               />
             </TouchableOpacity>
           );
