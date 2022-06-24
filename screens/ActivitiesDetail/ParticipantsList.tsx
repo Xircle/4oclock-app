@@ -1,5 +1,5 @@
 import { RouteProp, useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useMutation, useQuery } from "react-query";
@@ -84,6 +84,10 @@ export default function ParticipantsList({ route }: Props) {
     }
   };
 
+  useEffect(() => {
+    if (participantsData) console.log(participantsData.qAndA);
+  }, [participantsData]);
+
   return (
     <Container showsVerticalScrollIndicator={false}>
       {route?.params?.isCreator && (
@@ -124,6 +128,7 @@ export default function ParticipantsList({ route }: Props) {
                 profileImgUrl={item.profileImgUrl}
                 shortBio={item.shortBio}
                 job={item.job}
+                qAndA={item.qAndA}
               />
             </TouchableOpacity>
           );
