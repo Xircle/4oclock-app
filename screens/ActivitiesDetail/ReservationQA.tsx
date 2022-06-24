@@ -59,16 +59,12 @@ export default function ReservationQA({ route }: Props) {
   return (
     <Container>
       <InfoContainer>
-        <MainHeading>친구들과 veve놀러가기!🕺vdvdvdv</MainHeading>
-        <ThanksText>이제 친구들과 맛잼모임에 놀러가자~!</ThanksText>
+        <MainHeading>리더의 질문에 대답해줘!🕺</MainHeading>
+        <ThanksText>걱정마!대답은 리더에게만 공개가 돼!</ThanksText>
         <InnerInfoContainer>
           <InfoText>
-            👍 모임 시작 전 참여가 어려워진 경우, 반드시 운영진을 통해서 미리
-            알려주세요!
-          </InfoText>
-          <InfoText style={{ marginTop: 20 }}>
-            ✌ 모임에서 다른 친구들을 존중해주세요. 비매너 친구는 익명신고를
-            통해 연고이팅 운영진에게 말해주세요!
+            📌{`    `}
+            {route?.params?.qAndA[0]}
           </InfoText>
         </InnerInfoContainer>
       </InfoContainer>
