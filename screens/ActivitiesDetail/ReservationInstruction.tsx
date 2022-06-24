@@ -34,7 +34,7 @@ export default function ReservationInstruction({ route }: Props) {
 
   const CTAHandler = async () => {
     try {
-      if (route.params.qAndA) {
+      if (route.params.qAndA?.length) {
         navigation.navigate("ReservationQA", {
           detailAddress: route.params.detailAddress,
           participationFee: route.params.participationFee,
