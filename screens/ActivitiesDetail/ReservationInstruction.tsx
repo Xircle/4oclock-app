@@ -34,16 +34,35 @@ export default function ReservationInstruction({ route }: Props) {
 
   const CTAHandler = async () => {
     try {
-      navigation.navigate("ReservationQA", {
-        detailAddress: route.params.detailAddress,
-        participationFee: route.params.participationFee,
-        startDateFromNow: route.params.startDateFromNow,
-        startTime: route.params.startTime,
-        placeType: route.params.placeType,
-        kakaoLink: route.params.kakaoLink,
-        qAndA: route.params.qAndA,
-        placeId: route.params.placeId,
-      });
+      if (route.params.qAndA) {
+        navigation.navigate("ReservationQA", {
+          detailAddress: route.params.detailAddress,
+          participationFee: route.params.participationFee,
+          startDateFromNow: route.params.startDateFromNow,
+          startTime: route.params.startTime,
+          placeType: route.params.placeType,
+          kakaoLink: route.params.kakaoLink,
+          qAndA: route.params.qAndA,
+          placeId: route.params.placeId,
+        });
+      } else {
+        const { data } = await mutateReservation({
+          placeId,
+          qAndA: [participantAnswer],
+        });
+        if (!data.ok) {
+          Alert.alert(data.error);
+          return;
+        }
+        navigation.navigate("ReservationConfirm", {
+          detailAddress: route.params.detailAddress,
+          participationFee: route.params.participationFee,
+          startDateFromNow: route.params.startDateFromNow,
+          startTime: route.params.startTime,
+          placeType: route.params.placeType,
+          kakaoLink: route.params.kakaoLink,
+        });
+      }
     } catch (err) {
       console.log(err);
       Alert.alert(err);
