@@ -16,9 +16,12 @@ export default class LeaderQ extends PureComponent<Props> {
     return (
       <Container>
         <Header>모임 생성자의 질문</Header>
-        <ShortBioText numberOfLines={2}>
-          {this.props.qAndA ? this.props.qAndA[0] : "hihi"}
-        </ShortBioText>
+        <InnerInfoContainer>
+          <InfoText>
+            📌{`    `}
+            {this.props.qAndA?.[0]}
+          </InfoText>
+        </InnerInfoContainer>
       </Container>
     );
   }
@@ -35,6 +38,17 @@ const Header = styled(GeneralText)`
   font-size: 20px;
 `;
 
-const ShortBioText = styled(GeneralText)`
+const InfoText = styled(GeneralText)`
+  font-size: 13px;
+  color: ${colors.lightBlack};
+  line-height: 22px;
   font-family: ${fontFamilies.light};
+`;
+
+const InnerInfoContainer = styled.View`
+  margin-top: 22px;
+  margin-top: 22px;
+  background-color: rgba(219, 237, 255, 0.39);
+  padding: 20px 16px;
+  border-radius: 10px;
 `;
