@@ -96,10 +96,13 @@ export default function ParticipantsList({ route }: Props) {
           onClose={() => {}}
           visible={modal}
           setModal={() => setModal(false)}
-          height={200}
+          height={250}
         >
           <ModalBlueButton onPress={modalNavigateToFriendProfile}>
             <ModalButtonText>프로필 보러가기</ModalButtonText>
+          </ModalBlueButton>
+          <ModalBlueButton onPress={modalNavigateToFriendProfile}>
+            <ModalButtonText>오카방 초대하기</ModalButtonText>
           </ModalBlueButton>
           <ModalReportButton onPress={CancelReservation}>
             <ModalButtonText>참가자 강퇴하기</ModalButtonText>
