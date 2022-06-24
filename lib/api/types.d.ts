@@ -78,6 +78,7 @@ export interface PlaceDataParticipantsProfile extends Participants {
   isYkClub?: boolean;
   job?: string;
   shortBio?: string;
+  qAndA?: string[];
 }
 
 export interface Review {
@@ -381,6 +382,7 @@ export interface GetEventBannersOutput extends CoreOutput {
 
 export class PlaceParticipantListData {
   participantListProfiles: PlaceDataParticipantsProfile[];
+  qAndA: string[];
   participantsInfo: {
     total_count: number;
     male_count: number;
