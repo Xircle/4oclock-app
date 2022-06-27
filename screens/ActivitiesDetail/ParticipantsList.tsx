@@ -9,6 +9,7 @@ import ParticipantsPC from "../../components/activity/ParticipantsPC";
 import MyBottomModal from "../../components/UI/MyBottomModal";
 import { cancelReservationByCreator } from "../../lib/api/cancelReservationByCreator";
 import { getPlaceParticipantList } from "../../lib/api/getPlaceParticipantList";
+import { sendOkLink } from "../../lib/api/sendOkLink";
 import { PlaceParticipantListData } from "../../lib/api/types";
 import { LoggedInStackParamList } from "../../navigators/LoggedInNav";
 import {
@@ -29,6 +30,8 @@ export default function ParticipantsList({ route }: Props) {
   const navigation = useNavigation();
   const [userId, setUserId] = useState("");
   const [modal, setModal] = useState(false);
+
+  const { mutateAsync: mutateSendOkLink } = useMutation(sendOkLink);
 
   const {
     data: participantsData,
@@ -85,8 +88,19 @@ export default function ParticipantsList({ route }: Props) {
     }
   };
 
+  const sendOKLink = async () => {
+    if (userId) {
+      try {
+        await mutateSendOkLink({
+          placeId: route.params.placeId,
+          receiverId: userId,
+        });
+      } catch (error) {}
+    }
+  };
+
   useEffect(() => {
-    if (participantsData) console.log(participantsData.qAndA);
+    if (participantsData) console.log(participantsData?.qAndA);
   }, [participantsData]);
 
   return (
@@ -101,7 +115,7 @@ export default function ParticipantsList({ route }: Props) {
           <ModalBlueButton onPress={modalNavigateToFriendProfile}>
             <ModalButtonText>프로필 보러가기</ModalButtonText>
           </ModalBlueButton>
-          <ModalBlueButton onPress={modalNavigateToFriendProfile}>
+          <ModalBlueButton onPress={sendOKLink}>
             <ModalButtonText>오카방 초대하기</ModalButtonText>
           </ModalBlueButton>
           <ModalReportButton onPress={CancelReservation}>
@@ -113,7 +127,7 @@ export default function ParticipantsList({ route }: Props) {
         </MyBottomModal>
       )}
       <Heading>{route.params.placeName}</Heading>
-      {participantsData.qAndA?.length && <LeaderQ qAndA={["hello"]} />}
+      {participantsData?.qAndA?.length > 0 && <LeaderQ qAndA={["hello"]} />}
       <AgeContainer>
         <AgeText>남 {participantsData?.participantsInfo?.male_count}</AgeText>
         <AgeText>
