@@ -1,16 +1,14 @@
 import styled from "styled-components/native";
 import React, { useEffect } from "react";
-import { Dimensions, SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native";
 import { colors } from "../styles/styles";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { GetEventBannersOutput, UserData } from "../lib/api/types";
 import MainTopCarousel from "../components/UI/MainTopCarousel";
 import { getEventBanners } from "../lib/api/getEventBanners";
 import HeaderPureComponent from "../components/shared/HeaderPureComponent";
 import { getUser } from "../lib/api/getUser";
 import { useNavigation } from "@react-navigation/native";
-import messaging from "@react-native-firebase/messaging";
-import { updateFirebaseToken } from "../lib/api/updateFirebaseToken";
 import MainTopTabNav from "../navigators/MainTopTabNav";
 
 interface Props {}
