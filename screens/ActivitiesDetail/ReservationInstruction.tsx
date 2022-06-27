@@ -23,9 +23,7 @@ interface Props {
 
 export default function ReservationInstruction({ route }: Props) {
   const placeId = route.params.placeId;
-  const [participantAnswer, setParticipantAnswer] = useState(
-    "participate for the second time"
-  );
+  const [participantAnswer, setParticipantAnswer] = useState("");
   const [agree, setAgree] = useState(false);
   const navigation = useNavigation<ReservationQAScreenProp>();
 
@@ -132,12 +130,6 @@ const InfoText = styled(GeneralText)`
   color: ${colors.lightBlack};
   line-height: 22px;
   font-family: ${fontFamilies.light};
-`;
-
-const VaccineInfoText = styled(GeneralText)`
-  font-size: 13px;
-  color: ${colors.bareGrey};
-  margin-top: 8px;
 `;
 
 const InnerInfoContainer = styled.View`
