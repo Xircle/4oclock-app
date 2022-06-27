@@ -88,6 +88,7 @@ function MainRegularTab(props: Props) {
       await mutateVerifyByCode(modalInput);
       setModalInput("");
       await CloseModal();
+      setModalShown(true);
     } else {
       // 팀 업데이트
       await mutatePatchTeam(modalInput);
