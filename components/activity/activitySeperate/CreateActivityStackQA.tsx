@@ -2,6 +2,7 @@ import styled from "styled-components/native";
 import React, { useState } from "react";
 import {
   colors,
+  GeneralText,
   MainHeading,
   SpaceBetweenWrapper,
   TextArea,
@@ -65,6 +66,7 @@ export default function CreateActivityStackQA(props: Props) {
               returnKeyType="next"
               returnKeyLabel="next"
               autoCorrect={false}
+              multiline={true}
               value={qAndA?.[0] ? qAndA?.[0] : ""}
               defaultValue={qAndA?.[0] ? qAndA?.[0] : ""}
               onChange={(event) => {
@@ -76,6 +78,36 @@ export default function CreateActivityStackQA(props: Props) {
                 );
               }}
             />
+            <ExampleContainer>
+              <ExampleWrapper>
+                <ExampleLeftContainer>
+                  <ExampleLeftText>👽</ExampleLeftText>
+                </ExampleLeftContainer>
+                <ExampleRightContainer>
+                  <ExampleRightText>
+                    너의 최근의 관심사를 알려줘!
+                  </ExampleRightText>
+                </ExampleRightContainer>
+              </ExampleWrapper>
+              <ExampleWrapper>
+                <ExampleLeftContainer>
+                  <ExampleLeftText>👽</ExampleLeftText>
+                </ExampleLeftContainer>
+                <ExampleRightContainer>
+                  <ExampleRightText>
+                    술 먹고 기억에 남는 흑역사 썰은?
+                  </ExampleRightText>
+                </ExampleRightContainer>
+              </ExampleWrapper>
+              <ExampleWrapper>
+                <ExampleLeftContainer>
+                  <ExampleLeftText>👽</ExampleLeftText>
+                </ExampleLeftContainer>
+                <ExampleRightContainer>
+                  <ExampleRightText>요즘 하고 있는 고민은?</ExampleRightText>
+                </ExampleRightContainer>
+              </ExampleWrapper>
+            </ExampleContainer>
           </InnerContainer>
         </Container>
         <RelativeMainButtonWBg
@@ -89,6 +121,34 @@ export default function CreateActivityStackQA(props: Props) {
     </MyKeyboardAvoidingView>
   );
 }
+
+const ExampleContainer = styled.View`
+  padding-left: 6px;
+  padding-right: 3px;
+`;
+
+const ExampleWrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-top: 18px;
+`;
+
+const ExampleLeftContainer = styled.View`
+  margin-right: 16px;
+`;
+
+const ExampleRightContainer = styled.View`
+  background-color: #ebebeb;
+  flex: 1;
+  padding: 8px;
+  border-radius: 5px;
+`;
+
+const ExampleLeftText = styled(GeneralText)`
+  font-size: 28px;
+`;
+
+const ExampleRightText = styled(GeneralText)``;
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -105,6 +165,6 @@ const InnerContainer = styled.View`
 const STextArea = styled(TextArea)`
   margin-top: 50px;
   width: 100%;
-  height: 180px;
+  height: 120px;
   border: 0.5px solid ${colors.midGrey};
 `;
