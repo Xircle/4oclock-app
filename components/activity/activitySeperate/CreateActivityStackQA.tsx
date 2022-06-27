@@ -1,11 +1,7 @@
 import styled from "styled-components/native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  BigTextInput,
-  BlackLabel,
   colors,
-  ErrorMessage,
-  GeneralText,
   MainHeading,
   SpaceBetweenWrapper,
   TextArea,
@@ -16,8 +12,6 @@ import { RootState } from "../../../lib/reducers";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { activityDispatcher } from "../../../lib/activity/ActivityDispatcher";
-import { createPlaceErrorMessage } from "../../../lib/errorMessages";
-import { openLink } from "../../shared/Links";
 import { Alert } from "react-native";
 import FullScreenLoader from "../../UI/FullScreenLoader";
 import { createPlace } from "../../../lib/api/createPlace";
