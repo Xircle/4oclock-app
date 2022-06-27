@@ -398,6 +398,11 @@ export interface VerificationSendInput {
   phoneNumber: string;
 }
 
+export interface SendOkLinkInput {
+  placeId: string;
+  receiverId: string;
+}
+
 export interface VerificationSendOutput extends CoreOutput {}
 
 export interface VerificationConfirmInput {
