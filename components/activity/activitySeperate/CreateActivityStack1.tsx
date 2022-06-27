@@ -65,12 +65,6 @@ export default function CreateActivityStack1(props: Props) {
     }
   }, [teamsData]);
 
-  const activitySelectorEnabled = storage.getItem("accountType");
-
-  const setActivityType = (type: string) => {
-    activityDispatcher.dispatchActivityType(type, dispatch);
-  };
-
   return (
     <MyKeyboardAvoidingView keyboardVerticalOffset={50}>
       <SpaceBetweenWrapper>
@@ -79,14 +73,7 @@ export default function CreateActivityStack1(props: Props) {
           <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
             재밌는 모임을 열어볼까? 열고 친구들과 꿀잼모임😊
           </SubHeading>
-          {activitySelectorEnabled && (
-            <InnerContainer style={{ paddingBottom: 5 }}>
-              <CreatePlaceTypeSelector
-                onPress={setActivityType}
-                selectedType={activityType}
-              />
-            </InnerContainer>
-          )}
+
           <CAPartWrapper>
             <BlackLabel>만들고 싶은 모임 주제를 적어봐!(제목)</BlackLabel>
             <SBigTextInput
