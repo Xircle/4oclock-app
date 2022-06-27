@@ -158,12 +158,10 @@ const Container = styled.ScrollView`
   padding-right: 15px;
 `;
 
-const InnerContainer = styled.View`
-  margin-top: 22px;
-`;
+const InnerContainer = styled.View``;
 
 const STextArea = styled(TextArea)`
-  margin-top: 50px;
+  margin-top: 18px;
   width: 100%;
   height: 120px;
   border: 0.5px solid ${colors.midGrey};
