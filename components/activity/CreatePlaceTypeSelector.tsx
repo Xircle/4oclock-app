@@ -18,37 +18,24 @@ export default function CreatePlaceTypeSelector({
 }: Props) {
   return (
     <Container>
-      {types.map((item, idx) => {
-        return (
-          <Select key={item} onPress={() => onPress(types[idx])}>
-            <SelectText selected={selectedType === types[idx]}>
-              {item}
-            </SelectText>
-          </Select>
-        );
-      })}
+      <Select onPress={() => onPress(types[0])}></Select>
+      <Select onPress={() => onPress(types[1])}></Select>
+      <Select onPress={() => onPress(types[2])}></Select>
     </Container>
   );
 }
 
+const Select = styled.TouchableOpacity`
+  width: 100%;
+  height: 85px;
+  border-radius: 9px;
+  background-color: #d9d9d9;
+  margin-bottom: 18px;
+`;
+
+const Label = styled(GeneralText)``;
+
 const Container = styled.View`
   width: ${width * 0.9 + "px"};
-  height: 30px;
-  border-radius: 5px;
-  flex-direction: row;
-  justify-content: space-around;
-`;
-
-const Select = styled.TouchableOpacity<{ backgroundColor: string }>`
-  justify-content: center;
-  align-items: center;
-`;
-
-const SelectText = styled(GeneralText)<{ selected: boolean }>`
-  color: ${(props) => (props.selected ? colors.mainBlue : colors.bareGrey)};
-  font-family: ${fontFamilies.bold};
-  padding: 3px 10px;
-  border: 1px solid
-    ${(props) => (props.selected ? colors.mainBlue : colors.bareGrey)};
-  border-radius: 14px;
+  height: 100%;
 `;
