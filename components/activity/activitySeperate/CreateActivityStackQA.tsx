@@ -8,6 +8,7 @@ import {
   GeneralText,
   MainHeading,
   SpaceBetweenWrapper,
+  TextArea,
 } from "../../../styles/styles";
 import MyKeyboardAvoidingView from "../../UI/MyKeyboardAvoidingView";
 import { useSelector } from "react-redux";
@@ -63,9 +64,8 @@ export default function CreateActivityStackQA(props: Props) {
           </MainHeading>
 
           <InnerContainer>
-            <BlackLabel>오픈 카카오톡 채팅wcwcwc방 링크</BlackLabel>
-            <SBigTextInput
-              placeholder="ex: https://open.kakao.com/o/grFhbIBd"
+            <STextArea
+              placeholder="리더로서 크루원들에게 참고 될만한 질문을 해봐! b행 컨텐츠에 관련된 주제면 환영해!"
               autoCapitalize="none"
               blurOnSubmit={true}
               returnKeyType="next"
@@ -108,10 +108,9 @@ const InnerContainer = styled.View`
   margin-top: 22px;
 `;
 
-const SBigTextInput = styled(BigTextInput)<{ error?: Boolean }>`
-  border: ${(props) =>
-    props.error
-      ? `0.5px solid ${colors.warningRed}`
-      : `0.5px solid ${colors.midGrey}`};
-  margin-top: 20px;
+const STextArea = styled(TextArea)`
+  margin-top: 50px;
+  width: 100%;
+  height: 180px;
+  border: 0.5px solid ${colors.midGrey};
 `;
