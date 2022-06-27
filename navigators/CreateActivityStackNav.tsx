@@ -6,7 +6,7 @@ import CreateActivityStack1 from "../components/activity/activitySeperate/Create
 import CreateActivityStack2 from "../components/activity/activitySeperate/CreateActivityStack2";
 import CreateActivityStack3 from "../components/activity/activitySeperate/CreateActivityStack3";
 import { useNavigation } from "@react-navigation/native";
-import { ButtonProps, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import CreateActivityFinish from "../components/activity/activitySeperate/CreateActivityFinish";
 import CreateActivityStack4 from "../components/activity/activitySeperate/CreateActivityStack4";
 import CreateActivityStack5 from "../components/activity/activitySeperate/CreateActivityStack5";
