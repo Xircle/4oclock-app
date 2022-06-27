@@ -13,10 +13,29 @@ import CreateActivityStack5 from "../components/activity/activitySeperate/Create
 import CreateActivityStack6 from "../components/activity/activitySeperate/CreateActivityStack6";
 import CreateActivityStack21 from "../components/activity/activitySeperate/CreateActivityStack21";
 import CreateActivityStackQA from "../components/activity/activitySeperate/CreateActivityStackQA";
+import CASPlaceTypeScreen from "../components/activity/activitySeperate/CASPlaceTypeScreen";
 
 interface Props {}
 
 export type CreateActivityStackParamList = {
+  CASPlaceType: {
+    name?: string;
+    maxParticipantsNumber?: number;
+    startDateAt?: Date;
+    description?: string;
+    detailAddress?: string;
+    coverImageFile?: any;
+    subImagesFile?: any[];
+    team?: string;
+    placeId?: string;
+    activityType?: string;
+    kakaoLink?: string;
+    recommendation?: string;
+    participating?: string;
+    role?: string;
+    modify?: boolean;
+    stage1Valid?: boolean;
+  };
   CAS1: {
     name?: string;
     maxParticipantsNumber?: number;
@@ -96,6 +115,11 @@ export default function CreateActivityStackNav(props: Props) {
         },
       }}
     >
+      <Stack.Screen
+        name="CASPlaceType"
+        options={{}}
+        component={CASPlaceTypeScreen}
+      />
       <Stack.Screen name="CAS1" options={{}} component={CreateActivityStack1} />
       <Stack.Screen name="CAS2" options={{}} component={CreateActivityStack2} />
       <Stack.Screen name="CAS3" options={{}} component={CreateActivityStack3} />
