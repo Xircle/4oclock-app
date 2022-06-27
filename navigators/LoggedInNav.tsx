@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MainTabsNav from "./MainTabsNav";
 import { createStackNavigator } from "@react-navigation/stack";
 import MyProfile from "../screens/MyPage/MyProfile";
@@ -14,6 +14,8 @@ import ParticipantsList from "../screens/ActivitiesDetail/ParticipantsList";
 import BannedScreen from "../screens/BannedScreen";
 import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
+import { Alert } from "react-native";
+import { openLink } from "../components/shared/Links";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -41,11 +43,24 @@ const Stack = createStackNavigator<LoggedInStackParamList>();
 
 export default function LoggedInNav() {
   const navigation = useNavigation();
-  messaging().onNotificationOpenedApp(async (remoteMessage) => {
-    if (remoteMessage.data?.type === "message") {
-      navigation.navigate("ChatT", {});
-    }
-  });
+  useEffect(() => {
+    messaging().onNotificationOpenedApp(async (remoteMessage) => {
+      if (remoteMessage.data?.type === "message") {
+        //@ts-ignore
+        navigation.navigate("ChatT", {});
+      }
+      if (remoteMessage.data?.type === "okLink") {
+        Alert.alert("방장님이 오카방에 초대했습니다", "", [
+          {
+            text: "오카방 입장하기",
+            //@ts-ignore
+            onPress: () => openLink.LOpenLink(remoteMessage.data?.okLink),
+          },
+        ]);
+      }
+    });
+  }, []);
+
   return (
     <Stack.Navigator
       screenOptions={{
