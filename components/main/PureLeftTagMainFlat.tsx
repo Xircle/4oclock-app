@@ -12,7 +12,6 @@ export default class PureLeftTagMainFlat extends PureComponent<Props> {
     super(props);
   }
 
-
   render() {
     if (this.props.isClosed) {
       return (
@@ -20,12 +19,13 @@ export default class PureLeftTagMainFlat extends PureComponent<Props> {
           <ClosedText>마 감</ClosedText>
         </LeftContainerOverlay>
       );
+    } else {
+      return (
+        <TagContainer>
+          <Tag>잔여{this.props.leftParticipantsCount || "0"}석</Tag>
+        </TagContainer>
+      );
     }
-    return (
-      <TagContainer>
-        <Tag>잔여{this.props.leftParticipantsCount || "0"}석</Tag>
-      </TagContainer>
-    );
   }
 }
 
@@ -45,12 +45,11 @@ const LeftContainerOverlay = styled.View`
   border-radius: 5px;
 `;
 
-const TagContainer = styled.View<{ isDisabled: Boolean }>`
+const TagContainer = styled.View`
   position: absolute;
   top: 0;
   left: 0;
-  background-color: ${(props) =>
-    props.isDisabled ? colors.bareGrey : colors.mainBlue};
+  background-color: ${colors.mainBlue};
   justify-content: center;
   align-items: center;
   width: 58px;
