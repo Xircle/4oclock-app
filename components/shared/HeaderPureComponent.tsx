@@ -10,12 +10,21 @@ interface Props {}
 
 export default function HeaderPureComponent(props: Props) {
   const navigation = useNavigation();
+
+  const NotificationCTAHandler = () => {
+    navigation.navigate("NotificationScreen");
+  };
+
   return (
     <HeaderContainer>
       <HeaderImage source={require("../../statics/images/HeaderImage.png")} />
       <HeaderRightContainer>
-        <TouchableOpacity onPress={() => {}}>
-          <Ionicons name="search" size={30} color={colors.black} />
+        <TouchableOpacity onPress={NotificationCTAHandler}>
+          <Ionicons
+            name="notifications-outline"
+            size={30}
+            color={colors.black}
+          />
         </TouchableOpacity>
       </HeaderRightContainer>
     </HeaderContainer>
@@ -24,7 +33,7 @@ export default function HeaderPureComponent(props: Props) {
 
 const HeaderContainer = styled.View`
   width: 100%;
-  height: 50px;
+  height: 40px;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
