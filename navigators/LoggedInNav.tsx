@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
 import { Alert } from "react-native";
 import { openLink } from "../components/shared/Links";
+import { NotificationScreen } from "../screens/NotificationScreen";
 
 export type LoggedInStackParamList = {
   Tabs: undefined;
@@ -37,6 +38,7 @@ export type LoggedInStackParamList = {
     placeId: string;
   };
   BannedScreen: undefined;
+  NotificationScreen: undefined;
 };
 
 const Stack = createStackNavigator<LoggedInStackParamList>();
@@ -139,6 +141,11 @@ export default function LoggedInNav() {
         name="BannedScreen"
         component={BannedScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NotificationScreen"
+        component={NotificationScreen}
+        options={{ title: "알람" }}
       />
     </Stack.Navigator>
   );
