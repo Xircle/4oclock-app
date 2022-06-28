@@ -4,7 +4,6 @@ class LocalStorage {
   async setItem(key: string, value: any) {
     const string = JSON.stringify(value);
     await AsyncStorage.setItem(key, string);
-    return;
   }
 
   async getItem(key: string) {
@@ -15,6 +14,11 @@ class LocalStorage {
     } catch (e) {
       return null;
     }
+  }
+
+  async mergeItem(key: string, value: any) {
+    const string = JSON.stringify(value);
+    await AsyncStorage.mergeItem(key, string);
   }
 }
 
