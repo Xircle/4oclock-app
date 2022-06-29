@@ -42,7 +42,14 @@ export const NotificationScreen = (props: Props) => {
     <Container showsVerticalScrollIndicator={false}>
       {notifications?.length > 0 &&
         notifications?.map((item, index) => {
-          return <PureNotificationItem mainText={item.title} />;
+          return (
+            <PureNotificationItem
+              mainText={item.title}
+              subText={item.body}
+              CTA={item.CTA}
+              image={item.image}
+            />
+          );
         })}
     </Container>
   );
