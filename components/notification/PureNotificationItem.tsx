@@ -19,7 +19,9 @@ export default class PureNotificationItem extends PureComponent<Props> {
       <ItemContainer>
         <ItemPicContainer></ItemPicContainer>
         <ItemMidContainer>
-          <HeaderText>NotificationScreen</HeaderText>
+          <HeaderText>
+            {this.props.mainText ? this.props.mainText : "no title provided"}
+          </HeaderText>
         </ItemMidContainer>
         <ItemDeleteContainer></ItemDeleteContainer>
       </ItemContainer>
