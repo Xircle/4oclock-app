@@ -16,7 +16,7 @@ export default class PureNotificationItem extends PureComponent<Props> {
 
   render() {
     return (
-      <ItemContainer>
+      <ItemContainer onPress={this.props.CTA}>
         <ItemPicContainer>
           {/* {this.props.image ? : } */}
           <ImageSub>👽</ImageSub>
