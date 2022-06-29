@@ -8,9 +8,10 @@ import { Asset } from "expo-asset";
 import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./lib/reducers";
 import { Provider } from "react-redux";
-import messaging from "@react-native-firebase/messaging";
+import messaging, {
+  FirebaseMessagingTypes,
+} from "@react-native-firebase/messaging";
 import storage from "./lib/helpers/myAsyncStorage";
-import { NOTIFICATION_TYPE } from "./lib/api/types";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCPaFLT9I2OPjvrS-HKvks1nzvFquaeeKw",
@@ -27,7 +28,10 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+async function notificationHandler(
+  remoteMessage: FirebaseMessagingTypes.RemoteMessage
+) {
+  if (remoteMessage.data?.type === "message") return;
   const newNotification = {
     type: remoteMessage.data?.type,
     CTA: () => {},
@@ -45,28 +49,14 @@ messaging().setBackgroundMessageHandler(async (remoteMessage) => {
     };
   }
   await storage.setItem("notifications", notifications);
+}
+
+messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+  notificationHandler(remoteMessage);
 });
 
 messaging().onMessage(async (remoteMessage) => {
-  if (remoteMessage.data?.type === NOTIFICATION_TYPE.message) return;
-  const newNotification = {
-    type: remoteMessage.data?.type,
-    CTA: () => {},
-    image: "",
-    title: remoteMessage.notification?.title,
-    body: remoteMessage.notification?.body,
-  };
-  let notifications = await storage.getItem("notifications");
-
-  if (notifications) {
-    notifications.unreadNotifications.unshift(newNotification);
-  } else {
-    notifications = {
-      unreadNotifications: [newNotification],
-      readNotifications: [],
-    };
-  }
-  await storage.setItem("notifications", notifications);
+  notificationHandler(remoteMessage);
 });
 
 const queryClient = new QueryClient();
