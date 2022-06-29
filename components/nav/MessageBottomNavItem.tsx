@@ -4,6 +4,7 @@ import { GeneralText } from "../../styles/styles";
 import { Dimensions, View } from "react-native";
 import messaging from "@react-native-firebase/messaging";
 import { useFocusEffect } from "@react-navigation/native";
+import { NOTIFICATION_TYPE } from "../../lib/api/types";
 
 interface Props {
   color: string;
@@ -17,7 +18,8 @@ function MessageBottomNavItem({ color, focused, size }: Props) {
   const [msgReceived, setMsgReceived] = useState(false);
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      setMsgReceived(true);
+      if (remoteMessage.data?.type === NOTIFICATION_TYPE.message)
+        setMsgReceived(true);
     });
     return unsubscribe;
   }, []);
