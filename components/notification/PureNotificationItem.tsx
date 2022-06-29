@@ -17,13 +17,19 @@ export default class PureNotificationItem extends PureComponent<Props> {
   render() {
     return (
       <ItemContainer>
-        <ItemPicContainer></ItemPicContainer>
+        <ItemPicContainer>
+          {/* {this.props.image ? : } */}
+          <ImageSub>👽</ImageSub>
+        </ItemPicContainer>
         <ItemMidContainer>
           <HeaderText>
             {this.props.mainText ? this.props.mainText : "no title provided"}
           </HeaderText>
+          <SubText>
+            {this.props.subText ? this.props.subText : "no title provided"}
+          </SubText>
         </ItemMidContainer>
-        <ItemDeleteContainer></ItemDeleteContainer>
+        {/* <ItemDeleteContainer></ItemDeleteContainer> */}
       </ItemContainer>
     );
   }
@@ -40,9 +46,10 @@ const ItemContainer = styled.TouchableOpacity`
 `;
 
 const ItemPicContainer = styled.View`
-  background-color: red;
-  width: 40px;
+  width: 60px;
   height: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ItemDeleteContainer = styled.TouchableOpacity`
@@ -53,6 +60,15 @@ const ItemDeleteContainer = styled.TouchableOpacity`
 
 const ItemMidContainer = styled.View`
   flex: 1;
+  justify-content: space-around;
 `;
 
 const HeaderText = styled(GeneralText)``;
+
+const SubText = styled(GeneralText)`
+  color: ${colors.bareGrey};
+`;
+
+const ImageSub = styled.Text`
+  font-size: 40px;
+`;
