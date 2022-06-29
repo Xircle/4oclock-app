@@ -11,14 +11,32 @@ type Props = {};
 export const NotificationScreen = (props: Props) => {
   const [notifications, setNotification] = useState([]);
   useEffect(() => {
+    let mounted = true;
     async function fetchAndSaveNotification() {
-      const data: NotificationData = await storage.getItem(
-        StorageKey.notifications
-      );
-      Alert.alert(typeof data + data?.unreadNotifications?.length);
-      setNotification(data.unreadNotifications.concat(data.readNotifications));
+      if (mounted) {
+        const data: NotificationData = await storage.getItem(
+          StorageKey.notifications
+        );
+        if (!data) return;
+
+        const newReadNotifications = data.unreadNotifications
+          .concat(data.readNotifications)
+          .slice(0, 10);
+        setNotification(newReadNotifications);
+
+        await storage.setItem(StorageKey.notifications, {
+          unreadNotifications: [],
+          readNotifications: newReadNotifications,
+        });
+      }
+    }
+    async function cleanUp() {
+      mounted = false;
     }
     fetchAndSaveNotification();
+    return () => {
+      cleanUp();
+    };
   }, []);
   return (
     <Container showsVerticalScrollIndicator={false}>
