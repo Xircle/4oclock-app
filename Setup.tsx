@@ -12,6 +12,7 @@ import messaging, {
   FirebaseMessagingTypes,
 } from "@react-native-firebase/messaging";
 import storage from "./lib/helpers/myAsyncStorage";
+import { openLink } from "./components/shared/Links";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCPaFLT9I2OPjvrS-HKvks1nzvFquaeeKw",
@@ -32,9 +33,15 @@ async function notificationHandler(
   remoteMessage: FirebaseMessagingTypes.RemoteMessage
 ) {
   if (remoteMessage.data?.type === "message") return;
+  const CTA = async () => {
+    if (remoteMessage.data?.type === "place") {
+    } else if (remoteMessage.data?.type === "okLink") {
+      await openLink.LOpenLink(remoteMessage.data?.okLink);
+    }
+  };
   const newNotification = {
     type: remoteMessage.data?.type,
-    CTA: () => {},
+    CTA: CTA,
     image: "",
     title: remoteMessage.notification?.title,
     body: remoteMessage.notification?.body,
