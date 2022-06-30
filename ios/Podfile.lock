@@ -4,6 +4,8 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXApplication (4.0.0):
     - ExpoModulesCore
+  - EXAV (10.1.3):
+    - ExpoModulesCore
   - EXConstants (12.1.3):
     - ExpoModulesCore
   - EXErrorRecovery (3.0.3):
@@ -19,9 +21,9 @@ PODS:
     - ExpoModulesCore
   - EXManifests (0.2.2):
     - EXJSONUtils
-  - Expo (43.0.3):
+  - Expo (43.0.5):
     - ExpoModulesCore
-  - ExpoModulesCore (0.4.8):
+  - ExpoModulesCore (0.4.10):
     - React-Core
   - EXSplashScreen (0.13.5):
     - ExpoModulesCore
@@ -480,6 +482,7 @@ PODS:
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../node_modules/expo-application/ios`)
+  - EXAV (from `../node_modules/expo-av/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
@@ -571,6 +574,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXApplication:
     :path: "../node_modules/expo-application/ios"
+  EXAV:
+    :path: "../node_modules/expo-av/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
   EXErrorRecovery:
@@ -691,6 +696,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EXApplication: 0e15240e4d125b62f1cae48759ffbbd32b9286a6
+  EXAV: 8adf9a1c0161144d77e96149a1e5a5f9358be290
   EXConstants: 6d585d93723b18d7a8c283591a335609e3bc153e
   EXErrorRecovery: ac2622400a32be84604591f70d0efff416e4b9a2
   EXFileSystem: 99aac7962c11c680681819dd9cbca24e20e5b1e7
@@ -699,8 +705,8 @@ SPEC CHECKSUMS:
   EXKeepAwake: 8aa32396a5972d26e75e538603aad0f032396503
   EXLinearGradient: 4d727eacb53d19ef25b02dd810e0199b453489ce
   EXManifests: 50e42e01335df4e54109dee7be5a91bfd37347db
-  Expo: 5316c3ecdc34eb0cad340d01dc8beec97c7e879e
-  ExpoModulesCore: a9a9bf32b2da35cd9b7299c80790c03a91ac7d15
+  Expo: d9588796cd19999da4d440d87bf7eb7ae4dbd608
+  ExpoModulesCore: c9438f6add0fb7b04b7c64eb97a833d2752a7834
   EXSplashScreen: 57f329dbf25c5c12800feed79068a056453dc772
   EXStructuredHeaders: 873e7f329c2f6279c1b1e0229df59c9861560b53
   EXUpdates: 061b67c33f0e7f8fd335bbb48697c4a4fc8a5157

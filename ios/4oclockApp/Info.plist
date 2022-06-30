@@ -51,6 +51,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow $(PRODUCT_NAME) to access your microphone</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>모임 생성 또는 프로필 생성 및 수정을 위해 '모든 사진에 대한 접근 허용'을 설정해주세요</string>
 	<key>NSPhotoLibraryUsageDescription</key>
