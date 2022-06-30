@@ -36,8 +36,8 @@ messaging().setBackgroundMessageHandler(async (remoteMessage) => {
 });
 
 messaging().onMessage(async (remoteMessage) => {
-  await notificationHandler(remoteMessage);
   await notificationPlaySound();
+  await notificationHandler(remoteMessage);
 });
 
 const queryClient = new QueryClient();
