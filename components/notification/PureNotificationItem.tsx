@@ -4,9 +4,10 @@ import { colors, fontFamilies, GeneralText } from "../../styles/styles";
 
 interface Props {
   image?: string;
-  CTA?: () => void;
+  CTA?: () => Promise<void> | void;
   mainText: string;
   subText?: string;
+  //type: string |
 }
 
 export default class PureNotificationItem extends PureComponent<Props> {
@@ -15,6 +16,7 @@ export default class PureNotificationItem extends PureComponent<Props> {
   }
 
   render() {
+    function CTA() {}
     return (
       <ItemContainer onPress={this.props.CTA}>
         <ItemPicContainer>
