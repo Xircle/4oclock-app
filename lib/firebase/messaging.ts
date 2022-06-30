@@ -1,4 +1,8 @@
-import messaging from "@react-native-firebase/messaging";
+import { openLink } from "./../../components/shared/Links";
+import messaging, {
+  FirebaseMessagingTypes,
+} from "@react-native-firebase/messaging";
+import storage from "../helpers/myAsyncStorage";
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -9,4 +13,33 @@ export async function requestUserPermission() {
   if (enabled) {
     console.log("Authorization status:", authStatus);
   }
+}
+
+export async function notificationHandler(
+  remoteMessage: FirebaseMessagingTypes.RemoteMessage
+) {
+  if (remoteMessage.data?.type === "message") return;
+  const CTA = async () => {
+    if (remoteMessage.data?.type === "place") {
+    } else if (remoteMessage.data?.type === "okLink") {
+      await openLink.LOpenLink(remoteMessage.data?.okLink);
+    }
+  };
+  const newNotification = {
+    type: remoteMessage.data?.type,
+    CTA: CTA,
+    image: "",
+    title: remoteMessage.notification?.title,
+    body: remoteMessage.notification?.body,
+  };
+  let notifications = await storage.getItem("notifications");
+  if (notifications) {
+    notifications.unreadNotifications.unshift(newNotification);
+  } else {
+    notifications = {
+      unreadNotifications: [newNotification],
+      readNotifications: [],
+    };
+  }
+  await storage.setItem("notifications", notifications);
 }
