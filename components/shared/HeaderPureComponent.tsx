@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 import { colors } from "../../styles/styles";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import MainHeaderRight from "./MainHeaderRight";
 
 interface Props {}
 
@@ -12,6 +13,7 @@ export default function HeaderPureComponent(props: Props) {
   const navigation = useNavigation();
 
   const NotificationCTAHandler = () => {
+    // @ts-ignore
     navigation.navigate("NotificationScreen");
   };
 
@@ -19,13 +21,7 @@ export default function HeaderPureComponent(props: Props) {
     <HeaderContainer>
       <HeaderImage source={require("../../statics/images/HeaderImage.png")} />
       <HeaderRightContainer>
-        <TouchableOpacity onPress={NotificationCTAHandler}>
-          <Ionicons
-            name="notifications-outline"
-            size={30}
-            color={colors.black}
-          />
-        </TouchableOpacity>
+        <MainHeaderRight />
       </HeaderRightContainer>
     </HeaderContainer>
   );
