@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components/native";
-import { colors, fontFamilies, GeneralText } from "../../styles/styles";
+import { colors, GeneralText } from "../../styles/styles";
 
 interface Props {
   image?: string;
@@ -8,6 +8,7 @@ interface Props {
   subText?: string;
   type: string;
   isUnread?: boolean;
+  mainParam?: string;
 }
 
 export default class PureNotificationItem extends PureComponent<Props> {
@@ -17,10 +18,12 @@ export default class PureNotificationItem extends PureComponent<Props> {
 
   render() {
     async function CTA() {
+      if (!this.props.mainParam) return;
       switch (this.props.type) {
         case "message":
           break;
         case "okLink":
+          //openLink
           break;
         case "place":
           break;
