@@ -3,6 +3,7 @@ import messaging, {
   FirebaseMessagingTypes,
 } from "@react-native-firebase/messaging";
 import storage from "../helpers/myAsyncStorage";
+import { Audio } from "expo-av";
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -42,4 +43,11 @@ export async function notificationHandler(
     };
   }
   await storage.setItem("notifications", notifications);
+}
+
+export async function playSound() {
+  const { sound } = await Audio.Sound.createAsync(
+    require("../../statics/sounds/notification_sound.mp3")
+  );
+  await sound.playAsync();
 }
