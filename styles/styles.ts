@@ -154,6 +154,16 @@ export const ModalBlueButton = styled(ModalReportButton)`
   background-color: ${colors.mainBlue};
 `;
 
+export const MyAlert = styled.View`
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: red;
+  position: absolute;
+  left: -7px;
+  top: -7px;
+`;
+
 export const SpaceBetweenWrapper = styled.View`
   flex: 1;
   justify-content: space-between;
