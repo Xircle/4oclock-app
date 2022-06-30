@@ -16,7 +16,16 @@ export default class PureNotificationItem extends PureComponent<Props> {
   }
 
   render() {
-    async function CTA() {}
+    async function CTA() {
+      switch (this.props.type) {
+        case "message":
+          break;
+        case "okLink":
+          break;
+        case "place":
+          break;
+      }
+    }
     return (
       <ItemContainer onPress={CTA} isUnread={this.props.isUnread}>
         <ItemPicContainer>
