@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
-import { GeneralText } from "../../styles/styles";
+import { GeneralText, MyAlert } from "../../styles/styles";
 import { Dimensions, View } from "react-native";
 import messaging from "@react-native-firebase/messaging";
 import { useFocusEffect } from "@react-navigation/native";
@@ -42,12 +42,7 @@ const Text = styled(GeneralText)<{ width: number; color: string }>`
   color: ${(props) => props.color};
 `;
 
-const MsgAlert = styled.View`
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: red;
-  position: absolute;
+const MsgAlert = styled(MyAlert)`
   left: -7px;
   top: -7px;
 `;
