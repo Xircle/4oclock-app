@@ -1,3 +1,4 @@
+import { Audio } from "expo-av";
 import React, { PureComponent } from "react";
 import styled from "styled-components/native";
 import { colors, fontFamilies, GeneralText } from "../../styles/styles";
@@ -7,7 +8,7 @@ interface Props {
   CTA?: () => Promise<void> | void;
   mainText: string;
   subText?: string;
-  //type: string |
+  type: string;
 }
 
 export default class PureNotificationItem extends PureComponent<Props> {
@@ -16,9 +17,17 @@ export default class PureNotificationItem extends PureComponent<Props> {
   }
 
   render() {
-    function CTA() {}
+    async function playSound() {
+      const { sound } = await Audio.Sound.createAsync(
+        require("../../statics/sounds/notification_sound.mp3")
+      );
+      await sound.playAsync();
+    }
+    async function CTA() {
+      await playSound();
+    }
     return (
-      <ItemContainer onPress={this.props.CTA}>
+      <ItemContainer onPress={playSound}>
         <ItemPicContainer>
           {/* {this.props.image ? : } */}
           <ImageSub>👽</ImageSub>
