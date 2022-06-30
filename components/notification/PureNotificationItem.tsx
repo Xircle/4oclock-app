@@ -4,10 +4,10 @@ import { colors, fontFamilies, GeneralText } from "../../styles/styles";
 
 interface Props {
   image?: string;
-  CTA?: () => Promise<void> | void;
   mainText: string;
   subText?: string;
   type: string;
+  isUnread?: boolean;
 }
 
 export default class PureNotificationItem extends PureComponent<Props> {
@@ -18,7 +18,7 @@ export default class PureNotificationItem extends PureComponent<Props> {
   render() {
     async function CTA() {}
     return (
-      <ItemContainer onPress={this.props.CTA}>
+      <ItemContainer onPress={CTA} isUnread={this.props.isUnread}>
         <ItemPicContainer>
           {/* {this.props.image ? : } */}
           <ImageSub>👽</ImageSub>
@@ -37,13 +37,14 @@ export default class PureNotificationItem extends PureComponent<Props> {
   }
 }
 
-const ItemContainer = styled.TouchableOpacity`
+const ItemContainer = styled.TouchableOpacity<{ isUnread: boolean }>`
   width: 90%;
   margin-left: auto;
   margin-right: auto;
-  background-color: ${colors.lightBlue};
+  background-color: ${(props) =>
+    props.isUnread ? colors.lightBlue : "	#f5f5f5"};
   height: 60px;
-  border-bottom-width: 1px;
+  /* border-bottom-width: 1px; */
   flex-direction: row;
 `;
 
