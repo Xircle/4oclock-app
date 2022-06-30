@@ -422,6 +422,7 @@ export interface Notification {
   image?: string;
   title?: string;
   body?: string;
+  mainParam?: string;
 }
 
 export interface NotificationData {
