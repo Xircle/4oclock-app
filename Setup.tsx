@@ -26,6 +26,12 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
+messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+  console.log("background");
+  await notificationHandler(remoteMessage);
+  Alert.alert("background");
+});
+
 messaging().onMessage(async (remoteMessage) => {
   await notificationHandler(remoteMessage);
 });
