@@ -8,7 +8,8 @@ import { colors } from "../styles/styles";
 type Props = {};
 
 export const NotificationScreen = (props: Props) => {
-  const [notifications, setNotification] = useState([]);
+  const [unreadNotifications, setUnreadNotifications] = useState([]);
+  const [readNotifications, setReadNotifications] = useState([]);
   useEffect(() => {
     let mounted = true;
     async function fetchAndSaveNotification() {
@@ -21,7 +22,8 @@ export const NotificationScreen = (props: Props) => {
         const newReadNotifications = data.unreadNotifications
           .concat(data.readNotifications)
           .slice(0, 10);
-        setNotification(newReadNotifications);
+        setUnreadNotifications(data.unreadNotifications);
+        setReadNotifications(data.readNotifications);
 
         await storage.setItem(StorageKey.notifications, {
           unreadNotifications: [],
@@ -39,15 +41,27 @@ export const NotificationScreen = (props: Props) => {
   }, []);
   return (
     <Container showsVerticalScrollIndicator={false}>
-      {notifications?.length > 0 &&
-        notifications?.map((item, index) => {
+      {unreadNotifications?.length > 0 &&
+        unreadNotifications?.map((item, index) => {
           return (
             <PureNotificationItem
               type={item.type}
               mainText={item.title}
               subText={item.body}
-              CTA={item.CTA}
               image={item.image}
+              isUnread={true}
+            />
+          );
+        })}
+      {readNotifications?.length > 0 &&
+        readNotifications?.map((item, index) => {
+          return (
+            <PureNotificationItem
+              type={item.type}
+              mainText={item.title}
+              subText={item.body}
+              image={item.image}
+              isUnread={false}
             />
           );
         })}
