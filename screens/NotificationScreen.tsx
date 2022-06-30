@@ -50,6 +50,7 @@ export const NotificationScreen = (props: Props) => {
               subText={item.body}
               image={item.image}
               isUnread={true}
+              mainParam={item.mainParam}
             />
           );
         })}
