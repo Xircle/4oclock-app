@@ -45,7 +45,7 @@ export async function notificationHandler(
   await storage.setItem("notifications", notifications);
 }
 
-export async function playSound() {
+export async function notificationPlaySound() {
   const { sound } = await Audio.Sound.createAsync(
     require("../../statics/sounds/notification_sound.mp3")
   );
