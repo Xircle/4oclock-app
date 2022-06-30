@@ -412,15 +412,14 @@ export interface VerificationConfirmInput {
 
 export interface VerificationConfirmOutput extends CoreOutput {}
 
-export const NOTIFICATION_TYPE = {
-  message: "message",
-  okLink: "okLink",
-  place: "place",
-};
+export enum NotificationType {
+  message = "message",
+  okLink = "okLink",
+  place = "place",
+}
 export interface Notification {
   type: NOTIFICATION_TYPE;
   image?: string;
-  CTA?: () => void;
   title?: string;
   body?: string;
 }
