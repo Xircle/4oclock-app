@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Alert } from "react-native";
 import styled from "styled-components/native";
 import PureNotificationItem from "../components/notification/PureNotificationItem";
-import { Notification, NotificationData } from "../lib/api/types";
+import { NotificationData } from "../lib/api/types";
 import storage, { StorageKey } from "../lib/helpers/myAsyncStorage";
-import { colors, GeneralText } from "../styles/styles";
+import { colors } from "../styles/styles";
 
 type Props = {};
 
@@ -44,6 +43,7 @@ export const NotificationScreen = (props: Props) => {
         notifications?.map((item, index) => {
           return (
             <PureNotificationItem
+              type={item.type}
               mainText={item.title}
               subText={item.body}
               CTA={item.CTA}
