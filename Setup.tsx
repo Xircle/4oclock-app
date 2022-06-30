@@ -9,7 +9,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./lib/reducers";
 import { Provider } from "react-redux";
 import messaging from "@react-native-firebase/messaging";
-import { notificationHandler } from "./lib/firebase/messaging";
+import { notificationHandler, playSound } from "./lib/firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCPaFLT9I2OPjvrS-HKvks1nzvFquaeeKw",
@@ -34,6 +34,7 @@ messaging().setBackgroundMessageHandler(async (remoteMessage) => {
 
 messaging().onMessage(async (remoteMessage) => {
   await notificationHandler(remoteMessage);
+  await playSound();
 });
 
 const queryClient = new QueryClient();
