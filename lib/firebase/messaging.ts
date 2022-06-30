@@ -1,4 +1,3 @@
-import { openLink } from "./../../components/shared/Links";
 import messaging, {
   FirebaseMessagingTypes,
 } from "@react-native-firebase/messaging";
@@ -26,6 +25,7 @@ export async function notificationHandler(
     image: "",
     title: remoteMessage.notification?.title,
     body: remoteMessage.notification?.body,
+    mainParam: remoteMessage.data?.mainParam,
   };
   let notifications = await storage.getItem("notifications");
   if (notifications) {
