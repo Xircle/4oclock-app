@@ -82,7 +82,7 @@ export default function Activity({
         {
           text: "활동코드 입력하기",
           //@ts-ignore
-          onPress: () => navigation.navigate("MyProfile"),
+          onPress: () => navigation.navigate("정기"),
         },
         {
           text: "닫기",
