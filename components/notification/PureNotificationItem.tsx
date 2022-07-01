@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components/native";
 import { colors, GeneralText } from "../../styles/styles";
+import { openLink } from "../shared/Links";
 
 interface Props {
   image?: string;
@@ -24,6 +25,7 @@ export default class PureNotificationItem extends PureComponent<Props> {
           break;
         case "okLink":
           //openLink
+          await openLink.LOpenLink(this.props.mainParam);
           break;
         case "place":
           break;
