@@ -16,9 +16,11 @@ export default function CreatePlaceTypeSelector({
   onPress,
   selectedType,
 }: Props) {
+  function Select(value: string) {}
+
   return (
     <Container>
-      <Select
+      <SelectContainer
         onPress={() => onPress(types[0])}
         selected={selectedType === types[0]}
       >
@@ -28,8 +30,8 @@ export default function CreatePlaceTypeSelector({
         <SubLabel selected={selectedType === types[0]}>
           누구든 열 수 있고, 새로운 친구들과 놀고 싶을 때 놀러가자!
         </SubLabel>
-      </Select>
-      <Select
+      </SelectContainer>
+      <SelectContainer
         onPress={() => onPress(types[1])}
         selected={selectedType === types[1]}
       >
@@ -39,8 +41,8 @@ export default function CreatePlaceTypeSelector({
         <SubLabel selected={selectedType === types[1]}>
           리더가 여는 미b행의 컨텐츠로 꿀잼 비행모임
         </SubLabel>
-      </Select>
-      <Select
+      </SelectContainer>
+      <SelectContainer
         onPress={() => onPress(types[2])}
         selected={selectedType === types[2]}
       >
@@ -48,12 +50,12 @@ export default function CreatePlaceTypeSelector({
         <SubLabel selected={selectedType === types[2]}>
           운영진만 열 수 있어요!
         </SubLabel>
-      </Select>
+      </SelectContainer>
     </Container>
   );
 }
 
-const Select = styled.TouchableOpacity<{ selected: boolean }>`
+const SelectContainer = styled.TouchableOpacity<{ selected: boolean }>`
   width: 100%;
   height: 85px;
   border-radius: 9px;
