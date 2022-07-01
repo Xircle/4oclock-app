@@ -11,6 +11,7 @@ import { getUser } from "../../lib/api/getUser";
 import { patchTeam } from "../../lib/api/patchTeam";
 import { GetPlacesByLocationOutput, UserData } from "../../lib/api/types";
 import { verifyByCode } from "../../lib/api/verifyByCode";
+import storage, { StorageKey } from "../../lib/helpers/myAsyncStorage";
 import { colors, GeneralText, UnderLineInput } from "../../styles/styles";
 import MyModal from "../UI/MyModal";
 import MainFeed from "./MainFeed";
@@ -50,6 +51,23 @@ function MainRegularTab(props: Props) {
       },
     }
   );
+
+  useEffect(() => {
+    let mounted = true;
+    async function fetchNewData() {
+      if (mounted && userData?.accountType) {
+        await storage.setItem(StorageKey.accountType, userData?.accountType);
+      }
+    }
+    fetchNewData();
+    const cleanup = () => {
+      mounted = false;
+    };
+
+    return () => {
+      cleanup();
+    };
+  }, [userData]);
   const onRefresh = async (type: string) => {
     setRefreshing(true);
     await queryClient.refetchQueries(["places", type]);
