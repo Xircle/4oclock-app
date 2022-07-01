@@ -1,7 +1,10 @@
 import styled from "styled-components/native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions } from "react-native";
 import { colors, fontFamilies, GeneralText } from "../../styles/styles";
+import storage, { StorageKey } from "../../lib/helpers/myAsyncStorage";
+import FullScreenLoader from "../UI/FullScreenLoader";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   onPress: (string) => void;
@@ -16,12 +19,46 @@ export default function CreatePlaceTypeSelector({
   onPress,
   selectedType,
 }: Props) {
-  function Select(value: string) {}
+  const [accountType, setAccountType] = useState("");
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function fetchAccountType() {
+      if (mounted) {
+        const accountFromStorage = await storage.getItem(
+          StorageKey.accountType
+        );
+        setAccountType(accountFromStorage);
+        console.log(accountFromStorage);
+      }
+    }
+    function cleanUp() {
+      mounted = false;
+    }
+    fetchAccountType();
+
+    return cleanUp();
+  }, []);
+  function Select(value: string) {
+    if (value === types[0]) {
+      onPress(value);
+    } else if (accountType === "Owner" && value === types[1]) {
+      onPress(value);
+    }
+  }
+  if (!accountType) {
+    return (
+      <Container>
+        <FullScreenLoader />
+      </Container>
+    );
+  }
 
   return (
     <Container>
       <SelectContainer
-        onPress={() => onPress(types[0])}
+        onPress={() => Select(types[0])}
         selected={selectedType === types[0]}
       >
         <Label selected={selectedType === types[0]}>
@@ -32,7 +69,7 @@ export default function CreatePlaceTypeSelector({
         </SubLabel>
       </SelectContainer>
       <SelectContainer
-        onPress={() => onPress(types[1])}
+        onPress={() => Select(types[1])}
         selected={selectedType === types[1]}
       >
         <Label selected={selectedType === types[1]}>
@@ -41,19 +78,40 @@ export default function CreatePlaceTypeSelector({
         <SubLabel selected={selectedType === types[1]}>
           리더가 여는 미b행의 컨텐츠로 꿀잼 비행모임
         </SubLabel>
+        {accountType !== "Owner" && (
+          <Disabler>
+            <Ionicons name="lock-closed" size={50} color="black" />
+          </Disabler>
+        )}
       </SelectContainer>
       <SelectContainer
-        onPress={() => onPress(types[2])}
+        onPress={() => Select(types[2])}
         selected={selectedType === types[2]}
       >
         <Label selected={selectedType === types[2]}>미B행 파티 열기 🔥️</Label>
         <SubLabel selected={selectedType === types[2]}>
           운영진만 열 수 있어요!
         </SubLabel>
+        <Disabler>
+          <Ionicons name="lock-closed" size={50} color="black" />
+        </Disabler>
       </SelectContainer>
     </Container>
   );
 }
+
+const Disabler = styled.View`
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.5;
+  border-radius: 9px;
+  background-color: ${colors.bgColor};
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+`;
 
 const SelectContainer = styled.TouchableOpacity<{ selected: boolean }>`
   width: 100%;
