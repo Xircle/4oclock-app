@@ -3,6 +3,7 @@ import messaging, {
 } from "@react-native-firebase/messaging";
 import storage from "../helpers/myAsyncStorage";
 import { Audio } from "expo-av";
+import { Alert } from "react-native";
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -19,7 +20,10 @@ export async function notificationHandler(
   remoteMessage: FirebaseMessagingTypes.RemoteMessage
 ) {
   if (remoteMessage.data?.type === "message") return;
-
+  if (!remoteMessage.data?.mainParam) {
+    Alert.alert("no mainParam");
+    return;
+  }
   const newNotification = {
     type: remoteMessage.data?.type,
     image: "",
