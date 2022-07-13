@@ -50,8 +50,7 @@ export default function LoggedInNav() {
       if (remoteMessage.data?.type === "message") {
         //@ts-ignore
         navigation.navigate("ChatT", {});
-      }
-      if (remoteMessage.data?.type === "okLink") {
+      } else if (remoteMessage.data?.type === "okLink") {
         Alert.alert("방장님이 오카방에 초대했습니다", "", [
           {
             text: "오카방 입장하기",
