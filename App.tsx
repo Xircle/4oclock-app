@@ -16,13 +16,12 @@ export default function App() {
   const { mutateAsync: mutateUpdateFirebaseToken } =
     useMutation(updateFirebaseToken);
   useEffect(() => {
-    requestUserPermission();
-
-    messaging()
-      .getToken()
-      .then((token) => {
-        mutateUpdateFirebaseToken(token);
-      });
+    async function setupFCM() {
+      await requestUserPermission();
+      const token = await messaging().getToken();
+      await mutateUpdateFirebaseToken(token);
+    }
+    setupFCM();
   }, []);
 
   return (
