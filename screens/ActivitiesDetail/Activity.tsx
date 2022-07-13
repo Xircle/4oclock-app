@@ -11,7 +11,7 @@ import {
 } from "../../styles/styles";
 import { Alert, Dimensions, TouchableOpacity, View } from "react-native";
 import optimizeImage from "../../lib/helpers/optimizeImage";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "react-query";
 import { Participants, PlaceData, UserData } from "../../lib/api/types.d";
@@ -29,7 +29,7 @@ import { displayMeetingTime } from "../../lib/utils";
 
 interface Props {
   id: string;
-  name: string;
+  name?: string;
   modal: boolean;
   setModal: () => void;
   participants: Participants[];
@@ -37,13 +37,7 @@ interface Props {
 
 const { width, height } = Dimensions.get("window");
 
-export default function Activity({
-  id,
-  name,
-  modal,
-  setModal,
-  participants,
-}: Props) {
+export default function Activity({ id, name, modal, setModal }: Props) {
   const navigation = useNavigation();
   const [Images, setImages] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -238,7 +232,7 @@ export default function Activity({
               {activityData?.recommendation}
             </RecommendationText>
           )}
-          <InnerHeading>{name}</InnerHeading>
+          <InnerHeading>{name ? name : activityData?.name}</InnerHeading>
           <Description>{activityData?.placeDetail?.description}</Description>
         </InnerWrapper>
         <InnerWrapper upperDividor={true}>
