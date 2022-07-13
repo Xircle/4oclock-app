@@ -23,7 +23,7 @@ export default function AuthPhoneNumber({
   setIsSent,
 }: Props) {
   return (
-    <Container>
+    <Container showsVerticalScrollIndicator={false}>
       <MainHeading style={{ marginTop: 40 }}>
         즐거운 모임 전{"\n"}전화번호를 입력해볼까?
       </MainHeading>
@@ -62,8 +62,7 @@ export default function AuthPhoneNumber({
   );
 }
 
-const Container = styled.View`
-  flex: 1;
+const Container = styled.ScrollView`
   background-color: ${colors.bgColor};
   padding: 15px;
 `;
