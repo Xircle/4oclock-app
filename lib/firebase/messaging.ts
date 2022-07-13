@@ -1,7 +1,7 @@
 import messaging, {
   FirebaseMessagingTypes,
 } from "@react-native-firebase/messaging";
-import storage from "../helpers/myAsyncStorage";
+import storage, { StorageKey } from "../helpers/myAsyncStorage";
 import { Audio } from "expo-av";
 import { Alert } from "react-native";
 
@@ -21,7 +21,7 @@ export async function notificationHandler(
 ) {
   if (remoteMessage.data?.type === "message") return;
   if (!remoteMessage.data?.mainParam) {
-    Alert.alert("no mainParam");
+    // Alert.alert("no mainParam");
     return;
   }
   const newNotification = {
@@ -31,7 +31,7 @@ export async function notificationHandler(
     body: remoteMessage.notification?.body,
     mainParam: remoteMessage.data?.mainParam,
   };
-  let notifications = await storage.getItem("notifications");
+  let notifications = await storage.getItem(StorageKey.notifications);
   if (notifications) {
     notifications.unreadNotifications.unshift(newNotification);
   } else {
@@ -40,7 +40,7 @@ export async function notificationHandler(
       readNotifications: [],
     };
   }
-  await storage.setItem("notifications", notifications);
+  await storage.setItem(StorageKey.notifications, notifications);
 }
 
 export async function notificationPlaySound() {
