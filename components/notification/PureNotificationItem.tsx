@@ -1,3 +1,4 @@
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import React, { PureComponent } from "react";
 import styled from "styled-components/native";
 import { colors, GeneralText } from "../../styles/styles";
@@ -10,6 +11,7 @@ interface Props {
   type: string;
   isUnread?: boolean;
   mainParam?: string;
+  navigation: NavigationProp<ParamListBase>;
 }
 
 export default class PureNotificationItem extends PureComponent<Props> {
@@ -28,6 +30,9 @@ export default class PureNotificationItem extends PureComponent<Props> {
           await openLink.LOpenLink(this.props.mainParam);
           break;
         case "place":
+          this.props.navigation.navigate("ActivityStackNav", {
+            id: this.props.mainParam,
+          });
           break;
       }
     }
