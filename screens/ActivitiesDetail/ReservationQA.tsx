@@ -12,11 +12,10 @@ import {
   ActivityStackParamList,
   ReservationConfirmScreenProp,
 } from "../../navigators/ActivityStackNav";
-import AbsoluteMainButtonWBg from "../../components/UI/AbsoluteMainButtonWBg";
-import { Ionicons } from "@expo/vector-icons";
 import { Alert } from "react-native";
 import { useMutation } from "react-query";
 import { makeReservation } from "../../lib/api/makeReservation";
+import RelativeMainButtonWBg from "../../components/UI/RelativeMainButtonWBG";
 
 interface Props {
   route: RouteProp<ActivityStackParamList, "ReservationInstruction">;
@@ -81,7 +80,11 @@ export default function ReservationQA({ route }: Props) {
           }}
         />
       </SelectContainer>
-      <AbsoluteMainButtonWBg title="나도 놀러갈래~" onPress={CTAHandler} />
+      <RelativeMainButtonWBg
+        onPress={CTAHandler}
+        title={"나도 놀러갈래~"}
+        bottom={10}
+      />
     </Container>
   );
 }
