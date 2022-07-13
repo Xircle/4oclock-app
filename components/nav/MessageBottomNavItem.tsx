@@ -16,10 +16,9 @@ const { width } = Dimensions.get("window");
 function MessageBottomNavItem({ color, focused, size }: Props) {
   const [msgReceived, setMsgReceived] = useState(false);
   useEffect(() => {
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+    messaging().onMessage(async (remoteMessage) => {
       if (remoteMessage.data?.type === "message") setMsgReceived(true);
     });
-    return unsubscribe;
   }, []);
 
   useFocusEffect(() => {
