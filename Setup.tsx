@@ -30,11 +30,8 @@ if (!firebase.apps.length) {
 }
 
 messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-  console.log("background");
   await notificationHandler(remoteMessage);
-  Alert.alert("background");
 });
-
 messaging().onMessage(async (remoteMessage) => {
   await notificationPlaySound();
   await notificationHandler(remoteMessage);
