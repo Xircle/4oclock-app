@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export enum StorageKey {
   notifications = "notifications",
   accountType = "accountType",
+  message = "message",
 }
 
 class LocalStorage {
