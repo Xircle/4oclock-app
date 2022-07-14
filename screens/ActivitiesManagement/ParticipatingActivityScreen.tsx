@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useQuery } from "react-query";
 import styled from "styled-components/native";
@@ -6,11 +6,12 @@ import { getMyPlaces } from "../../lib/api/getMyPlaces";
 import { MyPlaceData } from "../../lib/api/types";
 import MyPageFlatlistPlace from "../../components/profile/MyPlacesFlatList";
 import { colors } from "../../styles/styles";
-import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 type Props = {};
 
 const ParticipatingActivityScreen = (props: Props) => {
+  const navigation = useNavigation();
   const {
     data: myPlacesData,
     isLoading,
@@ -19,9 +20,19 @@ const ParticipatingActivityScreen = (props: Props) => {
     retry: 1,
     refetchOnWindowFocus: false,
   });
-  useFocusEffect(() => {
-    refetch();
-  });
+
+  useEffect(() => {
+    let isFocused = true;
+    navigation.addListener("focus", (e) => {
+      // Do something
+      if (!isLoading && isFocused) refetch();
+      console.log("hi pas");
+    });
+
+    return () => {
+      isFocused = false;
+    };
+  }, []);
 
   return (
     <Container>
