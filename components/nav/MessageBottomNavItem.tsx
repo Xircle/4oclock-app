@@ -3,17 +3,20 @@ import React, { useEffect, useState } from "react";
 import { GeneralText, MyAlert } from "../../styles/styles";
 import { Dimensions, View } from "react-native";
 import messaging from "@react-native-firebase/messaging";
-import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import storage, { StorageKey } from "../../lib/helpers/myAsyncStorage";
 
 interface Props {
   color: string;
   focused: boolean;
   size?: number;
+  isNewMsg?: boolean;
 }
 
 const { width } = Dimensions.get("window");
 
-function MessageBottomNavItem({ color, focused, size }: Props) {
+function MessageBottomNavItem({ color, focused, size, isNewMsg }: Props) {
+  const navigation = useNavigation();
   const [msgReceived, setMsgReceived] = useState(false);
   useEffect(() => {
     messaging().onMessage(async (remoteMessage) => {
@@ -21,13 +24,28 @@ function MessageBottomNavItem({ color, focused, size }: Props) {
     });
   }, []);
 
-  useFocusEffect(() => {
-    setMsgReceived(false);
-  });
+  useEffect(() => {
+    let isFocused = true;
+    const unsubscribe = async () => {
+      setMsgReceived(false);
+      if (isFocused) {
+        await storage.setItem(StorageKey.message, false);
+        console.log("msg nav");
+      }
+    };
+    navigation.addListener("focus", (e) => {
+      // Do something
+      unsubscribe();
+    });
+
+    return () => {
+      isFocused = false;
+    };
+  }, []);
 
   return (
     <View>
-      {msgReceived && <MsgAlert />}
+      {(msgReceived || isNewMsg) && <MsgAlert />}
       <Text width={width} color={color}>
         메세지
       </Text>
