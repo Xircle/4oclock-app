@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Main from "../screens/Main";
 import MyPage from "../screens/MyPage/MyPage";
@@ -7,13 +7,14 @@ import { colors, fontFamilies } from "../styles/styles";
 import TabSide from "../components/nav/TabSide";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import ChatList from "../screens/Chat/ChatList";
 import RnadomProfile from "../screens/RandomProfile";
 import ActivityTopTabNav from "./ActivityTopTabNav";
 import { activityDispatcher } from "../lib/activity/ActivityDispatcher";
 import { useDispatch } from "react-redux";
 import MessageBottomNavItem from "../components/nav/MessageBottomNavItem";
+import storage, { StorageKey } from "../lib/helpers/myAsyncStorage";
 
 interface Props {}
 
@@ -21,11 +22,35 @@ const Tabs = createBottomTabNavigator();
 export default function MainTabsNav(props: Props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [isNewMsg, setIsNewMsg] = useState(false);
 
   const cleanUp = () => {
     activityDispatcher.dispatchInitialState(dispatch);
     activityDispatcher.dispatchStage1Valid(false, dispatch);
   };
+
+  //console.log("Main Tabs Nav Render");
+
+  useFocusEffect(() => {
+    let isFocused = true;
+
+    const fetchNewMsg = async () => {
+      try {
+        console.log("focus count");
+        if (!isFocused) return;
+        const isNewMessage = await storage.getItem(StorageKey.message);
+        if (isNewMessage) {
+          setIsNewMsg(true);
+        }
+      } catch (e) {}
+    };
+
+    fetchNewMsg();
+
+    return () => {
+      isFocused = false;
+    };
+  });
 
   return (
     <Tabs.Navigator
@@ -78,7 +103,12 @@ export default function MainTabsNav(props: Props) {
         options={{
           title: "메세지",
           tabBarIcon: ({ focused, color, size }) => (
-            <MessageBottomNavItem focused={focused} color={color} size={size} />
+            <MessageBottomNavItem
+              focused={focused}
+              color={color}
+              size={size}
+              isNewMsg={isNewMsg}
+            />
           ),
         }}
       />
