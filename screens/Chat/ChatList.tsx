@@ -40,9 +40,6 @@ export default function ChatList(props: Props) {
     navigation.addListener("focus", (e) => {
       setUp();
     });
-    return () => {
-      storage.setItem(StorageKey.message, false);
-    };
   }, []);
 
   useEffect(() => {
