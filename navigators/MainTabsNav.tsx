@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Main from "../screens/Main";
 import MyPage from "../screens/MyPage/MyPage";
@@ -6,7 +6,7 @@ import TabIcon from "../components/nav/TabIcon";
 import { colors, fontFamilies } from "../styles/styles";
 import TabSide from "../components/nav/TabSide";
 import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
+import { AppState, TouchableOpacity } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import ChatList from "../screens/Chat/ChatList";
 import RnadomProfile from "../screens/RandomProfile";
@@ -41,6 +41,8 @@ export default function MainTabsNav(props: Props) {
         const isNewMessage = await storage.getItem(StorageKey.message);
         if (isNewMessage) {
           setIsNewMsg(true);
+        } else {
+          setIsNewMsg(false);
         }
       } catch (e) {}
     };
@@ -51,7 +53,24 @@ export default function MainTabsNav(props: Props) {
       isFocused = false;
     };
   });
+  useEffect(() => {
+    const fetchNewMsg = async () => {
+      try {
+        const isNewMessage = await storage.getItem(StorageKey.message);
+        if (isNewMessage) {
+          setIsNewMsg(true);
+        } else {
+          setIsNewMsg(false);
+        }
+      } catch (e) {}
+    };
 
+    AppState.addEventListener("change", () => {
+      try {
+        fetchNewMsg();
+      } catch (e) {}
+    });
+  }, []);
   return (
     <Tabs.Navigator
       screenOptions={{
