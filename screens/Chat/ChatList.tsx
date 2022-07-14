@@ -27,26 +27,19 @@ export default function ChatList(props: Props) {
   });
 
   useEffect(() => {
-    let isFocused = true;
     async function setUp() {
-      if (isFocused && !isLoading) {
-        refetch();
-        await storage.setItem(StorageKey.message, false);
-      }
+      refetch();
+      await storage.setItem(StorageKey.message, false);
     }
     messaging().onMessage(async (remoteMessage) => {
       if (remoteMessage.data?.type === "message" && !isLoading) {
         refetch();
       }
     });
-    function cleanUp() {
-      isFocused = false;
-    }
 
     navigation.addListener("focus", (e) => {
       setUp();
     });
-    return cleanUp();
   }, []);
 
   useEffect(() => {
