@@ -1,5 +1,6 @@
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import React, { PureComponent } from "react";
+import { Alert } from "react-native";
 import styled from "styled-components/native";
 import { colors, GeneralText } from "../../styles/styles";
 import { openLink } from "../shared/Links";
@@ -30,14 +31,14 @@ export default class PureNotificationItem extends PureComponent<Props> {
           await openLink.LOpenLink(this.props.mainParam);
           break;
         case "place":
-          this.props.navigation.navigate("ActivityStackNav", {
-            id: this.props.mainParam,
-          });
+          // this.props.navigation.navigate("ActivityStackNav", {
+          //   id: this.props.mainParam,
+          // });
           break;
       }
     }
     return (
-      <ItemContainer onPress={CTA} isUnread={this.props.isUnread}>
+      <ItemContainer onPress={() => CTA()} isUnread={this.props.isUnread}>
         <ItemPicContainer>
           {/* {this.props.image ? : } */}
           <ImageSub>👽</ImageSub>
@@ -47,7 +48,10 @@ export default class PureNotificationItem extends PureComponent<Props> {
             {this.props.mainText ? this.props.mainText : "no title provided"}
           </HeaderText>
           <SubText>
-            {this.props.subText ? this.props.subText : "no title provided"}
+            {this.props.subText ? this.props.subText : "no subtitle provided"}
+            {this.props.mainParam
+              ? this.props.mainParam
+              : "no mainParam provided"}
           </SubText>
         </ItemMidContainer>
         {/* <ItemDeleteContainer></ItemDeleteContainer> */}
