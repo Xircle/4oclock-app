@@ -16,6 +16,12 @@ class LocalStorage {
     let value = await AsyncStorage.getItem(key);
     try {
       const parsed = JSON.parse(value || "");
+      if (parsed === "true") {
+        return true;
+      }
+      if (parsed === "false") {
+        return false;
+      }
       return parsed;
     } catch (e) {
       return null;
