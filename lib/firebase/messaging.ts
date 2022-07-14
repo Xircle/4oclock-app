@@ -19,7 +19,11 @@ export async function requestUserPermission() {
 export async function notificationHandler(
   remoteMessage: FirebaseMessagingTypes.RemoteMessage
 ) {
-  if (remoteMessage.data?.type === "message") return;
+  if (remoteMessage.data?.type === "message") {
+    await storage.setItem(StorageKey.message, true);
+
+    return;
+  }
   if (!remoteMessage.data?.mainParam) {
     // Alert.alert("no mainParam");
     return;
