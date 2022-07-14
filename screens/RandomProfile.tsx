@@ -75,11 +75,16 @@ export default function RnadomProfile(props: Props) {
   }, [profileData?.age]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", (e) => {
+    let isFocused = true;
+    navigation.addListener("focus", (e) => {
       // Do something
-      if (!isLoading) refetch();
+      if (!isLoading && isFocused) refetch();
+      console.log("hic");
     });
-    return unsubscribe;
+
+    return () => {
+      isFocused = false;
+    };
   }, []);
 
   return (
