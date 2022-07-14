@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import React, { useEffect, useState } from "react";
 import { GeneralText, MyAlert } from "../../styles/styles";
-import { Dimensions, View } from "react-native";
+import { AppState, Dimensions, View } from "react-native";
 import messaging from "@react-native-firebase/messaging";
 import { useNavigation } from "@react-navigation/native";
 import storage, { StorageKey } from "../../lib/helpers/myAsyncStorage";
@@ -10,42 +10,44 @@ interface Props {
   color: string;
   focused: boolean;
   size?: number;
-  isNewMsg?: boolean;
 }
 
 const { width } = Dimensions.get("window");
 
-function MessageBottomNavItem({ color, focused, size, isNewMsg }: Props) {
+function MessageBottomNavItem({ color, focused, size }: Props) {
   const navigation = useNavigation();
   const [msgReceived, setMsgReceived] = useState(false);
+
   useEffect(() => {
+    const fetchNewMsg = async () => {
+      try {
+        const isNewMessage = await storage.getItem(StorageKey.message);
+        if (isNewMessage) {
+          setMsgReceived(true);
+        } else {
+          setMsgReceived(false);
+        }
+      } catch (e) {}
+    };
+
     messaging().onMessage(async (remoteMessage) => {
       if (remoteMessage.data?.type === "message") setMsgReceived(true);
     });
-  }, []);
 
-  useEffect(() => {
-    let isFocused = true;
-    const unsubscribe = async () => {
-      setMsgReceived(false);
-      if (isFocused) {
-        await storage.setItem(StorageKey.message, false);
-        console.log("msg nav");
-      }
-    };
+    AppState.addEventListener("change", async () => {
+      try {
+        await fetchNewMsg();
+      } catch (e) {}
+    });
     navigation.addListener("focus", (e) => {
       // Do something
-      unsubscribe();
+      setMsgReceived(false);
     });
-
-    return () => {
-      isFocused = false;
-    };
   }, []);
 
   return (
     <View>
-      {(msgReceived || isNewMsg) && <MsgAlert />}
+      {msgReceived && <MsgAlert />}
       <Text width={width} color={color}>
         메세지
       </Text>
