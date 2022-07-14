@@ -7,6 +7,8 @@ import { GetMyRooms, IRoom } from "../../lib/api/types.d";
 import ChatListFlatList from "../../components/chat/ChatListFlatList";
 import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
+import storage, { StorageKey } from "../../lib/helpers/myAsyncStorage";
+import { Alert } from "react-native";
 
 interface Props {}
 
@@ -25,14 +27,27 @@ export default function ChatList(props: Props) {
   });
 
   useEffect(() => {
-    navigation.addListener("focus", (e) => {
-      refetch();
-    });
-    messaging().onMessage(async (remoteMessage) => {
-      if (remoteMessage.data?.type === "message") {
-        refetch();
+    let mounted = true;
+    async function setUp() {
+      if (mounted) {
+        await storage.setItem(StorageKey.message, false);
+        navigation.addListener("focus", (e) => {
+          refetch();
+        });
+        messaging().onMessage(async (remoteMessage) => {
+          if (remoteMessage.data?.type === "message") {
+            refetch();
+          }
+        });
       }
-    });
+    }
+
+    function cleanUp() {
+      mounted = false;
+    }
+    setUp();
+
+    return cleanUp();
   }, []);
 
   useEffect(() => {
