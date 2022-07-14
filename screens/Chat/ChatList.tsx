@@ -8,7 +8,6 @@ import ChatListFlatList from "../../components/chat/ChatListFlatList";
 import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
 import storage, { StorageKey } from "../../lib/helpers/myAsyncStorage";
-import { Alert } from "react-native";
 
 interface Props {}
 
@@ -33,12 +32,12 @@ export default function ChatList(props: Props) {
     }
     messaging().onMessage(async (remoteMessage) => {
       if (remoteMessage.data?.type === "message") {
-        refetch();
+        if (navigation.isFocused) refetch();
       }
     });
 
-    navigation.addListener("focus", (e) => {
-      setUp();
+    navigation.addListener("focus", async (e) => {
+      await setUp();
     });
   }, []);
 
