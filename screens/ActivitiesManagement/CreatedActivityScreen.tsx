@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useQuery } from "react-query";
 import styled from "styled-components/native";
 import { MyCreatedPlaceData } from "../../lib/api/types";
 import { colors } from "../../styles/styles";
-import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { getMyPlacesCreated } from "../../lib/api/getMyPlacesCreated";
 import MyCreatedPlacesFlatList from "../../components/profile/MyCreatedPlacesFlatList";
 import { typeEnToKo } from "../../lib/api/createPlace";
 type Props = {};
 
 const CreatedActivityScreen = (props: Props) => {
+  const navigation = useNavigation();
   const {
     data: myCreatedPlacesData,
     isLoading,
@@ -23,9 +24,19 @@ const CreatedActivityScreen = (props: Props) => {
       refetchOnWindowFocus: false,
     }
   );
-  useFocusEffect(() => {
-    refetch();
-  });
+
+  useEffect(() => {
+    let isFocused = true;
+    navigation.addListener("focus", (e) => {
+      // Do something
+      if (!isLoading && isFocused) refetch();
+      console.log("hic");
+    });
+
+    return () => {
+      isFocused = false;
+    };
+  }, []);
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
