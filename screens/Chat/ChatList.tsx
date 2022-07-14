@@ -32,7 +32,7 @@ export default function ChatList(props: Props) {
       await storage.setItem(StorageKey.message, false);
     }
     messaging().onMessage(async (remoteMessage) => {
-      if (remoteMessage.data?.type === "message" && !isLoading) {
+      if (remoteMessage.data?.type === "message") {
         refetch();
       }
     });
@@ -40,6 +40,9 @@ export default function ChatList(props: Props) {
     navigation.addListener("focus", (e) => {
       setUp();
     });
+    return () => {
+      storage.setItem(StorageKey.message, false);
+    };
   }, []);
 
   useEffect(() => {

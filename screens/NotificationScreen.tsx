@@ -1,3 +1,4 @@
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import PureNotificationItem from "../components/notification/PureNotificationItem";
@@ -5,11 +6,14 @@ import { NotificationData } from "../lib/api/types";
 import storage, { StorageKey } from "../lib/helpers/myAsyncStorage";
 import { colors } from "../styles/styles";
 
-type Props = {};
+type Props = {
+  navigation: NavigationProp<ParamListBase>;
+};
 
 export const NotificationScreen = (props: Props) => {
   const [unreadNotifications, setUnreadNotifications] = useState([]);
   const [readNotifications, setReadNotifications] = useState([]);
+
   useEffect(() => {
     let mounted = true;
     async function fetchAndSaveNotification() {
@@ -51,6 +55,7 @@ export const NotificationScreen = (props: Props) => {
               image={item.image}
               isUnread={true}
               mainParam={item.mainParam}
+              navigation={props.navigation}
             />
           );
         })}
@@ -63,6 +68,7 @@ export const NotificationScreen = (props: Props) => {
               subText={item.body}
               image={item.image}
               isUnread={false}
+              navigation={props.navigation}
             />
           );
         })}
