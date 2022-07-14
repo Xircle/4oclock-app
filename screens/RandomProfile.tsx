@@ -78,8 +78,9 @@ export default function RnadomProfile(props: Props) {
     let isFocused = true;
     navigation.addListener("focus", (e) => {
       // Do something
-      if (!isLoading && isFocused) refetch();
-      console.log("hic");
+      if (isFocused && !isLoading) {
+        refetch();
+      }
     });
 
     return () => {
