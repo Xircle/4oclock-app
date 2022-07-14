@@ -14,7 +14,6 @@ import ActivityTopTabNav from "./ActivityTopTabNav";
 import { activityDispatcher } from "../lib/activity/ActivityDispatcher";
 import { useDispatch } from "react-redux";
 import MessageBottomNavItem from "../components/nav/MessageBottomNavItem";
-import storage, { StorageKey } from "../lib/helpers/myAsyncStorage";
 
 interface Props {}
 
@@ -29,48 +28,6 @@ export default function MainTabsNav(props: Props) {
     activityDispatcher.dispatchStage1Valid(false, dispatch);
   };
 
-  //console.log("Main Tabs Nav Render");
-
-  useFocusEffect(() => {
-    let isFocused = true;
-
-    const fetchNewMsg = async () => {
-      try {
-        console.log("focus count");
-        if (!isFocused) return;
-        const isNewMessage = await storage.getItem(StorageKey.message);
-        if (isNewMessage) {
-          setIsNewMsg(true);
-        } else {
-          setIsNewMsg(false);
-        }
-      } catch (e) {}
-    };
-
-    fetchNewMsg();
-
-    return () => {
-      isFocused = false;
-    };
-  });
-  useEffect(() => {
-    const fetchNewMsg = async () => {
-      try {
-        const isNewMessage = await storage.getItem(StorageKey.message);
-        if (isNewMessage) {
-          setIsNewMsg(true);
-        } else {
-          setIsNewMsg(false);
-        }
-      } catch (e) {}
-    };
-
-    AppState.addEventListener("change", () => {
-      try {
-        fetchNewMsg();
-      } catch (e) {}
-    });
-  }, []);
   return (
     <Tabs.Navigator
       screenOptions={{
@@ -126,7 +83,7 @@ export default function MainTabsNav(props: Props) {
               focused={focused}
               color={color}
               size={size}
-              isNewMsg={isNewMsg}
+              // isNewMsg={isNewMsg}
             />
           ),
         }}
