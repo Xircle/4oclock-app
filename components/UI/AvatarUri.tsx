@@ -15,28 +15,29 @@ class AvatarUri extends PureComponent<Props> {
     super(props);
   }
   render() {
-    if (this.props.source) {
+    const { source, size, quality, isSmall } = this.props;
+    if (source) {
       return (
         <AvatarImage
           source={{
             uri: optimizeImage(
-              this.props.source,
+              source,
               {
-                width: this.props.size,
-                height: this.props.size,
-                quality: this.props.quality,
+                width: size,
+                height: size,
+                quality: quality,
               },
-              this.props.isSmall
+              isSmall
             ),
           }}
-          size={this.props.size}
+          size={size}
         />
       );
     } else {
       return (
         <AvatarImage
           source={require("../../statics/images/anonymous_user.png")}
-          size={this.props.size}
+          size={size}
         />
       );
     }
