@@ -13,7 +13,8 @@ export default class PureLeftTagMainFlat extends PureComponent<Props> {
   }
 
   render() {
-    if (this.props.isClosed) {
+    const { isClosed, leftParticipantsCount } = this.props;
+    if (isClosed) {
       return (
         <LeftContainerOverlay>
           <ClosedText>마 감</ClosedText>
@@ -22,7 +23,7 @@ export default class PureLeftTagMainFlat extends PureComponent<Props> {
     } else {
       return (
         <TagContainer>
-          <Tag>잔여{this.props.leftParticipantsCount || "0"}석</Tag>
+          <Tag>잔여{leftParticipantsCount || "0"}석</Tag>
         </TagContainer>
       );
     }
