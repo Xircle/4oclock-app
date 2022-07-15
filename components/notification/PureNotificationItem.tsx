@@ -21,14 +21,15 @@ export default class PureNotificationItem extends PureComponent<Props> {
   }
 
   render() {
+    const { mainText, isUnread, subText, mainParam, type } = this.props;
     async function CTA() {
-      if (!this.props.mainParam) return;
-      switch (this.props.type) {
+      if (!mainParam) return;
+      switch (type) {
         case "message":
           break;
         case "okLink":
           //openLink
-          await openLink.LOpenLink(this.props.mainParam);
+          await openLink.LOpenLink(mainParam);
           break;
         case "place":
           // this.props.navigation.navigate("ActivityStackNav", {
@@ -38,20 +39,16 @@ export default class PureNotificationItem extends PureComponent<Props> {
       }
     }
     return (
-      <ItemContainer onPress={() => CTA()} isUnread={this.props.isUnread}>
+      <ItemContainer onPress={CTA} isUnread={isUnread}>
         <ItemPicContainer>
           {/* {this.props.image ? : } */}
           <ImageSub>👽</ImageSub>
         </ItemPicContainer>
         <ItemMidContainer>
-          <HeaderText>
-            {this.props.mainText ? this.props.mainText : "no title provided"}
-          </HeaderText>
+          <HeaderText>{mainText ? mainText : "no title provided"}</HeaderText>
           <SubText>
-            {this.props.subText ? this.props.subText : "no subtitle provided"}
-            {this.props.mainParam
-              ? this.props.mainParam
-              : "no mainParam provided"}
+            {subText ? subText : "no subtitle provided"}
+            {mainParam ? mainParam : "no mainParam provided"}
           </SubText>
         </ItemMidContainer>
         {/* <ItemDeleteContainer></ItemDeleteContainer> */}
