@@ -3,7 +3,6 @@ import messaging, {
 } from "@react-native-firebase/messaging";
 import storage, { StorageKey } from "../helpers/myAsyncStorage";
 import { Audio } from "expo-av";
-import { Alert } from "react-native";
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -38,6 +37,9 @@ export async function notificationHandler(
   let notifications = await storage.getItem(StorageKey.notifications);
   if (notifications) {
     notifications.unreadNotifications.unshift(newNotification);
+    if (notifications.readNotifications.length > 10) {
+      notifications.readNotifications.pop();
+    }
   } else {
     notifications = {
       unreadNotifications: [newNotification],
