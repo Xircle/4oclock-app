@@ -13,13 +13,14 @@ export default class LeaderQ extends PureComponent<Props> {
   }
 
   render() {
+    const { qAndA } = this.props;
     return (
       <Container>
         <Header>모임 생성자의 질문</Header>
         <InnerInfoContainer>
           <InfoText>
             📌{`    `}
-            {this.props.qAndA?.[0]}
+            {qAndA?.[0]}
           </InfoText>
         </InnerInfoContainer>
       </Container>
