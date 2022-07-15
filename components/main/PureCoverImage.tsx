@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import FastImage from "react-native-fast-image";
-import  styled  from "styled-components/native";
+import styled from "styled-components/native";
 import optimizeImage from "../../lib/helpers/optimizeImage";
 import { colors } from "../../styles/styles";
 
@@ -14,11 +14,12 @@ export default class PureCoverImage extends PureComponent<Props> {
   }
 
   render() {
-    if (this.props.source) {
+    const { source } = this.props;
+    if (source) {
       return (
         <CoverImage
           source={{
-            uri: optimizeImage(this.props.source, {
+            uri: optimizeImage(source, {
               width: 130,
               height: 130,
               quality: 10,
