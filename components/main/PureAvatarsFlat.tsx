@@ -12,14 +12,14 @@ interface Props {
 export default class PureAvatarsFlat extends PureComponent<Props> {
   constructor(props) {
     super(props);
-
   }
 
   render() {
-    if (this.props.participants && this.props.length) {
+    const { participants, length } = this.props;
+    if (participants && length) {
       return (
         <AvatarContainer>
-          {this.props.participants?.map((item, index) => {
+          {participants?.map((item, index) => {
             if (index < 4) {
               return (
                 <AvartarWrapper key={item.userId}>
@@ -33,13 +33,13 @@ export default class PureAvatarsFlat extends PureComponent<Props> {
               );
             }
           })}
-          {this.props.participants?.length > 4 ? (
-            <AvatarNumText>+ {this.props.participants.length - 4}</AvatarNumText>
+          {participants?.length > 4 ? (
+            <AvatarNumText>+ {participants.length - 4}</AvatarNumText>
           ) : null}
         </AvatarContainer>
       );
     }
-    return <></>
+    return <></>;
   }
 }
 
