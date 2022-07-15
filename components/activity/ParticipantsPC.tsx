@@ -16,20 +16,16 @@ export default class ParticipantsPC extends PureComponent<Props> {
   }
 
   render() {
+    const { profileImgUrl, job, qAndA, shortBio } = this.props;
     return (
       <ParticipantsWrapper>
         <ParticipantsLeftContainer>
-          <AvatarUri
-            source={this.props.profileImgUrl}
-            size={45}
-            quality={10}
-            isSmall
-          />
+          <AvatarUri source={profileImgUrl} size={45} quality={10} isSmall />
         </ParticipantsLeftContainer>
         <ParticipantsRightContainer>
-          <JobText numberOfLines={1}>{this.props.job}</JobText>
+          <JobText numberOfLines={1}>{job}</JobText>
           <ShortBioText numberOfLines={2}>
-            {this.props.qAndA ? this.props.qAndA[0] : this.props.shortBio}
+            {qAndA ? qAndA[0] : shortBio}
           </ShortBioText>
         </ParticipantsRightContainer>
       </ParticipantsWrapper>
