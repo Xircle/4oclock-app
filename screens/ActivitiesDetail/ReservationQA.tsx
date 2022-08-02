@@ -112,12 +112,6 @@ const InfoText = styled(GeneralText)`
   font-family: ${fontFamilies.light};
 `;
 
-const VaccineInfoText = styled(GeneralText)`
-  font-size: 13px;
-  color: ${colors.bareGrey};
-  margin-top: 8px;
-`;
-
 const InnerInfoContainer = styled.View`
   margin-top: 22px;
   margin-top: 22px;
