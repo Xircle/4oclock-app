@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components/native";
 import { MyCreatedPlaceData } from "../../lib/api/types";
 import { colors } from "../../styles/styles";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { getMyPlacesCreated } from "../../lib/api/getMyPlacesCreated";
 import MyCreatedPlacesFlatList from "../../components/profile/MyCreatedPlacesFlatList";
 import { typeEnToKo } from "../../lib/api/createPlace";
@@ -28,9 +28,13 @@ const CreatedActivityScreen = (props: Props) => {
   useEffect(() => {
     let isFocused = true;
     navigation.addListener("focus", (e) => {
-      // Do something
-      if (!isLoading && isFocused) refetch();
-      console.log("hic");
+      try {
+        // Do something
+        if (isFocused) {
+          refetch();
+          console.log("hi CAS");
+        }
+      } catch (e) {}
     });
 
     return () => {
