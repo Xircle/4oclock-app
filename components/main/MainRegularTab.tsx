@@ -91,13 +91,16 @@ function MainRegularTab(props: Props) {
   };
 
   const OpenModal = () => {
+    setModalShown(true);
+  };
+
+  useEffect(() => {
     if (userData?.isYkClub) {
       setModalText("팀을 선택해주세요");
     } else {
       setModalText("활동코드를 입력해주세요");
     }
-    setModalShown(true);
-  };
+  }, [userData]);
 
   const TeamSubmitCTA = async () => {
     console.log("modal input: " + modalInput);
