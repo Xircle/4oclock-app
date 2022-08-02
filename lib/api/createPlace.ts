@@ -45,9 +45,6 @@ export const createPlace = async (
   formData.append("placeId", placeData.placeId);
   formData.append("placeType", typeKoToEn[placeData.activityType]);
   formData.append("kakaoLink", placeData.kakaoLink);
-  if (typeKoToEn[placeData.activityType] === "Regular-meeting") {
-    formData.append("team", placeData.team);
-  }
   if (placeData.qAndA?.length) {
     for (let i = 0; i < placeData.qAndA.length; i++) {
       formData.append("qAndA", placeData.qAndA[i]!);
