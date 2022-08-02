@@ -31,9 +31,6 @@ export const editPlace = async (
   formData.append("isVaccinated", true);
   formData.append("placeType", typeKoToEn[placeData.activityType]);
   formData.append("kakaoLink", placeData.kakaoLink);
-  if (typeKoToEn[placeData.activityType] === "Regular-meeting") {
-    formData.append("team", placeData.team);
-  }
   formData.append("isCoverImageDeleted", placeData.isCoverImageDeleted);
   if (placeData.modifySubImageUrls) {
     for (let i = 0; i < placeData.modifySubImageUrls.length; i++) {
