@@ -16,7 +16,6 @@ export type ActivityAction =
   | { type: "setPlaceId"; payload: string }
   | { type: "setActivityType"; payload: string }
   | { type: "setKakaoLink"; payload: string }
-  | { type: "setTeam"; payload: string }
   | { type: "setRecommendation"; payload: string }
   | { type: "setParticipating"; payload: boolean }
   | { type: "setModify"; payload: boolean }
@@ -51,7 +50,6 @@ export const activityInitialState: ActivityState = {
   placeId: "0",
   activityType: "번개",
   kakaoLink: "",
-  team: "",
   recommendation: "",
   participating: true,
   modify: false,
@@ -131,11 +129,6 @@ export function activityReducer(
       return {
         ...state,
         kakaoLink: action.payload,
-      };
-    case "setTeam":
-      return {
-        ...state,
-        team: action.payload,
       };
     case "setRecommendation":
       return {
