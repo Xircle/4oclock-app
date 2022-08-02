@@ -24,9 +24,13 @@ const ParticipatingActivityScreen = (props: Props) => {
   useEffect(() => {
     let isFocused = true;
     navigation.addListener("focus", (e) => {
-      // Do something
-      if (!isLoading && isFocused) refetch();
-      console.log("hi pas");
+      try {
+        // Do something
+        if (isFocused) {
+          refetch();
+          console.log("hi pas");
+        }
+      } catch (e) {}
     });
 
     return () => {
