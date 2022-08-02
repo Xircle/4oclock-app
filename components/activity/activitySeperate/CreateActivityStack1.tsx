@@ -116,27 +116,6 @@ export default function CreateActivityStack1(props: Props) {
               }}
             />
           </CAPartWrapper>
-          {activityType === "정기" && (
-            <CAPartWrapper>
-              <BlackLabel>어떤 팀에 열려있는 모임이야? (팀)</BlackLabel>
-              <MySelect
-                data={localTeamNames}
-                onSelect={(selectedItem, index) => {
-                  // setLocalProfileData((prev) => ({
-                  //   ...prev,
-                  //   team: selectedItem,
-                  // }));
-                  if (index !== 0) {
-                    activityDispatcher.dispatchTeam(selectedItem, dispatch);
-                  } else {
-                    activityDispatcher.dispatchTeam("", dispatch);
-                  }
-                }}
-                width={width * 0.81}
-                defaultButtonText="팀을 선택해주세요"
-              />
-            </CAPartWrapper>
-          )}
         </Container>
 
         <RelativeMainButtonWBg
