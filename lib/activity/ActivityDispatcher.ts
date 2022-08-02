@@ -7,7 +7,7 @@ export const activityDispatcher = {
     newNum: number,
     dispatch: React.Dispatch<ActivityAction>
   ) => {
-    if (newNum >= 1 && newNum <= 12)
+    if (newNum >= 1)
       dispatch({
         type: "setMaxParticipantsNumber",
         payload: newNum,
@@ -39,12 +39,6 @@ export const activityDispatcher = {
     dispatch({
       type: "setDescription",
       payload: text,
-    });
-  },
-  dispatchTeam: (team: string, dispatch: React.Dispatch<ActivityAction>) => {
-    dispatch({
-      type: "setTeam",
-      payload: team,
     });
   },
   dispatchRecommendation: (
@@ -206,10 +200,6 @@ export const activityDispatcher = {
       payload: activityInitialState.activityType,
     });
     dispatch({
-      type: "setTeam",
-      payload: activityInitialState.team,
-    });
-    dispatch({
       type: "setKakaoLink",
       payload: activityInitialState.kakaoLink,
     });
@@ -274,10 +264,6 @@ export const activityDispatcher = {
     dispatch({
       type: "setActivityType",
       payload: loadedData.activityType || activityInitialState.activityType,
-    });
-    dispatch({
-      type: "setTeam",
-      payload: loadedData.team || activityInitialState.team,
     });
     dispatch({
       type: "setKakaoLink",
