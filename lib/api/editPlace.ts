@@ -41,6 +41,16 @@ export const editPlace = async (
     "oldCoverImageUrl",
     placeData.modifyCoverImageUrl ? placeData.modifyCoverImageUrl : ""
   );
+  if (
+    placeData.teamOnly ||
+    typeKoToEn[placeData.activityType] === "Regular-meeting"
+  ) {
+    formData.append(
+      "teamOnly",
+      placeData.teamOnly ||
+        typeKoToEn[placeData.activityType] === "Regular-meeting"
+    );
+  }
 
   const { data } = await axiosclient.patch<CreateActivityOutput>(
     `${BASE_URL}/place/${placeId}`,
