@@ -51,6 +51,21 @@ export const createPlace = async (
     }
     formData.append("qAndA", "감사합니다");
   }
+  if (
+    placeData.teamOnly ||
+    typeKoToEn[placeData.activityType] === "Regular-meeting"
+  ) {
+    formData.append(
+      "teamOnly",
+      placeData.teamOnly ||
+        typeKoToEn[placeData.activityType] === "Regular-meeting"
+    );
+  }
+
+  console.log(
+    "team" + placeData.teamOnly ||
+      typeKoToEn[placeData.activityType] === "Regular-meeting"
+  );
 
   const { data } = await axiosclient.post<CreateActivityOutput>(
     `${BASE_URL}/place`,
