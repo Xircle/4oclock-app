@@ -49,22 +49,6 @@ export default function CreateActivityStack1(props: Props) {
     }
   };
 
-  const { data: teamsData } = useQuery<TeamData[] | undefined>(
-    ["teams"],
-    () => getTeams(),
-    {
-      retry: 1,
-    }
-  );
-
-  useEffect(() => {
-    if (teamsData && teamsData.length > 0 && localTeamNames.length === 0) {
-      teamsData.forEach((team, index) => {
-        setLocalTeamNames((prev) => [...prev, team.name]);
-      });
-    }
-  }, [teamsData]);
-
   return (
     <MyKeyboardAvoidingView keyboardVerticalOffset={50}>
       <SpaceBetweenWrapper>
