@@ -47,7 +47,8 @@ export interface ProfileData {
   MBTI?: string;
   drinkingStyle?: number;
   personality?: string;
-  team?: string;
+  teamName?: string;
+  teamId?: number;
 }
 
 export interface EditProfileData extends ProfileData {
@@ -68,6 +69,7 @@ export default function MyProfile(props: Props) {
     true,
   ]);
   const [localTeamNames, setLocalTeamNames] = useState<string[]>([]);
+  const [localTeamIds, setLocalTeamIds] = useState<number[]>([]);
   const [localMyTeam, setLocalMyTeam] = useState("");
 
   const errorMessages: string[] = [
@@ -266,6 +268,7 @@ export default function MyProfile(props: Props) {
 
   useEffect(() => {
     if (isSuccess) {
+      console.log(userData);
       setLocalProfileData({
         username: userData?.username,
         shortBio: userData?.shortBio,
@@ -278,7 +281,8 @@ export default function MyProfile(props: Props) {
         MBTI: userData?.MBTI,
         personality: userData?.personality,
         drinkingStyle: userData?.drinkingStyle,
-        team: userData?.team,
+        teamName: userData?.team,
+        teamId: userData?.team_id,
       });
       if (userData?.isYkClub) {
         setIsYK(userData?.isYkClub);
@@ -288,11 +292,11 @@ export default function MyProfile(props: Props) {
 
   useEffect(() => {
     if (teamsData.length > 0 && localTeamNames.length === 0) {
+      console.log(teamsData);
       teamsData?.forEach((team, index) => {
         setLocalTeamNames((prev) => [...prev, team.name]);
-        if (index === teamsData.length - 1) {
-          setLocalMyTeam(userData?.team);
-        }
+        setLocalTeamIds((prev) => [...prev, team.id]);
+        setLocalMyTeam(userData?.team);
       });
     }
   }, [teamsData]);
@@ -348,7 +352,8 @@ export default function MyProfile(props: Props) {
                 onSelect={(selectedItem, index) => {
                   setLocalProfileData((prev) => ({
                     ...prev,
-                    team: selectedItem,
+                    teamName: selectedItem,
+                    teamId: localTeamIds[index],
                   }));
                 }}
                 width={width * 0.81}
