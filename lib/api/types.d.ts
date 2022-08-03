@@ -191,6 +191,7 @@ export interface UserData {
   accountType?: string;
   fk_user_id?: string;
   team?: string;
+  team_id?: number;
 }
 
 export interface GetUserOutput extends CoreOutput {
