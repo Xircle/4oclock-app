@@ -47,13 +47,6 @@ export default function CreatePlaceTypeSelector({
       onPress(value);
     }
   }
-  if (!accountType) {
-    return (
-      <Container>
-        <FullScreenLoader />
-      </Container>
-    );
-  }
 
   return (
     <Container>
