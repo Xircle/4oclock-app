@@ -25,11 +25,8 @@ export const editProfile = async (
   }
 
   // for testing
-  if (
-    editedProfileData.team &&
-    editedProfileData.team !== "팀을 선택해주세요"
-  ) {
-    formData.append("team", editedProfileData.team);
+  if (editedProfileData.teamId) {
+    formData.append("teamId", editedProfileData.teamId);
   }
 
   editedProfileData.MBTI && formData.append("MBTI", editedProfileData.MBTI);
