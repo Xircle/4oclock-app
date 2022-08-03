@@ -30,9 +30,8 @@ interface Props {
 const { width } = Dimensions.get("window");
 
 export default function CreateActivityStack2({}: Props) {
-  const { coverImage, subImages, participating } = useSelector(
-    (state: RootState) => state.activityReducer
-  );
+  const { coverImage, subImages, participating, activityType, teamOnly } =
+    useSelector((state: RootState) => state.activityReducer);
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -114,6 +113,24 @@ export default function CreateActivityStack2({}: Props) {
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
           모임의 성향, 테마, 장소 등에 대한 사진
         </SubHeading>
+        {activityType && (
+          <ParticipatingContainer
+            onPress={() =>
+              activityDispatcher.dispatchTeamOnly(!teamOnly, dispatch)
+            }
+          >
+            <TeamOnlyWrapper>
+              <Ionicons
+                name="checkmark-circle-outline"
+                size={22}
+                color={teamOnly ? colors.mainBlue : colors.bareGrey}
+              />
+              <BlackLabel style={{ marginLeft: 10 }}>
+                우리 팀만 참여 가능해요
+              </BlackLabel>
+            </TeamOnlyWrapper>
+          </ParticipatingContainer>
+        )}
         <ParticipatingContainer
           onPress={() =>
             activityDispatcher.dispatchParticipating(!participating, dispatch)
@@ -184,9 +201,13 @@ const ParticipatingContainer = styled.TouchableWithoutFeedback``;
 
 const ParticipatingWrapper = styled.View`
   flex-direction: row;
-  margin-top: 10px;
   margin-bottom: 10px;
   align-items: center;
+`;
+
+const TeamOnlyWrapper = styled(ParticipatingWrapper)`
+  margin-bottom: 4px;
+  margin-top: 8px;
 `;
 
 const PhotoButton = styled.TouchableOpacity`
