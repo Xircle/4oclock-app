@@ -17,7 +17,7 @@ export default function MainTopTabNav() {
       }}
     >
       <Tab.Screen name="번개" component={MainLightningTab} />
-      <Tab.Screen name="정기" component={MainRegularTab} />
+      <Tab.Screen name="my 클럽" component={MainRegularTab} />
     </Tab.Navigator>
   );
 }
