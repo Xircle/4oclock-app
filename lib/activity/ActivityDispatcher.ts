@@ -165,11 +165,21 @@ export const activityDispatcher = {
   ) => {
     dispatch({ type: "setStage1Valid", payload: bool });
   },
+  dispatchTeamOnly: (
+    bool: boolean,
+    dispatch: React.Dispatch<ActivityAction>
+  ) => {
+    dispatch({ type: "setTeamOnly", payload: bool });
+  },
   dispatchInitialState: (dispatch: React.Dispatch<ActivityAction>) => {
     dispatch({ type: "setName", payload: activityInitialState.name });
     dispatch({
       type: "setMaxParticipantsNumber",
       payload: activityInitialState.maxParticipantsNumber,
+    });
+    dispatch({
+      type: "setTeamOnly",
+      payload: activityInitialState.teamOnly,
     });
     dispatch({
       type: "setParticipationFee",
@@ -229,6 +239,10 @@ export const activityDispatcher = {
     dispatch({
       type: "setName",
       payload: loadedData.name || activityInitialState.name,
+    });
+    dispatch({
+      type: "setTeamOnly",
+      payload: loadedData.team ? true : false,
     });
     dispatch({
       type: "setMaxParticipantsNumber",
