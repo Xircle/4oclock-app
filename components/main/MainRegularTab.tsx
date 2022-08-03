@@ -7,13 +7,20 @@ import {
 } from "react-query";
 import styled from "styled-components/native";
 import { getPlacesRegular } from "../../lib/api/getPlaces";
+import { getTeams } from "../../lib/api/getTeams";
 import { getUser } from "../../lib/api/getUser";
 import { patchTeam } from "../../lib/api/patchTeam";
-import { GetPlacesByLocationOutput, UserData } from "../../lib/api/types";
+import {
+  GetPlacesByLocationOutput,
+  GetTeamsOutput,
+  TeamData,
+  UserData,
+} from "../../lib/api/types";
 import { verifyByCode } from "../../lib/api/verifyByCode";
 import storage, { StorageKey } from "../../lib/helpers/myAsyncStorage";
 import { colors, GeneralText, UnderLineInput } from "../../styles/styles";
 import MyModal from "../UI/MyModal";
+import MySelect from "../UI/MySelect";
 import MainFeed from "./MainFeed";
 import MRTeamSubmitBtn from "./MainRegular/MRTeamSubmitBtn";
 import { renderRegular } from "./MainRenderItems";
@@ -51,6 +58,28 @@ function MainRegularTab(props: Props) {
       },
     }
   );
+
+  const [localTeamNames, setLocalTeamNames] = useState([]);
+  const [selectedTeamId, setSelectedTeamId] = useState("");
+  const [selectedTeamName, setSelectedTeamName] = useState("");
+  const [localTeamIds, setLocalTeamIds] = useState([]);
+  const { data: teamsData } = useQuery<TeamData[] | undefined>(
+    ["teams"],
+    () => getTeams(),
+    {
+      retry: 1,
+    }
+  );
+
+  useEffect(() => {
+    if (teamsData && teamsData.length > 0 && localTeamNames.length === 0) {
+      teamsData.forEach((team, index) => {
+        setLocalTeamNames((prev) => [...prev, team.name]);
+        setLocalTeamIds((prev) => [...prev, team.id]);
+      });
+      console.log(teamsData);
+    }
+  }, [teamsData]);
 
   useEffect(() => {
     let mounted = true;
@@ -112,8 +141,7 @@ function MainRegularTab(props: Props) {
       setModalShown(true);
     } else {
       // 팀 업데이트
-      await mutatePatchTeam(modalInput);
-      setModalInput("");
+      await mutatePatchTeam(selectedTeamId);
       await CloseModal();
     }
   };
@@ -123,18 +151,32 @@ function MainRegularTab(props: Props) {
       <MyModal visible={modalShown} onClose={CloseModal}>
         <RegularInfoContainer>
           <ActiveCodeText>{modalText}</ActiveCodeText>
-          <SUnderLineInput
-            blurOnSubmit={true}
-            returnKeyType="next"
-            returnKeyLabel="next"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholder="코드 입력"
-            onChange={(event) => {
-              const { eventCount, target, text } = event.nativeEvent;
-              setModalInput(text);
-            }}
-          />
+          {!userData?.isYkClub ? (
+            <SUnderLineInput
+              blurOnSubmit={true}
+              returnKeyType="next"
+              returnKeyLabel="next"
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholder="코드 입력"
+              onChange={(event) => {
+                const { eventCount, target, text } = event.nativeEvent;
+                setModalInput(text);
+              }}
+            />
+          ) : (
+            <MySelect
+              data={localTeamNames}
+              onSelect={(selectedItem, index) => {
+                setSelectedTeamId(localTeamIds[index]);
+                setSelectedTeamName(selectedItem);
+              }}
+              width={200}
+              defaultButtonText="팀을 선택해주세요"
+              defaultValue={selectedTeamName}
+            />
+          )}
+
           <MRTeamSubmitBtn onPress={TeamSubmitCTA} title={"제출"} top={15} />
         </RegularInfoContainer>
       </MyModal>
@@ -148,13 +190,17 @@ function MainRegularTab(props: Props) {
           !userData?.isYkClub ? (
             <ActiveCodeContainer>
               <ActiveCodeWrapper onPress={OpenModal}>
-                <ActiveCodeInstruction>활동코드 입력하기</ActiveCodeInstruction>
+                <ActiveCodeInstruction>
+                  STEP1.활동코드 입력하고 즐기기💕
+                </ActiveCodeInstruction>
               </ActiveCodeWrapper>
             </ActiveCodeContainer>
-          ) : !userData?.team ? (
+          ) : !userData?.team_id ? (
             <ActiveCodeContainer>
               <ActiveCodeWrapper onPress={OpenModal}>
-                <ActiveCodeInstruction>팀 입력하기</ActiveCodeInstruction>
+                <ActiveCodeInstruction>
+                  STEP2.팀 입력하고 즐기기💕
+                </ActiveCodeInstruction>
               </ActiveCodeWrapper>
             </ActiveCodeContainer>
           ) : (
