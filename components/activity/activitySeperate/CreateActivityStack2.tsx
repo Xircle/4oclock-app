@@ -113,7 +113,7 @@ export default function CreateActivityStack2({}: Props) {
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
           모임의 성향, 테마, 장소 등에 대한 사진
         </SubHeading>
-        {activityType && (
+        {activityType === "Lightning" && (
           <ParticipatingContainer
             onPress={() =>
               activityDispatcher.dispatchTeamOnly(!teamOnly, dispatch)
