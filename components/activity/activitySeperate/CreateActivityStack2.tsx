@@ -83,7 +83,7 @@ export default function CreateActivityStack2({}: Props) {
     } else {
       if (Platform.OS === "ios") {
         Alert.alert(
-          "'모든 사진에 대한 접근 허용'이 필요합니다. 설정 > 연고이팅 > 사진 > 모든 사진 허용으로 바꿔주세요~"
+          "'모든 사진에 대한 접근 허용'이 필요합니다. 설정 > 케빈의 클럽 > 사진 > 모든 사진 허용으로 바꿔주세요~"
         );
       } else {
         Alert.alert("'모든 사진에 대한 접근 허용'이 필요합니다.");
@@ -113,7 +113,7 @@ export default function CreateActivityStack2({}: Props) {
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
           모임의 성향, 테마, 장소 등에 대한 사진
         </SubHeading>
-        {activityType === "Lightning" && (
+        {activityType === "번개" && (
           <ParticipatingContainer
             onPress={() =>
               activityDispatcher.dispatchTeamOnly(!teamOnly, dispatch)
