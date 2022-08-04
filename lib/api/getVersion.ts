@@ -1,4 +1,4 @@
-import { GetPlaceByIdOutput, GetVersionOutput, PlaceData } from "./types.d";
+import { GetVersionOutput } from "./types.d";
 import AxiosClient from "../apiClient";
 import { BASE_URL } from "../utils";
 
