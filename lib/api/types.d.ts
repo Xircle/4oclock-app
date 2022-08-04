@@ -101,6 +101,15 @@ interface ParticipantsData {
   femaleCount?: number;
 }
 
+export interface PointData {
+  totalPointThisSeason: number;
+  myPointThisSeason: number;
+}
+
+export interface GetPointOutput extends CoreOutput {
+  data?: PointData;
+}
+
 export interface PlaceData {
   name: string; //
   oneLineIntroText: string; //
