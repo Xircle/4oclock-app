@@ -40,10 +40,10 @@ function MainTopCarousel({ eventBanners }: Props) {
               />
               <RMLTextWrapper>
                 <RegularMainListHeaderSubHeading>
-                  연고이팅 처음 가입했다면 필독!
+                  케빈의 클럽에 처음 가입했다면 필독!
                 </RegularMainListHeaderSubHeading>
                 <RegularMainListHeaderHeading>
-                  연고이팅 정기모임 가이드 {">"}
+                  케빈의 클럽 정기모임 가이드 {">"}
                 </RegularMainListHeaderHeading>
               </RMLTextWrapper>
             </RegularMainListHeaderContainer>
@@ -61,10 +61,10 @@ function MainTopCarousel({ eventBanners }: Props) {
               />
               <RMLTextWrapper>
                 <RegularMainListHeaderSubHeading>
-                  연고이팅 번개는 누구나 열고 참여가능하다구 {"><"}
+                  케빈의 클럽 번개는 누구나 열고 참여가능하다구 {"><"}
                 </RegularMainListHeaderSubHeading>
                 <RegularMainListHeaderHeading>
-                  연고이팅 번개모임 가이드 {">"}
+                  케빈의 클럽 번개모임 가이드 {">"}
                 </RegularMainListHeaderHeading>
               </RMLTextWrapper>
             </RegularMainListHeaderContainer>
