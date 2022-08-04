@@ -28,6 +28,7 @@ import {
 } from "../../styles/styles";
 import MyModal from "../UI/MyModal";
 import MySelect from "../UI/MySelect";
+import CodeButtonFC from "./CodeButtonFC";
 import CountFC from "./CountFC";
 import MainFeed from "./MainFeed";
 import MRTeamSubmitBtn from "./MainRegular/MRTeamSubmitBtn";
@@ -210,17 +211,13 @@ function MainRegularTab(props: Props) {
           !userData?.isYkClub ? (
             <ActiveCodeContainer>
               <ActiveCodeWrapper onPress={OpenModal}>
-                <ActiveCodeInstruction>
-                  STEP1.활동코드 입력하고 즐기기💕
-                </ActiveCodeInstruction>
+                <CodeButtonFC text={"STEP1.활동코드 입력하고 즐기기💕"} />
               </ActiveCodeWrapper>
             </ActiveCodeContainer>
           ) : !userData?.team_id ? (
             <ActiveCodeContainer>
               <ActiveCodeWrapper onPress={OpenModal}>
-                <ActiveCodeInstruction>
-                  STEP2.팀 입력하고 즐기기💕
-                </ActiveCodeInstruction>
+                <CodeButtonFC text={"STEP2.팀 입력하고 즐기기💕"} />
               </ActiveCodeWrapper>
             </ActiveCodeContainer>
           ) : (
@@ -239,25 +236,12 @@ export default React.memo(MainRegularTab);
 
 const ActiveCodeContainer = styled.View`
   width: 100%;
-  align-items: center;
-  justify-content: center;
 `;
 
-const ActiveCodeWrapper = styled.TouchableOpacity`
-  margin: 10px;
-  padding: 10px;
-  width: 90%;
-  border-radius: 100px;
-  background-color: ${colors.mainBlue};
-  align-items: center;
-`;
+const ActiveCodeWrapper = styled.TouchableOpacity``;
 
 const ActiveCodeText = styled(GeneralText)`
   color: ${colors.black};
-`;
-
-const ActiveCodeInstruction = styled(GeneralText)`
-  color: ${colors.bgColor};
 `;
 
 const Container = styled.View`
@@ -268,4 +252,9 @@ const Container = styled.View`
 const RegularInfoContainer = styled.View`
   align-items: center;
   width: 100%;
+`;
+
+const SUnderLineInput = styled(UnderLineInput)`
+  width: 60%;
+  text-align: center;
 `;
