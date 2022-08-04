@@ -10,11 +10,11 @@ export const renderRegular = ({ item, index }) => {
       <>
         <RegularDividorContainer>
           <RegularDividorHeader>
-            # 이번주 우리 팀 정기모임🔥
+            올라온 이번주 우리 팀 모임
           </RegularDividorHeader>
           <RegularDividorMainText>
-            이번주에 열린 우리 팀 정기모임 2개 중 하나를 선택해서 참여해주세요!
-            {"\n"} 선착순으로 마감되니 빨리 ㄱㄱ
+            선착순으로 즐기는 우리 팀 모임! 2개중 하나 꼭 참석하기!
+            {"\n"}갓.생.갓.놀 케빈의 정기모임의 참여해봐
           </RegularDividorMainText>
         </RegularDividorContainer>
         <MainFlatListPlace
@@ -34,10 +34,12 @@ export const renderRegular = ({ item, index }) => {
     return (
       <>
         <RegularDividorContainer>
-          <RegularDividorHeader># 지금 올라온 정기모임 🎉</RegularDividorHeader>
+          <RegularDividorHeader>
+            💎케빈의 클럽 다른 팀 모임
+          </RegularDividorHeader>
           <RegularDividorMainText>
-            이번주에 우리 팀 참여가 불가하다고?! 담당 운영진에게 연락을 주고
-            {"\n"}다른 팀 정기모임에 참여해봐!
+            이번주에 우리 팀 참여가 불가능하다면 매주 수요일부터 다른 팀 참가가
+            가능해! 참석횟수는 0.5번으로 인정되니 참고해줘!
           </RegularDividorMainText>
         </RegularDividorContainer>
         <MainFlatListPlace
@@ -75,10 +77,10 @@ export const renderItemLightning = ({ item }) => {
     return (
       <>
         <RegularDividorContainer>
-          <RegularDividorHeader>#우리 클럽 번개모임🔥</RegularDividorHeader>
+          <RegularDividorHeader>🧑‍🚀올라온 우리 팀 번개</RegularDividorHeader>
           <RegularDividorMainText>
-            이번주에 열린 우리 팀 정기모임 2개 중 하나를 선택해서 참여해주세요!
-            {"\n"} 선착순으로 마감되니 빨리 ㄱㄱ
+            only 우리 팀만 즐길 수 있는 번개가 올라왔어!
+            {"\n"}자유롭게 우리 팀이랑 친해져보자{"><"}
           </RegularDividorMainText>
         </RegularDividorContainer>
         <MainFlatListPlace
@@ -98,12 +100,10 @@ export const renderItemLightning = ({ item }) => {
     return (
       <>
         <RegularDividorContainer>
-          <RegularDividorHeader>
-            # 누구나 참가할 수 있는 번개 🎉
-          </RegularDividorHeader>
+          <RegularDividorHeader>💎케빈의 클럽 전체 번개</RegularDividorHeader>
           <RegularDividorMainText>
-            이번주에 우리 팀 참여가 불가하다고?! 담당 운영진에게 연락을 주고
-            {"\n"}다른 팀 정기모임에 참여해봐!
+            우리 팀 뿐아니라 다른 케빈의 클럽 프렌즈들을 만날 수 있는 공간이야!
+            {"\n"}자유롭게 번개를 올리고 참여해보자!
           </RegularDividorMainText>
         </RegularDividorContainer>
         <MainFlatListPlace
