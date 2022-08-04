@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   useInfiniteQuery,
@@ -7,20 +8,27 @@ import {
 } from "react-query";
 import styled from "styled-components/native";
 import { getPlacesRegular } from "../../lib/api/getPlaces";
+import { getPoint } from "../../lib/api/getPoint";
 import { getTeams } from "../../lib/api/getTeams";
 import { getUser } from "../../lib/api/getUser";
 import { patchTeam } from "../../lib/api/patchTeam";
 import {
   GetPlacesByLocationOutput,
-  GetTeamsOutput,
+  PointData,
   TeamData,
   UserData,
 } from "../../lib/api/types";
 import { verifyByCode } from "../../lib/api/verifyByCode";
 import storage, { StorageKey } from "../../lib/helpers/myAsyncStorage";
-import { colors, GeneralText, UnderLineInput } from "../../styles/styles";
+import {
+  colors,
+  fontFamilies,
+  GeneralText,
+  UnderLineInput,
+} from "../../styles/styles";
 import MyModal from "../UI/MyModal";
 import MySelect from "../UI/MySelect";
+import CountFC from "./CountFC";
 import MainFeed from "./MainFeed";
 import MRTeamSubmitBtn from "./MainRegular/MRTeamSubmitBtn";
 import { renderRegular } from "./MainRenderItems";
@@ -29,6 +37,7 @@ interface Props {}
 
 function MainRegularTab(props: Props) {
   const [refreshing, setRefreshing] = useState(false);
+  const navigation = useNavigation();
   const queryClient = useQueryClient();
   const [modalShown, setModalShown] = useState(false);
   const [modalText, setModalText] = useState("활동코드를 입력해주세요");
@@ -71,7 +80,17 @@ function MainRegularTab(props: Props) {
     }
   );
 
+  const { data: pointData, refetch: refetchPoint } = useQuery<
+    PointData | undefined
+  >(["point"], () => getPoint());
+
   useEffect(() => {
+    navigation.addListener("focus", (e) => {
+      // Do something
+      try {
+        refetchPoint();
+      } catch (error) {}
+    });
     if (teamsData && teamsData.length > 0 && localTeamNames.length === 0) {
       teamsData.forEach((team, index) => {
         setLocalTeamNames((prev) => [...prev, team.name]);
@@ -83,6 +102,7 @@ function MainRegularTab(props: Props) {
 
   useEffect(() => {
     let mounted = true;
+
     async function fetchNewData() {
       if (mounted && userData?.accountType) {
         await storage.setItem(StorageKey.accountType, userData?.accountType);
@@ -204,12 +224,10 @@ function MainRegularTab(props: Props) {
               </ActiveCodeWrapper>
             </ActiveCodeContainer>
           ) : (
-            <RegularInfoContainer>
-              <RegularInfoText>
-                (매우중요) 정기모임 참여는 마이페이지 {">"} 프로필 수정하기에서
-                팀과 활동코드를 입력해 주셔야지만 가능해요!
-              </RegularInfoText>
-            </RegularInfoContainer>
+            <CountFC
+              totalPointThisSeason={pointData?.totalPointThisSeason}
+              myPointThisSeason={pointData?.myPointThisSeason}
+            />
           )
         }
       />
@@ -218,11 +236,6 @@ function MainRegularTab(props: Props) {
 }
 
 export default React.memo(MainRegularTab);
-
-const SUnderLineInput = styled(UnderLineInput)`
-  width: 60%;
-  text-align: center;
-`;
 
 const ActiveCodeContainer = styled.View`
   width: 100%;
@@ -255,13 +268,4 @@ const Container = styled.View`
 const RegularInfoContainer = styled.View`
   align-items: center;
   width: 100%;
-`;
-
-const RegularInfoText = styled(GeneralText)`
-  line-height: 24px;
-  color: ${colors.midGrey};
-  padding-left: 10px;
-  padding-right: 10px;
-  font-size: 14px;
-  line-height: 22px;
 `;
