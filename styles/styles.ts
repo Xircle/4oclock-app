@@ -13,6 +13,8 @@ export const colors = {
   lightBlue: "#DBEDFF",
   warningRed: "#FF7F7F",
   pink: "#ff00ef",
+  orange: "#F15F24",
+  green: "#21E19C",
 };
 
 export const fontFamilies = {
