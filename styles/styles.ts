@@ -12,6 +12,7 @@ export const colors = {
   bareGrey: "#A7B0C0",
   lightBlue: "#DBEDFF",
   warningRed: "#FF7F7F",
+  pink: "#ff00ef",
 };
 
 export const fontFamilies = {
