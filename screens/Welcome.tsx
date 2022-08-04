@@ -252,16 +252,16 @@ export default function Welcome(props: Props) {
         </ModalInfo>
       </MyModal>
       <DesignContainer>
-        <Heading>2022년은🎉{"\n"}연고이팅에서 놀자!</Heading>
+        <Heading>Welcome to{"\n"}KEVIN's CLUB</Heading>
       </DesignContainer>
       <ButtonContainer>
-        <LoginContainer>
+        {/* <LoginContainer>
           <MyLogin
             emailOnchange={setEmailInput}
             pwdOnchange={setPwdInput}
             submit={LoginFormSubmit}
           />
-        </LoginContainer>
+        </LoginContainer> */}
 
         <KakaoLoginButton
           onPress={signInWithKakao}
@@ -298,7 +298,7 @@ export default function Welcome(props: Props) {
           </AppleLoginButton>
         )}
         <TouchableOpacity onPress={openLink.LOpenKakaoChat}>
-          <LoginText>로그인이 안되시나요?</LoginText>
+          <NotLoginText>앗! 로그인이 안되시나요?</NotLoginText>
         </TouchableOpacity>
         <AgreeContainer>
           <AgreeText>가입하시면</AgreeText>
@@ -326,7 +326,9 @@ export default function Welcome(props: Props) {
 
 const Heading = styled(GeneralText)`
   font-family: ${fontFamilies.bold};
-  font-size: 25px;
+  font-size: 30px;
+  color: ${colors.bgColor};
+  line-height: 40px;
 `;
 
 const AgreeContainer = styled.View`
@@ -338,7 +340,7 @@ const AgreeContainer = styled.View`
 const AgreeText = styled(GeneralText)`
   font-family: ${fontFamilies.thin};
   font-size: 12px;
-  color: ${colors.midGrey};
+  color: ${colors.black};
 `;
 
 const CTAAgreeContainer = styled.View`
@@ -348,16 +350,15 @@ const CTAAgreeContainer = styled.View`
 
 const Container = styled.View`
   flex: 1;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.orange};
 `;
 
 const DesignContainer = styled.View`
   width: 100%;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 40px;
+  padding-left: 15px;
+  padding-top: 100px;
   position: relative;
   flex: 1;
 `;
@@ -374,6 +375,10 @@ const KakaoLoginButton = styled.TouchableOpacity`
 
 const LoginText = styled(GeneralText)<{ color?: string }>`
   color: ${(props) => (props.color ? props.color : colors.black)};
+`;
+
+const NotLoginText = styled(LoginText)`
+  color: ${colors.bgColor};
 `;
 
 const AppleLoginButton = styled(KakaoLoginButton)`
