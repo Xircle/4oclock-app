@@ -19,7 +19,6 @@ import { Universities } from "../../lib/SelectData";
 import { Dimensions, View } from "react-native";
 import MySelect from "../UI/MySelect";
 import { Ionicons } from "@expo/vector-icons";
-import MyKeyboardAvoidingView from "../UI/MyKeyboardAvoidingView";
 
 interface Props {
   state: AuthState;
