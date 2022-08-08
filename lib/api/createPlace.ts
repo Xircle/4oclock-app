@@ -62,10 +62,6 @@ export const createPlace = async (
     );
   }
 
-  console.log(
-    "team" + placeData.teamOnly ||
-      typeKoToEn[placeData.activityType] === "Regular-meeting"
-  );
 
   const { data } = await axiosclient.post<CreateActivityOutput>(
     `${BASE_URL}/place`,
