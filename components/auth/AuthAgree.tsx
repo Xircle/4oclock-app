@@ -12,7 +12,7 @@ export default class AuthAgree extends PureComponent<Props> {
     return (
       <Container>
         <MainHeading style={{ marginTop: 40 }}>
-          연고이팅 크루가{"\n"}된 걸 환영해🎉
+          케빈의 클럽 프렌즈가{"\n"}된 걸 환영해🎉
         </MainHeading>
         <GreyInfoText style={{ marginTop: 20 }}>
           이제 친구들과 맛있는 밥먹으며 놀러가자!!!
