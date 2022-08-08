@@ -153,10 +153,10 @@ export default function MyPage(props: Props) {
               </RegisteredButton>
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
-              <ListText>연고이팅 운영진에게 문의 / 피드백</ListText>
+              <ListText>케빈의 클럽 운영진에게 문의 / 피드백</ListText>
             </ListButton>
             <ListButton onPress={openLink.LServiceAgree}>
-              <ListText>연고이팅 이용자 가이드!</ListText>
+              <ListText>케빈의 클럽 이용자 가이드!</ListText>
             </ListButton>
             <ListButton onPress={openLink.LOpenKakaoChat}>
               <ListText>비매너 유저 신고하기</ListText>
