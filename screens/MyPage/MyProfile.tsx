@@ -170,7 +170,7 @@ export default function MyProfile(props: Props) {
     } else {
       if (Platform.OS === "ios") {
         Alert.alert(
-          "'모든 사진에 대한 접근 허용'이 필요합니다. 설정 > 연고이팅 > 사진 > 모든 사진 허용으로 바꿔주세요~"
+          "'모든 사진에 대한 접근 허용'이 필요합니다. 설정 > 케빈의 클럽 > 사진 > 모든 사진 허용으로 바꿔주세요~"
         );
       } else {
         Alert.alert("사진 접근 허용부탁드립니다~");
@@ -421,7 +421,7 @@ export default function MyProfile(props: Props) {
                 defaultButtonText="음주 스타일을 설정해주세요"
                 defaultValueByIndex={localProfileData.drinkingStyle}
               />
-              <SLabel>연고이팅 활동 코드</SLabel>
+              <SLabel>케빈의 클럽 활동 코드</SLabel>
               <SBigTextInput
                 placeholder="활동 코드"
                 autoCapitalize="none"
