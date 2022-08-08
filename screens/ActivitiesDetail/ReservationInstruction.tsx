@@ -79,7 +79,7 @@ export default function ReservationInstruction({ route }: Props) {
           </InfoText>
           <InfoText style={{ marginTop: 20 }}>
             ✌ 모임에서 다른 친구들을 존중해주세요. 비매너 친구는 익명신고를
-            통해 연고이팅 운영진에게 말해주세요!
+            통해 케빈의 클럽 운영진에게 말해주세요!
           </InfoText>
         </InnerInfoContainer>
       </InfoContainer>
