@@ -262,6 +262,18 @@ export interface GetMyCreatedPlaceOutput extends CoreOutput {
   places: MyCreatedPlaceData[];
 }
 
+export interface PartyData {
+  id: string;
+  images?: string[];
+  externalLink?: string;
+  startDateAt: Date;
+  description: string;
+}
+
+export interface GetPartiesOutput extends CoreOutput {
+  parties: Party[];
+}
+
 // See Random Profile
 interface UserProfile {
   id: string;
