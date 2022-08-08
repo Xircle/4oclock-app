@@ -9,7 +9,7 @@ export default function BannedScreen({}: Props) {
     <Container>
       <MainHeading>정지된 계정입니다</MainHeading>
       <SubHeading>
-        관련문의는 연고이팅 카카오 체널로 연락 주시면 답변드리겠습니다.
+        관련문의는 케빈의 클럽 카카오 체널로 연락 주시면 답변드리겠습니다.
       </SubHeading>
     </Container>
   );
