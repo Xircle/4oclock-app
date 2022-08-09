@@ -1,6 +1,5 @@
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import React, { PureComponent } from "react";
-import { Alert } from "react-native";
 import styled from "styled-components/native";
 import { colors, GeneralText } from "../../styles/styles";
 import { openLink } from "../shared/Links";
@@ -20,36 +19,42 @@ export default class PureNotificationItem extends PureComponent<Props> {
     super(props);
   }
 
-  render() {
-    const { mainText, isUnread, subText, mainParam, type } = this.props;
-    async function CTA() {
-      if (!mainParam) return;
-      switch (type) {
-        case "message":
-          break;
-        case "okLink":
-          //openLink
-          await openLink.LOpenLink(mainParam);
-          break;
-        case "place":
-          // this.props.navigation.navigate("ActivityStackNav", {
-          //   id: this.props.mainParam,
-          // });
-          break;
-      }
+  CTA = async (
+    type: string,
+    navigation: NavigationProp<ParamListBase>,
+    mainParam?: string
+  ) => {
+    if (!mainParam) return;
+    switch (type) {
+      case "message":
+        break;
+      case "okLink":
+        //openLink
+        await openLink.LOpenLink(mainParam);
+        break;
+      case "place":
+        navigation.navigate("ActivityStackNav", {
+          id: mainParam,
+        });
+        break;
     }
+  };
+
+  render() {
+    const { mainText, isUnread, subText, mainParam, type, navigation } =
+      this.props;
     return (
-      <ItemContainer onPress={CTA} isUnread={isUnread}>
+      <ItemContainer
+        onPress={async () => await this.CTA(type, navigation, mainParam)}
+        isUnread={isUnread}
+      >
         <ItemPicContainer>
           {/* {this.props.image ? : } */}
-          <ImageSub>👽</ImageSub>
+          <ImageSub>☀️</ImageSub>
         </ItemPicContainer>
         <ItemMidContainer>
           <HeaderText>{mainText ? mainText : "no title provided"}</HeaderText>
-          <SubText>
-            {subText ? subText : "no subtitle provided"}
-            {mainParam ? mainParam : "no mainParam provided"}
-          </SubText>
+          <SubText>{subText ? subText : "no subtitle provided"}</SubText>
         </ItemMidContainer>
         {/* <ItemDeleteContainer></ItemDeleteContainer> */}
       </ItemContainer>
