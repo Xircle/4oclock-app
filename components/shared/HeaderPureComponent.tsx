@@ -19,13 +19,18 @@ export default function HeaderPureComponent(props: Props) {
 
   return (
     <HeaderContainer>
-      <HeaderImage source={require("../../statics/images/HeaderImage.png")} />
+      <HeaderLeftContainer>
+        {/* <HeaderImage source={require("../../statics/images/HeaderImage.png")} /> */}
+      </HeaderLeftContainer>
+
       <HeaderRightContainer>
         <MainHeaderRight />
       </HeaderRightContainer>
     </HeaderContainer>
   );
 }
+
+const HeaderLeftContainer = styled.View``;
 
 const HeaderContainer = styled.View`
   width: 100%;
