@@ -9,6 +9,7 @@ import { getParties } from "../../lib/api/getParties";
 import { getPlacesLightning } from "../../lib/api/getPlaces";
 import { GetPlacesByLocationOutput, PartyData } from "../../lib/api/types";
 import { colors, fontFamilies, GeneralText } from "../../styles/styles";
+import { openLink } from "../shared/Links";
 import MainFeed from "./MainFeed";
 import { renderItemLightning } from "./MainRenderItems";
 
@@ -84,29 +85,38 @@ function MainLightningTab(props: Props) {
               >
                 {partyData?.map((item, index) => {
                   return (
-                    <SwiperWrapper key={index}>
-                      <SwiperImage source={{ uri: item.images[0] }} />
-                      <LinearGradient
-                        // Background Linear Gradient
-                        colors={["transparent", "transparent", colors.black]}
-                        style={{
-                          position: "absolute",
-                          left: 0,
-                          right: 0,
-                          top: 0,
-                          bottom: 0,
-                        }}
-                      />
-                      <TextContainer>
-                        <InvitationContainer>
-                          <InvitationDetail>
-                            {item.invitationDetail}
-                          </InvitationDetail>
-                        </InvitationContainer>
-                        <PartyNameText>{item.name}</PartyNameText>
-                        <Description>{item.description}</Description>
-                      </TextContainer>
-                    </SwiperWrapper>
+                    <SwipButtonWrapper
+                      key={index}
+                      onPress={() => {
+                        openLink.LOpenLink(item.externalLink);
+                      }}
+                    >
+                      <SwiperWrapper>
+                        <SwiperImage source={{ uri: item.images[0] }} />
+                        <LinearGradient
+                          // Background Linear Gradient
+                          colors={["transparent", "transparent", colors.black]}
+                          style={{
+                            position: "absolute",
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                          }}
+                        />
+                        <TextContainer>
+                          <InvitationContainer>
+                            <InvitationDetail>
+                              {item.invitationDetail}
+                            </InvitationDetail>
+                          </InvitationContainer>
+                          <PartyNameText>{item.name}</PartyNameText>
+                          <Description numberOfLines={1}>
+                            {item.description}
+                          </Description>
+                        </TextContainer>
+                      </SwiperWrapper>
+                    </SwipButtonWrapper>
                   );
                 })}
               </Swiper>
@@ -136,6 +146,8 @@ function MainLightningTab(props: Props) {
 
 export default React.memo(MainLightningTab);
 
+const SwipButtonWrapper = styled.TouchableWithoutFeedback``;
+
 const SwiperContainer = styled.View`
   width: 100%;
   height: 180px;
@@ -154,6 +166,7 @@ const TextContainer = styled.View`
   position: absolute;
   left: 20px;
   bottom: 20px;
+  right: 20px;
 `;
 
 const PartyNameText = styled(GeneralText)`
@@ -165,7 +178,7 @@ const InvitationContainer = styled.View`
   background-color: #fa4444;
   padding: 5px;
   border-radius: 10px;
-  overflow: hidden;
+  align-self: flex-start;
 `;
 
 const InvitationDetail = styled(GeneralText)`
