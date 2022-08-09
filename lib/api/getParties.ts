@@ -3,7 +3,7 @@ import AxiosClient from "../apiClient";
 import { Alert } from "react-native";
 import { BASE_URL } from "../utils";
 
-export const getMyPlaces = async (): Promise<PartyData[]> => {
+export const getParties = async (): Promise<PartyData[]> => {
   const axiosclient = await AxiosClient();
   const { data } = await axiosclient.get<GetPartiesOutput>(
     `${BASE_URL}/party/`
