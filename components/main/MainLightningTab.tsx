@@ -1,3 +1,4 @@
+import { LinearGradient } from "expo-linear-gradient";
 import React, { PureComponent, useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
 import FastImage from "react-native-fast-image";
@@ -72,7 +73,12 @@ function MainLightningTab(props: Props) {
                 horizontal
                 autoplay
                 autoplayTimeout={20}
-                containerStyle={{ width: "100%", height: "100%" }}
+                containerStyle={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: 15,
+                  overflow: "hidden",
+                }}
                 showsButtons={false}
                 showsPagination={false}
               >
@@ -80,6 +86,26 @@ function MainLightningTab(props: Props) {
                   return (
                     <SwiperWrapper key={index}>
                       <SwiperImage source={{ uri: item.images[0] }} />
+                      <LinearGradient
+                        // Background Linear Gradient
+                        colors={["transparent", "transparent", colors.black]}
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                        }}
+                      />
+                      <TextContainer>
+                        <InvitationContainer>
+                          <InvitationDetail>
+                            {item.invitationDetail}
+                          </InvitationDetail>
+                        </InvitationContainer>
+                        <PartyNameText>{item.name}</PartyNameText>
+                        <Description>{item.description}</Description>
+                      </TextContainer>
                     </SwiperWrapper>
                   );
                 })}
@@ -112,18 +138,46 @@ export default React.memo(MainLightningTab);
 
 const SwiperContainer = styled.View`
   width: 100%;
-  height: 120px;
+  height: 180px;
   margin-top: 3px;
-  border-radius: 15px;
 `;
 const SwiperWrapper = styled.View`
   width: 100%;
   height: 100%;
+  position: relative;
 `;
 const SwiperImage = styled(FastImage)`
   width: 100%;
   height: 100%;
-  border-radius: 15px;
+`;
+const TextContainer = styled.View`
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+`;
+
+const PartyNameText = styled(GeneralText)`
+  color: ${colors.bgColor};
+  font-family: ${fontFamilies.bold};
+`;
+
+const InvitationContainer = styled.View`
+  background-color: #fa4444;
+  padding: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+`;
+
+const InvitationDetail = styled(GeneralText)`
+  color: ${colors.bgColor};
+  font-family: ${fontFamilies.bold};
+  font-size: 11px;
+`;
+
+const Description = styled(GeneralText)`
+  color: ${colors.bgColor};
+  font-family: ${fontFamilies.light};
+  font-size: 12px;
 `;
 
 const HeaderContainer = styled.View`
