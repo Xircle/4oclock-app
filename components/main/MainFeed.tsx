@@ -10,7 +10,7 @@ interface Props {
   refreshing: boolean;
   places: PlaceFeedData[];
   renderItem: ({ item }: { item: any }) => JSX.Element;
-  listHeaderCompoent: JSX.Element;
+  //listHeaderCompoent: JSX.Element;
 }
 
 function AreEqual(prevProps: Props, nextProps: Props) {
@@ -23,8 +23,8 @@ function MainFeed({
   refreshing,
   places,
   renderItem,
-  listHeaderCompoent,
-}: Props) {
+}: //listHeaderCompoent,
+Props) {
   //console.log("mainFeed Render");
   const placeFlatlistKeyExtractor = (item: PlaceFeedData, index) =>
     item.id + "" + index;
@@ -40,7 +40,7 @@ function MainFeed({
       // @ts-ignore
       data={places}
       renderItem={renderItem}
-      ListHeaderComponent={listHeaderCompoent}
+      //ListHeaderComponent={listHeaderCompoent}
     />
   );
 }
