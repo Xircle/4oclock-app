@@ -5538,6 +5538,11 @@
   "resolved" "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-4.3.0.tgz"
   "version" "4.3.0"
 
+"react-native-linear-gradient@^2.6.2":
+  "integrity" "sha512-Z8Xxvupsex+9BBFoSYS87bilNPWcRfRsGC0cpJk72Nxb5p2nEkGSBv73xZbEHnW2mUFvP+huYxrVvjZkr/gRjQ=="
+  "resolved" "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.6.2.tgz"
+  "version" "2.6.2"
+
 "react-native-optimized-flatlist@^1.0.4":
   "integrity" "sha512-PMoZRJAHKzd/ahYKUzt43AJ+kVhHpOSTvBhJdQqooZXw312xADWpR7iDvBAbBiRGkmk0yM4GJacd9TMft6q/Gg=="
   "resolved" "https://registry.npmjs.org/react-native-optimized-flatlist/-/react-native-optimized-flatlist-1.0.4.tgz"
