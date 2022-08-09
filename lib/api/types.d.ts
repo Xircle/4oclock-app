@@ -268,6 +268,8 @@ export interface PartyData {
   externalLink?: string;
   startDateAt: Date;
   description: string;
+  name: string;
+  invitationDetail: string;
 }
 
 export interface GetPartiesOutput extends CoreOutput {
