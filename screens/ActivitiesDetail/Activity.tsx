@@ -105,7 +105,7 @@ export default function Activity({ id, name, modal, setModal }: Props) {
 
   useEffect(() => {
     if (activityData) {
-      //console.log(activityData);
+      console.log(activityData);
       setImages(
         Array(activityData?.coverImage).concat(activityData?.subImages)
       );
@@ -115,7 +115,6 @@ export default function Activity({ id, name, modal, setModal }: Props) {
   useEffect(() => {
     refetch();
     setAccountType();
-    console.log("UE Activity");
   }, []);
   return (
     <Container>
