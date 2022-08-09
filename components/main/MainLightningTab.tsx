@@ -63,82 +63,88 @@ function MainLightningTab(props: Props) {
   };
   return (
     <Container>
-      <HeaderContainer>
-        {partyData ? (
-          <LightningInfoContainer>
-            <HeaderTitle>🎉KEVIN's party zone</HeaderTitle>
-            <MainText>케빈이 준비한 파티, 이벤트가 올라오는 공간이야!</MainText>
-            <SwiperContainer>
-              <Swiper
-                loop
-                horizontal
-                autoplay
-                autoplayTimeout={20}
-                containerStyle={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: 15,
-                  overflow: "hidden",
-                }}
-                showsButtons={false}
-                showsPagination={false}
-              >
-                {partyData?.map((item, index) => {
-                  return (
-                    <SwipButtonWrapper
-                      key={index}
-                      onPress={() => {
-                        openLink.LOpenLink(item.externalLink);
-                      }}
-                    >
-                      <SwiperWrapper>
-                        <SwiperImage source={{ uri: item.images[0] }} />
-                        <LinearGradient
-                          // Background Linear Gradient
-                          colors={["transparent", "transparent", colors.black]}
-                          style={{
-                            position: "absolute",
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0,
-                          }}
-                        />
-                        <TextContainer>
-                          <InvitationContainer>
-                            <InvitationDetail>
-                              {item.invitationDetail}
-                            </InvitationDetail>
-                          </InvitationContainer>
-                          <PartyNameText>{item.name}</PartyNameText>
-                          <Description numberOfLines={1}>
-                            {item.description}
-                          </Description>
-                        </TextContainer>
-                      </SwiperWrapper>
-                    </SwipButtonWrapper>
-                  );
-                })}
-              </Swiper>
-            </SwiperContainer>
-          </LightningInfoContainer>
-        ) : (
-          <LightningInfoContainer>
-            <LightningInfoText>
-              🚨(중요)모임 못 나가시면 오카방에서 상황 설명 후 앱에서 꼭 바로
-              취소 부탁드리겠습니다.🚨
-            </LightningInfoText>
-          </LightningInfoContainer>
-        )}
-      </HeaderContainer>
-
       <MainFeed
         loadMore={loadMoreLightning}
         onRefresh={onRefreshLightning}
         refreshing={refreshing}
         renderItem={memoizedValueLightning}
         places={mainLightningData?.pages?.map((page) => page.places).flat()}
-        listHeaderCompoent={<View />}
+        listHeaderCompoent={
+          <HeaderContainer>
+            {partyData ? (
+              <LightningInfoContainer>
+                <HeaderTitle>🎉KEVIN's party zone</HeaderTitle>
+                <MainText>
+                  케빈이 준비한 파티, 이벤트가 올라오는 공간이야!
+                </MainText>
+                <SwiperContainer>
+                  <Swiper
+                    loop
+                    horizontal
+                    autoplay
+                    autoplayTimeout={20}
+                    containerStyle={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 15,
+                      overflow: "hidden",
+                    }}
+                    showsButtons={false}
+                    showsPagination={false}
+                  >
+                    {partyData?.map((item, index) => {
+                      return (
+                        <SwipButtonWrapper
+                          key={index}
+                          onPress={() => {
+                            openLink.LOpenLink(item.externalLink);
+                          }}
+                        >
+                          <SwiperWrapper>
+                            <SwiperImage source={{ uri: item.images[0] }} />
+                            <LinearGradient
+                              // Background Linear Gradient
+                              colors={[
+                                "transparent",
+                                "transparent",
+                                colors.black,
+                              ]}
+                              style={{
+                                position: "absolute",
+                                left: 0,
+                                right: 0,
+                                top: 0,
+                                bottom: 0,
+                              }}
+                            />
+                            <TextContainer>
+                              <InvitationContainer>
+                                <InvitationDetail>
+                                  {item.invitationDetail}
+                                </InvitationDetail>
+                              </InvitationContainer>
+                              <PartyNameText>{item.name}</PartyNameText>
+                              <Description numberOfLines={1}>
+                                {item.description}
+                              </Description>
+                            </TextContainer>
+                          </SwiperWrapper>
+                        </SwipButtonWrapper>
+                      );
+                    })}
+                  </Swiper>
+                </SwiperContainer>
+              </LightningInfoContainer>
+            ) : (
+              <LightningInfoContainer>
+                <LightningInfoText>
+                  🚨(중요)모임 못 나가시면 오카방에서 상황 설명 후 앱에서 꼭
+                  바로 취소 부탁드리겠습니다.🚨
+                </LightningInfoText>
+              </LightningInfoContainer>
+            )}
+          </HeaderContainer>
+        }
       />
     </Container>
   );
@@ -195,7 +201,6 @@ const Description = styled(GeneralText)`
 
 const HeaderContainer = styled.View`
   width: 100%;
-  padding: 15px 20px 0px 20px;
 `;
 
 const HeaderTitle = styled(GeneralText)`
