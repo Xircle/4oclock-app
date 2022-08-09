@@ -131,7 +131,7 @@ export default function MainTabsNav(props: Props) {
               focused={focused}
               color={color}
               size={size}
-              title={"크루원"}
+              title={"친구"}
             />
           ),
           headerShown: false,
