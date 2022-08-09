@@ -21,7 +21,9 @@ export default class CountFC extends PureComponent<Props> {
           <HeaderTopText>프렌즈의 출석도장 🙋🏼</HeaderTopText>
           <HeaderInnerWrapper>
             <HeaderTopSubText>정기모임 </HeaderTopSubText>
-            <HeaderTopSubHighlight>3회 이상 참석시</HeaderTopSubHighlight>
+            <HeaderTopSubHighlight>
+              {totalPointThisSeason ?? "?"} 회 이상 참석시
+            </HeaderTopSubHighlight>
             <HeaderTopSubText> 보증금 2만원을 환급해줘!</HeaderTopSubText>
           </HeaderInnerWrapper>
         </TopContainer>
