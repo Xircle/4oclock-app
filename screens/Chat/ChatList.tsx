@@ -56,10 +56,10 @@ export default function ChatList(props: Props) {
       data={chatRoomData?.myRooms}
       ListHeaderComponent={
         <HeaderContainer>
-          <HeaderMainText>크루원들과 소통해요</HeaderMainText>
+          <HeaderMainText>프렌즈들과 소통해요</HeaderMainText>
           {showSubText && (
             <HeaderSubText>
-              도착한 메세지가 없습니다. 먼저 크루원들에게 메세지를 보내보세요
+              도착한 메세지가 없습니다. 먼저 프렌즈들에게 메세지를 보내보세요
             </HeaderSubText>
           )}
         </HeaderContainer>

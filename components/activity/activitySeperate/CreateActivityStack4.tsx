@@ -51,13 +51,23 @@ export default function CreateActivityStack4(props: Props) {
     navigation.navigate("CAS5", {});
   };
 
-  const CTAPlace = (addressName: string, placeName: string, id: string) => {
+  const CTAPlace = (
+    addressName: string,
+    placeName: string,
+    id: string,
+    x?: string,
+    y?: string
+  ) => {
     setPlaceName(placeName);
     setPlaceAddress(addressName);
     activityDispatcher.dispatchDetailAddress(addressName, id, dispatch);
     setPlaceSearch("");
     setAddressError(false);
     setSearchResult(undefined);
+    // if (x && y) {
+    //   const temp2 = await kakaoLocal.coord2address(x, y);
+    //   console.log(temp2?.documents?.[0]?.region_2depth_name);
+    // }
   };
 
   useEffect(() => {
@@ -134,7 +144,13 @@ export default function CreateActivityStack4(props: Props) {
                       addressName={item.address_name}
                       categoryGroupName={item.category_group_name}
                       onPress={() =>
-                        CTAPlace(item.address_name, item.place_name, item.id)
+                        CTAPlace(
+                          item.address_name,
+                          item.place_name,
+                          item.id,
+                          item.x,
+                          item.y
+                        )
                       }
                     />
                   );

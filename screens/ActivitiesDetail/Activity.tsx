@@ -236,7 +236,7 @@ export default function Activity({ id, name, modal, setModal }: Props) {
         </InnerWrapper>
         <InnerWrapper upperDividor={true}>
           <InnerHeadingBlue>
-            참여 크루원{" "}
+            프렌즈{" "}
             {activityData?.participantsData.participantsCount
               ? activityData?.participantsData.participantsCount
               : "0"}{" "}

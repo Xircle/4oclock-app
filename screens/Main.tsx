@@ -34,6 +34,7 @@ function Main(props: Props) {
     if (userData?.accountType === "Banned") {
       navigation.reset({
         index: 0,
+        // @ts-ignore
         routes: [{ name: "BannedScreen" }],
       });
     }

@@ -27,6 +27,7 @@ import { getVersion } from "../lib/api/getVersion";
 
 import messaging from "@react-native-firebase/messaging";
 import { updateFirebaseToken } from "../lib/api/updateFirebaseToken";
+import FastImage from "react-native-fast-image";
 
 interface Props {}
 
@@ -262,7 +263,7 @@ export default function Welcome(props: Props) {
             submit={LoginFormSubmit}
           />
         </LoginContainer> */}
-
+        <AvatarImg source={require("../statics/images/800.png")} />
         <KakaoLoginButton
           onPress={signInWithKakao}
           style={{
@@ -323,6 +324,11 @@ export default function Welcome(props: Props) {
     </Container>
   );
 }
+
+const AvatarImg = styled(FastImage)`
+  width: ${width * 0.55 + "px"};
+  height: ${width * 0.55 + "px"};
+`;
 
 const Heading = styled(GeneralText)`
   font-family: ${fontFamilies.bold};

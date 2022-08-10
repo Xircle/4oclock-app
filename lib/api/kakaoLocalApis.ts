@@ -9,6 +9,8 @@ export interface kakaoLocalData {
   category_group_code: string;
   category_group_name: string;
   id: string;
+  x: string;
+  y: string;
 }
 
 export interface kakaoLocalResponse {
@@ -21,6 +23,16 @@ export const kakaoLocal = {
 
     return await fetch(url, {
       method: "post",
+      headers: new Headers({
+        Authorization: `KakaoAK ${kakaoRESTApiKey}`,
+      }),
+    }).then((response) => response.json());
+  },
+  coord2address: async (x: string, y: string) => {
+    const url = `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${x}&y=${y}`;
+
+    return await fetch(url, {
+      method: "get",
       headers: new Headers({
         Authorization: `KakaoAK ${kakaoRESTApiKey}`,
       }),

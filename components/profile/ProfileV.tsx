@@ -8,7 +8,7 @@ import { colors, fontFamilies, InfoBox, InfoText } from "../../styles/styles";
 import AvatarUri from "../UI/AvatarUri";
 
 interface Props {
-  profileData: UserProfile;
+  profileData?: UserProfile;
   onPressNext?: () => void;
   enableNext?: boolean;
   onPressChat?: () => void;
@@ -30,7 +30,7 @@ export default function ProfileV({
     <>
       <SInfoBox>
         <SInfoText>
-          연고이팅을 가입한 친구들과 소통할 수 있는 탭이에요!
+          케빈의 클럽 프렌즈들과 소통할 수 있는 탭이에요!
         </SInfoText>
       </SInfoBox>
       <View style={{ flex: 8, width: "100%" }}>
@@ -43,17 +43,19 @@ export default function ProfileV({
               source={profileData?.profileImageUrl}
               size={width * 0.5}
             />
-            <BigBlackText>{profileData?.username}</BigBlackText>
+            <BigBlackText>{profileData?.username || ""}</BigBlackText>
             <MidGreyText>{profileData?.job || ""}</MidGreyText>
             {showPN ? (
-              <SmallBlackText>{profileData?.phoneNumber}</SmallBlackText>
+              <SmallBlackText>{profileData?.phoneNumber || ""}</SmallBlackText>
             ) : null}
             <InnerContainer>
               <InnerContent>
-                <SmallBlackText>{profileData?.MBTI}</SmallBlackText>
-                <SmallBlackText>{profileData?.personality}</SmallBlackText>
+                <SmallBlackText>{profileData?.MBTI || ""}</SmallBlackText>
+                <SmallBlackText>
+                  {profileData?.personality || ""}
+                </SmallBlackText>
               </InnerContent>
-              <ShortBioText>{profileData?.shortBio}</ShortBioText>
+              <ShortBioText>{profileData?.shortBio || ""}</ShortBioText>
               <GraySubText>
                 {profileData?.university || "두근두근대"} /{" "}
                 {AgeNumberToString(profileData?.age) || "나잇살"} /{" "}
