@@ -6,15 +6,15 @@ const { width, height } = Dimensions.get("window");
 export const colors = {
   lightBlack: "#505050",
   black: "#12121D",
-  mainBlue: "#18A0FB",
-  bgColor: "#FFFFFF",
+  vividBlue: "#18A0FB",
+  white: "#FFFFFF",
   midGrey: "#6F7789",
   bareGrey: "#A7B0C0",
-  lightBlue: "#DBEDFF",
-  warningRed: "#FF7F7F",
-  pink: "#ff00ef",
-  orange: "#F15F24",
-  green: "#21E19C",
+  veryPaleBlue: "#DBEDFF",
+  veryLightRed: "#FF7F7F",
+  pureMagenta: "#ff00ef",
+  vividOrange: "#F15F24",
+  vividCyan: "#21E19C",
 };
 
 export const fontFamilies = {
@@ -39,7 +39,7 @@ export const SubHeading = styled.Text`
 
 export const CASContainer = styled.View`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   padding-top: 20px;
   padding-left: 15px;
   padding-right: 15px;
@@ -58,14 +58,14 @@ export const GeneralText = styled.Text`
 
 export const InfoBox = styled.View`
   padding: 20px;
-  background-color: ${colors.lightBlue};
+  background-color: ${colors.veryPaleBlue};
   border-radius: 5px;
   width: 100%;
   font-family: ${fontFamilies.regular};
 `;
 
 export const InfoText = styled.Text`
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
   font-family: ${fontFamilies.regular};
   font-size: 13px;
   line-height: 20px;
@@ -122,7 +122,7 @@ export const ErrorMessage = styled(Text)`
   font-size: 11px;
   /* text-align: center; */
   margin-top: 5px;
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
 `;
 
 export const TextArea = styled(BigTextInput)`
@@ -139,7 +139,7 @@ export const ModalButton = styled.TouchableOpacity`
 
 export const ModalButtonText = styled(GeneralText)`
   font-size: 22px;
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-family: ${fontFamilies.bold};
 `;
 
@@ -149,12 +149,12 @@ export const ModalCloseButton = styled(ModalButton)`
 `;
 
 export const ModalReportButton = styled(ModalButton)`
-  background-color: ${colors.warningRed};
+  background-color: ${colors.veryLightRed};
   height: 50px;
 `;
 
 export const ModalBlueButton = styled(ModalReportButton)`
-  background-color: ${colors.mainBlue};
+  background-color: ${colors.vividBlue};
 `;
 
 export const MyAlert = styled.View`
@@ -182,7 +182,7 @@ export const XLButton = styled.TouchableOpacity<{
       ? colors.bareGrey
       : props.bgColor
       ? props.bgColor
-      : colors.mainBlue};
+      : colors.vividBlue};
   border-radius: ${width / 25 + "px"};
   width: ${width * 0.9 + "px"};
   height: ${width * 0.14 + "px"};
