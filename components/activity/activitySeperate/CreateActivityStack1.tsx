@@ -123,7 +123,7 @@ const Container = styled.ScrollView`
   padding-top: 20px;
   padding-left: 15px;
   padding-right: 15px;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;
 
 const InnerContainer = styled.View`
@@ -135,11 +135,11 @@ const InnerContainer = styled.View`
 const SBigTextInput = styled(BigTextInput)<{ error?: Boolean }>`
   border: ${(props) =>
     props.error
-      ? `0.5px solid ${colors.warningRed}`
+      ? `0.5px solid ${colors.veryLightRed}`
       : `0.5px solid ${colors.midGrey}`};
   margin-top: 11px;
 `;
 
 const SErrorMessage = styled(ErrorMessage)`
-  color: ${colors.warningRed};
+  color: ${colors.veryLightRed};
 `;

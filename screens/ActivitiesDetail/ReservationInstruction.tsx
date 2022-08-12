@@ -90,7 +90,7 @@ export default function ReservationInstruction({ route }: Props) {
               <Ionicons
                 name={agree ? "checkmark-circle" : "checkmark-circle-outline"}
                 size={28}
-                color={agree ? colors.mainBlue : colors.bareGrey}
+                color={agree ? colors.vividBlue : colors.bareGrey}
               />
               <SelectText>
                 위 사항을 확인하고 이용 규칙을 지키겠습니다
@@ -111,7 +111,7 @@ export default function ReservationInstruction({ route }: Props) {
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;
 
 const InfoContainer = styled.View`

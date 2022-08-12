@@ -91,7 +91,7 @@ export default function ReservationQA({ route }: Props) {
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;
 
 const InfoContainer = styled.View`

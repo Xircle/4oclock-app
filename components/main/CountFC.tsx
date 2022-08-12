@@ -80,7 +80,7 @@ const HeaderTopSubText = styled(GeneralText)`
 
 const HeaderTopSubHighlight = styled(HeaderTopSubText)`
   font-family: ${fontFamilies.bold};
-  color: ${colors.pink};
+  color: ${colors.pureMagenta};
 `;
 
 const HeaderContainer = styled.View`
@@ -92,7 +92,7 @@ const HeaderContainer = styled.View`
 const HeaderCountContainer = styled.View`
   width: 90%;
   height: 70px;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   border-radius: 10px;
   flex-direction: row;
 `;

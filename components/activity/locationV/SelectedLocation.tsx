@@ -24,10 +24,10 @@ const Container = styled.View`
 
 const PlaceNameText = styled(GeneralText)`
   margin-left: 20px;
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
 `;
 
 const AddressText = styled(GeneralText)`
   margin-left: 20px;
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
 `;

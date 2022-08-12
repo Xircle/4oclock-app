@@ -52,7 +52,7 @@ const ModalOuterWrapper = styled.View`
 const ModalInnerWrapper = styled.View`
   width: 300px;
   height: 400px;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   align-items: center;
   border-radius: 15px;
   position: relative;

@@ -12,7 +12,7 @@ const { width, height } = Dimensions.get("window");
 export default function FullScreenLoader({ notFullScreen }: Props) {
   return (
     <Container notFullScreen={notFullScreen}>
-      <ActivityIndicator color={colors.mainBlue} size="large" />
+      <ActivityIndicator color={colors.vividBlue} size="large" />
     </Container>
   );
 }

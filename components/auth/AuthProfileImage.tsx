@@ -87,7 +87,7 @@ export default function AuthProfileImage({ state, dispatch }: Props) {
 }
 
 const Container = styled.ScrollView`
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   padding: 15px;
   flex: 1;
 `;
@@ -100,7 +100,7 @@ const InfoText = styled(GreyInfoText)`
 `;
 
 const AvatarText = styled(GeneralText)`
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
   font-family: ${fontFamilies.bold};
   margin-top: 12px;
 `;

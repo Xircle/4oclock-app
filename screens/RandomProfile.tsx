@@ -89,7 +89,7 @@ export default function RnadomProfile(props: Props) {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bgColor }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
       <Wrapper>
         {(isLoading || isFetching) && (
           <LoaderWrapper
@@ -98,7 +98,7 @@ export default function RnadomProfile(props: Props) {
               zIndex: 3,
             }}
           >
-            <Loader color={colors.mainBlue} large={true} />
+            <Loader color={colors.vividBlue} large={true} />
           </LoaderWrapper>
         )}
         <ProfileV
@@ -118,7 +118,7 @@ const Wrapper = styled.View`
   flex: 1;
   align-items: center;
   justify-content: flex-start;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;
 
 const LoaderWrapper = styled.View`

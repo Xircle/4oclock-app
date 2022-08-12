@@ -126,7 +126,7 @@ export default function AuthProfileMainData({ state, dispatch }: Props) {
                 : "checkmark-circle-outline"
             }
             color={
-              state.gender === "female" ? colors.mainBlue : colors.bareGrey
+              state.gender === "female" ? colors.vividBlue : colors.bareGrey
             }
             size={32}
             style={{ marginRight: 10 }}
@@ -151,7 +151,7 @@ export default function AuthProfileMainData({ state, dispatch }: Props) {
                 ? "checkmark-circle"
                 : "checkmark-circle-outline"
             }
-            color={state.gender === "male" ? colors.mainBlue : colors.bareGrey}
+            color={state.gender === "male" ? colors.vividBlue : colors.bareGrey}
             size={32}
             style={{ marginRight: 10 }}
           />
@@ -213,11 +213,11 @@ export default function AuthProfileMainData({ state, dispatch }: Props) {
 }
 
 const GenderText = styled(GeneralText)<{ isSelected: boolean }>`
-  color: ${(props) => (props.isSelected ? colors.mainBlue : colors.bareGrey)};
+  color: ${(props) => (props.isSelected ? colors.vividBlue : colors.bareGrey)};
 `;
 
 const Container = styled.ScrollView`
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   padding: 15px;
 `;
 

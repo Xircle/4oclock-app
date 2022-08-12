@@ -16,7 +16,7 @@ export default function SelectButton({ size, selected, marginRight }: Props) {
         <Ionicons
           name="checkmark"
           size={size ? size * 0.85 : 25.5}
-          color={colors.bgColor}
+          color={colors.white}
         />
       </YKIconContainer>
     </YKIconWrapper>
@@ -27,7 +27,7 @@ const YKIconWrapper = styled.View<{ selected?: boolean; marginRight: number }>`
   margin-right: ${(props) =>
     props.marginRight ? props.marginRight + "px" : 0 + "px"};
   background-color: ${(props) =>
-    props.selected ? colors.mainBlue : colors.bareGrey};
+    props.selected ? colors.vividBlue : colors.bareGrey};
   border-radius: ${(props) => (props.size ? props.size / 2 + "px" : "15px")};
   width: ${(props) => (props.size ? props.size + "px" : "30px")};
   height: ${(props) => (props.size ? props.size + "px" : "30px")};

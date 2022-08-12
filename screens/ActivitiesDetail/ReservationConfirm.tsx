@@ -31,7 +31,7 @@ export default function ReservationConfirm({ route }: Props) {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bgColor }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
       <Container>
         <Wrapper>
           <InfoContainer>
@@ -100,7 +100,7 @@ const BottomButtonContainer = styled.View``;
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   width: 90%;
   margin-left: auto;
   margin-right: auto;
@@ -114,7 +114,7 @@ const InfoContainer = styled.View`
 `;
 
 const CongratMainText = styled(GeneralText)`
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
   font-family: ${fontFamilies.medium};
   margin-top: 12px;
 `;

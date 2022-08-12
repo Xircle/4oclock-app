@@ -83,7 +83,7 @@ const Container = styled.View`
   width: 100%;
   height: 110px;
   border-radius: 4px;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   flex-direction: row;
 `;
 
@@ -107,13 +107,13 @@ const SBigTextInput = styled(BigTextInput)`
 const LoginButton = styled.TouchableOpacity`
   flex: 1;
   width: 100%;
-  background-color: ${colors.mainBlue};
+  background-color: ${colors.vividBlue};
   border-radius: 4px;
   justify-content: center;
   align-items: center;
 `;
 
 const LoginText = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-family: ${fontFamilies.bold};
 `;

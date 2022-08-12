@@ -23,6 +23,6 @@ export default class AuthAgree extends PureComponent<Props> {
 }
 
 const Container = styled.ScrollView`
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   padding: 15px;
 `;

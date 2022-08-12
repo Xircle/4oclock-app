@@ -295,7 +295,7 @@ export default function Welcome(props: Props) {
               elevation: 3,
             }}
           >
-            <LoginText color={colors.bgColor}> Apple로 시작하기</LoginText>
+            <LoginText color={colors.white}> Apple로 시작하기</LoginText>
           </AppleLoginButton>
         )}
         <TouchableOpacity onPress={openLink.LOpenKakaoChat}>
@@ -333,7 +333,7 @@ const AvatarImg = styled(FastImage)`
 const Heading = styled(GeneralText)`
   font-family: ${fontFamilies.bold};
   font-size: 30px;
-  color: ${colors.bgColor};
+  color: ${colors.white};
   line-height: 40px;
 `;
 
@@ -358,7 +358,7 @@ const Container = styled.View`
   flex: 1;
   justify-content: space-between;
   align-items: center;
-  background-color: ${colors.orange};
+  background-color: ${colors.vividOrange};
 `;
 
 const DesignContainer = styled.View`
@@ -384,7 +384,7 @@ const LoginText = styled(GeneralText)<{ color?: string }>`
 `;
 
 const NotLoginText = styled(LoginText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
 `;
 
 const AppleLoginButton = styled(KakaoLoginButton)`

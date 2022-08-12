@@ -95,7 +95,7 @@ export default function MyPage(props: Props) {
     <Wrapper>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: colors.bgColor, marginTop: 40 }}
+        style={{ backgroundColor: colors.white, marginTop: 40 }}
       >
         <Container>
           <MainHeading>마이페이지</MainHeading>
@@ -210,18 +210,18 @@ const Container = styled.View`
 
 const Wrapper = styled.View`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;
 
 const SXLButton = styled(XLButton)`
   background-color: white;
-  border: 1px solid ${colors.mainBlue};
+  border: 1px solid ${colors.vividBlue};
   width: ${width * 0.86 + "px"};
   height: ${width * 0.86 * 0.17 + "px"};
 `;
 
 const SXLButtonText = styled(XLButtonText)`
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
   font-size: ${(width * 0.86) / 17 + "px"};
 `;
 

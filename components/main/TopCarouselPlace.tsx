@@ -84,7 +84,7 @@ export default function TopCarouselPlace({
 }
 const TagContainer = styled.View<{ isDisabled: Boolean }>`
   background-color: ${(props) =>
-    props.isDisabled ? colors.bareGrey : colors.mainBlue};
+    props.isDisabled ? colors.bareGrey : colors.vividBlue};
   justify-content: center;
   align-items: center;
   width: 58px;
@@ -95,13 +95,13 @@ const TagContainer = styled.View<{ isDisabled: Boolean }>`
 `;
 
 const Tag = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-size: 11px;
   font-family: ${fontFamilies.bold};
 `;
 
 const SubText = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-size: 13px;
   margin-left: 5px;
   font-family: ${fontFamilies.bold};
@@ -115,7 +115,7 @@ const TextContainer = styled.View`
 `;
 
 const NameText = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-family: ${fontFamilies.bold};
   font-size: 20px;
 `;

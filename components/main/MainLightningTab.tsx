@@ -176,7 +176,7 @@ const TextContainer = styled.View`
 `;
 
 const PartyNameText = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-family: ${fontFamilies.bold};
 `;
 
@@ -188,13 +188,13 @@ const InvitationContainer = styled.View`
 `;
 
 const InvitationDetail = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-family: ${fontFamilies.bold};
   font-size: 11px;
 `;
 
 const Description = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-family: ${fontFamilies.light};
   font-size: 12px;
 `;
@@ -215,7 +215,7 @@ const MainText = styled(GeneralText)`
 `;
 
 const Container = styled.View`
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   flex: 1;
 `;
 

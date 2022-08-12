@@ -31,7 +31,7 @@ export default function MRTeamSubmitBtn({
 }
 
 const Container = styled.View<{ marginV?: number; top?: number }>`
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   width: 100%;
   padding-top: ${(props) => (props.top ? props.top + "px" : 0)};
   align-items: center;
@@ -46,7 +46,7 @@ export const TeamButton = styled.TouchableOpacity<{
       ? colors.bareGrey
       : props.bgColor
       ? props.bgColor
-      : colors.mainBlue};
+      : colors.vividBlue};
   border-radius: ${width / 25 + "px"};
   width: 45%;
   height: ${width * 0.12 + "px"};

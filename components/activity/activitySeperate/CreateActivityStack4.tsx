@@ -174,7 +174,7 @@ export default function CreateActivityStack4(props: Props) {
                 <Ionicons
                   name="remove-outline"
                   size={35}
-                  color={colors.bgColor}
+                  color={colors.white}
                 />
               </MaxPrticipantsButton>
               <MaxParticipantsNumber>
@@ -189,7 +189,7 @@ export default function CreateActivityStack4(props: Props) {
                   );
                 }}
               >
-                <Ionicons name="add" size={35} color={colors.bgColor} />
+                <Ionicons name="add" size={35} color={colors.white} />
               </MaxPrticipantsButton>
             </MaxParticipantsContainer>
           </InnerContainer>
@@ -219,7 +219,7 @@ const TimeText = styled(ErrorMessage)`
 
 const Container = styled.ScrollView`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   padding-top: 20px;
   padding-left: 15px;
   padding-right: 15px;
@@ -244,7 +244,7 @@ const MaxPrticipantsButton = styled.TouchableOpacity<{ left?: boolean }>`
   align-items: center;
   justify-content: center;
   background-color: ${(props) =>
-    props.left ? colors.warningRed : colors.mainBlue};
+    props.left ? colors.veryLightRed : colors.vividBlue};
   height: 100%;
   border-bottom-left-radius: ${(props) => (props.left ? "30px" : "0px")};
   border-top-left-radius: ${(props) => (props.left ? "30px" : "0px")};
@@ -254,7 +254,7 @@ const MaxPrticipantsButton = styled.TouchableOpacity<{ left?: boolean }>`
 
 const MaxParticipantsNumber = styled(GeneralText)`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   text-align: center;
 `;
 
@@ -263,18 +263,18 @@ const InnerContainer = styled.View`
 `;
 
 const PickerContainer = styled.TouchableOpacity`
-  background-color: ${colors.mainBlue};
+  background-color: ${colors.vividBlue};
   border-radius: 3px;
   padding: 5px;
 `;
 
 const WhiteText = styled(BlackLabel)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-size: 20px;
 `;
 
 const SErrorMessage = styled(ErrorMessage)`
-  color: ${colors.warningRed};
+  color: ${colors.veryLightRed};
 `;
 
 const SearchListContainer = styled.ScrollView`
@@ -286,6 +286,6 @@ const SearchListContainer = styled.ScrollView`
 const SBigTextInput = styled(BigTextInput)<{ error?: Boolean }>`
   border: ${(props) =>
     props.error
-      ? `0.5px solid ${colors.warningRed}`
+      ? `0.5px solid ${colors.veryLightRed}`
       : `0.5px solid ${colors.midGrey}`};
 `;

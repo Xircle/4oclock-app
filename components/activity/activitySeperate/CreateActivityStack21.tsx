@@ -119,7 +119,7 @@ export default function CreateActivityStack21({}: Props) {
               <Photo source={{ uri: modifyCoverImageUrl }} space={3} />
               <Ionicons
                 name="close-circle"
-                color={colors.bgColor}
+                color={colors.white}
                 style={{ position: "absolute", right: 0, top: 0 }}
                 size={22}
               />
@@ -137,7 +137,7 @@ export default function CreateActivityStack21({}: Props) {
                   <Photo source={{ uri: item }} space={3} />
                   <Ionicons
                     name="close-circle"
-                    color={colors.bgColor}
+                    color={colors.white}
                     style={{ position: "absolute", right: 0, top: 0 }}
                     size={22}
                   />
@@ -156,7 +156,7 @@ export default function CreateActivityStack21({}: Props) {
                   <Photo source={{ uri: item.uri }} space={3} />
                   <Ionicons
                     name="close-circle"
-                    color={colors.bgColor}
+                    color={colors.white}
                     style={{ position: "absolute", right: 0, top: 0 }}
                     size={22}
                   />

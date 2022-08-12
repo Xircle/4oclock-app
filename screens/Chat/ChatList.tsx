@@ -97,5 +97,5 @@ const HeaderSubText = styled(GeneralText)`
 const Container = styled.FlatList`
   width: 100%;
   height: 100%;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;

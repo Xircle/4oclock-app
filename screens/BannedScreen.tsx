@@ -17,7 +17,7 @@ export default function BannedScreen({}: Props) {
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   justify-content: center;
   align-items: center;
 `;

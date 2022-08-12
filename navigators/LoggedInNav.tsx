@@ -82,7 +82,7 @@ export default function LoggedInNav() {
           color: colors.black,
         },
         headerStyle: {
-          backgroundColor: colors.bgColor,
+          backgroundColor: colors.white,
           shadowColor: "transparent",
         },
       }}

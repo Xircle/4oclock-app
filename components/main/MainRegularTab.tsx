@@ -245,7 +245,7 @@ const ActiveCodeText = styled(GeneralText)`
 `;
 
 const Container = styled.View`
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   flex: 1;
 `;
 

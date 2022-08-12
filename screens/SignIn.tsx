@@ -174,7 +174,7 @@ export default function SignIn({ route }: Props) {
 
   // pan responders
   return (
-    <SafeAreaView style={{ backgroundColor: colors.bgColor, flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: colors.white, flex: 1 }}>
       <MyKeyboardAvoidingView>
         <Container>
           <TouchableOpacity onPress={backHandler}>
@@ -271,14 +271,14 @@ const ScaleBar = styled.View`
 `;
 
 const AnimationScaleBar = styled(Animated.createAnimatedComponent(ScaleBar))`
-  background-color: ${colors.mainBlue};
+  background-color: ${colors.vividBlue};
   height: 2px;
   border-radius: 1px;
 `;
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   padding: 15px;
 `;
 
@@ -289,7 +289,7 @@ const Wrapper = styled.View`
 `;
 
 const AnimationWrapper = styled(Animated.createAnimatedComponent(View))`
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   width: 100%;
   height: 100%;
   position: absolute;

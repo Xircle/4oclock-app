@@ -99,7 +99,7 @@ const OKInfoButton = styled.TouchableOpacity`
 
 const Container = styled.ScrollView`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   padding-top: 20px;
   padding-left: 15px;
   padding-right: 15px;
@@ -112,7 +112,7 @@ const InnerContainer = styled.View`
 const SBigTextInput = styled(BigTextInput)<{ error?: Boolean }>`
   border: ${(props) =>
     props.error
-      ? `0.5px solid ${colors.warningRed}`
+      ? `0.5px solid ${colors.veryLightRed}`
       : `0.5px solid ${colors.midGrey}`};
   margin-top: 20px;
 `;
@@ -125,5 +125,5 @@ const OKInfoText = styled(GeneralText)`
 `;
 
 const SErrorMessage = styled(ErrorMessage)`
-  color: ${colors.warningRed};
+  color: ${colors.veryLightRed};
 `;

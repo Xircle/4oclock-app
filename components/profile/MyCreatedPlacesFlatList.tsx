@@ -175,7 +175,7 @@ function MyCreatedPlacesFlatList({
               <CTAButtonContainer>
                 <ActivityCTAButton onPress={EditPlace}>
                   <ModifyText>
-                    <Ionicons name="brush" size={14} color={colors.mainBlue} />
+                    <Ionicons name="brush" size={14} color={colors.vividBlue} />
                     모임 수정하기
                   </ModifyText>
                 </ActivityCTAButton>
@@ -187,7 +187,7 @@ function MyCreatedPlacesFlatList({
                     <Ionicons
                       name="alert"
                       size={18}
-                      color={colors.warningRed}
+                      color={colors.veryLightRed}
                     />
                     모임 삭제하기
                   </DeleteText>
@@ -221,7 +221,7 @@ const ModalCloseButton = styled(ModalButton)`
 `;
 
 const ModalCloseButtonText = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-family: ${fontFamilies.bold};
 `;
 
@@ -263,11 +263,11 @@ const ActivityCTAButton = styled.TouchableOpacity`
 `;
 
 const DeleteText = styled(GeneralText)`
-  color: ${colors.warningRed};
+  color: ${colors.veryLightRed};
 `;
 
 const ModifyText = styled(GeneralText)`
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
 `;
 
 const BottomRightFixedContainer = styled.View`

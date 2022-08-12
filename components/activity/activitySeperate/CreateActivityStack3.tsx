@@ -82,10 +82,10 @@ const STextArea = styled(TextArea)<{ error?: boolean }>`
   height: 180px;
   border: ${(props) =>
     props.error
-      ? `0.5px solid ${colors.warningRed}`
+      ? `0.5px solid ${colors.veryLightRed}`
       : `0.5px solid ${colors.midGrey}`};
 `;
 
 const SErrorMessage = styled(ErrorMessage)`
-  color: ${colors.warningRed};
+  color: ${colors.veryLightRed};
 `;

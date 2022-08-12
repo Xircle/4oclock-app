@@ -76,9 +76,9 @@ const RightContainer = styled.View`
 const SelectContainer = styled.View`
   padding: 3px;
   border-radius: 3px;
-  background-color: ${colors.mainBlue};
+  background-color: ${colors.vividBlue};
 `;
 
 const SelectText = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
 `;

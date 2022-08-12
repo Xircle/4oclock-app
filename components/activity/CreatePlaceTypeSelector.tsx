@@ -100,7 +100,7 @@ const Disabler = styled.View`
   right: 0;
   opacity: 0.5;
   border-radius: 9px;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   position: absolute;
   justify-content: center;
   align-items: center;
@@ -111,7 +111,7 @@ const SelectContainer = styled.TouchableOpacity<{ selected: boolean }>`
   height: 85px;
   border-radius: 9px;
   background-color: ${(props) =>
-    props.selected ? colors.mainBlue : "#ebebeb"};
+    props.selected ? colors.vividBlue : "#ebebeb"};
   margin-bottom: 18px;
   padding: 11px;
   padding-top: 16px;
@@ -121,12 +121,12 @@ const SelectContainer = styled.TouchableOpacity<{ selected: boolean }>`
 
 const Label = styled(GeneralText)<{ selected: boolean }>`
   font-family: ${fontFamilies.bold};
-  color: ${(props) => (props.selected ? colors.bgColor : colors.black)};
+  color: ${(props) => (props.selected ? colors.white : colors.black)};
 `;
 
 const SubLabel = styled(GeneralText)<{ selected: boolean }>`
   font-size: 10px;
-  color: ${(props) => (props.selected ? colors.bgColor : "#959595")};
+  color: ${(props) => (props.selected ? colors.white : "#959595")};
 `;
 
 const Container = styled.View`

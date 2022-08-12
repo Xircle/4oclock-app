@@ -183,7 +183,11 @@ function MyPlacesFlatList({
             {startDateFromNow !== "마감" ? (
               <CancelButton onPress={() => setCancelModal(true)}>
                 <CancelText>
-                  <Ionicons name="alert" size={18} color={colors.warningRed} />
+                  <Ionicons
+                    name="alert"
+                    size={18}
+                    color={colors.veryLightRed}
+                  />
                   취소하기
                 </CancelText>
               </CancelButton>
@@ -219,7 +223,7 @@ const ModalCloseButton = styled(ModalButton)`
 `;
 
 const ModalCloseButtonText = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-family: ${fontFamilies.bold};
 `;
 
@@ -252,7 +256,7 @@ const CancelButton = styled.TouchableOpacity`
 `;
 
 const CancelText = styled(GeneralText)`
-  color: ${colors.warningRed};
+  color: ${colors.veryLightRed};
 `;
 
 const AvatarNumText = styled(GeneralText)`

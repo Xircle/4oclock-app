@@ -152,7 +152,7 @@ const ExampleRightText = styled(GeneralText)``;
 
 const Container = styled.ScrollView`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   padding-top: 20px;
   padding-left: 15px;
   padding-right: 15px;

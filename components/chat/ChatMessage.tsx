@@ -36,12 +36,12 @@ const Container = styled.View<{ isMe?: boolean }>`
 `;
 
 const Wrapper = styled.View<{ isMe?: boolean }>`
-  background-color: ${(props) => (props.isMe ? colors.mainBlue : "#ededed")};
+  background-color: ${(props) => (props.isMe ? colors.vividBlue : "#ededed")};
   padding: 10px;
   border-radius: 5px;
   max-width: 60%;
 `;
 
 const MessageText = styled(GeneralText)<{ isMe?: boolean }>`
-  color: ${(props) => (props.isMe ? colors.bgColor : colors.black)};
+  color: ${(props) => (props.isMe ? colors.white : colors.black)};
 `;

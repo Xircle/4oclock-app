@@ -57,7 +57,7 @@ const Container = styled.TouchableOpacity`
 const ModalWrapper = styled.View<{ height: number }>`
   width: ${width + "px"};
   height: ${(props) => (props.height ? props.height + "px" : "200px")};
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   border-top-right-radius: 25px;
   border-top-left-radius: 25px;
   position: absolute;

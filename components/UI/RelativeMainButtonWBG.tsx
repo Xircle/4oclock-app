@@ -26,7 +26,7 @@ export default function RelativeMainButtonWBg({
 }
 
 const Container = styled.View<{ left?: number; bottom?: number }>`
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   width: 100%;
   padding-bottom: ${(props) => (props.bottom ? props.bottom + "px" : 0)};
   align-items: center;

@@ -64,7 +64,7 @@ const ParticipatingActivityScreen = (props: Props) => {
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;
 
 export default ParticipatingActivityScreen;

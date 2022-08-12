@@ -147,7 +147,7 @@ const TagContainer = styled.View`
 `;
 
 const Container = styled.ScrollView`
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   padding: 15px;
 `;
 

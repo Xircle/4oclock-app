@@ -79,6 +79,6 @@ export const NotificationScreen = (props: Props) => {
 
 const Container = styled.ScrollView`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   width: 100%;
 `;

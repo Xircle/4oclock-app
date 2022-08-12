@@ -356,7 +356,7 @@ export default function Activity({ id, name, modal, setModal }: Props) {
 const RecommendationText = styled(GeneralText)`
   font-size: 12px;
   font-family: ${fontFamilies.bold};
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
 `;
 
 const AvatarWrapper = styled.View`
@@ -367,7 +367,7 @@ const AvatarWrapper = styled.View`
 const Container = styled.View`
   flex: 1;
   position: relative;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;
 
 const ActivityImageContainer = styled.View`
@@ -402,7 +402,7 @@ const InnerHeading = styled(GeneralText)`
 `;
 
 const InnerHeadingBlue = styled(InnerHeading)`
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
 `;
 
 const Description = styled(GeneralText)`

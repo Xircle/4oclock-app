@@ -48,7 +48,7 @@ function MainFeed({
 export default React.memo(MainFeed, AreEqual);
 
 const Container = styled(OptimizedFlatList)`
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   width: 100%;
   height: 100%;
   padding: 15px 20px;

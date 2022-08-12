@@ -34,7 +34,7 @@ export default function ChatStackNav(props: Props) {
           color: colors.black,
         },
         headerStyle: {
-          backgroundColor: colors.bgColor,
+          backgroundColor: colors.white,
           shadowColor: "transparent",
         },
       }}

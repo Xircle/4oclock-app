@@ -79,7 +79,7 @@ export default function ChatListFlatList({
 const Container = styled.View`
   width: 100%;
   height: 80px;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   /* border-bottom-color: ${colors.lightBlack};
   border-bottom-width: 1px; */
   flex-direction: row;
@@ -100,7 +100,7 @@ const NameText = styled(GeneralText)`
 `;
 
 const MessageText = styled(NameText)<{ isBlue: boolean }>`
-  color: ${(props) => (props.isBlue ? colors.mainBlue : colors.lightBlack)};
+  color: ${(props) => (props.isBlue ? colors.vividBlue : colors.lightBlack)};
 `;
 
 const NameContainer = styled.View`
@@ -121,6 +121,6 @@ const Cong = styled.View`
   width: 8px;
   height: 8px;
   border-radius: 4px;
-  background-color: ${colors.mainBlue};
+  background-color: ${colors.vividBlue};
   margin-left: 2px;
 `;

@@ -123,7 +123,7 @@ export default function CreateActivityStack2({}: Props) {
               <Ionicons
                 name="checkmark-circle-outline"
                 size={22}
-                color={teamOnly ? colors.mainBlue : colors.bareGrey}
+                color={teamOnly ? colors.vividBlue : colors.bareGrey}
               />
               <BlackLabel style={{ marginLeft: 10 }}>
                 우리 팀만 참여 가능해요
@@ -140,7 +140,7 @@ export default function CreateActivityStack2({}: Props) {
             <Ionicons
               name="checkmark-circle-outline"
               size={22}
-              color={participating ? colors.mainBlue : colors.bareGrey}
+              color={participating ? colors.vividBlue : colors.bareGrey}
             />
             <BlackLabel style={{ marginLeft: 10 }}>저도 참여해요</BlackLabel>
           </ParticipatingWrapper>
@@ -159,7 +159,7 @@ export default function CreateActivityStack2({}: Props) {
               <Photo source={{ uri: coverImage?.uri }} space={3} />
               <Ionicons
                 name="close-circle"
-                color={colors.bgColor}
+                color={colors.white}
                 style={{ position: "absolute", right: 0, top: 0 }}
                 size={22}
               />
@@ -177,7 +177,7 @@ export default function CreateActivityStack2({}: Props) {
                   <Photo source={{ uri: item.uri }} space={3} />
                   <Ionicons
                     name="close-circle"
-                    color={colors.bgColor}
+                    color={colors.white}
                     style={{ position: "absolute", right: 0, top: 0 }}
                     size={22}
                   />

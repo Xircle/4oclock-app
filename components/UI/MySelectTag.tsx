@@ -30,10 +30,10 @@ const Wrapper = styled.View<{ isSelected?: boolean }>`
 
 const Text = styled(GeneralText)<{ isSelected: boolean }>`
   border: 1px solid
-    ${(props) => (props.isSelected ? colors.mainBlue : colors.bareGrey)};
+    ${(props) => (props.isSelected ? colors.vividBlue : colors.bareGrey)};
   border-radius: 15px;
   padding: 4px;
   font-size: 16px;
   margin: 7px 2px;
-  color: ${(props) => (props.isSelected ? colors.mainBlue : colors.bareGrey)};
+  color: ${(props) => (props.isSelected ? colors.vividBlue : colors.bareGrey)};
 `;

@@ -15,7 +15,7 @@ export default function TabMiddleAdd({ focused }: Props) {
   return (
     <Ionicons
       name={focused ? "add-circle" : "add-circle-outline"}
-      color={focused ? colors.mainBlue : colors.bareGrey}
+      color={focused ? colors.vividBlue : colors.bareGrey}
       size={25}
     />
   );
@@ -28,11 +28,11 @@ const Container = styled.View<{ width: number; focused: boolean }>`
   align-items: center;
   justify-content: center;
   background-color: ${(props) =>
-    props.focused ? colors.mainBlue : colors.bareGrey};
+    props.focused ? colors.vividBlue : colors.bareGrey};
 `;
 
 const Label = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
 `;
 
 const Wrapper = styled.View`

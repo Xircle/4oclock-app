@@ -37,5 +37,5 @@ export default function MyKeyboardAvoidingView({
 const Container = styled(KeyboardAvoidingView)`
   width: 100%;
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;

@@ -42,7 +42,7 @@ export default class CodeButtonFC extends PureComponent<Props> {
 }
 
 const PlusContainer = styled.View`
-  background-color: ${colors.green};
+  background-color: ${colors.vividCyan};
   height: 40px;
   width: 40px;
   border-radius: 20px;
@@ -64,7 +64,7 @@ const HeaderContainer = styled.View`
 const HeaderCountContainer = styled.View`
   width: 90%;
   height: 70px;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   border-radius: 10px;
   flex-direction: row;
   margin-left: auto;

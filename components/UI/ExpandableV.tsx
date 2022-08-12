@@ -69,7 +69,7 @@ export default function ExpandableV({
 }
 
 const SBlackLabel = styled(BlackLabel)<{ error?: Boolean }>`
-  color: ${(props) => (props.error ? colors.warningRed : colors.black)};
+  color: ${(props) => (props.error ? colors.veryLightRed : colors.black)};
 `;
 
 const Container = styled.View`

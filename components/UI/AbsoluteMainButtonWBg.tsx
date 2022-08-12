@@ -30,7 +30,7 @@ export default function AbsoluteMainButtonWBg({
 }
 
 const Container = styled.View<{ bottom?: number }>`
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   padding: ${width * 0.02 + "px"} ${width * 0.05 + "px"} ${width * 0.06 + "px"}
     ${width * 0.05 + "px"};
   position: absolute;

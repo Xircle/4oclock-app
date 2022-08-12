@@ -29,9 +29,7 @@ export default function ProfileV({
   return (
     <>
       <SInfoBox>
-        <SInfoText>
-          케빈의 클럽 프렌즈들과 소통할 수 있는 탭이에요!
-        </SInfoText>
+        <SInfoText>케빈의 클럽 프렌즈들과 소통할 수 있는 탭이에요!</SInfoText>
       </SInfoBox>
       <View style={{ flex: 8, width: "100%" }}>
         <ScrollView
@@ -140,7 +138,7 @@ const ButtonContainer = styled.View`
 `;
 
 const ChatButton = styled.TouchableOpacity<{ fullWidth?: boolean }>`
-  background-color: ${colors.mainBlue};
+  background-color: ${colors.vividBlue};
   height: 100%;
   flex: 0.47;
   flex: ${(props) => (props.fullWidth ? 1 : 0.47)};
@@ -150,7 +148,7 @@ const ChatButton = styled.TouchableOpacity<{ fullWidth?: boolean }>`
 `;
 
 const NextButton = styled.TouchableOpacity`
-  background-color: ${colors.lightBlue};
+  background-color: ${colors.veryPaleBlue};
   height: 100%;
   flex: 0.47;
   border-radius: 10px;
@@ -166,7 +164,7 @@ const ChatText = styled.Text`
 
 const NextText = styled.Text`
   font-size: 20px;
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
   font-family: ${fontFamilies.bold};
 `;
 

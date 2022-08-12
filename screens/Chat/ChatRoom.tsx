@@ -143,7 +143,7 @@ export default function ChatRoom({ route }: Props) {
             onBlur={onSubmitHandler}
           />
           <SendButton onPress={onSubmitHandler}>
-            <Ionicons name="send" size={30} color={colors.mainBlue} />
+            <Ionicons name="send" size={30} color={colors.vividBlue} />
           </SendButton>
         </InputContainer>
       </MyKeyboardAvoidingView>
@@ -153,7 +153,7 @@ export default function ChatRoom({ route }: Props) {
 
 const Container = styled.SafeAreaView`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;
 
 const SendButton = styled.TouchableOpacity`

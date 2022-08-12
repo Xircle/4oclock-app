@@ -42,7 +42,7 @@ export default function MySelect({
         }}
         defaultValue={defaultValue}
         buttonStyle={{
-          backgroundColor: colors.bgColor,
+          backgroundColor: colors.white,
           borderColor: colors.bareGrey,
           borderWidth: 1,
           borderRadius: 12,
@@ -84,7 +84,7 @@ export default function MySelect({
         }}
         defaultValueByIndex={defaultValueByIndex}
         buttonStyle={{
-          backgroundColor: colors.bgColor,
+          backgroundColor: colors.white,
           borderColor: colors.bareGrey,
           borderWidth: 1,
           borderRadius: 12,
@@ -125,7 +125,7 @@ export default function MySelect({
           return item;
         }}
         buttonStyle={{
-          backgroundColor: colors.bgColor,
+          backgroundColor: colors.white,
           borderColor: colors.bareGrey,
           borderWidth: 1,
           borderRadius: 12,

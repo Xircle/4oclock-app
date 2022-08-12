@@ -14,7 +14,7 @@ export default function TabIcon({ iconName, color, focused, size }: Props) {
     <Ionicons
       //@ts-ignore
       name={focused ? iconName : `${iconName}-outline`}
-      color={colors.mainBlue}
+      color={colors.vividBlue}
       size={size ? size : 27}
     />
   );

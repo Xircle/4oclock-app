@@ -31,7 +31,7 @@ export default class PureLeftTagMainFlat extends PureComponent<Props> {
 }
 
 const ClosedText = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-family: ${fontFamilies.bold};
   font-size: 22px;
 `;
@@ -50,7 +50,7 @@ const TagContainer = styled.View`
   position: absolute;
   top: 0;
   left: 0;
-  background-color: ${colors.mainBlue};
+  background-color: ${colors.vividBlue};
   justify-content: center;
   align-items: center;
   width: 58px;
@@ -59,7 +59,7 @@ const TagContainer = styled.View`
 `;
 
 const Tag = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-size: 11px;
   font-family: ${fontFamilies.bold};
 `;

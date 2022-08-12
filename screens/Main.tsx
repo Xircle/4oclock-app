@@ -41,7 +41,7 @@ function Main(props: Props) {
   }, [userData?.accountType]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: colors.bgColor, flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: colors.white, flex: 1 }}>
       <Container>
         <HeaderPureComponent />
         <MainTopCarousel eventBanners={eventBannerData?.eventBanners} />
@@ -55,5 +55,5 @@ export default React.memo(Main);
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;

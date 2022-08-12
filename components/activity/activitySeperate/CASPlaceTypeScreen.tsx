@@ -57,7 +57,7 @@ const Container = styled.ScrollView`
   padding-top: 20px;
   padding-left: 15px;
   padding-right: 15px;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;
 
 const InnerContainer = styled.View`

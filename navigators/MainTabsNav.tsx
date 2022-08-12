@@ -33,13 +33,13 @@ export default function MainTabsNav(props: Props) {
       screenOptions={{
         tabBarShowLabel: false,
         headerStyle: {
-          backgroundColor: colors.bgColor,
-          borderColor: colors.bgColor,
+          backgroundColor: colors.white,
+          borderColor: colors.white,
           borderBottomWidth: 0,
         },
         headerTitle: "",
         headerShadowVisible: false,
-        tabBarActiveTintColor: colors.mainBlue,
+        tabBarActiveTintColor: colors.vividBlue,
         lazy: true,
       }}
     >

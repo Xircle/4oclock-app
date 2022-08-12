@@ -82,7 +82,7 @@ export default function FriendProfile({ route }: Props) {
             zIndex: 3,
           }}
         >
-          <Loader color={colors.mainBlue} large={true} />
+          <Loader color={colors.vividBlue} large={true} />
         </LoaderWrapper>
       )}
       <ProfileV
@@ -99,7 +99,7 @@ const Wrapper = styled.View`
   flex: 1;
   align-items: center;
   justify-content: flex-start;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;
 
 const LoaderWrapper = styled.View`

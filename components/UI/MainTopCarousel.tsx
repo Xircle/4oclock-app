@@ -138,7 +138,7 @@ const RegularMainListHeaderImage = styled.Image`
 `;
 
 const RegularMainListHeaderHeading = styled(GeneralText)`
-  color: ${colors.bgColor};
+  color: ${colors.white};
   font-size: 20px;
   font-family: ${fontFamilies.bold};
 `;

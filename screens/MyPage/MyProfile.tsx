@@ -476,7 +476,7 @@ const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
 `;
 
 const AvatarWrapper = styled.TouchableOpacity`
@@ -486,7 +486,7 @@ const AvatarWrapper = styled.TouchableOpacity`
 
 const ChangeProfilePicText = styled.Text`
   padding-top: 15px;
-  color: ${colors.mainBlue};
+  color: ${colors.vividBlue};
   font-family: ${fontFamilies.bold};
   font-size: 18px;
 `;

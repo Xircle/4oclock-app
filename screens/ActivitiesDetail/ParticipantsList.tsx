@@ -159,7 +159,7 @@ export default function ParticipantsList({ route }: Props) {
 
 const Container = styled.ScrollView`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.white};
   padding: 15px;
 `;
 
