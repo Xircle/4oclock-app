@@ -30,7 +30,7 @@ function MessageBottomNavItem({ color, focused, size }: Props) {
       } catch (e) {}
     };
 
-    messaging().onMessage(async (remoteMessage) => {
+    messaging().onMessage((remoteMessage) => {
       if (remoteMessage.data?.type === "message") setMsgReceived(true);
     });
 
