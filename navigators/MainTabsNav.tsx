@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Main from "../screens/Main";
 import MyPage from "../screens/MyPage/MyPage";
 import TabIcon from "../components/nav/TabIcon";
-import { colors, fontFamilies } from "../styles/styles";
+import { colors, fontFamilies, GeneralText } from "../styles/styles";
 import TabSide from "../components/nav/TabSide";
 import { Ionicons } from "@expo/vector-icons";
 import { AppState, TouchableOpacity } from "react-native";
@@ -14,6 +14,7 @@ import ActivityTopTabNav from "./ActivityTopTabNav";
 import { activityDispatcher } from "../lib/activity/ActivityDispatcher";
 import { useDispatch } from "react-redux";
 import MessageBottomNavItem from "../components/nav/MessageBottomNavItem";
+import styled from "styled-components/native";
 
 interface Props {}
 
@@ -110,7 +111,9 @@ export default function MainTabsNav(props: Props) {
                 navigation.navigate("CreateActivityStackNav");
               }}
             >
-              <Ionicons name="add" size={30} color={colors.lightBlack} />
+              <SRow>
+                <HeaderRightText>생성하기+</HeaderRightText>
+              </SRow>
             </TouchableOpacity>
           ),
           tabBarIcon: ({ focused, color, size }) => (
@@ -156,3 +159,12 @@ export default function MainTabsNav(props: Props) {
     </Tabs.Navigator>
   );
 }
+
+const HeaderRightText = styled(GeneralText)`
+  color: ${colors.vividBlue};
+`;
+
+const SRow = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
