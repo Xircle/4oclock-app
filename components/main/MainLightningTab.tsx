@@ -71,7 +71,7 @@ function MainLightningTab(props: Props) {
         places={mainLightningData?.pages?.map((page) => page.places).flat()}
         listHeaderCompoent={
           <HeaderContainer>
-            {partyData ? (
+            {partyData?.length ? (
               <LightningInfoContainer>
                 <HeaderTitle>🎉KEVIN's party zone</HeaderTitle>
                 <MainText>
