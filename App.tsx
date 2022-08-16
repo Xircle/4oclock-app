@@ -7,6 +7,7 @@ import { requestUserPermission } from "./lib/firebase/messaging";
 import messaging from "@react-native-firebase/messaging";
 import { useMutation } from "react-query";
 import { updateFirebaseToken } from "./lib/api/updateFirebaseToken";
+import storage from "./lib/helpers/myAsyncStorage";
 
 //LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 
@@ -18,8 +19,11 @@ export default function App() {
   useEffect(() => {
     async function setupFCM() {
       await requestUserPermission();
-      const token = await messaging().getToken();
-      await mutateUpdateFirebaseToken(token);
+      const token = await storage.getItem("token");
+      if (token) {
+        const ftoken = await messaging().getToken();
+        await mutateUpdateFirebaseToken(ftoken);
+      }
     }
     setupFCM();
   }, []);
