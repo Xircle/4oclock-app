@@ -95,11 +95,8 @@ export default function Welcome(props: Props) {
     }
 
     await storage.setItem("token", token);
-    await messaging()
-      .getToken()
-      .then((token) => {
-        mutateUpdateFirebaseToken(token);
-      });
+    const firebaseToken = await messaging().getToken();
+    await mutateUpdateFirebaseToken(firebaseToken);
     const tokenFromStorage = await storage.getItem("token");
 
     if (tokenFromStorage) {
