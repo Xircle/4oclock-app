@@ -140,11 +140,7 @@ export default function SignIn({ route }: Props) {
           console.log(data.error);
         } else {
           await storage.setItem("token", data.data.token);
-          await messaging()
-            .getToken()
-            .then((token) => {
-              mutateUpdateFirebaseToken(token);
-            });
+
           /* @ts-ignore */
           navigation.navigate("LoggedInNav");
         }
