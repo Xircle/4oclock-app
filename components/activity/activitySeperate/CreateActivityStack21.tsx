@@ -30,9 +30,14 @@ interface Props {
 const { width } = Dimensions.get("window");
 
 export default function CreateActivityStack21({}: Props) {
-  const { subImages, modifyCoverImageUrl, modifySubImageUrls } = useSelector(
-    (state: RootState) => state.activityReducer
-  );
+  const {
+    subImages,
+    modifyCoverImageUrl,
+    modifySubImageUrls,
+    activityType,
+    participating,
+    teamOnly,
+  } = useSelector((state: RootState) => state.activityReducer);
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -106,6 +111,25 @@ export default function CreateActivityStack21({}: Props) {
         <SubHeading style={{ marginTop: 20, marginBottom: 20 }}>
           모임의 성향, 테마, 장소 등에 대한 사진
         </SubHeading>
+        {activityType === "번개" && (
+          <ParticipatingContainer
+            onPress={() =>
+              activityDispatcher.dispatchTeamOnly(!teamOnly, dispatch)
+            }
+          >
+            <TeamOnlyWrapper>
+              <Ionicons
+                name="checkmark-circle-outline"
+                size={22}
+                color={teamOnly ? colors.vividBlue : colors.bareGrey}
+              />
+              <BlackLabel style={{ marginLeft: 10 }}>
+                우리 팀만 참여 가능해요
+              </BlackLabel>
+            </TeamOnlyWrapper>
+          </ParticipatingContainer>
+        )}
+
         <BlackLabel>관련 사진 올리기</BlackLabel>
         <AddPhotoContiner onPress={ImageHandle}>
           <AddPhotoWrapper>
@@ -215,3 +239,16 @@ const AddPhotoText = styled(GeneralText)`
   margin-left: 20px;
   font-size: 18px;
 `;
+
+const ParticipatingWrapper = styled.View`
+  flex-direction: row;
+  margin-bottom: 10px;
+  align-items: center;
+`;
+
+const TeamOnlyWrapper = styled(ParticipatingWrapper)`
+  margin-bottom: 4px;
+  margin-top: 8px;
+`;
+
+const ParticipatingContainer = styled.TouchableWithoutFeedback``;
