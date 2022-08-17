@@ -58,11 +58,15 @@ export default function MyPage(props: Props) {
   };
 
   const deleteAccountActivated = async () => {
-    await mutateDeleteAccount();
-
-    await Account.logout();
-    // @ts-ignore
-    navigation.navigate("Welcome");
+    const data = await mutateDeleteAccount();
+    if (data.ok === true) {
+      Alert.alert("계정이 삭제되었습니다");
+      await Account.logout();
+      // @ts-ignore
+      navigation.navigate("Welcome");
+    } else {
+      Alert.alert("계정 삭제를 실패하였습니다. 운영진에게 연락주세요");
+    }
   };
 
   const saveToLocalStorage = async (variable: string, value: string) => {
