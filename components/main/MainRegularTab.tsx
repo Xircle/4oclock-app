@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useMemo, useState } from "react";
+import { Alert } from "react-native";
 import {
   useInfiniteQuery,
   useMutation,
@@ -97,7 +98,6 @@ function MainRegularTab(props: Props) {
         setLocalTeamNames((prev) => [...prev, team.name]);
         setLocalTeamIds((prev) => [...prev, team.id]);
       });
-      console.log(teamsData);
     }
   }, [teamsData]);
 
@@ -153,17 +153,23 @@ function MainRegularTab(props: Props) {
   }, [userData]);
 
   const TeamSubmitCTA = async () => {
+    let data;
     console.log("modal input: " + modalInput);
     if (!userData?.isYkClub) {
       // isYkClub 업데이트=
-      await mutateVerifyByCode(modalInput);
+      data = await mutateVerifyByCode(modalInput);
       setModalInput("");
       await CloseModal();
       setModalShown(true);
     } else {
       // 팀 업데이트
-      await mutatePatchTeam(selectedTeamId);
+      data = await mutatePatchTeam(selectedTeamId);
       await CloseModal();
+    }
+    if (data.ok === true) {
+      Alert.alert(data.error);
+    } else {
+      Alert.alert(data.error);
     }
   };
 
