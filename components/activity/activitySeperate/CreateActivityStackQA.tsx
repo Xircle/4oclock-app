@@ -60,7 +60,7 @@ export default function CreateActivityStackQA(props: Props) {
 
           <InnerContainer>
             <STextArea
-              placeholder="리더로서 프렌즈들에게 참고 될만한 질문을 해봐! b행 컨텐츠에 관련된 주제면 환영해!"
+              placeholder="리더로서 프렌즈들에게 참고 될만한 질문을 해봐! 케빈의 클럽 컨텐츠에 관련된 주제면 환영해!"
               autoCapitalize="none"
               blurOnSubmit={true}
               returnKeyType="next"
