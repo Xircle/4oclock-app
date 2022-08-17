@@ -65,7 +65,7 @@ const CreatedActivityScreen = (props: Props) => {
                 participationFee={item.placeDetail.participationFee + ""}
                 startDateAt={item.startDateAt}
                 kakaoLink={item.placeDetail.kakaoLink}
-                team={item.team}
+                team={item.team_id}
                 recommendation={item.recommendation}
               />
             );
