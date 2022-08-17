@@ -55,7 +55,7 @@ export default function CreatePlaceTypeSelector({
         selected={selectedType === types[0]}
       >
         <Label selected={selectedType === types[0]}>
-          미B행 번개모임 열기 ⭐️
+          케빈의 클럽 번개모임 열기 ⭐️
         </Label>
         <SubLabel selected={selectedType === types[0]}>
           누구든 열 수 있고, 새로운 친구들과 놀고 싶을 때 놀러가자!
@@ -66,10 +66,10 @@ export default function CreatePlaceTypeSelector({
         selected={selectedType === types[1]}
       >
         <Label selected={selectedType === types[1]}>
-          미B행 정기모임 열기 👽
+          케빈의 클럽 정기모임 열기 👽
         </Label>
         <SubLabel selected={selectedType === types[1]}>
-          리더가 여는 미b행의 컨텐츠로 꿀잼 비행모임
+          리더가 여는 케빈의 클럽 컨텐츠로 꿀잼 비행모임
         </SubLabel>
         {accountType !== "Owner" && (
           <Disabler>
@@ -81,7 +81,9 @@ export default function CreatePlaceTypeSelector({
         onPress={() => Select(types[2])}
         selected={selectedType === types[2]}
       >
-        <Label selected={selectedType === types[2]}>미B행 파티 열기 🔥️</Label>
+        <Label selected={selectedType === types[2]}>
+          케빈의 클럽 파티 열기 🔥️
+        </Label>
         <SubLabel selected={selectedType === types[2]}>
           운영진만 열 수 있어요!
         </SubLabel>
