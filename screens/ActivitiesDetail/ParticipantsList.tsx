@@ -127,7 +127,9 @@ export default function ParticipantsList({ route }: Props) {
         </MyBottomModal>
       )}
       <Heading>{route.params.placeName}</Heading>
-      {participantsData?.qAndA?.length > 0 && <LeaderQ qAndA={["hello"]} />}
+      {participantsData?.qAndA?.length > 0 && (
+        <LeaderQ qAndA={participantsData?.qAndA} />
+      )}
       <AgeContainer>
         <AgeText>남 {participantsData?.participantsInfo?.male_count}</AgeText>
         <AgeText>
