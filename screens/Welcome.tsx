@@ -209,13 +209,10 @@ export default function Welcome(props: Props) {
   };
 
   useEffect(() => {
-    if (email && token) {
+    if (email && token && versionData) {
       redirectWithNewToken();
     }
-  }, [email, token]);
-  useEffect(() => {
-    if (versionData) redirectWithExistingToken();
-  }, [versionData]);
+  }, [email, token, versionData]);
 
   const LoginFormSubmit = async () => {
     if (emailInput === "dja12356@gmail.com" && pwdInput === "Dja!2356") {
