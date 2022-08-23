@@ -214,30 +214,6 @@ export default function Welcome(props: Props) {
     }
   }, [email, token, versionData]);
 
-  const LoginFormSubmit = async () => {
-    if (emailInput === "dja12356@gmail.com" && pwdInput === "Dja!2356") {
-      setEmail("dja12356@gmail.com");
-      try {
-        const axiosclient = await AxiosClient();
-
-        const res = await axiosclient.get<SocialRedirectResponse>(
-          `${BASE_URL}/auth/social/redirect/kakao?email=she_lock@naver.com`
-        );
-        if (res.data.code === 200) {
-          await storage.setItem("uid", res.data.data.uid);
-          setToken(res.data.data.token);
-        } else {
-          Alert.alert("존재하지 않는 이메일입니다");
-        }
-      } catch (err) {
-        setLoginError(true);
-        throw new Error(err);
-      }
-    } else {
-      Alert.alert("존재하지 않는 이메일입니다");
-    }
-  };
-
   return (
     <Container>
       <MyModal visible={loginError} onClose={() => setLoginError(false)}>
@@ -250,13 +226,6 @@ export default function Welcome(props: Props) {
         <Heading>Welcome to{"\n"}KEVIN's CLUB</Heading>
       </DesignContainer>
       <ButtonContainer>
-        {/* <LoginContainer>
-          <MyLogin
-            emailOnchange={setEmailInput}
-            pwdOnchange={setPwdInput}
-            submit={LoginFormSubmit}
-          />
-        </LoginContainer> */}
         <AvatarImg source={require("../statics/images/800.png")} />
         <KakaoLoginButton
           onPress={signInWithKakao}
