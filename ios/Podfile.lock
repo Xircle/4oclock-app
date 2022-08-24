@@ -424,7 +424,7 @@ PODS:
     - React-perflogger (= 0.64.3)
   - RNAppleAuthentication (2.1.5):
     - React-Core
-  - RNCAsyncStorage (1.15.11):
+  - RNCAsyncStorage (1.15.17):
     - React-Core
   - RNFastImage (8.5.11):
     - React-Core
@@ -770,7 +770,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 493d9abb8b23c3f84e19ae221eeba92cadcb70dc
   ReactCommon: 8fea6422328e2fc093e25c9fac67adbcf0f04fb4
   RNAppleAuthentication: 63c2127ace11985b94f852fc480eb84145653712
-  RNCAsyncStorage: eb05c0284dd6b50b32f92fad55e2a41e03358c43
+  RNCAsyncStorage: 6bd5a7ba3dde1c3facba418aa273f449bdc5437a
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFBApp: 9646e09d041ea159b84584865212e4cf33acd179
   RNFBMessaging: 3e2682ea5e15fe86da24d16d16019395a881f33c
