@@ -12,10 +12,11 @@ import {
   ActivityStackParamList,
   ReservationConfirmScreenProp,
 } from "../../navigators/ActivityStackNav";
-import { Alert } from "react-native";
+import { Alert, Keyboard } from "react-native";
 import { useMutation } from "react-query";
 import { makeReservation } from "../../lib/api/makeReservation";
 import RelativeMainButtonWBg from "../../components/UI/RelativeMainButtonWBG";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 interface Props {
   route: RouteProp<ActivityStackParamList, "ReservationInstruction">;
@@ -54,40 +55,47 @@ export default function ReservationQA({ route }: Props) {
     }
   };
   return (
-    <Container>
-      <InfoContainer>
-        <MainHeading>리더의 질문에 대답해줘!🕺</MainHeading>
-        <ThanksText>걱정마!대답은 리더에게만 공개가 돼!</ThanksText>
-        <InnerInfoContainer>
-          <InfoText>
-            📌{`    `}
-            {route?.params?.qAndA[0]}
-          </InfoText>
-        </InnerInfoContainer>
-      </InfoContainer>
-      <SelectContainer>
-        <STextArea
-          placeholder="함께하고 싶은 주제나 내용을 입력해도 좋아"
-          autoCapitalize="none"
-          returnKeyType="next"
-          returnKeyLabel="next"
-          autoCorrect={false}
-          multiline={true}
-          defaultValue={answer}
-          onChange={(event) => {
-            const { eventCount, target, text } = event.nativeEvent;
-            setAnswer(text);
-          }}
+    <Wrapper onPress={Keyboard.dismiss} accessible={false}>
+      <Container>
+        <InfoContainer>
+          <MainHeading>리더의 질문에 대답해줘!🕺</MainHeading>
+          <ThanksText>걱정마!대답은 리더에게만 공개가 돼!</ThanksText>
+          <InnerInfoContainer>
+            <InfoText>
+              📌{`    `}
+              {route?.params?.qAndA[0]}
+            </InfoText>
+          </InnerInfoContainer>
+        </InfoContainer>
+        <SelectContainer>
+          <STextArea
+            placeholder="함께하고 싶은 주제나 내용을 입력해도 좋아"
+            autoCapitalize="none"
+            returnKeyType="next"
+            returnKeyLabel="next"
+            autoCorrect={false}
+            multiline={true}
+            defaultValue={answer}
+            onChange={(event) => {
+              const { eventCount, target, text } = event.nativeEvent;
+              setAnswer(text);
+            }}
+          />
+        </SelectContainer>
+        <RelativeMainButtonWBg
+          onPress={CTAHandler}
+          title={"나도 놀러갈래~"}
+          bottom={10}
         />
-      </SelectContainer>
-      <RelativeMainButtonWBg
-        onPress={CTAHandler}
-        title={"나도 놀러갈래~"}
-        bottom={10}
-      />
-    </Container>
+      </Container>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.TouchableWithoutFeedback`
+  flex: 1;
+  background-color: ${colors.white};
+`;
 
 const Container = styled.View`
   flex: 1;
