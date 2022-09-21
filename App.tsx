@@ -20,7 +20,7 @@ export default function App() {
     async function setupFCM() {
       await requestUserPermission();
       const token = await storage.getItem("token");
-      if (token) {
+      if (token?.length > 0) {
         const ftoken = await messaging().getToken();
         await mutateUpdateFirebaseToken(ftoken);
       }
