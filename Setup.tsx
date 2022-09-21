@@ -29,7 +29,6 @@ const store = configureStore({ reducer: rootReducer });
 
 function Setup() {
   const [ready, setReady] = useState(false);
-
   const startLoading = async () => {
     try {
       const firebaseConfig = {
