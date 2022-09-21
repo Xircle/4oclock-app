@@ -24,7 +24,6 @@ import jwt_decode from "jwt-decode";
 import { GetVersionOutput } from "../lib/api/types";
 import { useMutation, useQuery } from "react-query";
 import { getVersion } from "../lib/api/getVersion";
-
 import messaging from "@react-native-firebase/messaging";
 import { updateFirebaseToken } from "../lib/api/updateFirebaseToken";
 import FastImage from "react-native-fast-image";
