@@ -19,7 +19,6 @@ import { appleAuth } from "@invertase/react-native-apple-authentication";
 import MyModal from "../components/UI/MyModal";
 import { useAssets } from "expo-asset";
 import { openLink } from "../components/shared/Links";
-import MyLogin from "../components/loginForm/MyLogin";
 import jwt_decode from "jwt-decode";
 import { GetVersionOutput } from "../lib/api/types";
 import { useMutation, useQuery } from "react-query";
