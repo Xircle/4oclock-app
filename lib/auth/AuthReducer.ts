@@ -150,7 +150,6 @@ export function reducer(state: AuthState, action: AuthAction): AuthState {
         agree1: action.payload,
         agree2: action.payload,
         agree3: action.payload,
-        agree4: action.payload,
       };
     case "setStage1Valid":
       return {
