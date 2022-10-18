@@ -15,6 +15,8 @@ interface Props {
   dispatch: React.Dispatch<AuthAction>;
   setCode: (code: string) => void;
   setIsSent: (b: boolean) => void;
+
+  state: AuthState;
 }
 
 export default function AuthPhoneNumber({
