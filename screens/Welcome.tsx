@@ -35,7 +35,7 @@ const currentVersion = Platform.OS === "ios" ? 16 : 16;
 
 export default function Welcome(props: Props) {
   const { data: versionData } = useQuery<GetVersionOutput | undefined>(
-    ["teams"],
+    ["version"],
     () => getVersion(),
     {
       retry: 1,
@@ -49,9 +49,6 @@ export default function Welcome(props: Props) {
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
   const [loginError, setLoginError] = useState(false);
-
-  const [emailInput, setEmailInput] = useState("");
-  const [pwdInput, setPwdInput] = useState("");
 
   const { mutateAsync: mutateUpdateFirebaseToken } =
     useMutation(updateFirebaseToken);
@@ -128,7 +125,7 @@ export default function Welcome(props: Props) {
         `${BASE_URL}/auth/social/redirect/kakao?email=${profile.email}`
       );
       if (res.data.code === 200) {
-        await storage.setItem("uid", res.data.data.uid);
+        await storage.setItem("token", res.data.data.token);
         setToken(res.data.data.token);
         await storage.setItem("uid", res.data.data.uid);
       } else if (res.data.code === 401) {
@@ -153,7 +150,7 @@ export default function Welcome(props: Props) {
         `${BASE_URL}/auth/social/redirect/kakao?email=${email}`
       );
       if (res.data.code === 200) {
-        await storage.setItem("uid", res.data.data.uid);
+        await storage.setItem("token", res.data.data.token);
         setToken(res.data.data.token);
         await storage.setItem("uid", res.data.data.uid);
       } else if (res.data.code === 401) {
