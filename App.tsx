@@ -3,31 +3,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import LoggedOutNav from "./navigators/LoggedOutNav";
 import LoggedInNav from "./navigators/LoggedInNav";
 import { createStackNavigator } from "@react-navigation/stack";
-import { requestUserPermission } from "./lib/firebase/messaging";
-import messaging from "@react-native-firebase/messaging";
-import { useMutation } from "react-query";
-import { updateFirebaseToken } from "./lib/api/updateFirebaseToken";
-import storage from "./lib/helpers/myAsyncStorage";
-
-//LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  const { mutateAsync: mutateUpdateFirebaseToken } =
-    useMutation(updateFirebaseToken);
-  useEffect(() => {
-    async function setupFCM() {
-      await requestUserPermission();
-      const token = await storage.getItem("token");
-      if (token?.length > 0) {
-        const ftoken = await messaging().getToken();
-        await mutateUpdateFirebaseToken(ftoken);
-      }
-    }
-    setupFCM();
-  }, []);
-
   return (
     <NavigationContainer>
       <Stack.Navigator
