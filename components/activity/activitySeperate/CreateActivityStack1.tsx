@@ -12,8 +12,6 @@ import {
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MyKeyboardAvoidingView from "../../UI/MyKeyboardAvoidingView";
-import storage from "../../../lib/helpers/myAsyncStorage";
-import CreatePlaceTypeSelector from "../CreatePlaceTypeSelector";
 import { activityDispatcher } from "../../../lib/activity/ActivityDispatcher";
 import { activityValidation } from "../../../lib/activity/CreateActivityValidation";
 import { createPlaceErrorMessage } from "../../../lib/errorMessages";
@@ -21,10 +19,6 @@ import { CreateActivityStackParamList } from "../../../navigators/CreateActivity
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "../../../lib/reducers";
-import MySelect from "../../UI/MySelect";
-import { useQuery } from "react-query";
-import { TeamData } from "../../../lib/api/types";
-import { getTeams } from "../../../lib/api/getTeams";
 import RelativeMainButtonWBg from "../../UI/RelativeMainButtonWBG";
 
 type Props = CreateActivityStackParamList["CAS1"];
