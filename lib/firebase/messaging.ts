@@ -1,8 +1,10 @@
+import { updateFirebaseToken } from "./../api/updateFirebaseToken";
 import messaging, {
   FirebaseMessagingTypes,
 } from "@react-native-firebase/messaging";
 import storage, { StorageKey } from "../helpers/myAsyncStorage";
 import { Audio } from "expo-av";
+import { useMutation } from "react-query";
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -15,6 +17,17 @@ export async function requestUserPermission() {
   }
 }
 
+export async function setupFCM() {
+  const { mutateAsync: mutateUpdateFirebaseToken } =
+    useMutation(updateFirebaseToken);
+  await requestUserPermission();
+  const token = await storage.getItem("token");
+  const ftoken = await messaging().getToken();
+  if (token?.length > 0 && ftoken?.length > 0) {
+    await mutateUpdateFirebaseToken(ftoken);
+  }
+}
+
 export async function notificationHandler(
   remoteMessage: FirebaseMessagingTypes.RemoteMessage
 ) {
@@ -24,7 +37,6 @@ export async function notificationHandler(
     return;
   }
   if (!remoteMessage.data?.mainParam) {
-    // Alert.alert("no mainParam");
     return;
   }
   const newNotification = {
