@@ -141,6 +141,8 @@ export default function SignIn({ route }: Props) {
         } else {
           await storage.setItem("token", data.data.token);
 
+          const firebaseToken = await messaging().getToken();
+          await mutateUpdateFirebaseToken(firebaseToken);
           /* @ts-ignore */
           navigation.navigate("LoggedInNav");
         }
@@ -246,8 +248,8 @@ export default function SignIn({ route }: Props) {
             disabled={isDisable()}
           />
         </Container>
+        {loading && <FullScreenLoader />}
       </MyKeyboardAvoidingView>
-      {loading && <FullScreenLoader />}
     </SafeAreaView>
   );
 }
