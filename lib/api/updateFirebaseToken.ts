@@ -10,6 +10,7 @@ export const updateFirebaseToken = async (
   if (!userToken) {
     return { ok: false, error: "no userToken. Which is fine" };
   }
+
   const axiosclient = await AxiosClient();
 
   const { data } = await axiosclient.post<CoreOutput>(
