@@ -30,7 +30,7 @@ import FastImage from "react-native-fast-image";
 interface Props {}
 
 const { width } = Dimensions.get("window");
-const currentVersion = Platform.OS === "ios" ? 16 : 16;
+const currentVersion = Platform.OS === "ios" ? 20 : 20;
 
 export default function Welcome(props: Props) {
   const { data: versionData } = useQuery<GetVersionOutput | undefined>(
