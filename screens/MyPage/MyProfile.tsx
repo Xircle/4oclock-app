@@ -68,9 +68,6 @@ export default function MyProfile(props: Props) {
     true,
     true,
   ]);
-  const [localTeamNames, setLocalTeamNames] = useState<string[]>([]);
-  const [localTeamIds, setLocalTeamIds] = useState<number[]>([]);
-  const [localMyTeam, setLocalMyTeam] = useState("");
 
   const errorMessages: string[] = [
     "20자 이하의 이름을 입력해주세요",
@@ -78,13 +75,7 @@ export default function MyProfile(props: Props) {
     "1000자 이하의 자기소개를 입력해주세요",
     "200자 이하의 성격이나 스타일을 입력해주세요",
   ];
-  const { data: teamsData } = useQuery<TeamData[] | undefined>(
-    ["teams"],
-    () => getTeams(),
-    {
-      retry: 1,
-    }
-  );
+
   const {
     data: userData,
     isFetching,
@@ -290,17 +281,6 @@ export default function MyProfile(props: Props) {
     }
   }, [isSuccess]);
 
-  useEffect(() => {
-    if (teamsData.length > 0 && localTeamNames.length === 0) {
-      console.log(teamsData);
-      teamsData?.forEach((team, index) => {
-        setLocalTeamNames((prev) => [...prev, team.name]);
-        setLocalTeamIds((prev) => [...prev, team.id]);
-        setLocalMyTeam(userData?.team);
-      });
-    }
-  }, [teamsData]);
-
   return (
     <Container>
       <MyKeyboardAvoidingView>
@@ -347,18 +327,14 @@ export default function MyProfile(props: Props) {
                 defaultValueByIndex={MBTIToIndex[localProfileData.MBTI]}
               />
               <SLabel>팀</SLabel>
-              <MySelect
-                data={localTeamNames}
-                onSelect={(selectedItem, index) => {
-                  setLocalProfileData((prev) => ({
-                    ...prev,
-                    teamName: selectedItem,
-                    teamId: localTeamIds[index],
-                  }));
-                }}
-                width={width * 0.81}
-                defaultButtonText="팀을 선택해주세요"
-                defaultValue={localMyTeam}
+              <SBigTextInput
+                placeholder="TEAM"
+                autoCapitalize="none"
+                editable={false}
+                style={{ backgroundColor: "#f7f7f7" }}
+                defaultValue={
+                  localProfileData.teamName ? localProfileData.teamName : ""
+                }
               />
               <SLabel>계열이나 직업</SLabel>
               <SBigTextInput
@@ -420,19 +396,6 @@ export default function MyProfile(props: Props) {
                 width={width * 0.81}
                 defaultButtonText="음주 스타일을 설정해주세요"
                 defaultValueByIndex={localProfileData.drinkingStyle}
-              />
-              <SLabel>케빈의 클럽 활동 코드</SLabel>
-              <SBigTextInput
-                placeholder="활동 코드"
-                autoCapitalize="none"
-                defaultValue={""}
-                onChange={(event) => {
-                  const { eventCount, target, text } = event.nativeEvent;
-                  setLocalProfileData((prev) => ({
-                    ...prev,
-                    code: text,
-                  }));
-                }}
               />
               <View style={{ height: 150 }} />
             </DetailContainer>
