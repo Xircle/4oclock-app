@@ -332,9 +332,7 @@ export default function MyProfile(props: Props) {
                 autoCapitalize="none"
                 editable={false}
                 style={{ backgroundColor: "#f7f7f7" }}
-                defaultValue={
-                  localProfileData.teamName ? localProfileData.teamName : ""
-                }
+                defaultValue={userData?.team ? userData?.team : ""}
               />
               <SLabel>계열이나 직업</SLabel>
               <SBigTextInput
