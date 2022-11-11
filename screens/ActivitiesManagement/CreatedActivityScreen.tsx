@@ -12,11 +12,7 @@ type Props = {};
 
 const CreatedActivityScreen = (props: Props) => {
   const navigation = useNavigation();
-  const {
-    data: myCreatedPlacesData,
-    isLoading,
-    refetch,
-  } = useQuery<MyCreatedPlaceData[]>(
+  const { data: myCreatedPlacesData, refetch } = useQuery<MyCreatedPlaceData[]>(
     "myPlacesCreated",
     () => getMyPlacesCreated(),
     {
