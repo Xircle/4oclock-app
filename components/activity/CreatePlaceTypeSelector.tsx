@@ -30,7 +30,6 @@ export default function CreatePlaceTypeSelector({
           StorageKey.accountType
         );
         setAccountType(accountFromStorage);
-        console.log(accountFromStorage);
       }
     }
     function cleanUp() {
@@ -71,7 +70,7 @@ export default function CreatePlaceTypeSelector({
         <SubLabel selected={selectedType === types[1]}>
           리더가 여는 케빈의 클럽 컨텐츠로 꿀잼 비행모임
         </SubLabel>
-        {accountType !== "Owner" && (
+        {(accountType === "Owner" || accountType === "Admin") && (
           <Disabler>
             <Ionicons name="lock-closed" size={50} color="black" />
           </Disabler>
