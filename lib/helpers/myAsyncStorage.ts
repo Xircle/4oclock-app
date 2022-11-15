@@ -32,6 +32,10 @@ class LocalStorage {
     const string = JSON.stringify(value);
     await AsyncStorage.mergeItem(key, string);
   }
+
+  async clearItems() {
+    await AsyncStorage.clear();
+  }
 }
 
 const storage = new LocalStorage();
