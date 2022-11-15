@@ -15,7 +15,7 @@ const giveApiClient = async () => {
     async (error) => {
       if (error.response.status === 403 || error.response.status === 401) {
         console.log("hi");
-        //await storage.clearItems();
+        await storage.clearItems();
         navigate("Welcome", {});
       }
     }
