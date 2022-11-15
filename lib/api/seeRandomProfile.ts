@@ -19,6 +19,5 @@ export const seeRandomProfile = async (
     return data.randomProfile;
   } catch (err) {
     console.log(err);
-    throw new Error("일시적인 에러가 발생했습니다.");
   }
 };
