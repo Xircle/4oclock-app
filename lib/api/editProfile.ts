@@ -24,11 +24,6 @@ export const editProfile = async (
     formData.append("isYkClub", String(editedProfileData.isYkClub));
   }
 
-  // for testing
-  if (editedProfileData.teamId) {
-    formData.append("teamId", editedProfileData.teamId);
-  }
-
   editedProfileData.MBTI && formData.append("MBTI", editedProfileData.MBTI);
   editedProfileData.personality &&
     formData.append("personality", editedProfileData.personality);
