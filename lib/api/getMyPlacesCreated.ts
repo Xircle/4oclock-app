@@ -1,9 +1,4 @@
-import {
-  GetMyCreatedPlaceOutput,
-  GetMyPlaceOutput,
-  MyCreatedPlaceData,
-  MyPlaceData,
-} from "./types.d";
+import { GetMyCreatedPlaceOutput, MyCreatedPlaceData } from "./types.d";
 import AxiosClient from "../apiClient";
 import { Alert } from "react-native";
 import { BASE_URL } from "../utils";
